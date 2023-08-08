@@ -1,10 +1,10 @@
-import OurServices from "../OurServices/OurServices";
+import RecommendedFlights from "../../../Components/RecommendedFlight/RecommendedFlights";
 
 const Home = () => {
   return (
     <div>
       <p>Home</p>
-      <OurServices />
+      <RecommendedFlights />
     </div>
   );
 };
