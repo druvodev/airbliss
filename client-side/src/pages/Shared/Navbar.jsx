@@ -4,7 +4,7 @@ import { TiTicket } from "react-icons/ti";
 import { RxCaretDown } from "react-icons/rx";
 import { BiScatterChart } from "react-icons/bi";
 import logoBlack from "../../assets/icon/airblissBlack.png";
-import LoginSignupModal from "../../Components/LoginSignupModal";
+import LoginSignupModal from "../../LogIn/LoginSignupModal";
 
 const Navbar = () => {
   const [user, setUser] = useState(false); // It's temporary state for checking
