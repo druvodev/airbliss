@@ -1,9 +1,15 @@
+import { Outlet } from "react-router-dom";
+import Navbar from "../pages/Shared/Navbar";
+import Footer from "../pages/Shared/Footer";
+
 const Main = () => {
   return (
-    <div>
-      <h1>Welcome TO AirCNC</h1>
+    <div className="px-5 sm:px-10">
+      <Navbar />
+      <Outlet />
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;
