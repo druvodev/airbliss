@@ -36,50 +36,34 @@ const ScrollTopButton = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-5 right-5 z-50">
-      <div
-        className={`transition-opacity duration-300 ${
-          showButton ? "opacity-100" : "opacity-0"
+    <div className="fixed animate-bounce bottom-5 right-5 z-50">
+      <button
+        onClick={scrollToTop}
+        className={`bg-transparent text-white rounded-full p-5 shadow-md bg-blue-400 relative ${
+          showButton ? "block" : "hidden"
         }`}
       >
-        <div className="relative w-14 h-14">
+        <FaArrowUp />
+        <div className="absolute  top-0 left-0 w-full h-full">
           <svg
-            className="absolute top-0 left-0"
-            width="
-          100%"
-            height="100%"
+            className="w-full h-full"
+            viewBox="0 0 32 32"
+            xmlns="http://www.w3.org/2000/svg"
           >
             <circle
-              cx="50%"
-              cy="50%"
-              r="50%"
-              stroke="transparent"
-              strokeWidth="8"
+              cx="16"
+              cy="16"
+              r="14"
               fill="none"
-            />
-            <circle
-              cx="50%"
-              cy="50%"
-              r="30%"
-              stroke="red"
-              strokeWidth="8"
-              strokeLinecap="round"
-              fill="none"
+              stroke="#9CF80A"
+              strokeWidth="4"
               strokeDasharray={`${scrollProgress}, 100`}
+              strokeLinecap="round"
+              transform="rotate(-90 16 16)"
             />
           </svg>
-          <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
-            <span className="text-xs text-gray-600">
-              <button
-                onClick={scrollToTop}
-                className=" rounded-full p-2 text-white  shadow-md hover:bg-blue-600 bg-sky-700 relative"
-              >
-                <FaArrowUp />
-              </button>
-            </span>
-          </div>
         </div>
-      </div>
+      </button>
     </div>
   );
 };
