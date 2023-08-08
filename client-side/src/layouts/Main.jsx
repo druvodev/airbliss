@@ -4,11 +4,13 @@ import Footer from "../pages/Shared/Footer";
 
 const Main = () => {
   return (
-    <div className="px-5 sm:px-10">
+    <>
       <Navbar />
-      <Outlet />
+      <div className="px-5 sm:px-10 max-w-7xl mx-auto">
+        <Outlet />
+      </div>
       <Footer />
-    </div>
+    </>
   );
 };
 
