@@ -1,15 +1,17 @@
 import React from "react";
 import { GiAirplaneDeparture } from "react-icons/gi";
+import SectionTitle from "../SectionTitle";
 
 const RecommendedFlights = () => {
   return (
     <div>
       <div>
         <div>
-          <h1 className="text-xl mt-2 font-semibold">Recommended Flights</h1>
+          {/* <h1 className="text-xl mt-2 font-semibold">Recommended Flights</h1>
           <p className="text-sky-700 flex mt-1 font-bold m">
             <GiAirplaneDeparture /> --------
-          </p>
+          </p> */}
+          <SectionTitle sectionTitle={"Recommended Flights"} />
           <p className="text-xs mb-10">
             Most famous Flights of us. Our happy clients always happy with these
             Flights. <br /> The flights are always maintenance there roles and
