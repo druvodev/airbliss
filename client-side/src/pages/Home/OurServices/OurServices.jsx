@@ -13,11 +13,11 @@ const OurServices = () => {
   return (
     <section>
       <SectionTitle sectionTitle="Our Services" />
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-2 text-gray-500">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugiat nemo
-          quia, aliquid quam repudiandae tempore beatae maxime veniam totam ab
-          nihil.
+          Explore seamless travel with our flight, hotel, car, and cruise
+          booking services. Effortlessly tailor your journey for a memorable,
+          personalized experience. Your dream adventure starts here..
         </p>
         <button className="ml-auto bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide px-5 rounded-full h-[45px] text-white font-semibold">
           View All
@@ -27,7 +27,7 @@ const OurServices = () => {
         {services.map((service, index) => (
           <div
             key={index}
-            className="flex items-center gap-5 w-full bg-white shadow-lg py-2"
+            className="flex items-center gap-5 w-full bg-white shadow-md py-2 text-gray-500"
           >
             <div className="h-[120px] md:h-[180px] w-1/2">
               <img
@@ -41,7 +41,7 @@ const OurServices = () => {
                 {service.title}
               </h2>
               <p className="mb-2">{service.details}</p>
-              <button className="ml-auto bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide px-5 rounded-full h-[45px] text-white font-semibold">
+              <button className="ml-auto bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide px-5 rounded-full h-[38px] text-white font-semibold">
                 See All
               </button>
             </div>
