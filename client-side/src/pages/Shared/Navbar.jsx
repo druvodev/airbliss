@@ -4,11 +4,13 @@ import { TiTicket } from "react-icons/ti";
 import { RxCaretDown } from "react-icons/rx";
 import { BiScatterChart } from "react-icons/bi";
 import logoBlack from "../../assets/icon/airblissBlack.png";
+import LoginSignupModal from "../../Components/LoginSignupModal";
 
 const Navbar = () => {
   const [user, setUser] = useState(false); // It's temporary state for checking
   const [isMenuOne, setIsMenuOne] = useState(false);
   const [isMenuTwo, setIsMenuTwo] = useState(false);
+  const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
 
   const navOption = (
     <>
@@ -139,7 +141,11 @@ const Navbar = () => {
               </ul>
             </div>
           ) : (
-            <a href="" className="px-5 py-1 flex items-center font-medium">
+            <a
+              href="#"
+              onClick={() => setIsLoginSignupModalOpen(true)} // Open the modal on click
+              className="px-5 py-1 flex items-center font-medium"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -156,6 +162,10 @@ const Navbar = () => {
           )}
         </div>
       </div>
+      {/* Render the modal conditionally */}
+      {isLoginSignupModalOpen && (
+        <LoginSignupModal onClose={() => setIsLoginSignupModalOpen(false)} />
+      )}
     </div>
   );
 };
