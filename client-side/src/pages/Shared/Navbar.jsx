@@ -126,7 +126,7 @@ const Navbar = () => {
                   </label>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
+                    className="dropdown-content z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1 text-gray-600"
                   >
                     <li className="cursor-pointer">Flight Booking</li>
                     <li className="cursor-pointer">Hotels Booking</li>
@@ -143,7 +143,7 @@ const Navbar = () => {
                   </label>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
+                    className="dropdown-content z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1 text-gray-600"
                   >
                     <li className="cursor-pointer">Blogs</li>
                     <li className="cursor-pointer">Gallery</li>
