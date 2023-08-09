@@ -37,7 +37,7 @@ const RecommendedFlights = () => {
               <div>
                 <h3 className="card-title mr-16">Bengaluru to Paris</h3>
                 <p className="text-semibold text-xs font-semibold">
-                  ONE WAY FLIGHT
+                  ONE WAY FLIGHTS
                 </p>
               </div>
               <div>
