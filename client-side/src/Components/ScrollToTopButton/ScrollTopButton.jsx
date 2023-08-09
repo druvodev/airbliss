@@ -36,10 +36,10 @@ const ScrollTopButton = () => {
   }, []);
 
   return (
-    <div className="fixed animate-bounce bottom-5 right-5 z-50">
+    <div className="fixed  animate-bounce bottom-5 right-5 ">
       <button
         onClick={scrollToTop}
-        className={`bg-transparent text-white rounded-full p-5 shadow-md bg-blue-400 relative ${
+        className={`bg-transparent text-blue-500 rounded-full p-5 shadow-md bg-blue-400 relative ${
           showButton ? "block" : "hidden"
         }`}
       >

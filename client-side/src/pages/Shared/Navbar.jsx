@@ -6,6 +6,7 @@ import { BiScatterChart } from "react-icons/bi";
 import logoBlack from "../../assets/icon/airblissBlack.png";
 import logoWhite from "../../assets/icon/airblissWhite.png";
 import LoginSignupModal from "../../components/LoginSignupModal";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [user, setUser] = useState(false); // Temporary state for checking
@@ -41,14 +42,14 @@ const Navbar = () => {
     <>
       <ul className="text-gray-600">
         <li onClick={() => setIsMenuOne(!isMenuOne)} className="">
-          <p className="font-font-medium">
+          <p className="font-font-medium ">
             Bookings {isMenuOne ? <FaAngleUp /> : <FaAngleDown />}
           </p>
           {isMenuOne && (
             <ul className="grid gap-1">
-              <li>Flight Booking</li>
-              <li>Hotels Booking</li>
-              <li>Cars Booking</li>
+              <Link>Flight Booking</Link>
+              <Link>Hotels Booking</Link>
+              <Link>Cars Booking</Link>
             </ul>
           )}
         </li>
@@ -58,10 +59,10 @@ const Navbar = () => {
           </p>
           {isMenuTwo && (
             <ul className="grid gap-1">
-              <li>Blogs</li>
-              <li>Gallery</li>
-              <li>About Us</li>
-              <li>Contact</li>
+              <Link>Blogs</Link>
+              <Link>Gallery</Link>
+              <Link>About Us</Link>
+              <Link>Contact</Link>
             </ul>
           )}
         </li>
@@ -70,13 +71,13 @@ const Navbar = () => {
   );
 
   const navbarClass = isScrolled
-    ? "bg-white text-gray-700 shadow"
+    ? "bg-white text-gray-700 shadow fixed z-50"
     : "bg-gradient-to-b from-gray-800 text-white";
 
   return (
     <div className="flex justify-center">
       {isNavbarVisible && (
-        <div className={`fixed w-full z-50 ${navbarClass}`}>
+        <div className={`fixed w-full z-50  ${navbarClass}`}>
           <div className="navbar text-sm px-0 justify-between w-screen sm:max-w-7xl mx-auto">
             <div className="navbar-start">
               <div className="dropdown">
@@ -126,11 +127,17 @@ const Navbar = () => {
                   </label>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
+                    className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
                   >
-                    <li className="cursor-pointer">Flight Booking</li>
-                    <li className="cursor-pointer">Hotels Booking</li>
-                    <li className="cursor-pointer">Cars Booking</li>
+                    <Link className="cursor-pointer hover:bg-base-300 ">
+                      Flight Booking
+                    </Link>
+                    <Link className="cursor-pointer hover:bg-base-300">
+                      Hotels Booking
+                    </Link>
+                    <Link className="cursor-pointer hover:bg-base-300">
+                      Cars Booking
+                    </Link>
                   </ul>
                 </div>
                 <div className="dropdown">
@@ -143,12 +150,20 @@ const Navbar = () => {
                   </label>
                   <ul
                     tabIndex={0}
-                    className="dropdown-content z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
+                    className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
                   >
-                    <li className="cursor-pointer">Blogs</li>
-                    <li className="cursor-pointer">Gallery</li>
-                    <li className="cursor-pointer">About Us</li>
-                    <li className="cursor-pointer">Contact</li>
+                    <Link className="cursor-pointer hover:bg-base-300">
+                      Blogs
+                    </Link>
+                    <Link className="cursor-pointer hover:bg-base-300">
+                      Gallery
+                    </Link>
+                    <Link className="cursor-pointer hover:bg-base-300">
+                      About Us
+                    </Link>
+                    <Link className="cursor-pointer hover:bg-base-300">
+                      Contact
+                    </Link>
                   </ul>
                 </div>
               </div>
