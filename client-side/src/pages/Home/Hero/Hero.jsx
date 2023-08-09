@@ -46,7 +46,7 @@ const Hero = () => {
           className="mx-auto pt-20"
           style={{ transition: "none" }} // Disable CSS transition
         />
-        <div className="absolute top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-full h-full bg-black/20">
+        <div className="absolute top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-full h-full bg-black/20 z-10">
           <div className="max-w-7xl mx-auto px-5 sm:px-10">
             <div className="absolute top-1/2 -translate-y-2/4 text-white">
               <h1 className="text-3xl sm:text-5xl font-light tracking-wide">
@@ -63,7 +63,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="absolute left-1/2 -translate-x-2/4 z-30 w-full">
+      <div className="z-30 relative">
         <SearchFilter />
       </div>
     </>
