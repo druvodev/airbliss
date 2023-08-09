@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media (max-width: 768px) {
+  .search-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+@media (min-width: 768px) and (max-width: 1120px) {
+  .search-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 1120px) {
+  .search-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.4fr 1fr;
+  }
+}

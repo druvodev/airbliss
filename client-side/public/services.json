@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "title": "Flight Booking",
+        "details": "Seamless personalized flight bookings for your perfect journey. Book now.",
+        "image": "https://i.ibb.co/f2K7x8g/flight.jpg"
+    },
+    {
+        "id": 2,
+        "title": "Car Booking",
+        "details": "Effortlessly book your ideal car with us. Convenient, and hassle-free service.",
+        "image": "https://i.ibb.co/wzynCF4/car.jpg"
+    },
+    {
+        "id": 3,
+        "title": "Hotel Booking",
+        "details": "Discover and book your perfect hotel with us. Your comfort, our priority.",
+        "image": "https://i.ibb.co/RvSv14d/hotel.jpg"
+    },
+    {
+        "id": 3,
+        "title": "cruise Booking",
+        "details": "Embark on unforgettable cruises with us. Enjoy your sea journey.",
+        "image": "https://i.ibb.co/3BkSNd8/cruise.png"
+    },
+    {
+        "id": 3,
+        "title": "Hotel Booking",
+        "details": "Discover and book your perfect hotel with us. Your comfort, our priority.",
+        "image": "https://i.ibb.co/RvSv14d/hotel.jpg"
+    },
+    {
+        "id": 3,
+        "title": "cruise Booking",
+        "details": "Embark on unforgettable cruises with us. Enjoy your sea journey.",
+        "image": "https://i.ibb.co/3BkSNd8/cruise.png"
+    }
+]
