@@ -18,7 +18,7 @@ const RecommendedFlights = () => {
             regulations
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-10">
+        <div className="grid md:grid-cols-3 gap-10">
           <div className="border shadow-2xl p-2">
             <div>
               <div className="flex gap-5 container ">
