@@ -15,10 +15,10 @@ const RecommendedFlights = () => {
           <p className="text-xs mb-10">
             Most famous Flights of us. Our happy clients always happy with these
             Flights. <br /> The flights are always maintenance there roles and
-            regulations.
+            regulations
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-10">
+        <div className="grid md:grid-cols-3 gap-10">
           <div className="border shadow-2xl p-2">
             <div>
               <div className="flex gap-5 container ">
