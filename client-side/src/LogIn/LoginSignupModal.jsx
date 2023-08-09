@@ -1,5 +1,6 @@
 import { useState } from "react";
 import LogInSlider from "./LogInSlider";
+import { Link } from 'react-router-dom';
 
 const LoginSignupModal = ({ onClose }) => {
     const [isLoginMode, setIsLoginMode] = useState(true);
@@ -15,11 +16,11 @@ const LoginSignupModal = ({ onClose }) => {
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-75 bg-gray-900">
-            <div className="modal-container bg-white p-6 rounded-lg w-[830px] relative">
+            <div className="modal-container bg-white rounded-lg w-[830px] relative">
                 <button
                     onClick={onClose}
                     // className="text-red-500 z-50 hover:text-gray-700 absolute top-4 right-4"
-                    className="btn z-50 btn-circle btn-error btn-outline absolute top-4 right-4"
+                    className="btn z-50 btn-circle border-white text-white hover:bg-white hover:text-black btn-outline absolute top-4 right-4"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
@@ -65,6 +66,9 @@ const LoginSignupModal = ({ onClose }) => {
                     </div>
                     <div>
                         <LogInSlider />
+                        <Link className="flex justify-center">
+                            <button className="text-cyan-500 btn btn-sm btn-outline hover:bg-cyan-500 hover:text-white hover:border-cyan-500 my-5">Learn about Our Service</button>
+                        </Link>
                     </div>
                 </div>
             </div>
