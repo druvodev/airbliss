@@ -83,7 +83,7 @@ const SearchFilter = () => {
                     <input
                       id="fromCity"
                       type="text"
-                      className="text-xl font-semibold outline-none"
+                      className="text-xl font-light outline-none"
                       value="Dhaka"
                     />
                     <div className="cursor-pointer">
