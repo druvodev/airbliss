@@ -1,6 +1,6 @@
 import React from "react";
 import { GiAirplaneDeparture } from "react-icons/gi";
-import SectionTitle from "../SectionTitle";
+import SectionTitle from "../../../Components/SectionTitle";
 
 const RecommendedFlights = () => {
   return (
@@ -15,7 +15,7 @@ const RecommendedFlights = () => {
           <p className="text-xs mb-10">
             Most famous Flights of us. Our happy clients always happy with these
             Flights. <br /> The flights are always maintenance there roles and
-            regulations.
+            regulations
           </p>
         </div>
         <div className="grid grid-cols-3 gap-10">
@@ -37,7 +37,7 @@ const RecommendedFlights = () => {
               <div>
                 <h3 className="card-title mr-16">Bengaluru to Paris</h3>
                 <p className="text-semibold text-xs font-semibold">
-                  ONE WAY FLIGHT
+                  ONE WAY FLIGHTS
                 </p>
               </div>
               <div>
