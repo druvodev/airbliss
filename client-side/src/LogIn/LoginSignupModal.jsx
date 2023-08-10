@@ -1,6 +1,7 @@
 import { useState } from "react";
 import LogInSlider from "./LogInSlider";
 import { Link } from 'react-router-dom';
+import { FaFacebook, FaGoogle } from "react-icons/fa";
 
 const LoginSignupModal = ({ onClose }) => {
     const [isLoginMode, setIsLoginMode] = useState(true);
@@ -25,28 +26,22 @@ const LoginSignupModal = ({ onClose }) => {
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
                 </button>
                 <div className="grid grid-cols-2 gap-5">
-                    <div>
-                        <h2 className="text-xl font-semibold mb-4">
-                            {isLoginMode ? "Login" : "Sign Up"}
+                    <div className="p-6">
+                        <h2 className="text-3xl font-semibold mb-5">
+                            {isLoginMode ? "Sign in or Join ClubMiles" : "Sign Up or Join ClubMiles"}
                         </h2>
+                        <div className="grid grid-cols-2 gap-10">
+                            <span className="flex rounded py-1 cursor-pointer hover:bg-blue-500 hover:text-white justify-center text-blue-500 items-center gap-2 border-2 border-blue-500">
+                                <FaFacebook /> <p>Facebook</p>
+                            </span>
+                            <span className="flex rounded py-1 cursor-pointer justify-center items-center gap-2 border-2 border-[#f14336] text-[#f14336] hover:bg-[#f14336] hover:text-white">
+                                <FaGoogle /> <p>Google</p>
+                            </span>
+                        </div>
+                        <div className="divider py-6">OR</div>
                         <form onSubmit={submitHandler}>
                             {/* Render appropriate form fields based on isLoginMode */}
-                            <div className="mb-4">
-                                <label className="block font-medium mb-1">Email</label>
-                                <input
-                                    type="email"
-                                    className="w-full p-2 border rounded-md"
-                                // Add necessary input attributes here
-                                />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block font-medium mb-1">Password</label>
-                                <input
-                                    type="password"
-                                    className="w-full p-2 border rounded-md"
-                                // Add necessary input attributes here
-                                />
-                            </div>
+                            
                             <div className="flex justify-between items-center mb-4">
                                 <button
                                     type="submit"
