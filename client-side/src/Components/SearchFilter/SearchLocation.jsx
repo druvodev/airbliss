@@ -110,18 +110,6 @@ const SearchLocation = React.memo(({ setIsModal }) => {
           </div>
           <p className="text-sm font-semibold text-gray-500">DAC</p>
         </div>
-        <div
-          onClick={() => setIsModal(false)}
-          className="flex items-center justify-between gap-1 px-2 py-1 hover:bg-slate-100 cursor-pointer"
-        >
-          <div>
-            <h5 className="text-sm font-semibold">Dhaka, Bangladesh</h5>
-            <p className="text-sm">
-              <small>Hazrat Shahjalal International Airport</small>
-            </p>
-          </div>
-          <p className="text-sm font-semibold text-gray-500">DAC</p>
-        </div>
       </div>
     </div>
   );
