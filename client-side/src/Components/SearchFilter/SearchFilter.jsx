@@ -2,11 +2,69 @@ import { useState } from "react";
 import { MdAddCircle, MdFlight, MdRemoveCircle } from "react-icons/md";
 import { RiHotelFill } from "react-icons/ri";
 import { BsPostcardFill } from "react-icons/bs";
+import { Calendar } from "react-date-range";
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
+import { format } from "date-fns";
 
 const SearchFilter = () => {
   const [isActive, setIsActive] = useState("flight");
   const [flightType, setFlightType] = useState("oneWay");
   const [cityCount, setCityCount] = useState(1);
+  const [departureDate, setDepartureDate] = useState(new Date());
+  const [returnDate, setReturnDate] = useState(new Date());
+  const [calendarModal, setCalendarModal] = useState(null);
+
+  // Convert Date Format
+  const formattedDate = (date) => {
+    return format(date, "dd MMM yy");
+  };
+  const dateName = (date) => {
+    return format(date, "EEEE");
+  };
+
+  // Handle Departure Date
+  const handleDepartureDate = (date) => {
+    setDepartureDate(date);
+    if (flightType === "roundTrip") {
+      setCalendarModal("return");
+    } else {
+      setCalendarModal(null);
+    }
+  };
+  // Handle Return Date
+  const handleReturnDate = (date) => {
+    setReturnDate(date);
+    setCalendarModal(null);
+  };
+
+  // Calendar Modal
+  const handleCalendarModal = (date, setDate) => {
+    console.log("click");
+    return (
+      <Calendar
+        rangeColors={["#262626"]}
+        color="#0891B2"
+        date={date}
+        direction="vertical"
+        showDateDisplay={false}
+        minDate={new Date()}
+        onChange={setDate}
+        className="w-fit shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] rounded-md"
+      />
+    );
+  };
+
+  // Handle Search Field
+  const handleSearch = () => {
+    const searchQuery = {
+      bookingType: isActive,
+      flightType,
+      departureDate: departureDate.toString(),
+      returnDate: flightType === "oneWay" ? "" : returnDate.toString(),
+    };
+    console.log(searchQuery);
+  };
 
   return (
     <div className="max-w-7xl mx-auto grid justify-center">
@@ -114,30 +172,44 @@ const SearchFilter = () => {
                   </label>
                 </div>
                 <div className="grid grid-cols-2 border rounded-md">
-                  <div className="w-full p-2 border-r relative overflow-hidden">
+                  <div
+                    className="w-full p-2 border-r relative"
+                    onClick={() => setCalendarModal(!calendarModal)}
+                  >
                     <p className="text-sm">Departure</p>
                     <div className="cursor-pointer">
                       <input
                         type="text"
                         className="text-lg sm:text-xl font-semibold outline-none bg-transparent"
-                        value="08 Aug 23"
+                        value={formattedDate(departureDate)}
                         readOnly
                       />
                       <small className="text-xs my-0">
                         <span title="" className="">
-                          Tuesday
+                          {dateName(departureDate)}
                         </span>
                       </small>
                     </div>
+                    {calendarModal && (
+                      <div className="absolute top-20 left-0 z-40">
+                        {handleCalendarModal(
+                          departureDate,
+                          handleDepartureDate
+                        )}
+                      </div>
+                    )}
                   </div>
                   <div className="w-full p-2">
                     <p className="text-sm">Return</p>
-                    <h5 className="text-lg sm:text-xl font-semibold">
-                      11 Aug 23
-                    </h5>
+                    <input
+                      type="text"
+                      className="text-lg sm:text-xl font-semibold outline-none bg-transparent"
+                      value={formattedDate(returnDate)}
+                      readOnly
+                    />
                     <small className="text-xs my-0">
                       <span title="" className="">
-                        Friday
+                        {dateName(returnDate)}
                       </span>
                     </small>
                   </div>
@@ -256,7 +328,7 @@ const SearchFilter = () => {
             </>
           ) : (
             <div className="search-grid gap-2">
-              <div className="w-full p-2 border rounded-md">
+              <div className="w-full p-2 border rounded-md relative">
                 <label htmlFor="fromCity">
                   <p className="text-sm">From</p>
                   <input
@@ -274,7 +346,7 @@ const SearchFilter = () => {
                   </div>
                 </label>
               </div>
-              <div className="w-full p-2 border rounded-md">
+              <div className="w-full p-2 border rounded-md relative">
                 <label htmlFor="toCity">
                   <p className="text-sm">To</p>
                   <input
@@ -293,26 +365,38 @@ const SearchFilter = () => {
                 </label>
               </div>
               <div className="grid grid-cols-2 border rounded-md">
-                <div className="w-full p-2 border-r relative overflow-hidden">
+                <div
+                  className="w-full p-2 border-r relative"
+                  onClick={() => setCalendarModal("departure")}
+                >
                   <p className="text-sm">Departure</p>
                   <div className="cursor-pointer">
                     <input
                       type="text"
-                      className="text-lg sm:text-xl font-semibold outline-none bg-transparent"
-                      value="08 Aug 23"
+                      className="text-lg sm:text-xl w-24 font-semibold outline-none bg-transparent"
+                      value={formattedDate(departureDate)}
                       readOnly
-                    />
+                    />{" "}
+                    <br />
                     <small className="text-xs my-0">
                       <span title="" className="">
-                        Tuesday
+                        {dateName(departureDate)}
                       </span>
                     </small>
                   </div>
+                  {calendarModal === "departure" && (
+                    <div className="absolute top-20 left-0 z-40">
+                      {handleCalendarModal(departureDate, handleDepartureDate)}
+                    </div>
+                  )}
                 </div>
                 {flightType === "oneWay" && (
                   <div
                     className="w-full p-2 cursor-pointer"
-                    onClick={() => setFlightType("roundTrip")}
+                    onClick={() => {
+                      setFlightType("roundTrip");
+                      setCalendarModal("return");
+                    }}
                   >
                     <p className="text-sm">Return</p>
                     <p className="text-xs my-0 mt-2 cursor-pointer">
@@ -321,16 +405,30 @@ const SearchFilter = () => {
                   </div>
                 )}
                 {flightType === "roundTrip" && (
-                  <div className="w-full p-2">
+                  <div
+                    className="w-full p-2 border-r relative"
+                    onClick={() => setCalendarModal("return")}
+                  >
                     <p className="text-sm">Return</p>
-                    <h5 className="text-lg sm:text-xl font-semibold">
-                      11 Aug 23
-                    </h5>
-                    <small className="text-xs my-0">
-                      <span title="" className="">
-                        Friday
-                      </span>
-                    </small>
+                    <div className="cursor-pointer">
+                      <input
+                        type="text"
+                        className="text-lg sm:text-xl w-24 font-semibold outline-none bg-transparent"
+                        value={formattedDate(returnDate)}
+                        readOnly
+                      />{" "}
+                      <br />
+                      <small className="text-xs my-0">
+                        <span title="" className="">
+                          {dateName(returnDate)}
+                        </span>
+                      </small>
+                    </div>
+                    {calendarModal === "return" && (
+                      <div className="absolute top-20 left-0 z-40">
+                        {handleCalendarModal(returnDate, handleReturnDate)}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -348,7 +446,10 @@ const SearchFilter = () => {
         </div>
 
         <div className="flex justify-center -mb-11">
-          <button className="px-10 py-3 rounded bg-cyan-600 active:bg-cyan-700 text-white font-semibold">
+          <button
+            className="px-10 py-3 rounded bg-cyan-600 active:bg-cyan-700 text-white font-semibold"
+            onClick={handleSearch}
+          >
             Search
           </button>
         </div>
