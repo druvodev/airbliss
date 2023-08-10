@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../providers/AuthProvider";
 import { TbFidgetSpinner } from 'react-icons/tb'
+import { toast } from "react-hot-toast";
 
 const LoginSignupModal = ({ onClose }) => {
     const [isLoginMode, setIsLoginMode] = useState(true);
@@ -17,9 +18,22 @@ const LoginSignupModal = ({ onClose }) => {
         setIsLoginMode((prevMode) => !prevMode);
     };
 
-    const submitHandler = (event) => {
-        event.preventDefault();
-    };
+    const handleSubmitLogIn = event => {
+        event.preventDefault()
+        const email = event.target.email.value
+        const password = event.target.password.value
+
+        signIn(email, password)
+            .then(result => {
+                console.log(result.user);
+                navigate(from, { replace: true })
+            })
+            .catch(err => {
+                setLoading(false)
+                console.log(err);
+                toast.error(err.message);
+            })
+    }
 
     const handleGoogleSignIn = () => {
         signInWithGoogle()
@@ -59,7 +73,7 @@ const LoginSignupModal = ({ onClose }) => {
                         </div>
                         <div className="divider py-6">OR</div>
                         {
-                            isLoginMode ? <form onSubmit={submitHandler}>
+                            isLoginMode ? <form onSubmit={handleSubmitLogIn}>
                                 <div className='space-y-4'>
                                     <div>
                                         <label htmlFor='email' className='block mb-2 text-sm'>
@@ -96,7 +110,7 @@ const LoginSignupModal = ({ onClose }) => {
                                     <div>
                                         <button type='submit'
                                             className='bg-cyan-500 w-full rounded-md px-5 py-2 text-white'>
-                                            {loading ? <TbFidgetSpinner size={24} className='m-auto animate-spin' /> : 'SignUp'}
+                                            {loading ? <TbFidgetSpinner size={24} className='m-auto animate-spin' /> : 'SignIn'}
                                         </button>
                                     </div>
                                     <div className='space-y-1'>
@@ -111,7 +125,7 @@ const LoginSignupModal = ({ onClose }) => {
                                     noValidate=''
                                     action=''
                                     className='space-y-6 ng-untouched ng-pristine ng-valid'
-                                    // onSubmit={handleSubmit}
+                                // onSubmit={handleSubmit}
                                 >
                                     <div className='space-y-4'>
                                         <div>
