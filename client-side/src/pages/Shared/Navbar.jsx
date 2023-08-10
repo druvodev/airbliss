@@ -5,7 +5,7 @@ import { RxCaretDown } from "react-icons/rx";
 import { BiScatterChart } from "react-icons/bi";
 import logoBlack from "../../assets/icon/airblissBlack.png";
 import logoWhite from "../../assets/icon/airblissWhite.png";
-import LoginSignupModal from "../../components/LoginSignupModal";
+import LoginSignupModal from "../../LogIn/LoginSignupModal";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
