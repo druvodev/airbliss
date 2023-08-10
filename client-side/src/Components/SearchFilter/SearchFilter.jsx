@@ -1,19 +1,24 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { MdAddCircle, MdFlight, MdRemoveCircle } from "react-icons/md";
 import { RiHotelFill } from "react-icons/ri";
 import { BsPostcardFill } from "react-icons/bs";
-import { Calendar } from "react-date-range";
-import "react-date-range/dist/styles.css"; // main style file
-import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
+import SearchLocation from "./SearchLocation";
+import CalendarComponent from "./CalendarComponent";
+import { is } from "date-fns/locale";
 
-const SearchFilter = () => {
+const SearchFilter = React.memo(() => {
   const [isActive, setIsActive] = useState("flight");
   const [flightType, setFlightType] = useState("oneWay");
   const [cityCount, setCityCount] = useState(1);
   const [departureDate, setDepartureDate] = useState(new Date());
   const [returnDate, setReturnDate] = useState(new Date());
-  const [calendarModal, setCalendarModal] = useState(null);
+  const [calendarModal, setCalendarModal] = useState("");
+  const [locationModal, setLocationModal] = useState("");
+  const [isModal, setIsModal] = useState(false);
+
+  console.log("rerender");
+  console.log(isModal);
 
   // Convert Date Format
   const formattedDate = (date) => {
@@ -38,24 +43,6 @@ const SearchFilter = () => {
     setCalendarModal(null);
   };
 
-  // Calendar Modal
-  const handleCalendarModal = (date, setDate) => {
-    console.log("click");
-    return (
-      <Calendar
-        rangeColors={["#262626"]}
-        color="#0891B2"
-        date={date}
-        direction="vertical"
-        showDateDisplay={false}
-        minDate={new Date()}
-        onChange={setDate}
-        className="w-fit shadow-[0px_4px_16px_rgba(17,17,26,0.1),_0px_8px_24px_rgba(17,17,26,0.1),_0px_16px_56px_rgba(17,17,26,0.1)] rounded-md"
-      />
-    );
-  };
-
-  // Handle Search Field
   const handleSearch = () => {
     const searchQuery = {
       bookingType: isActive,
@@ -190,12 +177,12 @@ const SearchFilter = () => {
                         </span>
                       </small>
                     </div>
-                    {calendarModal && (
+                    {calendarModal === "departure" && (
                       <div className="absolute top-20 left-0 z-40">
-                        {handleCalendarModal(
-                          departureDate,
-                          handleDepartureDate
-                        )}
+                        <CalendarComponent
+                          date={departureDate}
+                          setDate={handleDepartureDate}
+                        />
                       </div>
                     )}
                   </div>
@@ -297,7 +284,9 @@ const SearchFilter = () => {
                     {index !== cityCount - 1 ? (
                       <button
                         className="flex items-center gap-1 text-red-500"
-                        onClick={() => setCityCount(cityCount - 1)}
+                        onClick={() =>
+                          setCityCount((prevCount) => prevCount - 1)
+                        }
                       >
                         <MdRemoveCircle /> Remove
                       </button>
@@ -305,7 +294,9 @@ const SearchFilter = () => {
                       <>
                         <button
                           className="border px-3 py-1 flex items-center text-cyan-500"
-                          onClick={() => setCityCount(cityCount + 1)}
+                          onClick={() =>
+                            setCityCount((prevCount) => prevCount + 1)
+                          }
                         >
                           <MdAddCircle /> Add
                         </button>
@@ -314,7 +305,9 @@ const SearchFilter = () => {
                             <div className="divider divider-horizontal"></div>
                             <button
                               className="flex items-center gap-1 text-red-500"
-                              onClick={() => setCityCount(cityCount - 1)}
+                              onClick={() =>
+                                setCityCount((prevCount) => prevCount - 1)
+                              }
                             >
                               <MdRemoveCircle /> Remove
                             </button>
@@ -328,14 +321,23 @@ const SearchFilter = () => {
             </>
           ) : (
             <div className="search-grid gap-2">
-              <div className="w-full p-2 border rounded-md relative">
+              <div
+                className="w-full p-2 border rounded-md relative"
+                onClick={() => {
+                  if (!isModal) {
+                    setIsModal(true);
+                  }
+                  setLocationModal("from");
+                }}
+              >
                 <label htmlFor="fromCity">
                   <p className="text-sm">From</p>
                   <input
                     id="fromCity"
                     type="text"
-                    className="text-xl font-semibold outline-none"
+                    className="text-xl font-semibold outline-none cursor-pointer"
                     value="Dhaka"
+                    readOnly
                   />
                   <div className="cursor-pointer">
                     <small className="text-xs my-0">
@@ -345,15 +347,29 @@ const SearchFilter = () => {
                     </small>
                   </div>
                 </label>
+                {isModal && locationModal === "from" && (
+                  <div className="absolute top-24 left-0 z-40">
+                    <SearchLocation setIsModal={setIsModal} />
+                  </div>
+                )}
               </div>
-              <div className="w-full p-2 border rounded-md relative">
+              <div
+                className="w-full p-2 border rounded-md relative cursor-pointer"
+                onClick={() => {
+                  if (!isModal) {
+                    setIsModal(true);
+                  }
+                  setLocationModal("to");
+                }}
+              >
                 <label htmlFor="toCity">
                   <p className="text-sm">To</p>
                   <input
                     id="toCity"
                     type="text"
-                    className="text-lg sm:text-xl font-semibold outline-none"
+                    className="text-lg sm:text-xl font-semibold outline-none cursor-pointer"
                     value="Khulna"
+                    readOnly
                   />
                   <div className="cursor-pointer">
                     <small className="text-xs my-0">
@@ -363,6 +379,11 @@ const SearchFilter = () => {
                     </small>
                   </div>
                 </label>
+                {isModal && locationModal === "to" && (
+                  <div className="absolute top-24 left-0 z-40">
+                    <SearchLocation setIsModal={setIsModal} />
+                  </div>
+                )}
               </div>
               <div className="grid grid-cols-2 border rounded-md">
                 <div
@@ -386,7 +407,10 @@ const SearchFilter = () => {
                   </div>
                   {calendarModal === "departure" && (
                     <div className="absolute top-20 left-0 z-40">
-                      {handleCalendarModal(departureDate, handleDepartureDate)}
+                      <CalendarComponent
+                        date={departureDate}
+                        setDate={handleDepartureDate}
+                      />
                     </div>
                   )}
                 </div>
@@ -426,7 +450,10 @@ const SearchFilter = () => {
                     </div>
                     {calendarModal === "return" && (
                       <div className="absolute top-20 left-0 z-40">
-                        {handleCalendarModal(returnDate, handleReturnDate)}
+                        <CalendarComponent
+                          date={returnDate}
+                          setDate={handleReturnDate}
+                        />
                       </div>
                     )}
                   </div>
@@ -456,6 +483,6 @@ const SearchFilter = () => {
       </div>
     </div>
   );
-};
+});
 
 export default SearchFilter;
