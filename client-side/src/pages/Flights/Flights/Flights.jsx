@@ -1,6 +1,7 @@
 import SearchFilter from "../../../Components/SearchFilter/SearchFilter";
 import ResultsFilter from "../ResultsFilter/ResultsFilter";
 import banner from "../../../assets/banner/flights.webp";
+import BookFlight from "../BookingFlights/BookFlight/BookFlight";
 
 const Flights = () => {
   return (
@@ -12,7 +13,9 @@ const Flights = () => {
           <div className="col-span-1">
             <ResultsFilter />
           </div>
-          <div className="col-span-2">Right Side</div>
+          <div className="col-span-2">
+            <BookFlight />
+          </div>
         </div>
       </div>
     </>
