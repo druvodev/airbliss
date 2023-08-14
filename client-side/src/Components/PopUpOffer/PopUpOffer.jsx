@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./PopUpOffer.css";
+import LoginSignupModal from "../../LogIn/LoginSignupModal";
+import { FaTimesCircle } from "react-icons/fa";
 
 const PopUpOffer = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
 
   const closePopup = () => {
     setShowPopup(false);
@@ -28,10 +31,20 @@ const PopUpOffer = () => {
               className="popup-image"
             />
             <button onClick={closePopup} className="popup-close-btn">
-              X
+              <FaTimesCircle />
             </button>
-            <button className="get-discount">Get Discount</button>
+            <button
+              onClick={() => setIsLoginSignupModalOpen(true)}
+              className="get-discount"
+            >
+              Get Discount
+            </button>
           </div>
+          {isLoginSignupModalOpen && (
+            <LoginSignupModal
+              onClose={() => setIsLoginSignupModalOpen(false)}
+            />
+          )}
         </div>
       )}
     </>
