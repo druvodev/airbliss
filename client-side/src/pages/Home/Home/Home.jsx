@@ -1,3 +1,4 @@
+import PopUpOffer from "../../../Components/PopUpOffer/PopUpOffer";
 import Hero from "../Hero/Hero";
 import OurServices from "../OurServices/OurServices";
 import RecommendedFlights from "../RecommendedFlight/RecommendedFlights";
@@ -10,6 +11,7 @@ const Home = () => {
         {/* Add Another Components */}
         <RecommendedFlights />
         <OurServices />
+        <PopUpOffer />
       </div>
     </div>
   );
