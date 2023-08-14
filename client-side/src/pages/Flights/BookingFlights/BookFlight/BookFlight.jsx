@@ -1,11 +1,47 @@
 import React, { useState } from "react";
+
+import "./BookingFlight.css";
+import FlightDetails from "../FlightDetails/FlightDetails";
+import FlightSummery from "../FlightSummery/FlightSummery";
+import FareRuls from "../FareRuls/FareRuls";
 import ShortingFlight from "../../ShortingFlight/ShortingFlight";
 
 const BookFlight = () => {
-  const [selectedButton, setSelectedButton] = useState('cheapest');
+  const [activeCard, setActiveCard] = useState(true);
+  const [visibleDetails, setVisibleDetails] = useState(false);
+  const [showFlightDetails, setShowFlightDetails] = useState(false);
+  const [showFlightSummary, setShowFlightSummary] = useState(false);
+  const [showFareRules, setShowFareRules] = useState(false);
+  const [selectedButton, setSelectedButton] = useState("cheapest");
 
   const handleButtonClick = (buttonType) => {
     setSelectedButton(buttonType);
+  };
+
+  const handelVisible = () => {
+    setVisibleDetails(!visibleDetails);
+    setShowFlightDetails(true);
+    setShowFlightDetails(true);
+    setShowFlightSummary(false);
+    setShowFareRules(false);
+  };
+
+  const handleFlightDetailsClick = () => {
+    setShowFlightDetails(true);
+    setShowFlightSummary(false);
+    setShowFareRules(false);
+  };
+
+  const handleFlightSummaryClick = () => {
+    setShowFlightDetails(false);
+    setShowFlightSummary(true);
+    setShowFareRules(false);
+  };
+
+  const handleFareRulesClick = () => {
+    setShowFlightDetails(false);
+    setShowFlightSummary(false);
+    setShowFareRules(true);
   };
 
   return (
@@ -13,23 +49,37 @@ const BookFlight = () => {
       {/* Filter Card */}
       <ShortingFlight />
       <section>
-        <div className='flex w-full p-5 mt-10 rounded-md justify-between shadow-xl'>
+        <div className="flex w-full p-5 mt-10 rounded-md justify-between shadow-md">
           <button
-            className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${selectedButton === 'cheapest' ? 'bg-gray-100 text-white' : 'text-white'
-              }`}
-            onClick={() => handleButtonClick('cheapest')}
+            className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
+              selectedButton === "cheapest"
+                ? "bg-gray-100 text-white"
+                : "text-white"
+            }`}
+            onClick={() => handleButtonClick("cheapest")}
           >
-            <h1 className='text-[18px] font-semibold mb-2 text-gray-900'>Cheapest</h1>
-            <p className='text-[14px] text-[#7c8db0]'>To get the cheapest available flights</p>
+            <h1 className="text-[18px] font-semibold mb-2 text-gray-900">
+              Cheapest
+            </h1>
+            <p className="text-[14px] text-[#7c8db0]">
+              To get the cheapest available flights
+            </p>
           </button>
-          <div className='border self-stretch mx-5'></div>
+          <div className="border self-stretch mx-5"></div>
           <button
-            className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${selectedButton === 'shortest' ? 'bg-gray-100 text-white' : 'text-white'
-              }`}
-            onClick={() => handleButtonClick('shortest')}
+            className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
+              selectedButton === "shortest"
+                ? "bg-gray-100 text-white"
+                : "text-white"
+            }`}
+            onClick={() => handleButtonClick("shortest")}
           >
-            <h1 className='text-[18px] font-semibold mb-2 text-gray-900'>Shortest</h1>
-            <p className='text-[14px] text-[#7c8db0]'>To get the shortest available flights</p>
+            <h1 className="text-[18px] font-semibold mb-2 text-gray-900">
+              Shortest
+            </h1>
+            <p className="text-[14px] text-[#7c8db0]">
+              To get the shortest available flights
+            </p>
           </button>
         </div>
       </section>
@@ -37,7 +87,7 @@ const BookFlight = () => {
       {/* Flight Details Card  Container*/}
       <section className=" mt-6">
         {/* Card Design */}
-        <section className="shadow-lg rounded-md pl-6 pr-6 pt-8 pb-8">
+        <section className="shadow-md rounded-md pl-6 pr-6 pt-8 pb-8">
           <div className=" grid grid-cols-3 lg:grid-cols-6 items-center gap-5 ">
             <div>
               <img
@@ -96,8 +146,8 @@ const BookFlight = () => {
               </h2>
             </div>
 
-            <div>
-              <button className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:border-cyan-600 hover:text-cyan-600 text-white rounded-md">
+            <div align="center">
+              <button className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:border-cyan-600 text-white rounded-md">
                 Book Now
               </button>
             </div>
@@ -108,10 +158,53 @@ const BookFlight = () => {
             <p>
               <small>Partially Refundable</small>
             </p>
-            <p>
-              <small>View Flight Details</small>
+            <p
+              onClick={() => handelVisible()}
+              className="hover:cursor-pointer link-hover"
+            >
+              <small>
+                {visibleDetails ? "Hide Flight Details" : "View Flight Details"}
+              </small>
             </p>
           </div>
+
+          {/* View Details Card Section */}
+
+          {visibleDetails && (
+            <section className="mt-6 ">
+              <hr />
+              <section className="flex justify-start items-center mt-5 text-[12px]">
+                <p
+                  onClick={handleFlightDetailsClick}
+                  className={`border-2 p-2 rounded-md cursor-pointer ${
+                    showFlightDetails ? "bg-cyan-600 text-white" : ""
+                  }`}
+                >
+                  Flight Details
+                </p>
+                <p
+                  onClick={handleFlightSummaryClick}
+                  className={`border-2 p-2 rounded-md cursor-pointer ${
+                    showFlightSummary ? "bg-cyan-600 text-white" : ""
+                  }`}
+                >
+                  Fare Summary
+                </p>
+                <p
+                  onClick={handleFareRulesClick}
+                  className={`border-2 p-2 rounded-md cursor-pointer ${
+                    showFareRules ? "bg-cyan-600 text-white" : ""
+                  }`}
+                >
+                  Fare Rules
+                </p>
+              </section>
+
+              {showFlightDetails && <FlightDetails />}
+              {showFlightSummary && <FlightSummery />}
+              {showFareRules && <FareRuls />}
+            </section>
+          )}
         </section>
       </section>
     </section>
