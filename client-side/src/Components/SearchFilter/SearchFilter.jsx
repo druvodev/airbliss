@@ -5,9 +5,8 @@ import { BsPostcardFill } from "react-icons/bs";
 import { format } from "date-fns";
 import SearchLocation from "./SearchLocation";
 import CalendarComponent from "./CalendarComponent";
-import { is } from "date-fns/locale";
 
-const SearchFilter = React.memo(() => {
+const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const [isActive, setIsActive] = useState("flight");
   const [flightType, setFlightType] = useState("oneWay");
   const [cityCount, setCityCount] = useState(1);
@@ -56,39 +55,41 @@ const SearchFilter = React.memo(() => {
   return (
     <div className="max-w-7xl mx-auto grid justify-center">
       <div className="p-5 sm:mx-10 rounded-xl shadow-md bg-white">
-        <div className="flex gap-1 bg-gray-200 p-1 rounded w-fit font-medium text-gray-600 text-sm">
-          <div
-            onClick={() => setIsActive("flight")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "flight" ? "bg-cyan-300" : "bg-white"
-            }`}
-          >
-            <MdFlight /> Flight
+        {bookingType === "all" && (
+          <div className="flex gap-1 bg-gray-200 p-1 rounded w-fit font-medium text-gray-600 text-sm">
+            <div
+              onClick={() => setIsActive("flight")}
+              className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+                isActive === "flight" ? "bg-cyan-300" : "bg-white"
+              }`}
+            >
+              <MdFlight /> Flight
+            </div>
+            <div
+              onClick={() => setIsActive("hotel")}
+              className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+                isActive === "hotel" ? "bg-cyan-300" : "bg-white"
+              }`}
+            >
+              <RiHotelFill /> Hotel
+            </div>
+            <div
+              onClick={() => setIsActive("visa")}
+              className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+                isActive === "visa" ? "bg-cyan-300" : "bg-white"
+              }`}
+            >
+              <BsPostcardFill /> Visa
+            </div>
           </div>
-          <div
-            onClick={() => setIsActive("hotel")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "hotel" ? "bg-cyan-300" : "bg-white"
-            }`}
-          >
-            <RiHotelFill /> Hotel
-          </div>
-          <div
-            onClick={() => setIsActive("visa")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "visa" ? "bg-cyan-300" : "bg-white"
-            }`}
-          >
-            <BsPostcardFill /> Visa
-          </div>
-        </div>
+        )}
         <div className="flex gap-4 font-semibold text-gray-600 my-4">
           <label className="flex gap-1">
             <input
               type="radio"
               name="flightType"
               value="oneWay"
-              className="radio radio-info"
+              className="radio radio-accent"
               checked={flightType === "oneWay"}
               onChange={() => setFlightType("oneWay")}
             />
@@ -99,7 +100,7 @@ const SearchFilter = React.memo(() => {
               type="radio"
               name="flightType"
               value="roundTrip"
-              className="radio radio-info"
+              className="radio radio-accent"
               checked={flightType === "roundTrip"}
               onChange={() => setFlightType("roundTrip")}
             />
@@ -110,7 +111,7 @@ const SearchFilter = React.memo(() => {
               type="radio"
               name="flightType"
               value="multiCity"
-              className="radio radio-info"
+              className="radio radio-accent"
               checked={flightType === "multiCity"}
               onChange={() => setFlightType("multiCity")}
             />
@@ -477,7 +478,7 @@ const SearchFilter = React.memo(() => {
             className="px-10 py-3 rounded bg-cyan-600 active:bg-cyan-700 text-white font-semibold"
             onClick={handleSearch}
           >
-            Search
+            {filterName}
           </button>
         </div>
       </div>

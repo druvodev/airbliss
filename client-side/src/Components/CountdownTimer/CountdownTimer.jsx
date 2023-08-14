@@ -23,7 +23,7 @@ const CountdownTimer = () => {
       <p className="text-lg font-semibold mb-4">Session Time Out</p>
       <div className="flex justify-center gap-2">
         <div className="text-center">
-          <div className="py-1 w-14 bg-cyan-500 text-white text-2xl font-semibold rounded">
+          <div className="py-1 w-14 bg-cyan-600 text-white text-2xl font-semibold rounded">
             {minutes < 10 ? `0${minutes}` : minutes}
           </div>
           <p className="mt-1">min</p>
@@ -31,7 +31,7 @@ const CountdownTimer = () => {
         <div className="text-cyan-600 text-2xl font-semibold">:</div>
         {""}
         <div className="text-center">
-          <div className="py-1 w-14 bg-cyan-500 text-white text-2xl font-semibold rounded">
+          <div className="py-1 w-14 bg-cyan-600 text-white text-2xl font-semibold rounded">
             {seconds < 10 ? `0${seconds}` : seconds}
           </div>
           <p className="mt-1">sec</p>
