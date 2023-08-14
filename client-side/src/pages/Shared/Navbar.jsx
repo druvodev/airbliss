@@ -110,7 +110,7 @@ const Navbar = () => {
               >
                 <img
                   src={isScrolled ? logoBlack : logoWhite}
-                  className="h-10 sm:h-12"
+                  className="h-9 sm:h-10"
                   alt=""
                 />
               </a>
