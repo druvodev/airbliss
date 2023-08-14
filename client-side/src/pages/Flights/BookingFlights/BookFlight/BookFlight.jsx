@@ -1,10 +1,44 @@
 import React, { useState } from "react";
+import "./BookingFlight.css";
+import FlightDetails from "../FlightDetails/FlightDetails";
+import FlightSummery from "../FlightSummery/FlightSummery";
+import FareRuls from "../FareRuls/FareRuls";
 
 const BookFlight = () => {
   const [activeCard, setActiveCard] = useState(true);
+  const [visibleDetails, setVisibleDetails] = useState(false);
+  const [showFlightDetails, setShowFlightDetails] = useState(false);
+  const [showFlightSummary, setShowFlightSummary] = useState(false);
+  const [showFareRules, setShowFareRules] = useState(false);
 
   const cardStatus = () => {
     setActiveCard(!activeCard);
+  };
+
+  const handelVisible = () => {
+    setVisibleDetails(!visibleDetails);
+    setShowFlightDetails(true);
+    setShowFlightDetails(true);
+    setShowFlightSummary(false);
+    setShowFareRules(false);
+  };
+
+  const handleFlightDetailsClick = () => {
+    setShowFlightDetails(true);
+    setShowFlightSummary(false);
+    setShowFareRules(false);
+  };
+
+  const handleFlightSummaryClick = () => {
+    setShowFlightDetails(false);
+    setShowFlightSummary(true);
+    setShowFareRules(false);
+  };
+
+  const handleFareRulesClick = () => {
+    setShowFlightDetails(false);
+    setShowFlightSummary(false);
+    setShowFareRules(true);
   };
 
   return (
@@ -103,8 +137,8 @@ const BookFlight = () => {
               </h2>
             </div>
 
-            <div>
-              <button className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:border-cyan-600 hover:text-cyan-600 text-white rounded-md">
+            <div align="center">
+              <button className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:border-cyan-600 text-white rounded-md">
                 Book Now
               </button>
             </div>
@@ -115,10 +149,53 @@ const BookFlight = () => {
             <p>
               <small>Partially Refundable</small>
             </p>
-            <p>
-              <small>View Flight Details</small>
+            <p
+              onClick={() => handelVisible()}
+              className="hover:cursor-pointer link-hover"
+            >
+              <small>
+                {visibleDetails ? "Hide Flight Details" : "View Flight Details"}
+              </small>
             </p>
           </div>
+
+          {/* View Details Card Section */}
+
+          {visibleDetails && (
+            <section className="mt-6 ">
+              <hr />
+              <section className="flex justify-start items-center mt-5 text-[12px]">
+                <p
+                  onClick={handleFlightDetailsClick}
+                  className={`border-2 p-2 rounded-md cursor-pointer ${
+                    showFlightDetails ? "bg-cyan-600 text-white" : ""
+                  }`}
+                >
+                  Flight Details
+                </p>
+                <p
+                  onClick={handleFlightSummaryClick}
+                  className={`border-2 p-2 rounded-md cursor-pointer ${
+                    showFlightSummary ? "bg-cyan-600 text-white" : ""
+                  }`}
+                >
+                  Fare Summary
+                </p>
+                <p
+                  onClick={handleFareRulesClick}
+                  className={`border-2 p-2 rounded-md cursor-pointer ${
+                    showFareRules ? "bg-cyan-600 text-white" : ""
+                  }`}
+                >
+                  Fare Rules
+                </p>
+              </section>
+
+              {showFlightDetails && <FlightDetails />}
+              {showFlightSummary && <FlightSummery />}
+              {showFareRules && <FareRuls />}
+            </section>
+          )}
         </section>
       </section>
     </section>
