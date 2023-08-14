@@ -78,7 +78,7 @@ const Navbar = () => {
     <div className="flex justify-center">
       {isNavbarVisible && (
         <div className={`fixed w-full z-50  ${navbarClass}`}>
-          <div className="navbar text-sm px-0 justify-between w-screen sm:max-w-7xl mx-auto">
+          <div className="navbar text-sm px-5 sm:px-10 justify-between w-screen sm:max-w-7xl mx-auto">
             <div className="navbar-start">
               <div className="dropdown">
                 <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -104,10 +104,7 @@ const Navbar = () => {
                   {navOption}
                 </div>
               </div>
-              <a
-                href="/"
-                className="text-xl font-semibold md:pl-5 text-cyan-500"
-              >
+              <a href="/" className="text-xl font-semibold text-cyan-500">
                 <img
                   src={isScrolled ? logoBlack : logoWhite}
                   className="h-9 sm:h-10"
@@ -202,7 +199,7 @@ const Navbar = () => {
                 <a
                   href="#"
                   onClick={() => setIsLoginSignupModalOpen(true)} // Open the modal on click
-                  className="px-5 py-1 flex items-center font-medium"
+                  className="pl-5 py-1 flex items-center font-medium"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -213,7 +210,7 @@ const Navbar = () => {
                   >
                     <path d="M3.535,18.712a.58.58,0,0,1,0-.817,10.38,10.38,0,0,1,14.682,0,.583.583,0,0,1,0,.813,10.383,10.383,0,0,1-14.686,0Zm.939-.409a9.436,9.436,0,0,0,12.8,0,9.432,9.432,0,0,0-12.8,0Zm13.079.255h-.008Zm2.372-2.569a.5.5,0,0,1-.217-.665,9.785,9.785,0,0,0,1.055-4.45,9.887,9.887,0,0,0-19.775,0,9.771,9.771,0,0,0,1.054,4.45.494.494,0,1,1-.882.446A10.765,10.765,0,0,1,0,10.876a10.876,10.876,0,0,1,21.752,0,10.76,10.76,0,0,1-1.162,4.9.493.493,0,0,1-.441.271A.511.511,0,0,1,19.926,15.99Zm-13-6.137a3.955,3.955,0,1,1,3.955,3.954A3.96,3.96,0,0,1,6.921,9.853Zm.989,0a2.966,2.966,0,1,0,2.966-2.967A2.97,2.97,0,0,0,7.91,9.853Z"></path>
                   </svg>
-                  <span className="ml-2 font-medium">Login | Sign up</span>
+                  <span className="font-medium">Login | Sign up</span>
                 </a>
               )}
             </div>
