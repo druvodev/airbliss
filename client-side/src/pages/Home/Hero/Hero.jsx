@@ -1,4 +1,4 @@
-import SearchFilter from "../../../components/SearchFilter";
+import SearchFilter from "../../../Components/SearchFilter/SearchFilter";
 import cover from "../../../assets/banner/skybg.jpg";
 import plain from "../../../assets/banner/plain.png";
 import { useEffect, useState } from "react";
@@ -63,8 +63,8 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="z-30 relative">
-        <SearchFilter />
+      <div className="z-30 relative -mt-16">
+        <SearchFilter bookingType="all" filterName="Search" />
       </div>
     </>
   );

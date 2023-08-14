@@ -39,7 +39,7 @@ const ScrollTopButton = () => {
     <div className="fixed  animate-bounce bottom-5 right-5 ">
       <button
         onClick={scrollToTop}
-        className={`bg-transparent text-blue-500 rounded-full p-5 shadow-md bg-blue-400 relative ${
+        className={`text-cyan-600 rounded-full p-4 shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-cyan-600/30 backdrop-blur relative ${
           showButton ? "block" : "hidden"
         }`}
       >
@@ -55,7 +55,7 @@ const ScrollTopButton = () => {
               cy="16"
               r="14"
               fill="none"
-              stroke="#9CF80A"
+              stroke="#0891B2"
               strokeWidth="4"
               strokeDasharray={`${scrollProgress}, 100`}
               strokeLinecap="round"
