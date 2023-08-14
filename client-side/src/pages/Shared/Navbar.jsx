@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { TiTicket } from "react-icons/ti";
 import { RxCaretDown } from "react-icons/rx";
@@ -7,9 +7,10 @@ import logoBlack from "../../assets/icon/airblissBlack.png";
 import logoWhite from "../../assets/icon/airblissWhite.png";
 import LoginSignupModal from "../../LogIn/LoginSignupModal";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
-  const [user, setUser] = useState(false); // Temporary state for checking
+  const { user, logOut } = useContext(AuthContext)
   const [isMenuOne, setIsMenuOne] = useState(false);
   const [isMenuTwo, setIsMenuTwo] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -126,13 +127,13 @@ const Navbar = () => {
                     tabIndex={0}
                     className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
                   >
-                    <Link className="cursor-pointer hover:bg-base-300 ">
+                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
                       Flight Booking
                     </Link>
-                    <Link className="cursor-pointer hover:bg-base-300">
+                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
                       Hotels Booking
                     </Link>
-                    <Link className="cursor-pointer hover:bg-base-300">
+                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
                       Cars Booking
                     </Link>
                   </ul>
@@ -149,16 +150,16 @@ const Navbar = () => {
                     tabIndex={0}
                     className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
                   >
-                    <Link className="cursor-pointer hover:bg-base-300">
+                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
                       Blogs
                     </Link>
-                    <Link className="cursor-pointer hover:bg-base-300">
+                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
                       Gallery
                     </Link>
-                    <Link className="cursor-pointer hover:bg-base-300">
+                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
                       About Us
                     </Link>
-                    <Link className="cursor-pointer hover:bg-base-300">
+                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
                       Contact
                     </Link>
                   </ul>
@@ -188,10 +189,10 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
                   >
                     <li>
-                      <a href="">Dashboard</a>
+                      <a className="text-black" href="">Dashboard</a>
                     </li>
                     <li>
-                      <a>Logout</a>
+                      <Link className="text-black" to='/' onClick={logOut}>Logout</Link>
                     </li>
                   </ul>
                 </div>
