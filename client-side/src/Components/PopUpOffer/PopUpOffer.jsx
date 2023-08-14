@@ -10,7 +10,7 @@ const PopUpOffer = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setShowPopup(true);
-    }, 60000); // 60000 milliseconds = 1 minute
+    }, 30000); // 60000 milliseconds = 1 minute
 
     return () => {
       clearTimeout(timeout);
@@ -27,7 +27,6 @@ const PopUpOffer = () => {
               alt="Special Offer"
               className="popup-image"
             />
-            {/* <p>This is a special offer for you!</p> */}
             <button onClick={closePopup} className="popup-close-btn">
               X
             </button>
