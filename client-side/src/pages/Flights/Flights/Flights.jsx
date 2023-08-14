@@ -1,5 +1,6 @@
 import SearchFilter from "../../../Components/SearchFilter/SearchFilter";
 import ResultsFilter from "../ResultsFilter/ResultsFilter";
+import ShortingFlight from "../ShortingFlight/ShortingFlight";
 
 const Flights = () => {
   return (
@@ -9,7 +10,9 @@ const Flights = () => {
         <div className="col-span-1">
           <ResultsFilter />
         </div>
-        <div className="col-span-2">Right Side</div>
+        <div className="col-span-2">
+          <ShortingFlight />
+        </div>
       </div>
     </div>
   );
