@@ -63,7 +63,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="z-30 relative">
+      <div className="z-30 relative -mt-16">
         <SearchFilter />
       </div>
     </>

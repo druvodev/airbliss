@@ -55,7 +55,7 @@ const SearchFilter = React.memo(() => {
 
   return (
     <div className="max-w-7xl mx-auto grid justify-center">
-      <div className="-mt-16 p-5 sm:mx-10 rounded-xl shadow-md bg-white">
+      <div className="p-5 sm:mx-10 rounded-xl shadow-md bg-white">
         <div className="flex gap-1 bg-gray-200 p-1 rounded w-fit font-medium text-gray-600 text-sm">
           <div
             onClick={() => setIsActive("flight")}
