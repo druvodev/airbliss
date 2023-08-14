@@ -8,8 +8,7 @@ import { toast } from "react-hot-toast";
 
 const LoginSignupModal = ({ onClose }) => {
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const { resetPassword, signInWithGoogle, signIn, setLoading, loading } =
-    useContext(AuthContext);
+  const { resetPassword, signInWithGoogle, signIn, setLoading, loading, createUser, updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -18,6 +17,52 @@ const LoginSignupModal = ({ onClose }) => {
   const switchModeHandler = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
+
+  const handleSubmitSignUp = event => {
+    event.preventDefault()
+    const name = event.target.name.value
+    const email = event.target.email.value
+    const password = event.target.password.value
+    const image = event.target.image.files[0]
+
+    const formData = new FormData()
+    formData.append('image', image)
+
+    const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`
+
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+    }).then(res => res.json()).then(imageData => {
+      const imageUrl = imageData.data.display_url
+      createUser(email, password)
+        .then(result => {
+          console.log(result.user);
+          updateUserProfile(name, imageUrl)
+            .then(() => {
+              toast.success("User Created Successfully")
+              navigate(from, { replace: true })
+            })
+            .catch(err => {
+              setLoading(false)
+              toast.error(err.message);
+            })
+          navigate(from, { replace: true })
+        })
+        .catch(err => {
+          setLoading(false)
+          toast.error(err.message);
+        })
+    })
+      .catch(err => {
+        setLoading(false)
+        console.log(err.message);
+        toast.error(err.message)
+      })
+
+    console.log(name, email, password, formData);
+    return
+  }
 
   const handleSubmitLogIn = (event) => {
     event.preventDefault();
@@ -40,12 +85,12 @@ const LoginSignupModal = ({ onClose }) => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
-        saveUser(result.user);
         navigate(from, { replace: true });
       })
       .catch((err) => {
         setLoading(false);
         toast.error(err.message);
+        console.log(err);
       });
   };
 
@@ -153,7 +198,7 @@ const LoginSignupModal = ({ onClose }) => {
                 noValidate=""
                 action=""
                 className="space-y-6 ng-untouched ng-pristine ng-valid"
-                // onSubmit={handleSubmit}
+                onSubmit={handleSubmitSignUp}
               >
                 <div className="space-y-4">
                   <div>

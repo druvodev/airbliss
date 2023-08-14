@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+
 import "./BookingFlight.css";
 import FlightDetails from "../FlightDetails/FlightDetails";
 import FlightSummery from "../FlightSummery/FlightSummery";
 import FareRuls from "../FareRuls/FareRuls";
+import ShortingFlight from "../../ShortingFlight/ShortingFlight";
 
 const BookFlight = () => {
   const [activeCard, setActiveCard] = useState(true);
@@ -10,9 +12,10 @@ const BookFlight = () => {
   const [showFlightDetails, setShowFlightDetails] = useState(false);
   const [showFlightSummary, setShowFlightSummary] = useState(false);
   const [showFareRules, setShowFareRules] = useState(false);
+  const [selectedButton, setSelectedButton] = useState("cheapest");
 
-  const cardStatus = () => {
-    setActiveCard(!activeCard);
+  const handleButtonClick = (buttonType) => {
+    setSelectedButton(buttonType);
   };
 
   const handelVisible = () => {
@@ -44,41 +47,47 @@ const BookFlight = () => {
   return (
     <section className="mb-16">
       {/* Filter Card */}
-      <section className="shadow-lg flex items-center p-4 gap-4">
-        <div
-          onClick={() => cardStatus()}
-          className={`${
-            activeCard ? "bg-gray-100" : "bg-white"
-          } rounded-md pt-2 pb-3 pl-3 w-1/2`}
-        >
-          <h1>
-            <b>Cheapest</b>
-          </h1>
-          <p>
-            <small>To get the cheapest available flights</small>
-          </p>
-        </div>
-        <div className="bg-gray-500 rounded-lg h-12 w-[1.5px]"></div>
-
-        <div
-          onClick={() => cardStatus()}
-          className={`${
-            !activeCard ? "bg-gray-100" : "bg-white"
-          } rounded-md pt-2 pb-3 pl-3 w-1/2`}
-        >
-          <h1>
-            <b>Shortest</b>
-          </h1>
-          <p>
-            <small>To get the shortest available flights</small>
-          </p>
+      <ShortingFlight />
+      <section>
+        <div className="flex w-full p-5 mt-10 rounded-md justify-between shadow-md">
+          <button
+            className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
+              selectedButton === "cheapest"
+                ? "bg-gray-100 text-white"
+                : "text-white"
+            }`}
+            onClick={() => handleButtonClick("cheapest")}
+          >
+            <h1 className="text-[18px] font-semibold mb-2 text-gray-900">
+              Cheapest
+            </h1>
+            <p className="text-[14px] text-[#7c8db0]">
+              To get the cheapest available flights
+            </p>
+          </button>
+          <div className="border self-stretch mx-5"></div>
+          <button
+            className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
+              selectedButton === "shortest"
+                ? "bg-gray-100 text-white"
+                : "text-white"
+            }`}
+            onClick={() => handleButtonClick("shortest")}
+          >
+            <h1 className="text-[18px] font-semibold mb-2 text-gray-900">
+              Shortest
+            </h1>
+            <p className="text-[14px] text-[#7c8db0]">
+              To get the shortest available flights
+            </p>
+          </button>
         </div>
       </section>
 
       {/* Flight Details Card  Container*/}
       <section className=" mt-6">
         {/* Card Design */}
-        <section className="shadow-lg rounded-md pl-6 pr-6 pt-8 pb-8">
+        <section className="shadow-md rounded-md pl-6 pr-6 pt-8 pb-8">
           <div className=" grid grid-cols-3 lg:grid-cols-6 items-center gap-5 ">
             <div>
               <img
