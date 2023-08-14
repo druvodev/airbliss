@@ -40,7 +40,7 @@ const Flights = () => {
           onClick={() => window.my_modal_3.showModal()}
           className="flex items-center justify-between sm:hidden gap-1 p-3 mt-3 mx-3 shadow rounded-md bg-cyan-50/50"
         >
-          <p className="font-semibold text-sm">Filter your search result</p>
+          <p className="font-semibold text-sm">Filter your search results</p>
           <div className="text-gray-500">
             <TbFilterEdit className="text-xl" />
           </div>
