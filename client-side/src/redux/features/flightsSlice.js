@@ -27,9 +27,11 @@ export const fetchFlights = (searchQuery) => async (dispatch) => {
     const data = response.data;
     console.log("flightSlice", response);
     dispatch(storeFlights(data));
+    dispatch(setError({ key: "flights", error: "" }));
     dispatch(setLoading({ key: "flights", loading: false }));
   } catch (error) {
     dispatch(setError({ key: "flights", error: "Failed to fetch flights" }));
+    dispatch(storeFlights([]));
     dispatch(setLoading({ key: "flights", loading: false }));
   }
 };
