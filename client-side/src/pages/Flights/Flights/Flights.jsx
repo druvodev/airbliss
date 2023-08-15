@@ -49,7 +49,7 @@ const Flights = () => {
         <div className="hidden lg:block">
           <SearchFilter bookingType="flight" filterName="Modify Search" />
         </div>
-        <div className=" grid md:grid-cols-3 gap-5 mt-12 px-5 sm:px-10">
+        <div className=" grid md:grid-cols-3 gap-10 mt-12 px-5 sm:px-10">
           <div className="col-span-1 hidden lg:block">
             <ResultsFilter />
           </div>
