@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdAddCircle, MdFlight, MdRemoveCircle } from "react-icons/md";
 import { RiHotelFill } from "react-icons/ri";
 import { BsPostcardFill } from "react-icons/bs";
 import { format } from "date-fns";
 import SearchLocation from "./SearchLocation";
 import CalendarComponent from "./CalendarComponent";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFlights } from "../../redux/features/flightsSlice";
 
 const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const [isActive, setIsActive] = useState("flight");
@@ -15,6 +17,9 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const [calendarModal, setCalendarModal] = useState("");
   const [locationModal, setLocationModal] = useState("");
   const [isModal, setIsModal] = useState(false);
+  // Dispatch redux state
+  const dispatch = useDispatch();
+  const flight = useSelector((state) => state.flights.flights);
 
   console.log("rerender");
   console.log(isModal);
@@ -51,6 +56,15 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
     };
     console.log(searchQuery);
   };
+
+  // redux state test
+  useEffect(() => {
+    const searchQuery = "5";
+    dispatch(fetchFlights(searchQuery));
+  }, []);
+  useEffect(() => {
+    console.log("Search Filter", flight);
+  }, [flight]);
 
   return (
     <div className="max-w-7xl mx-auto grid justify-center">
