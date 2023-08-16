@@ -17,7 +17,7 @@ const TravelerDetailsForm = () => {
   return (
     <div className="">
       <div className="shadow-md rounded-xl overflow-hidden">
-        <div className="px-5">
+        <div className="px-5 ">
           <div className="flex items-center gap-2 mb-3">
             <h2 className="text-2xl font-semibold">Traveler 1</h2>
             <span className="px-2 py-1 border bg-[#e4dede] rounded text-sm ">
@@ -178,15 +178,64 @@ const TravelerDetailsForm = () => {
                   <span>receive booking confirmation & updates</span>
                 </div>
               </div>
-              <PhoneInput
-                country={"us"}
-                value={this?.state.phone}
-                onChange={(phone) => this?.setState({ phone })}
-                inputProps={{
-                  name: "phone",
-                  required: true,
-                }}
-              />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="flex flex-col">
+                  <label className="font-semibold">
+                    Email<span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    name=""
+                    id=""
+                    placeholder="Email"
+                    className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="font-semibold">
+                    Phone Number<span className="text-red-600">*</span>
+                  </label>
+                  <PhoneInput
+                    country={"bd"}
+                    value={this?.state.phone}
+                    onChange={(phone) => this?.setState({ phone })}
+                    inputProps={{
+                      name: "phone",
+                      required: true,
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="font-semibold">
+                    Frequent Flyer{" "}
+                    <span className="text-gray-500">(If any)</span>
+                  </label>
+                  <input
+                    type="text"
+                    name=""
+                    id=""
+                    defaultValue="No Preference"
+                    className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="font-semibold"></label>
+                  <input
+                    type="text"
+                    disabled
+                    name=""
+                    id=""
+                    placeholder="Frequent Flyer Number"
+                    className="block w-full px-2 py-2 mt-7 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+              </div>
+              <button
+                className=" my-10 block w-full bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide px-5 rounded h-[38px] text-white font-semibold"
+                type="submit"
+              >
+                Continue
+              </button>
             </form>
           </div>
         </div>
