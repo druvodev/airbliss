@@ -1,6 +1,8 @@
 import React from "react";
 
-const FlightSummery = () => {
+const FlightSummery = ({ flightFullDetails }) => {
+  const { base_fare, taxes_fee, ticket_price } = flightFullDetails || {};
+
   return (
     <section className="mt-3 border-[1px] rounded-sm">
       <h1 className=" p-3 border-b-[1px]">
@@ -32,17 +34,17 @@ const FlightSummery = () => {
           <tbody>
             <tr>
               <td className="border p-2">Adult</td>
-              <td className="border p-2">BDT 1,978</td>
-              <td className="border p-2">BDT 1,021</td>
-              <td className="border p-2">BDT 1,021</td>
-              <td className="border p-2">BDT 2,999</td>
+              <td className="border p-2">BDT {base_fare}</td>
+              <td className="border p-2">BDT {taxes_fee}</td>
+              <td className="border p-2">BDT {taxes_fee}</td>
+              <td className="border p-2">BDT {ticket_price}</td>
             </tr>
             <tr>
               <td className="border p-2">Total (1 Traveler)</td>
               <td className="border p-2"></td>
               <td className="border p-2"></td>
               <td className="border p-2"></td>
-              <td className="border p-2">BDT 2,901</td>
+              <td className="border p-2">BDT {ticket_price}</td>
             </tr>
           </tbody>
         </table>
