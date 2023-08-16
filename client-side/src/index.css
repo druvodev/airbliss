@@ -20,16 +20,3 @@
     grid-template-columns: 1fr 1fr 1.4fr 1fr;
   }
 }
-
-.transition-height {
-  transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out,
-    margin 0.3s ease-in-out;
-}
-.transition-max-height {
-  transition: max-height 0.3s ease-in-out;
-}
-.transition-height {
-  max-height: 1000px; /* Adjust this value as needed */
-  overflow: hidden;
-  transition: max-height 0.3s ease-in-out;
-}
