@@ -6,7 +6,8 @@ import { AuthContext } from "../providers/AuthProvider";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { toast } from "react-hot-toast";
 
-const LoginSignupModal = ({ onClose }) => {
+const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
+  const {user} = useContext(AuthContext)
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { resetPassword, signInWithGoogle, signIn, setLoading, loading, createUser, updateUserProfile } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const LoginSignupModal = ({ onClose }) => {
               toast.error(err.message);
             })
           navigate(from, { replace: true })
+          setIsLoginSignupModalOpen(false)
         })
         .catch(err => {
           setLoading(false)
@@ -73,6 +75,7 @@ const LoginSignupModal = ({ onClose }) => {
       .then((result) => {
         console.log(result.user);
         navigate(from, { replace: true });
+        setIsLoginSignupModalOpen(false)
       })
       .catch((err) => {
         setLoading(false);
@@ -86,6 +89,7 @@ const LoginSignupModal = ({ onClose }) => {
       .then((result) => {
         console.log(result.user);
         navigate(from, { replace: true });
+        setIsLoginSignupModalOpen(false)
       })
       .catch((err) => {
         setLoading(false);
