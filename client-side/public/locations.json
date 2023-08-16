@@ -1,0 +1,122 @@
+[
+  {
+    "airportName": "Shahjalal International Airport",
+    "code": "DAC",
+    "destination": "Dhaka, Bangladesh"
+  },
+  {
+    "airportName": "Hazrat Shah Amanat International",
+    "code": "CGP",
+    "destination": "Chittagong, Bangladesh"
+  },
+  {
+    "airportName": "Osmani International Airport",
+    "code": "ZYL",
+    "destination": "Sylhet, Bangladesh"
+  },
+  {
+    "airportName": "Jessore Airport",
+    "code": "JSR",
+    "destination": "Jessore, Bangladesh"
+  },
+  {
+    "airportName": "Shah Makhdum Airport",
+    "code": "RJH",
+    "destination": "Rajshahi, Bangladesh"
+  },
+  {
+    "airportName": "Barisal Airport",
+    "code": "BZL",
+    "destination": "Barisal, Bangladesh"
+  },
+  {
+    "airportName": "Cox's Bazar Airport",
+    "code": "CXB",
+    "destination": "Cox's Bazar, Bangladesh"
+  },
+  {
+    "airportName": "Lalmonirhat Airport",
+    "code": "LLJ",
+    "destination": "Lalmonirhat, Bangladesh"
+  },
+  {
+    "airportName": "Syedpur Airport",
+    "code": "SPD",
+    "destination": "Syedpur, Bangladesh"
+  },
+  {
+    "airportName": "Thakurgaon Airport",
+    "code": "TKZ",
+    "destination": "Thakurgaon, Bangladesh"
+  },
+  {
+    "airportName": "Comilla Airport",
+    "code": "CLA",
+    "destination": "Comilla, Bangladesh"
+  },
+  {
+    "airportName": "Rangpur Airport",
+    "code": "RAU",
+    "destination": "Rangpur, Bangladesh"
+  },
+  {
+    "airportName": "Hilli Airport",
+    "code": "HIL",
+    "destination": "Sylhet, Bangladesh"
+  },
+  {
+    "airportName": "Bogra Airport",
+    "code": "BOG",
+    "destination": "Bogra, Bangladesh"
+  },
+  {
+    "airportName": "Indira Gandhi International",
+    "code": "DEL",
+    "destination": "New Delhi, India"
+  },
+  {
+    "airportName": "CSM International Airport",
+    "code": "BOM",
+    "destination": "Mumbai, India"
+  },
+  {
+    "airportName": "Kempegowda International",
+    "code": "BLR",
+    "destination": "Bengaluru, India"
+  },
+  {
+    "airportName": "Chennai International Airport",
+    "code": "MAA",
+    "destination": "Chennai, India"
+  },
+  {
+    "airportName": "NSCB International Airport",
+    "code": "CCU",
+    "destination": "Kolkata, India"
+  },
+  {
+    "airportName": "Rajiv Gandhi International",
+    "code": "HYD",
+    "destination": "Hyderabad, India"
+  },
+  {
+    "airportName": "Cochin International",
+    "code": "COK",
+    "destination": "Kochi, India"
+  },
+  {
+    "airportName": "Ahmedabad International",
+    "code": "AMD",
+    "destination": "Ahmedabad, India"
+  },
+  {
+    "airportName": "Pune International",
+    "code": "PNQ",
+    "destination": "Pune, India"
+  },
+  {
+    "airportName": "Goa International Airport",
+    "code": "GOI",
+    "destination": "Goa, India"
+  }
+]

@@ -1,10 +1,18 @@
-import React, { useState } from "react";
-import CountdownTimer from "../../../Components/CountdownTimer/CountdownTimer";
+import React, { useEffect, useState } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import { FaInfoCircle } from "react-icons/fa";
+import { FaExclamationCircle, FaInfoCircle } from "react-icons/fa";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    fetch("https://restcountries.com/v3.1/all")
+      .then((res) => res.json())
+      .then((data) => setCountries(data));
+  }, []);
 
   return (
     <div className="">
@@ -16,31 +24,6 @@ const TravelerDetailsForm = () => {
               Adult
             </span>
             <span className="font-semibold text-gray-600">Primary Contact</span>
-
-            {/* <level>Select Title</level>
-            <div className="flex gap-2">
-              <input
-                className="join-item btn"
-                type="radio"
-                name="options"
-                aria-label="Mr."
-              />
-              <input
-                className="join-item btn"
-                type="radio"
-                name="options"
-                aria-label="Mrs."
-              />
-              <input
-                className="join-item btn"
-                type="radio"
-                name="options"
-                aria-label="Ms"
-              />
-            </div>
-            <h5 className="font-semibold text-gray-600">
-              Biman Bangladesh Airlines
-            </h5> */}
           </div>
           <hr />
           <div className="text-end -mt-10">
@@ -55,59 +38,158 @@ const TravelerDetailsForm = () => {
         </div>
         <div
           className={`duration-500 ${
-            isCollapse ? "max-h-[289px]" : "max-h-0"
+            !isCollapse && "max-h-0"
           } transition-all ease-linear overflow-hidden`}
         >
           <div className="p-5">
             <h2 className="font-semibold text-2xl">Personal Details (Adult)</h2>
-            <div className="flex items-center text-gray-400 gap-1 text-sm mt-2">
+            <div className="flex items-center text-gray-400 gap-2 text-sm mt-2">
               <span>
-                <FaInfoCircle />
+                <FaExclamationCircle />
               </span>
               <span>
                 as mentioned on your passport or government approved IDs
               </span>
             </div>
-            <p className="mt-2">{"Adult (1 Traveler)"}</p>
-            <div className="flex justify-between mt-1">
-              <p className="text-gray-500 text-sm">Base Fare</p>
-              <div className="text-end">
-                <p>
-                  BDT <span className="font-semibold">1,967</span>
-                </p>
-                <p className="text-xs text-gray-500">{"( 1 x 1,967 )"}</p>
-              </div>
-            </div>
-            <div className="flex justify-between mt-1 mb-2">
-              <p className="text-gray-500 text-sm">Taxes + Fees</p>
-              <div className="text-end">
-                <p>
-                  BDT <span className="font-semibold">934</span>
-                </p>
-                <p className="text-xs text-gray-500">{"( 1 x 934 )"}</p>
-              </div>
-            </div>
-            <hr />
-            <div className="flex justify-between mt-2">
-              <p className="text-gray-500 text-sm">Sub Total</p>
-              <p>
-                BDT <span className="font-semibold">1,967</span>
-              </p>
-            </div>
           </div>
-          <div className="flex justify-between p-5 bg-cyan-100">
-            <p>
-              <span className="font-semibold">You Pay</span>{" "}
-              <span className="text-sm text-gray-500">
-                {"(for 1 traveler)"}
-              </span>
-            </p>
-            <p className="font-semibold">BDT 2,901</p>
+          <div className="py-2 px-5">
+            <form>
+              <label className="font-semibold mb-2">Select Title</label>
+              <div className="flex gap-2 mt-1 mb-3">
+                <input
+                  className="join-item btn"
+                  type="radio"
+                  name="options"
+                  aria-label="Mr."
+                />
+                <input
+                  className="join-item btn"
+                  type="radio"
+                  name="options"
+                  aria-label="Mrs."
+                />
+                <input
+                  className="join-item btn"
+                  type="radio"
+                  name="options"
+                  aria-label="Ms"
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="flex flex-col">
+                  <label className="font-semibold">
+                    First Name<span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="First Name"
+                    className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="font-semibold">
+                    Last Name<span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="Last Name"
+                    className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="font-semibold">
+                    Date of Birth<span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    name=""
+                    id=""
+                    placeholder="Select Date"
+                    className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="font-semibold">
+                    Passport Number{" "}
+                    <span className="text-gray-500">(Optinal)</span>
+                  </label>
+                  <input
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="Last Name"
+                    className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="font-semibold">
+                    Passport Expiry Date{" "}
+                    <span className="text-gray-500">(Optinal)</span>
+                  </label>
+                  <input
+                    type="date"
+                    name=""
+                    id=""
+                    placeholder="Passport Expiry Date"
+                    className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="font-semibold">
+                    City<span className="text-red-600">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="City"
+                    className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label className="font-semibold">
+                    Country<span className="text-red-600">*</span>
+                  </label>
+                  <select
+                    type="select"
+                    name=""
+                    id=""
+                    placeholder="Country"
+                    className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  >
+                    {countries.map((country, index) => (
+                      <option key={index} value={country.name.common}>
+                        {country.name.common}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="mt-10">
+                <h2 className="font-semibold text-2xl">Contact Details</h2>
+                <div className="flex items-center text-gray-400 gap-2 text-sm mt-2">
+                  <span>
+                    <FaExclamationCircle />
+                  </span>
+                  <span>receive booking confirmation & updates</span>
+                </div>
+              </div>
+              <PhoneInput
+                country={"us"}
+                value={this?.state.phone}
+                onChange={(phone) => this?.setState({ phone })}
+                inputProps={{
+                  name: "phone",
+                  required: true,
+                }}
+              />
+            </form>
           </div>
         </div>
-      </div>
-      <div className="mt-5 shadow-md rounded-xl">
-        <CountdownTimer />
       </div>
     </div>
   );

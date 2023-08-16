@@ -10,6 +10,7 @@ const Review = () => {
           <div className="mt-8">
             <TravelerDetailsForm />
           </div>
+          <div className="mt-8">Left Side</div>
         </div>
         <div className="md:col-span-1 mt-14">
           <FareSummary />
