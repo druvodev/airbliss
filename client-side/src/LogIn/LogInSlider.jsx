@@ -12,8 +12,7 @@ const LogInSlider = () => {
                         </figure>
                         <div className="card-body p-0 text-center">
                             <h2 className="text-xl font-semibold">Earn</h2>
-                            <p className='text-sm px-12'>Earn points on your bookings across our travel brands
-                            </p>
+                            <p className='text-sm px-12'>Earn points on your bookings across our travel brands</p>
                         </div>
                     </div>
                     <div className='absolute top-[15%] flex flex-col justify-center items-center left-[50%] translate-x-[-50%]'>
