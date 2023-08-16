@@ -27,6 +27,7 @@ const FlightDetails = () => {
             <h4 className="font-semibold text-[12px]">Economy (G)</h4>
             <h4 className="font-semibold text-[12px]">Available seats: 8</h4>
           </div>
+          zz
         </div>
 
         {/* flight other details */}
