@@ -2,6 +2,7 @@ import Hero from "../Hero/Hero";
 import HotDeals from "../HotDeals/HotDeals";
 import OurServices from "../OurServices/OurServices";
 import RecommendedFlights from "../RecommendedFlight/RecommendedFlights";
+import Weather from "../Weather/Weather";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
         <HotDeals></HotDeals>
         <RecommendedFlights />
         <OurServices />
+        <Weather></Weather>
       </div>
     </div>
   );
