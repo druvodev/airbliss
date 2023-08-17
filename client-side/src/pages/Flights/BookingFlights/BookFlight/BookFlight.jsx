@@ -5,6 +5,8 @@ import FareRuls from "../FareRuls/FareRuls";
 import ShortingFlight from "../../ShortingFlight/ShortingFlight";
 import { GrPrevious, GrNext } from "react-icons/gr";
 
+const ITEMS_PER_PAGE = 3;
+
 const BookFlight = () => {
   const [activeCard, setActiveCard] = useState(true);
   const [visibleDetails, setVisibleDetails] = useState(false);
@@ -15,6 +17,7 @@ const BookFlight = () => {
   const [flightData, setFlightData] = useState([]);
   const [sortOrder, setSortOrder] = useState("asc");
   const [singleFlightDetails, setsingleFlightDetails] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetch("booking.json")
@@ -80,6 +83,22 @@ const BookFlight = () => {
     setShowFareRules(true);
   };
 
+  const handlePaginationPrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handlePaginationNext = () => {
+    const totalPages = Math.ceil(flightData.length / ITEMS_PER_PAGE);
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+
   return (
     <section className="mb-16">
       {/* Filter Card */}
@@ -124,7 +143,7 @@ const BookFlight = () => {
       <section className=" mt-6">
         {/* Card Design */}
 
-        {flightData?.map((singleFlight) => (
+        {flightData.slice(startIndex, endIndex).map((singleFlight) => (
           <section
             key={singleFlight?._id}
             className="shadow-md rounded-md pl-6 pr-6 pt-8 pb-8"
@@ -199,7 +218,7 @@ const BookFlight = () => {
               </div>
 
               <div align="center">
-                <button className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:border-cyan-600 text-white rounded-md">
+                <button className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:text-cyan-600 hover:border-cyan-600 text-white rounded-md">
                   Book Now
                 </button>
               </div>
@@ -272,13 +291,31 @@ const BookFlight = () => {
 
         {/* Paination Button Section */}
         <section className="mt-12 flex justify-end items-center">
-          <button className="border-[1px] p-2 rounded-l-md">
+          <button
+            className="border-[1px] p-2 rounded-l-md"
+            onClick={handlePaginationPrev}
+          >
             <GrPrevious size={20} />
           </button>
-          <h3 className="pl-3 pr-3 pt-[6px] pb-[6px] border-[1px]">1</h3>
-          <h3 className="pl-3 pr-3 pt-[6px] pb-[6px] border-[1px]">2</h3>
-          <h3 className="pl-3 pr-3 pt-[6px] pb-[6px] border-[1px]">3</h3>
-          <button className="border-[1px] p-2 rounded-r-md">
+          {/* Render pagination buttons based on the total number of pages */}
+          {Array.from(
+            { length: Math.ceil(flightData.length / ITEMS_PER_PAGE) },
+            (_, index) => (
+              <h3
+                key={index}
+                className={`pl-3 pr-3 pt-[6px] pb-[6px] border-[1px] ${
+                  index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                }`}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </h3>
+            )
+          )}
+          <button
+            className="border-[1px] p-2 rounded-r-md"
+            onClick={handlePaginationNext}
+          >
             <GrNext size={20} />
           </button>
         </section>
