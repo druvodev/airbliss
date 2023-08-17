@@ -19,28 +19,38 @@ const BookFlight = () => {
   useEffect(() => {
     fetch("booking.json")
       .then((res) => res.json())
-      .then((data) => setFlightData(data));
+      .then((data) => {
+        // Sort the fetched data by descending ticket price
+        const sortedData = data.slice(); // Create a copy of the data array
+        sortedData.sort(
+          (a, b) => b.fare_summary.ticket_price - a.fare_summary.ticket_price
+        );
+        setFlightData(sortedData);
+
+        console.log(sortedData);
+      });
   }, []);
 
-  const sortByTicketPrice = () => {
+  const sortByTicketPrice = (sortOrder) => {
     const sortedData = [...flightData];
-    if (sortOrder === "asc") {
-      sortedData.sort(
-        (a, b) => a.flight_details.ticket_price - b.flight_details.ticket_price
-      );
-      setSortOrder("desc");
-    } else {
-      sortedData.sort(
-        (a, b) => b.flight_details.ticket_price - a.flight_details.ticket_price
-      );
-      setSortOrder("asc");
-    }
+    sortedData.sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.fare_summary.ticket_price - b.fare_summary.ticket_price;
+      } else {
+        return b.fare_summary.ticket_price - a.fare_summary.ticket_price;
+      }
+    });
     setFlightData(sortedData);
   };
 
   const handleButtonClick = (buttonType) => {
     setSelectedButton(buttonType);
-    sortByTicketPrice();
+
+    if (buttonType === "cheapest") {
+      sortByTicketPrice("desc");
+    } else if (buttonType === "shortest") {
+      sortByTicketPrice("asc");
+    }
   };
 
   const handelVisible = (singleDataFlight) => {
