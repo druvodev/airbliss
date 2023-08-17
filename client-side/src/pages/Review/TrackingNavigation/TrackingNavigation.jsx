@@ -5,7 +5,7 @@ const TrackingNavigation = () => {
   const [isCollapse, setIsCollapse] = useState(true);
 
   return (
-    <div>
+    <>
       <div className="">
         <div className="shadow-md rounded-xl overflow-hidden">
           <div className="px-5">
@@ -104,7 +104,86 @@ const TrackingNavigation = () => {
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Modal */}
+      <Dialog
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        className="fixed inset-0 flex items-center justify-center p-2 z-50"
+      >
+        <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+
+        <Dialog.Panel className="fixed inset-0 flex items-center justify-center">
+          <div className="w-full max-w-lg lg:max-w-2xl p-4 bg-white rounded-lg">
+            <div className="mb-2 flex justify-between items-center">
+              <h2>
+                <b>Dhaka to Chittagong, 18 Aug 2023</b>
+              </h2>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="btn btn-circle bg-white"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div className="border-[1px] p-4 rounded-sm mt-4 mb-24">
+              <div className="flex items-center gap-2">
+                <img
+                  className="h-12 w-12"
+                  src="https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/BG.png"
+                  alt=""
+                />
+                <div>
+                  <p className="text-gray-400">
+                    <small>Biman Bangladesh Airlines</small>
+                  </p>
+                  <h1 className="text-[13px]">
+                    <b>BG | 135</b>
+                  </h1>
+                  <h3 className="text-[11px]">
+                    <b>Aircraft : Boeing 777-300</b>
+                  </h3>
+                </div>
+              </div>
+
+              <div className=" flex justify-between items-center mt-6 mb-4 ">
+                <div>
+                  <h2 className="mt-2 text-[14px] font-semibold">Baggage</h2>
+
+                  <h6 className="mt-2 text-[11px] text-gray-400">Adult</h6>
+                </div>
+
+                <div>
+                  <h2 className="mt-2 text-[14px] font-semibold">Check In</h2>
+
+                  <h6 className="mt-2 text-[11px] text-gray-400">20 Kg(s)</h6>
+                </div>
+
+                <div>
+                  <h2 className="mt-2 text-[14px] font-semibold">Cabin</h2>
+
+                  <h6 className="mt-2 text-[11px] text-gray-400">7 Kg(s)</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Dialog.Panel>
+      </Dialog>
+    </>
   );
 };
 
