@@ -24,7 +24,7 @@ const Weather = () => {
         <div>
             <SectionTitle sectionTitle="Weather Report"></SectionTitle>
 
-            <div className="py-6 relative mx-auto xl:px-10 bg-gradient-to-bl to-sky-700 from-cyan-300">
+            <div className="py-6 relative mx-auto xl:px-10 bg-gradient-to-bl to-blue-900 from-cyan-600">
                 <span className="bg-[#00000032] absolute top-0 left-0 w-full h-full "></span>
                 <div className="md:w-7/12 x-10 mx-auto p-5 opacity-100  text-white">
                     <p className="text-center">{moment(sunrise).format("MMM Do YYYY")}</p>
