@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const useAxios = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com",
+  baseURL: "http://localhost:5000",
 });
 
 export default useAxios;
