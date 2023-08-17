@@ -1,4 +1,5 @@
 import FareSummary from "../FareSummary/FareSummary";
+import TravelerDetailsForm from "../TravelerDetailsForm/TravelerDetailsForm";
 
 const Review = () => {
   return (
@@ -6,6 +7,9 @@ const Review = () => {
       <div className="grid md:grid-cols-3 gap-10">
         <div className="md:col-span-2">
           <div>Tracking Navigation </div>
+          <div className="mt-8">
+            <TravelerDetailsForm />
+          </div>
           <div className="mt-8">Left Side</div>
         </div>
         <div className="md:col-span-1 mt-14">

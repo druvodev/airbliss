@@ -20,7 +20,7 @@ const FareSummary = () => {
             </h5>
           </div>
           <hr />
-          <div className="text-end -mt-3">
+          <div className="text-end -mt-10">
             <button onClick={() => setIsCollapse(!isCollapse)}>
               {isCollapse ? (
                 <MdKeyboardArrowUp className="text-2xl rounded-full bg-gray-300" />

@@ -36,7 +36,7 @@ const verifyJWT = (req, res, next) => {
 };
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster1.96fzlxn.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.8vqv4om.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -61,26 +61,28 @@ async function run() {
       res.send({ token });
     });
 
-    // get all flights by destination
-    app.get("/flights/search", async (req, res) => {
-      const { destination } = req.query;
-
-      try {
-        const db = await connect();
-        const flightsCollection = db.collection("flights");
-        const flights = await flightsCollection
-          .find({ destination: destination })
-          .toArray();
-        res.json(flights);
-      } catch (error) {
-        res
-          .status(500)
-          .json({ error: true, message: "Error searching flights" });
+    // Save user
+    app.post("/users", async (req, res) => {
+      const user = req.body;
+      console.log(user);
+      const query = { email: user.email };
+      const existingUser = await usersCollection.findOne(query);
+      console.log(existingUser, "existing user");
+      if (existingUser) {
+        return res.send({ message: "user already exist" });
       }
+      const result = await usersCollection.insertOne(user);
+      res.send(result);
+    });
+
+    // get users
+    app.get("/users", verifyJWT, async (req, res) => {
+      const result = await usersCollection.find().toArray();
+      res.send(result);
     });
 
     // // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
+    // await client.db("admin").command({ ping: 0 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );
