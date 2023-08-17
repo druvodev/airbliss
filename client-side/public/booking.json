@@ -1,0 +1,462 @@
+[
+  {
+    "_id": "1",
+    "flight": {
+      "flight_name": "Biman Bangladesh Airlines",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/BG.png",
+      "destination": "Dhaka to Chittagong",
+      "travel_date": "Tue, 15 Aug 2023",
+      "aircraft": "DHC8 Dash 8",
+      "operated_by": "BG",
+      "economy_type": "Economy (G)",
+      "available_seats": 8
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "7:45",
+        "terminal": "D",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "8:40",
+        "date": "Tue, 15 Aug 2023",
+        "terminal": "D",
+        "airport_name": "Patenga",
+        "airport_address": "Chittagong, Bangladesh"
+      },
+      "travel_duration": "45min",
+
+      "baggage_allowance": {
+        "check_in": "20 kg(s)",
+        "cabin": "7 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 1978,
+      "taxes_fee": 1021,
+      "ticket_price": 2941
+    }
+  },
+
+  {
+    "_id": "2",
+    "flight": {
+      "flight_name": "Novoair",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/NO.png",
+      "destination": "Dhaka to Cox's Bazar",
+      "travel_date": "Wed, 16 Aug 2023",
+      "aircraft": "ATR 72",
+      "operated_by": "VQ",
+      "economy_type": "Economy (N)",
+      "available_seats": 12
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "10:30",
+        "terminal": "A",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "11:45",
+        "date": "Wed, 16 Aug 2023",
+        "terminal": "C",
+        "airport_name": "Cox's Bazar Airport",
+        "airport_address": "Cox's Bazar, Bangladesh"
+      },
+      "travel_duration": "1hr 15min",
+
+      "baggage_allowance": {
+        "check_in": "25 kg(s)",
+        "cabin": "5 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 2500,
+      "taxes_fee": 1000,
+      "ticket_price": 3500
+    }
+  },
+
+  {
+    "_id": "3",
+    "flight": {
+      "flight_name": "US-Bangla Airlines",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/UB.png",
+      "destination": "Dhaka to Sylhet",
+      "travel_date": "Thu, 17 Aug 2023",
+      "aircraft": "Boeing 737",
+      "operated_by": "BS",
+      "economy_type": "Economy (U)",
+      "available_seats": 5
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "15:20",
+        "terminal": "B",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "16:30",
+        "date": "Thu, 17 Aug 2023",
+        "terminal": "A",
+        "airport_name": "Osmani International Airport",
+        "airport_address": "Sylhet, Bangladesh"
+      },
+      "travel_duration": "1hr 10min",
+      "baggage_allowance": {
+        "check_in": "15 kg(s)",
+        "cabin": "7 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 2000,
+      "taxes_fee": 1200,
+      "ticket_price": 3200
+    }
+  },
+
+  {
+    "_id": "4",
+    "flight": {
+      "flight_name": "Regent Airways",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/RX.png",
+      "destination": "Dhaka to Jessore",
+      "travel_date": "Fri, 18 Aug 2023",
+      "aircraft": "Boeing 737",
+      "operated_by": "RX",
+      "economy_type": "Economy (R)",
+      "available_seats": 15
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "9:15",
+        "terminal": "C",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "10:20",
+        "date": "Fri, 18 Aug 2023",
+        "terminal": "A",
+        "airport_name": "Jessore Airport",
+        "airport_address": "Jessore, Bangladesh"
+      },
+      "travel_duration": "1hr 5min",
+
+      "baggage_allowance": {
+        "check_in": "20 kg(s)",
+        "cabin": "5 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 1300,
+      "taxes_fee": 500,
+      "ticket_price": 1800
+    }
+  },
+
+  {
+    "_id": "5",
+    "flight": {
+      "flight_name": "Dhaka Airways",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/DA.png",
+      "destination": "Dhaka to Rajshahi",
+      "travel_date": "Sat, 19 Aug 2023",
+      "aircraft": "ATR 72",
+      "operated_by": "DA",
+      "economy_type": "Economy (D)",
+      "available_seats": 10
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "13:30",
+        "terminal": "B",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "14:45",
+        "date": "Sat, 19 Aug 2023",
+        "terminal": "A",
+        "airport_name": "Shah Makhdum Airport",
+        "airport_address": "Rajshahi, Bangladesh"
+      },
+      "travel_duration": "1hr 15min",
+
+      "baggage_allowance": {
+        "check_in": "15 kg(s)",
+        "cabin": "5 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 2200,
+      "taxes_fee": 500,
+      "ticket_price": 2700
+    }
+  },
+
+  {
+    "_id": "6",
+    "flight": {
+      "flight_name": "FlyMango",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/FM.png",
+      "destination": "Dhaka to Barisal",
+      "travel_date": "Sun, 20 Aug 2023",
+      "aircraft": "ATR 72",
+      "operated_by": "FM",
+      "economy_type": "Economy (F)",
+      "available_seats": 18
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "11:00",
+        "terminal": "A",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "12:15",
+        "date": "Sun, 20 Aug 2023",
+        "terminal": "A",
+        "airport_name": "Barisal Airport",
+        "airport_address": "Barisal, Bangladesh"
+      },
+      "travel_duration": "1hr 15min",
+
+      "baggage_allowance": {
+        "check_in": "15 kg(s)",
+        "cabin": "5 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 1800,
+      "taxes_fee": 500,
+      "ticket_price": 2300
+    }
+  },
+
+  {
+    "_id": "7",
+    "flight": {
+      "flight_name": "Air Sylhet",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/AS.png",
+      "destination": "Dhaka to Sylhet",
+      "travel_date": "Mon, 21 Aug 2023",
+      "aircraft": "ATR 72",
+      "operated_by": "AS",
+      "economy_type": "Economy (A)",
+      "available_seats": 10
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "8:00",
+        "terminal": "A",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "9:15",
+        "date": "Mon, 21 Aug 2023",
+        "terminal": "A",
+        "airport_name": "Osmani International Airport",
+        "airport_address": "Sylhet, Bangladesh"
+      },
+      "travel_duration": "1hr 15min",
+
+      "baggage_allowance": {
+        "check_in": "15 kg(s)",
+        "cabin": "7 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 2400,
+      "taxes_fee": 400,
+      "ticket_price": 2800
+    }
+  },
+
+  {
+    "_id": "8",
+    "flight": {
+      "flight_name": "Chittagong Airways",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/CA.png",
+      "destination": "Dhaka to Chittagong",
+      "travel_date": "Tue, 22 Aug 2023",
+      "aircraft": "Boeing 737",
+      "operated_by": "CA",
+      "economy_type": "Economy (C)",
+      "available_seats": 7
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "12:30",
+        "terminal": "B",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "13:45",
+        "date": "Tue, 22 Aug 2023",
+        "terminal": "B",
+        "airport_name": "Shah Amanat International Airport",
+        "airport_address": "Chittagong, Bangladesh"
+      },
+      "travel_duration": "1hr 15min",
+
+      "baggage_allowance": {
+        "check_in": "20 kg(s)",
+        "cabin": "5 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 2000,
+      "taxes_fee": 600,
+      "ticket_price": 2600
+    }
+  },
+
+  {
+    "_id": "9",
+    "flight": {
+      "flight_name": "Mango Express",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/ME.png",
+      "destination": "Dhaka to Rajshahi",
+      "travel_date": "Wed, 23 Aug 2023",
+      "aircraft": "ATR 72",
+      "operated_by": "ME",
+      "economy_type": "Economy (M)",
+      "available_seats": 12
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "17:00",
+        "terminal": "A",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "18:15",
+        "date": "Wed, 23 Aug 2023",
+        "terminal": "A",
+        "airport_name": "Shah Makhdum Airport",
+        "airport_address": "Rajshahi, Bangladesh"
+      },
+      "travel_duration": "1hr 15min",
+
+      "baggage_allowance": {
+        "check_in": "15 kg(s)",
+        "cabin": "5 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 1800,
+      "taxes_fee": 400,
+      "ticket_price": 2200
+    }
+  },
+
+  {
+    "_id": "10",
+    "flight": {
+      "flight_name": "Bangla Sky",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/BS.png",
+      "destination": "Dhaka to Cox's Bazar",
+      "travel_date": "Thu, 24 Aug 2023",
+      "aircraft": "ATR 72",
+      "operated_by": "BS",
+      "economy_type": "Economy (B)",
+      "available_seats": 15
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "9:30",
+        "terminal": "B",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "10:45",
+        "date": "Thu, 24 Aug 2023",
+        "terminal": "C",
+        "airport_name": "Cox's Bazar Airport",
+        "airport_address": "Cox's Bazar, Bangladesh"
+      },
+      "travel_duration": "1hr 15min",
+
+      "baggage_allowance": {
+        "check_in": "25 kg(s)",
+        "cabin": "5 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 2700,
+      "taxes_fee": 400,
+      "ticket_price": 3100
+    }
+  },
+
+  {
+    "_id": "11",
+    "flight": {
+      "flight_name": "Bangladesh Airways",
+      "flight_image": "https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/BA.png",
+      "destination": "Dhaka to Barisal",
+      "travel_date": "Fri, 25 Aug 2023",
+      "aircraft": "ATR 72",
+      "operated_by": "BA",
+      "economy_type": "Economy (B)",
+      "available_seats": 10
+    },
+
+    "flight_details": {
+      "departure": {
+        "time": "14:45",
+        "terminal": "C",
+        "airport_name": "Hazrat Shahjalal International Airport",
+        "airport_address": "Dhaka, Bangladesh"
+      },
+      "arrival": {
+        "time": "16:00",
+        "date": "Fri, 25 Aug 2023",
+        "terminal": "A",
+        "airport_name": "Barisal Airport",
+        "airport_address": "Barisal, Bangladesh"
+      },
+      "travel_duration": "1hr 15min",
+
+      "baggage_allowance": {
+        "check_in": "15 kg(s)",
+        "cabin": "5 kg(s)"
+      }
+    },
+
+    "fare_summary": {
+      "base_fare": 2100,
+      "taxes_fee": 400,
+      "ticket_price": 2500
+    }
+  }
+]
