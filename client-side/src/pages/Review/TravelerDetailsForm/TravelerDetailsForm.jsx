@@ -16,7 +16,7 @@ const TravelerDetailsForm = () => {
 
   return (
     <div className="relative">
-      <div className="shadow-md rounded-xl overflow-hidden">
+      <div className="shadow-lg rounded-xl overflow-hidden">
         <div className="px-5 ">
           <div className="flex items-center gap-2 mt-4 mb-8">
             <h2 className="text-2xl font-semibold">Traveler 1</h2>

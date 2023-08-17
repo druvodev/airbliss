@@ -7,7 +7,7 @@ const FareSummary = () => {
 
   return (
     <div className="">
-      <div className="shadow-md rounded-xl overflow-hidden">
+      <div className="shadow-lg rounded-xl overflow-hidden">
         <div className="px-5">
           <div className="flex items-center gap-1 mb-2">
             <img
@@ -75,7 +75,7 @@ const FareSummary = () => {
           </div>
         </div>
       </div>
-      <div className="mt-5 shadow-md rounded-xl">
+      <div className="mt-5 shadow-lg rounded-xl">
         <CountdownTimer />
       </div>
     </div>
