@@ -220,7 +220,7 @@ const Navbar = () => {
       )}
       {/* Render the modal conditionally */}
       {isLoginSignupModalOpen && (
-        <LoginSignupModal onClose={() => setIsLoginSignupModalOpen(false)} />
+        <LoginSignupModal setIsLoginSignupModalOpen={setIsLoginSignupModalOpen} onClose={() => setIsLoginSignupModalOpen(false)} />
       )}
     </div>
   );
