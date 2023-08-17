@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdAddCircle, MdFlight, MdRemoveCircle } from "react-icons/md";
 import { RiHotelFill } from "react-icons/ri";
 import { BsPostcardFill } from "react-icons/bs";
 import { format } from "date-fns";
 import SearchLocation from "./SearchLocation";
 import CalendarComponent from "./CalendarComponent";
-import { is } from "date-fns/locale";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchFlights } from "../../redux/features/flightsSlice";
 
-const SearchFilter = React.memo(() => {
+const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const [isActive, setIsActive] = useState("flight");
   const [flightType, setFlightType] = useState("oneWay");
   const [cityCount, setCityCount] = useState(1);
@@ -16,6 +17,20 @@ const SearchFilter = React.memo(() => {
   const [calendarModal, setCalendarModal] = useState("");
   const [locationModal, setLocationModal] = useState("");
   const [isModal, setIsModal] = useState(false);
+  const [fromCityInfo, setFromCityInfo] = useState({
+    airportName: "Shahjalal International Airport",
+    code: "DAC",
+    destination: "Dhaka, Bangladesh",
+  });
+  const [toCityInfo, setToCityInfo] = useState({
+    airportName: "Barisal Airport",
+    code: "BZL",
+    destination: "Barisal, Bangladesh",
+  });
+
+  // Dispatch redux state
+  const dispatch = useDispatch();
+  const flight = useSelector((state) => state.flights.flights);
 
   console.log("rerender");
   console.log(isModal);
@@ -53,42 +68,53 @@ const SearchFilter = React.memo(() => {
     console.log(searchQuery);
   };
 
+  // redux state test
+  useEffect(() => {
+    const searchQuery = "5";
+    dispatch(fetchFlights(searchQuery));
+  }, []);
+  useEffect(() => {
+    console.log("Search Filter", flight);
+  }, [flight]);
+
   return (
     <div className="max-w-7xl mx-auto grid justify-center">
-      <div className="-mt-16 p-5 sm:mx-10 rounded-xl shadow-md bg-white">
-        <div className="flex gap-1 bg-gray-200 p-1 rounded w-fit font-medium text-gray-600 text-sm">
-          <div
-            onClick={() => setIsActive("flight")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "flight" ? "bg-cyan-300" : "bg-white"
-            }`}
-          >
-            <MdFlight /> Flight
+      <div className="p-5 sm:mx-10 rounded-xl shadow-md bg-white">
+        {bookingType === "all" && (
+          <div className="flex gap-1 bg-gray-200 p-1 rounded w-fit font-medium text-gray-600 text-sm">
+            <div
+              onClick={() => setIsActive("flight")}
+              className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+                isActive === "flight" ? "bg-cyan-300" : "bg-white"
+              }`}
+            >
+              <MdFlight /> Flight
+            </div>
+            <div
+              onClick={() => setIsActive("hotel")}
+              className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+                isActive === "hotel" ? "bg-cyan-300" : "bg-white"
+              }`}
+            >
+              <RiHotelFill /> Hotel
+            </div>
+            <div
+              onClick={() => setIsActive("visa")}
+              className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+                isActive === "visa" ? "bg-cyan-300" : "bg-white"
+              }`}
+            >
+              <BsPostcardFill /> Visa
+            </div>
           </div>
-          <div
-            onClick={() => setIsActive("hotel")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "hotel" ? "bg-cyan-300" : "bg-white"
-            }`}
-          >
-            <RiHotelFill /> Hotel
-          </div>
-          <div
-            onClick={() => setIsActive("visa")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "visa" ? "bg-cyan-300" : "bg-white"
-            }`}
-          >
-            <BsPostcardFill /> Visa
-          </div>
-        </div>
+        )}
         <div className="flex gap-4 font-semibold text-gray-600 my-4">
           <label className="flex gap-1">
             <input
               type="radio"
               name="flightType"
               value="oneWay"
-              className="radio radio-info"
+              className="radio radio-accent"
               checked={flightType === "oneWay"}
               onChange={() => setFlightType("oneWay")}
             />
@@ -99,7 +125,7 @@ const SearchFilter = React.memo(() => {
               type="radio"
               name="flightType"
               value="roundTrip"
-              className="radio radio-info"
+              className="radio radio-accent"
               checked={flightType === "roundTrip"}
               onChange={() => setFlightType("roundTrip")}
             />
@@ -110,7 +136,7 @@ const SearchFilter = React.memo(() => {
               type="radio"
               name="flightType"
               value="multiCity"
-              className="radio radio-info"
+              className="radio radio-accent"
               checked={flightType === "multiCity"}
               onChange={() => setFlightType("multiCity")}
             />
@@ -129,12 +155,12 @@ const SearchFilter = React.memo(() => {
                       id="fromCity"
                       type="text"
                       className="text-xl font-semibold outline-none"
-                      value="Dhaka"
+                      value={fromCityInfo.destination.split(",")[0]}
                     />
                     <div className="cursor-pointer">
                       <small className="text-xs my-0">
                         <span title="" className="">
-                          Hazrat Shahjalal International Airport
+                          {fromCityInfo.airportName}
                         </span>
                       </small>
                     </div>
@@ -147,12 +173,12 @@ const SearchFilter = React.memo(() => {
                       id="toCity"
                       type="text"
                       className="text-lg sm:text-xl font-semibold outline-none"
-                      value="Khulna"
+                      value={toCityInfo.destination.split(",")[0]}
                     />
                     <div className="cursor-pointer">
                       <small className="text-xs my-0">
                         <span title="" className="">
-                          Khulna International Airport
+                          {toCityInfo.airportName}
                         </span>
                       </small>
                     </div>
@@ -336,20 +362,23 @@ const SearchFilter = React.memo(() => {
                     id="fromCity"
                     type="text"
                     className="text-xl font-semibold outline-none cursor-pointer"
-                    value="Dhaka"
+                    value={fromCityInfo.destination.split(",")[0]}
                     readOnly
                   />
                   <div className="cursor-pointer">
                     <small className="text-xs my-0">
                       <span title="" className="">
-                        Hazrat Shahjalal International Airport
+                        {fromCityInfo.airportName}
                       </span>
                     </small>
                   </div>
                 </label>
                 {isModal && locationModal === "from" && (
                   <div className="absolute top-24 left-0 z-40">
-                    <SearchLocation setIsModal={setIsModal} />
+                    <SearchLocation
+                      setIsModal={setIsModal}
+                      setCityInfo={setFromCityInfo}
+                    />
                   </div>
                 )}
               </div>
@@ -368,20 +397,23 @@ const SearchFilter = React.memo(() => {
                     id="toCity"
                     type="text"
                     className="text-lg sm:text-xl font-semibold outline-none cursor-pointer"
-                    value="Khulna"
+                    value={toCityInfo.destination.split(",")[0]}
                     readOnly
                   />
                   <div className="cursor-pointer">
                     <small className="text-xs my-0">
                       <span title="" className="">
-                        Khulna International Airport
+                        {toCityInfo.airportName}
                       </span>
                     </small>
                   </div>
                 </label>
                 {isModal && locationModal === "to" && (
                   <div className="absolute top-24 left-0 z-40">
-                    <SearchLocation setIsModal={setIsModal} />
+                    <SearchLocation
+                      setIsModal={setIsModal}
+                      setCityInfo={setToCityInfo}
+                    />
                   </div>
                 )}
               </div>
@@ -477,7 +509,7 @@ const SearchFilter = React.memo(() => {
             className="px-10 py-3 rounded bg-cyan-600 active:bg-cyan-700 text-white font-semibold"
             onClick={handleSearch}
           >
-            Search
+            {filterName}
           </button>
         </div>
       </div>

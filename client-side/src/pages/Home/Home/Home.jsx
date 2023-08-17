@@ -1,3 +1,4 @@
+import PopUpOffer from "../../../Components/PopUpOffer/PopUpOffer";
 import Hero from "../Hero/Hero";
 import HotDeals from "../HotDeals/HotDeals";
 import HotelDiscount from "../HotelDiscount/HotelDiscount";
@@ -16,6 +17,7 @@ const Home = () => {
         <OurServices />
         <Weather></Weather>
         <HotelDiscount></HotelDiscount>
+        <PopUpOffer />
       </div>
     </div>
   );

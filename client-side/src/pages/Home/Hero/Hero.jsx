@@ -63,8 +63,8 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="z-30 relative">
-        <SearchFilter />
+      <div className="z-30 relative -mt-16">
+        <SearchFilter bookingType="all" filterName="Search" />
       </div>
     </>
   );
