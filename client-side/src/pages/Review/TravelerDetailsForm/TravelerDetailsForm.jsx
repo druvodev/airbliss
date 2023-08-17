@@ -18,7 +18,7 @@ const TravelerDetailsForm = () => {
     <div className="relative">
       <div className="shadow-md rounded-xl overflow-hidden">
         <div className="px-5 ">
-          <div className="flex items-center gap-2 mb-8">
+          <div className="flex items-center gap-2 mt-4 mb-8">
             <h2 className="text-2xl font-semibold">Traveler 1</h2>
             <span className="px-2 py-1 border bg-[#e4dede] rounded text-sm ">
               Adult
