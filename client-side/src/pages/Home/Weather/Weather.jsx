@@ -6,7 +6,7 @@ import moment from "moment/moment";
 const Weather = () => {
     const [weather, setWeather] = useState([]);
     useEffect(() => {
-        const city = "Toronto";
+        const city = "dhaka";
         const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${import.meta.env.VITE_WEATHER_KEY}`;
         // const url = `api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=3&appid=${import.meta.env.VITE_WEATHER_KEY}`;
         fetch(url)
