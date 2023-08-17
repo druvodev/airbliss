@@ -81,24 +81,6 @@ async function run() {
       res.send(result);
     });
 
-    // get all flights by destination
-    app.get("/flights/search", async (req, res) => {
-      const { destination } = req.query;
-
-      try {
-        // const db = await connect();
-        // const flightsCollection = db.collection("flights");
-        const flights = await flightsCollection
-          .find({ destination: destination })
-          .toArray();
-        res.json(flights);
-      } catch (error) {
-        res
-          .status(500)
-          .json({ error: true, message: "Error searching flights" });
-      }
-    });
-
     // // Send a ping to confirm a successful connection
     // await client.db("admin").command({ ping: 0 });
     console.log(
