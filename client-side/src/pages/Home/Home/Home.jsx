@@ -1,5 +1,6 @@
 import Hero from "../Hero/Hero";
 import HotDeals from "../HotDeals/HotDeals";
+import HotelDiscount from "../HotelDiscount/HotelDiscount";
 import OurServices from "../OurServices/OurServices";
 import RecommendedFlights from "../RecommendedFlight/RecommendedFlights";
 import Weather from "../Weather/Weather";
@@ -14,6 +15,7 @@ const Home = () => {
         <RecommendedFlights />
         <OurServices />
         <Weather></Weather>
+        <HotelDiscount></HotelDiscount>
       </div>
     </div>
   );

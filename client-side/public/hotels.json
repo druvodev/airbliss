@@ -1,13 +1,32 @@
 [
     {
-        "name": "Seashore Coast, Italy",
-        "to": "Dhaka",
-        "from": "Italy",
-        "air_line": "AirAsia Air Line",
-        "date": "5th Aug 23",
-        "day": "3 days trip",
-        "cost": "898",
+        "name": "Wonders Hostel Boat Quayland",
+        "distance": "5 min away from  Mumbai Airport",
+        "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
+        "cost": 685,
+        "discount": 35,
+        "img": "https://i.ibb.co/9H7BJQs/discount-Hotel.png",
+        "star": 5
+    },
+ 
+    {
+        "name": "Wonders Hostel Boat Quayland",
+        "distance": "5 min away from  Mumbai Airport",
+        "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
+        "cost": 893,
         "discount": 20,
-        "img": ""
+        "img": "https://i.ibb.co/9H7BJQs/discount-Hotel.png",
+        "star": 5
+    },
+ 
+    {
+        "name": "Wonders Hostel Boat Quayland",
+        "distance": "5 min away from  Mumbai Airport",
+        "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
+        "cost": 904,
+        "discount": 29,
+        "img": "https://i.ibb.co/9H7BJQs/discount-Hotel.png",
+        "star": 5
     }
+ 
 ]
