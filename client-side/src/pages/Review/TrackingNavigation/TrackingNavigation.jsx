@@ -106,7 +106,7 @@ const TrackingNavigation = () => {
       </div>
 
       {/* Modal */}
-      <Dialog
+      {/* <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
         className="fixed inset-0 flex items-center justify-center p-2 z-50"
@@ -182,7 +182,7 @@ const TrackingNavigation = () => {
             </div>
           </div>
         </Dialog.Panel>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 };
