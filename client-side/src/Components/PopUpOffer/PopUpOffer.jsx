@@ -9,6 +9,7 @@ const PopUpOffer = () => {
 
   const closePopup = () => {
     setShowPopup(false);
+    clearTimeout(timeout);
   };
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -28,7 +29,7 @@ const PopUpOffer = () => {
             <img
               src="https://i.ibb.co/mJszpX0/Add.jpg"
               alt="Special Offer"
-              className="popup-image"
+              className="popup-image object-cover"
             />
             <button onClick={closePopup} className="popup-close-btn">
               <FaTimesCircle />
