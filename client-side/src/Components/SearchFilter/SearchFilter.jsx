@@ -6,9 +6,15 @@ import { format } from "date-fns";
 import SearchLocation from "./SearchLocation";
 import CalendarComponent from "./CalendarComponent";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchFlights } from "../../redux/features/flightsSlice";
+import {
+  storeFilteredFlights,
+  storeFlights,
+} from "../../redux/features/flightsSlice";
+import useAxios from "../../hooks/useAxios";
+import { useNavigate } from "react-router";
 
 const SearchFilter = React.memo(({ bookingType, filterName }) => {
+  const navigate = useNavigate();
   const [isActive, setIsActive] = useState("flight");
   const [flightType, setFlightType] = useState("oneWay");
   const [cityCount, setCityCount] = useState(1);
@@ -59,20 +65,29 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
   };
 
   const handleSearch = () => {
-    const searchQuery = {
-      bookingType: isActive,
-      flightType,
-      departureDate: departureDate.toString(),
-      returnDate: flightType === "oneWay" ? "" : returnDate.toString(),
-    };
-    console.log(searchQuery);
+    const fromCity = fromCityInfo.code;
+    const toCity = toCityInfo.code;
+    const date = format(departureDate, "yyyy-MM-dd");
+
+    const searchQuery = `fromCity=${fromCity}&toCity=${toCity}&departureDate=${date}`;
+    const url = `/flights/search?${searchQuery}`;
+
+    useAxios
+      .get(url)
+      .then((response) => {
+        const data = response.data;
+        // Handle the response data here
+        storeFilteredFlights(data);
+        dispatch(storeFlights(data));
+        navigate("/flights");
+      })
+      .catch((error) => {
+        // Handle any errors here
+        console.error("Error fetching data:", error);
+      });
   };
 
   // redux state test
-  useEffect(() => {
-    const searchQuery = "5";
-    dispatch(fetchFlights(searchQuery));
-  }, []);
   useEffect(() => {
     console.log("Search Filter", flight);
   }, [flight]);
