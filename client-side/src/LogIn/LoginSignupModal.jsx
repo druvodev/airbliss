@@ -5,6 +5,7 @@ import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../providers/AuthProvider";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { toast } from "react-hot-toast";
+import { saveUser } from "../Api/auth";
 
 const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
   const { user } = useContext(AuthContext)
@@ -42,6 +43,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
           updateUserProfile(name, imageUrl)
             .then(() => {
               toast.success("User Created Successfully")
+              saveUser(result.user)
               navigate(from, { replace: true })
             })
             .catch(err => {
@@ -74,6 +76,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signIn(email, password)
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false)
       })
@@ -88,6 +91,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false)
       })
@@ -102,6 +106,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signInWithFacebook()
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false)
       })
