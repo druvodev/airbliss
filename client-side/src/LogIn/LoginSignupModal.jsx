@@ -21,6 +21,18 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
+  const handleReset = () => {
+    const email = emailRef.current.value
+    resetPassword(email)
+      .then(() => {
+        toast.success("Please check your email for rest link")
+      })
+      .catch(err => {
+        setLoading(false)
+        toast.error(err.message);
+      })
+  }
+
   const handleSubmitSignUp = event => {
     event.preventDefault()
     const name = event.target.name.value
@@ -220,7 +232,10 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
                     </button>
                   </div>
                   <div className="space-y-1">
-                    <button className="text-xs hover:underline hover:text-cyan-500 text-gray-400">
+                    <button
+                      onClick={handleReset}
+                      className="text-xs hover:underline hover:text-cyan-500 text-gray-400"
+                    >
                       Forgot password?
                     </button>
                   </div>
