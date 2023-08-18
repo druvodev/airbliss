@@ -294,7 +294,7 @@ const TravelerDetailsForm = () => {
                     disabled={isSecondInputDisabled}
                     placeholder="Frequent Flyer Number"
                     className={`block w-full px-2 py-2 mt-7 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
-                      isSecondInputDisabled ? "bg-[#e7e5e5]" : ""
+                      isSecondInputDisabled ? "bg-[#e6e4e4]" : ""
                     }`}
                   />
                 </div>
