@@ -18,6 +18,7 @@ const BookFlight = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [singleFlightDetails, setsingleFlightDetails] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [flightDetailsVisibility, setFlightDetailsVisibility] = useState({});
 
   useEffect(() => {
     fetch("booking.json")
@@ -29,10 +30,10 @@ const BookFlight = () => {
           (a, b) => b.fare_summary.ticket_price - a.fare_summary.ticket_price
         );
         setFlightData(sortedData);
-
-        console.log(sortedData);
       });
   }, []);
+
+  console.log(singleFlightDetails);
 
   const sortByTicketPrice = (sortOrder) => {
     const sortedData = [...flightData];
@@ -57,12 +58,13 @@ const BookFlight = () => {
   };
 
   const handelVisible = (singleDataFlight) => {
-    setVisibleDetails(!visibleDetails);
-    setShowFlightDetails(true);
-    setShowFlightDetails(true);
-    setShowFlightSummary(false);
-    setShowFareRules(false);
+    const flightId = singleDataFlight._id;
+    setFlightDetailsVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [flightId]: !prevVisibility[flightId],
+    }));
     setsingleFlightDetails(singleDataFlight);
+    handleFlightDetailsClick();
   };
 
   const handleFlightDetailsClick = () => {
@@ -243,12 +245,12 @@ const BookFlight = () => {
 
             {/* View Details Card Section */}
 
-            {visibleDetails && (
+            {flightDetailsVisibility[singleFlight._id] && (
               <section className="mt-6 ">
                 <hr />
                 <section className="flex justify-start items-center mt-5 text-[12px]">
                   <p
-                    onClick={handleFlightDetailsClick}
+                    onClick={() => handleFlightDetailsClick()}
                     className={`border-2 p-2 rounded-md cursor-pointer ${
                       showFlightDetails ? "bg-cyan-600 text-white" : ""
                     }`}
@@ -256,7 +258,7 @@ const BookFlight = () => {
                     Flight Details
                   </p>
                   <p
-                    onClick={handleFlightSummaryClick}
+                    onClick={() => handleFlightSummaryClick()}
                     className={`border-2 p-2 rounded-md cursor-pointer ${
                       showFlightSummary ? "bg-cyan-600 text-white" : ""
                     }`}
@@ -264,7 +266,7 @@ const BookFlight = () => {
                     Fare Summary
                   </p>
                   <p
-                    onClick={handleFareRulesClick}
+                    onClick={() => handleFareRulesClick()}
                     className={`border-2 p-2 rounded-md cursor-pointer ${
                       showFareRules ? "bg-cyan-600 text-white" : ""
                     }`}
