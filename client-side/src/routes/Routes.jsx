@@ -27,20 +27,20 @@ export const router = createBrowserRouter([
         path: "/review",
         element: <Review />,
       },
+
       {
         path: "/contact",
-        element: <Contact></Contact>
-
+        element: <Contact></Contact>,
       },
+
       {
         path: "/terms",
-        element: <Terms></Terms>
+        element: <Terms></Terms>,
       },
       {
         path: "/refund",
-        element: <Refund></Refund>
-      }
-      
+        element: <Refund></Refund>,
+      },
     ],
-  }
+  },
 ]);
