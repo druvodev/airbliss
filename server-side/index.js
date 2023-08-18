@@ -50,9 +50,9 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   const a =
     Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
     Math.cos(lat1Rad) *
-      Math.cos(lat2Rad) *
-      Math.sin(deltaLon / 2) *
-      Math.sin(deltaLon / 2);
+    Math.cos(lat2Rad) *
+    Math.sin(deltaLon / 2) *
+    Math.sin(deltaLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const distance = R * c;
@@ -182,6 +182,7 @@ async function run() {
     });
 
     // Save user
+
     app.post("/users", async (req, res) => {
       const user = req.body;
       console.log(user);
@@ -189,7 +190,7 @@ async function run() {
       const existingUser = await usersCollection.findOne(query);
       console.log(existingUser, "existing user");
       if (existingUser) {
-        return res.send({ message: "user already exist" });
+        return res.send({ message: "User already exists" });
       }
       const result = await usersCollection.insertOne(user);
       res.send(result);
