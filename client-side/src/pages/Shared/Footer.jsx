@@ -13,11 +13,13 @@ import {
   AiFillLinkedin,
   AiOutlineWhatsApp,
 } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const svgStyle = {
     fill: "#414D5E",
   };
+
 
   return (
     <section className="bg-[#414D5E] relative mt-28 ">
@@ -167,6 +169,22 @@ const Footer = () => {
                 <span>Booking Flight</span>
               </p>
             </div>
+            <div>
+              <Link to="/terms" className="inline-flex items-center gap-1 mt-3">
+                <span>
+                  <AiOutlineArrowRight size={16} />
+                </span>
+                <span>Terms and Policy</span>
+              </Link>
+            </div>
+            <div>
+              <Link to="/refund" className="inline-flex items-center gap-1 mt-3">
+                <span>
+                  <AiOutlineArrowRight size={16} />
+                </span>
+                <span >Refund Policy</span>
+              </Link>
+            </div>
           </div>
 
           <div className="mt-6 lg:mt-0">
@@ -213,7 +231,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 lg:mt-0">
-          <h1 className="text-xl font-bold">Recent Postes</h1>
+          <h1 className="text-xl font-bold">Recent Posts</h1>
           <p>
             <span className="flex items-center  tracking-widest">
               <IoAirplaneSharp />

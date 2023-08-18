@@ -4,6 +4,8 @@ import Home from "../pages/Home/Home/Home";
 import Flights from "../pages/Flights/Flights/Flights";
 import Review from "../pages/Review/Review/Review";
 import Contact from "../pages/Contact/Contact";
+import Terms from "../pages/Terms/Terms";
+import Refund from "../pages/Refund/Refund";
 
 export const router = createBrowserRouter([
   {
@@ -26,8 +28,16 @@ export const router = createBrowserRouter([
         path: "/contact",
         element: <Contact></Contact>
 
+      },
+      {
+        path: "/terms",
+        element: <Terms></Terms>
+      },
+      {
+        path: "/refund",
+        element: <Refund></Refund>
       }
-    
+      
     ],
-  },
+  }
 ]);
