@@ -23,7 +23,7 @@ const Contact = () => {
             <div className="flex items-start gap-2">
               <FaLocationDot className="text-2xl"></FaLocationDot>
               <div>
-                <h6 className="text-[#00F6FF] ">Address</h6>
+                <h6 className="text-cyan-600  ">Address</h6>
                 <p className=" w-8/12 text-sm">
                   Road:27, House:119, Dhanmondi-27, Dhaka, Bangladesh
                 </p>
@@ -32,14 +32,14 @@ const Contact = () => {
             <div className="flex items-start gap-2">
               <FaLocationDot className="text-2xl"></FaLocationDot>
               <div>
-                <h6 className="text-[#00F6FF] ">Phone</h6>
-                <p className=" w-8/12 text-sm">+88017325856</p>
+                <h6 className="text-cyan-600  ">Phone</h6>
+                <p className=" w-/12 text-sm">+88017325856</p>
               </div>
             </div>
             <div className="flex items-start gap-2">
               <FaLocationDot className="text-2xl"></FaLocationDot>
               <div>
-                <h6 className="text-[#00F6FF] ">Email</h6>
+                <h6 className="text-cyan-600 ">Email</h6>
                 <p className=" w-8/12 text-sm">
                   webgeniussquad@gmail.com
                 </p>

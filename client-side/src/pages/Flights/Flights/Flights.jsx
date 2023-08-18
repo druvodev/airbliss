@@ -5,12 +5,16 @@ import { BiSolidEdit } from "react-icons/bi";
 import { TbFilterEdit } from "react-icons/tb";
 import { useState } from "react";
 import BookFlight from "../BookingFlights/BookFlight/BookFlight";
+import Weather from "../../Home/Weather/Weather";
 
 const Flights = () => {
   const [isShowSearch, setIsShowSearch] = useState(false);
   return (
-    <>
+    <div className="relative">
       <img src={banner} className="w-full h-44 object-cover" alt="" />
+     <div className="absolute top-16  text-gray-50 left-1/3">
+      <Weather></Weather>
+     </div>
       <div className="max-w-7xl mx-auto lg:-mt-10">
         <div className="flex items-center justify-between lg:hidden gap-1 p-3 mt-3 mx-3 border rounded-md bg-cyan-50/50">
           <div>
@@ -58,7 +62,7 @@ const Flights = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
