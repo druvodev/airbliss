@@ -23,15 +23,15 @@ const OurServices = () => {
           View All
         </button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 my-10">
+      <div className="grid grid-cols-1  md:grid-cols-2 gap-5 my-10">
         {services.map((service, index) => (
           <div
             key={index}
-            className="flex items-center gap-5 w-full bg-white shadow-md py-2 text-gray-500"
+            className="flex shadow-2xl items-center gap-5 w-full bg-white  py-2 text-gray-500"
           >
             <div className="h-[120px] md:h-[180px] w-1/2">
               <img
-                className="h-full w-full p-2 image-full"
+                className="h-full rounded-full object-cover w-full p-2 image-full"
                 src={service.image}
                 alt=""
               />

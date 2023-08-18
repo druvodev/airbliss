@@ -3,8 +3,8 @@ import { setError, setLoading } from "./globalSlice";
 import useAxios from "../../hooks/useAxios";
 
 const initialState = {
-  flights: [],
-  filteredFlights: [],
+  flights: {},
+  filteredFlights: {},
 };
 
 export const flightsSlice = createSlice({
@@ -23,7 +23,7 @@ export const flightsSlice = createSlice({
 export const fetchFlights = (searchQuery) => async (dispatch) => {
   try {
     dispatch(setLoading({ key: "flights", loading: true }));
-    const response = await useAxios.get(`/posts/${searchQuery}`);
+    const response = await useAxios.get(`/flights/search?${searchQuery}`);
     const data = response.data;
     console.log("flightSlice", response);
     dispatch(storeFlights(data));

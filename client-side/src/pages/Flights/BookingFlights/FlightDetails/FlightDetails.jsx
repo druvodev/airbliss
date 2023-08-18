@@ -21,7 +21,7 @@ const FlightDetails = ({ flightFullDetails }) => {
     flightFullDetails?.flight_details?.baggage_allowance || {};
 
   return (
-    <section className="mt-3 border-[1px] rounded-sm">
+    <section className="mt-3 border-[1px] rounded-sm ">
       <h1 className=" p-3 border-b-[1px]">
         <b>
           {destination}, {travel_date}
