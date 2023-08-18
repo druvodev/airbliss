@@ -3,16 +3,50 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { FaExclamationCircle } from "react-icons/fa";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { useForm } from "react-hook-form";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
   const [countries, setCountries] = useState([]);
+  const [firstInputValue, setFirstInputValue] = useState("");
+  const [secondInputValue, setSecondInputValue] = useState("");
+  const [isSecondInputDisabled, setIsSecondInputDisabled] = useState(true);
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const handleFirstInputChange = (event) => {
+    const value = event.target.value;
+    setFirstInputValue(value);
+
+    if (value) {
+      setIsSecondInputDisabled(false);
+    } else {
+      setIsSecondInputDisabled(true);
+      setSecondInputValue("");
+    }
+  };
+
+  const handleSecondInputChange = (event) => {
+    setSecondInputValue(event.target.value);
+  };
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all")
       .then((res) => res.json())
       .then((data) => setCountries(data));
   }, []);
+
+  const handleContinue = (data) => {
+    console.log(data);
+    reset();
+  };
 
   return (
     <div className="relative">
@@ -56,26 +90,34 @@ const TravelerDetailsForm = () => {
             </div>
           </div>
           <div className="py-2 px-5">
-            <form>
-              <label className="font-semibold mb-2">Select Title</label>
+            <form onSubmit={handleSubmit(handleContinue)}>
+              <label className="font-semibold mb-2">
+                Select Title<span className="text-red-600">*</span>
+              </label>
               <div className="flex gap-2 mt-1 mb-3">
                 <input
                   className="join-item btn"
                   type="radio"
                   name="options"
+                  {...register("title")}
                   aria-label="Mr."
+                  value="Mr."
                 />
                 <input
                   className="join-item btn"
                   type="radio"
                   name="options"
+                  {...register("title")}
                   aria-label="Mrs."
+                  value="Mrs."
                 />
                 <input
                   className="join-item btn"
                   type="radio"
                   name="options"
+                  {...register("title")}
                   aria-label="Ms"
+                  value="Ms."
                 />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -87,6 +129,7 @@ const TravelerDetailsForm = () => {
                     type="text"
                     name=""
                     id=""
+                    {...register("first_name", { required: true })}
                     placeholder="First Name"
                     className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
@@ -99,6 +142,7 @@ const TravelerDetailsForm = () => {
                     type="text"
                     name=""
                     id=""
+                    {...register("last_name", { required: true })}
                     placeholder="Last Name"
                     className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
@@ -111,6 +155,7 @@ const TravelerDetailsForm = () => {
                     type="date"
                     name=""
                     id=""
+                    {...register("date_of_birth", { required: true })}
                     placeholder="Select Date"
                     className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
@@ -124,7 +169,8 @@ const TravelerDetailsForm = () => {
                     type="text"
                     name=""
                     id=""
-                    placeholder="Last Name"
+                    {...register("passport_number")}
+                    placeholder="Passport Number"
                     className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
@@ -137,6 +183,7 @@ const TravelerDetailsForm = () => {
                     type="date"
                     name=""
                     id=""
+                    {...register("passport_expiry_date")}
                     placeholder="Passport Expiry Date"
                     className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
@@ -149,6 +196,7 @@ const TravelerDetailsForm = () => {
                     type="text"
                     name=""
                     id=""
+                    {...register("city", { required: true })}
                     placeholder="City"
                     className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
@@ -161,6 +209,7 @@ const TravelerDetailsForm = () => {
                     type="select"
                     name=""
                     id=""
+                    {...register("country", { required: true })}
                     placeholder="Country"
                     className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                   >
@@ -190,6 +239,7 @@ const TravelerDetailsForm = () => {
                     type="email"
                     name=""
                     id=""
+                    {...register("traveler_email", { required: true })}
                     placeholder="Email"
                     className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
@@ -205,10 +255,13 @@ const TravelerDetailsForm = () => {
                       padding: "20px 40px",
                       border: "1px solid rgba(158, 158, 158,0.2)",
                     }}
-                    value={this?.state.phone}
-                    onChange={(phone) => this?.setState({ phone })}
+                    {...register("phone_number", { required: true })}
+                    value={getValues("phone_number")}
+                    onChange={(value) => {
+                      setValue("phone_number", value);
+                    }}
                     inputProps={{
-                      name: "phone",
+                      name: "phone_number",
                       required: true,
                     }}
                   />
@@ -222,19 +275,27 @@ const TravelerDetailsForm = () => {
                     type="text"
                     name=""
                     id=""
-                    defaultValue="No Preference"
+                    {...register("frequent_flayer")}
+                    placeholder="No Preference"
+                    value={firstInputValue}
+                    onChange={handleFirstInputChange}
                     className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
                 <div className="flex flex-col">
                   <label className="font-semibold"></label>
                   <input
-                    type="text"
-                    disabled
+                    type="number"
                     name=""
                     id=""
+                    {...register("flyer_number")}
+                    value={secondInputValue}
+                    onChange={handleSecondInputChange}
+                    disabled={isSecondInputDisabled}
                     placeholder="Frequent Flyer Number"
-                    className="block w-full px-2 py-2 mt-7 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                    className={`block w-full px-2 py-2 mt-7 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                      isSecondInputDisabled ? "bg-[#e6e4e4]" : ""
+                    }`}
                   />
                 </div>
               </div>

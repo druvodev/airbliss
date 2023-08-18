@@ -15,7 +15,6 @@ const Home = () => {
         <HotDeals></HotDeals>
         <RecommendedFlights />
         <OurServices />
-        <Weather></Weather>
         <HotelDiscount></HotelDiscount>
         <PopUpOffer />
       </div>

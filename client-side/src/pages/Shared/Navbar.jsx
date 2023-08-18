@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext)
+  const { user, logOut } = useContext(AuthContext);
   const [isMenuOne, setIsMenuOne] = useState(false);
   const [isMenuTwo, setIsMenuTwo] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -177,7 +177,7 @@ const Navbar = () => {
                       <img
                         src={
                           user?.photoURL
-                            ? user.photoURL
+                            ? user?.photoURL
                             : "https://i.ibb.co/Ws1r9fp/images.png"
                         }
                         alt={user.displayName}
@@ -189,10 +189,14 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
                   >
                     <li>
-                      <a className="text-black" href="">Dashboard</a>
+                      <a className="text-black" href="">
+                        Dashboard
+                      </a>
                     </li>
                     <li>
-                      <Link className="text-black" to='/' onClick={logOut}>Logout</Link>
+                      <Link className="text-black" to="/" onClick={logOut}>
+                        Logout
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -220,7 +224,10 @@ const Navbar = () => {
       )}
       {/* Render the modal conditionally */}
       {isLoginSignupModalOpen && (
-        <LoginSignupModal setIsLoginSignupModalOpen={setIsLoginSignupModalOpen} onClose={() => setIsLoginSignupModalOpen(false)} />
+        <LoginSignupModal
+          setIsLoginSignupModalOpen={setIsLoginSignupModalOpen}
+          onClose={() => setIsLoginSignupModalOpen(false)}
+        />
       )}
     </div>
   );

@@ -1,13 +1,15 @@
 import { useContext, useRef, useState } from "react";
 import LogInSlider from "./LogInSlider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaFacebook, FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaFacebook, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../providers/AuthProvider";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { toast } from "react-hot-toast";
+import { saveUser } from "../Api/auth";
 
 const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
   const { user } = useContext(AuthContext)
+  const [show, setShow] = useState(false)
   const [isLoginMode, setIsLoginMode] = useState(true);
   const { resetPassword, signInWithGoogle, signIn, setLoading, loading, createUser, updateUserProfile, signInWithFacebook } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -18,6 +20,18 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
   const switchModeHandler = () => {
     setIsLoginMode((prevMode) => !prevMode);
   };
+
+  const handleReset = () => {
+    const email = emailRef.current.value
+    resetPassword(email)
+      .then(() => {
+        toast.success("Please check your email for rest link")
+      })
+      .catch(err => {
+        setLoading(false)
+        toast.error(err.message);
+      })
+  }
 
   const handleSubmitSignUp = event => {
     event.preventDefault()
@@ -42,6 +56,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
           updateUserProfile(name, imageUrl)
             .then(() => {
               toast.success("User Created Successfully")
+              saveUser(result.user)
               navigate(from, { replace: true })
             })
             .catch(err => {
@@ -74,6 +89,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signIn(email, password)
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false)
       })
@@ -88,6 +104,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false)
       })
@@ -102,6 +119,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signInWithFacebook()
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false)
       })
@@ -135,7 +153,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
             />
           </svg>
         </button>
-        <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
+        <div className="grid lg:grid-cols-2 md:grid-cols-1 grid-cols-1 gap-5">
           <div className="p-6">
             <h2 className="text-3xl font-semibold mb-5">
               {isLoginMode
@@ -144,7 +162,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
             </h2>
             <div className="grid grid-cols-2 gap-10">
               <span
-                 onClick={handleFacebookSignIn}
+                onClick={handleFacebookSignIn}
                 className="flex rounded py-1 cursor-pointer hover:bg-blue-500 hover:text-white justify-center text-blue-500 items-center gap-2 border-2 border-blue-500">
                 <FaFacebook /> <p>Facebook</p>
               </span>
@@ -175,19 +193,26 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
                     />
                   </div>
                   <div>
-                    <div className="flex justify-between">
+                    <div className="flex relative justify-between">
                       <label htmlFor="password" className="text-sm mb-2">
                         Password
                       </label>
                     </div>
                     <input
-                      type="password"
+                      type={show ? "text" : "password"}
                       name="password"
                       id="password"
                       required
                       placeholder="Enter Your Password Here"
                       className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-cyan-500 bg-gray-50 text-gray-900"
                     />
+                    <span className='text-[20px] inline-block absolute lg:right-[472px] top-[320px] right-[40px] lg:top-[321px] cursor-pointer text-gray-900' onClick={() => setShow(!show)}>
+                      <span>
+                        {
+                          show ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                        }
+                      </span>
+                    </span>
                   </div>
                 </div>
                 <div className="flex justify-between mt-10 items-center mb-4">
@@ -207,7 +232,10 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
                     </button>
                   </div>
                   <div className="space-y-1">
-                    <button className="text-xs hover:underline hover:text-cyan-500 text-gray-400">
+                    <button
+                      onClick={handleReset}
+                      className="text-xs hover:underline hover:text-cyan-500 text-gray-400"
+                    >
                       Forgot password?
                     </button>
                   </div>
@@ -305,7 +333,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
                 : "You have Account Switch to Login"}
             </div>
           </div>
-          <div className="hidden md:flex flex-col">
+          <div className="hidden lg:flex flex-col">
             <LogInSlider />
             <Link className="flex justify-center mb-14 mt-2">
               <button className="text-cyan-500 btn btn-sm btn-outline hover:bg-cyan-500 hover:text-white hover:border-cyan-500 my-5">
