@@ -19,8 +19,7 @@ const Footer = () => {
   const svgStyle = {
     fill: "#414D5E",
   };
-
-
+  // className = "px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden";
   return (
     <div>
       <section className="bg-[#414D5E]  relative mt-28  ">
@@ -165,6 +164,24 @@ const Footer = () => {
                   </div>
 
                   <div>
+                    <Link to='/terms' className="inline-flex items-center gap-1 mt-3">
+                      <span>
+                        <AiOutlineArrowRight size={16} />
+                      </span>
+                      <span>Terms & Condition</span>
+                    </Link>
+                  </div>
+
+                  <div>
+                    <Link to='/refund' className="inline-flex items-center gap-1 mt-3">
+                      <span>
+                        <AiOutlineArrowRight size={16} />
+                      </span>
+                      <span>Refund</span>
+                    </Link>
+                  </div>
+
+                  <div>
                     <p className="inline-flex items-center gap-1 mt-3">
                       <span>
                         <AiOutlineArrowRight size={16} />
@@ -273,125 +290,8 @@ const Footer = () => {
 
             {/* Payment Partner */}
             <div>
-              <p className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span>About Us</span>
-              </p>
-            </div>
-
-            <div>
-              <p className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span>Blogs</span>
-              </p>
-            </div>
-
-            <div>
-              <p className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span>Destination</span>
-              </p>
-            </div>
-
-            <div>
-              <p className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span>Booking Flight</span>
-              </p>
-            </div>
-            <div>
-              <Link to="/terms" className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span>Terms and Policy</span>
-              </Link>
-            </div>
-            <div>
-              <Link to="/refund" className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span >Refund Policy</span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="mt-6 lg:mt-0">
-            <h1 className="text-xl font-bold">Contact Us</h1>
-            <p>
-              <span className="flex items-center  tracking-widest">
-                <IoAirplaneSharp />
-                <BsDashLg />
-                <BsDashLg />
-                <BsDashLg />
-                <BsDashLg />
-                <BsDashLg />
-                <BsDashLg />
-              </span>
-            </p>
-
-            <div>
-              <p className="inline-flex justify-start items-center gap-1 mt-3">
-                <span>
-                  <IoLocationOutline size={20} />
-                </span>
-                <span>5807W 63rd Dhaka,Bangladesh</span>
-              </p>
-            </div>
-
-            <div>
-              <p className="inline-flex justify-start items-center gap-1 mt-3">
-                <span>
-                  <AiOutlinePhone size={20} />
-                </span>
-                <span>+88 0150000001</span>
-              </p>
-            </div>
-
-            <div>
-              <p className="inline-flex justify-start items-center gap-1 mt-3">
-                <span>
-                  <CgMail size={20} />
-                </span>
-                <span>info@airbless.com</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12 lg:mt-0">
-          <h1 className="text-xl font-bold">Recent Posts</h1>
-          <p>
-            <span className="flex items-center  tracking-widest">
-              <IoAirplaneSharp />
-              <BsDashLg />
-              <BsDashLg />
-              <BsDashLg />
-              <BsDashLg />
-              <BsDashLg />
-              <BsDashLg />
-            </span>
-          </p>
-
-          <div className="mt-2 flex justify-start items-center gap-2">
-            <img
-              className="rounded shadow-md"
-              src="https://www.adivaha.com/themeforest-travon/assets/img/blog/recent-post-2-1.jpg"
-              alt=""
-            />
-
-            <div>
-              <h1 className="font-bold ">
-                5 Ways To Get Your Dream Photos On Picnic
+              <h1 className="ml-12 text-white text-xl font-bold mb-2">
+                Payment Partner
               </h1>
               <hr className="w-[170px] ml-12" />
 
