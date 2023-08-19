@@ -23,7 +23,7 @@ const Footer = () => {
   return (
     <div>
       <section className="bg-[#414D5E]  relative mt-28  ">
-        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden  -top-[109px]   left-0 md:left-0">
+        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden -top-[79px] md:-top-[109px]   left-0 md:left-0">
           <svg
             version="1.1"
             width="2000"
