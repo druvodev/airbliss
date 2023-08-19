@@ -171,6 +171,22 @@ const Footer = () => {
                       <span>Booking Flight</span>
                     </p>
                   </div>
+                  <div>
+                    <p className="inline-flex items-center gap-1 mt-3">
+                      <span>
+                        <AiOutlineArrowRight size={16} />
+                      </span>
+                      <Link to="/terms">Terms & Conditions</Link>
+                    </p>
+                  </div>
+                  <div>
+                    <p className="inline-flex items-center gap-1 mt-3">
+                      <span>
+                        <AiOutlineArrowRight size={16} />
+                      </span>
+                      <Link to="/refund">Refund Policy</Link>
+                    </p>
+                  </div>
                 </div>
 
                 <div className="mt-6 lg:mt-0">
