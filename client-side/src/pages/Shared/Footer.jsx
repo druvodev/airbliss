@@ -20,11 +20,10 @@ const Footer = () => {
     fill: "#414D5E",
   };
 
-
   return (
     <div>
       <section className="bg-[#414D5E]  relative mt-28  ">
-        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden  -top-[78px]  left-0 md:left-0">
+        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden  -top-[109px]   left-0 md:left-0">
           <svg
             version="1.1"
             width="2000"
@@ -72,7 +71,7 @@ const Footer = () => {
           </svg>
         </div>
 
-        <div className="px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
+        <div className="px-5  sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
           <div>
             {/* Footer Item Design */}
             <section className="  text-white p-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -270,206 +269,14 @@ const Footer = () => {
                 </div>
               </div>
             </section>
-
-            {/* Payment Partner */}
-            <div>
-              <p className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span>About Us</span>
-              </p>
-            </div>
-
-            <div>
-              <p className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span>Blogs</span>
-              </p>
-            </div>
-
-            <div>
-              <p className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span>Destination</span>
-              </p>
-            </div>
-
-            <div>
-              <p className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span>Booking Flight</span>
-              </p>
-            </div>
-            <div>
-              <Link to="/terms" className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span>Terms and Policy</span>
-              </Link>
-            </div>
-            <div>
-              <Link to="/refund" className="inline-flex items-center gap-1 mt-3">
-                <span>
-                  <AiOutlineArrowRight size={16} />
-                </span>
-                <span >Refund Policy</span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="mt-6 lg:mt-0">
-            <h1 className="text-xl font-bold">Contact Us</h1>
-            <p>
-              <span className="flex items-center  tracking-widest">
-                <IoAirplaneSharp />
-                <BsDashLg />
-                <BsDashLg />
-                <BsDashLg />
-                <BsDashLg />
-                <BsDashLg />
-                <BsDashLg />
-              </span>
-            </p>
-
-            <div>
-              <p className="inline-flex justify-start items-center gap-1 mt-3">
-                <span>
-                  <IoLocationOutline size={20} />
-                </span>
-                <span>5807W 63rd Dhaka,Bangladesh</span>
-              </p>
-            </div>
-
-            <div>
-              <p className="inline-flex justify-start items-center gap-1 mt-3">
-                <span>
-                  <AiOutlinePhone size={20} />
-                </span>
-                <span>+88 0150000001</span>
-              </p>
-            </div>
-
-            <div>
-              <p className="inline-flex justify-start items-center gap-1 mt-3">
-                <span>
-                  <CgMail size={20} />
-                </span>
-                <span>info@airbless.com</span>
-              </p>
-            </div>
           </div>
         </div>
 
         <div className="mt-12 lg:mt-0">
-          <h1 className="text-xl font-bold">Recent Posts</h1>
-          <p>
-            <span className="flex items-center  tracking-widest">
-              <IoAirplaneSharp />
-              <BsDashLg />
-              <BsDashLg />
-              <BsDashLg />
-              <BsDashLg />
-              <BsDashLg />
-              <BsDashLg />
-            </span>
+          <hr className="mt-12 text-white" />
+          <p className="pb-4 text-center text-white  mt-4">
+            &copy; 2023 Airbliess Bd Ltd. All rights reserved.
           </p>
-
-          <div className="mt-2 flex justify-start items-center gap-2">
-            <img
-              className="rounded shadow-md"
-              src="https://www.adivaha.com/themeforest-travon/assets/img/blog/recent-post-2-1.jpg"
-              alt=""
-            />
-
-            <div>
-              <h1 className="font-bold ">
-                5 Ways To Get Your Dream Photos On Picnic
-              </h1>
-              <hr className="w-[170px] ml-12" />
-
-              <div className="ml-10 flex lg:flex-row flex-col ">
-                <div className="flex justify-start items-center">
-                  <img
-                    className="h-16 "
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/gTF85MF/unnamed-removebg-preview.png"
-                    alt=""
-                  />
-
-                  <img
-                    className="h-10 img_bg"
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/bzNCqnQ/Master-Card-early-1990s-logo-svg-removebg-preview.png"
-                    alt=""
-                  />
-                </div>
-
-                <div className="flex justify-start items-center">
-                  <img
-                    className="h-6 lg:ml-1 img_bg"
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/J2fnFdy/2560px-Pay-Pal-logo-svg.png"
-                    alt=""
-                  />
-
-                  <img
-                    className="h-16 lg:ml-1 img_bg"
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/BPwnQFQ/Discover-logo-removebg-preview.png"
-                    alt=""
-                  />
-                </div>
-
-                <div className="flex justify-start items-center">
-                  <img
-                    className="h-6 img_bg"
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/C6Hzwdc/logo-black-59208b9-removebg-preview.png"
-                    alt=""
-                  />
-
-                  <img
-                    className="h-16 img_bg"
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/qMLHdgs/download-2-removebg-preview-1.png"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
-
-            <hr className="mt-12" />
-
-            <p className="pb-4 text-white text-center mt-4">
-              &copy; 2023 Airbliess Bd Ltd. All rights reserved.
-            </p>
-          </div>
         </div>
       </section>
     </div>
