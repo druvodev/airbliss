@@ -1,18 +1,31 @@
-export const saveUser = user => {
+import { toast } from "react-hot-toast";
+
+export const saveUser = async (user) => {
     const currentUser = {
         email: user?.email,
         name: user?.displayName ? user.displayName : user.name,
         photo: user?.photoURL,
+    };
+
+    try {
+        const response = await fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(currentUser),
+        });
+
+        const data = await response.json();
+        console.log(data);
+
+        if (data.acknowledged === true) {
+            toast.success("User saved successfully!");
+        } else {
+            toast.success(data.message);
+        }
+    } catch (error) {
+        console.error("Error saving user:", error);
+        window.alert("An error occurred while saving user");
     }
-    fetch(`https://airbliss/users/${user?.email}`, {
-        method: 'PUT',
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify(currentUser),
-    })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-        })
-}
+};

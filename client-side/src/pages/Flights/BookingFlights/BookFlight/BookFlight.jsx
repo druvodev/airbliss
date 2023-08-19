@@ -4,6 +4,7 @@ import FlightSummery from "../FlightSummery/FlightSummery";
 import FareRuls from "../FareRuls/FareRuls";
 import ShortingFlight from "../../ShortingFlight/ShortingFlight";
 import { GrPrevious, GrNext } from "react-icons/gr";
+import { Link } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 3;
 
@@ -18,6 +19,7 @@ const BookFlight = () => {
   const [sortOrder, setSortOrder] = useState("asc");
   const [singleFlightDetails, setsingleFlightDetails] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [flightDetailsVisibility, setFlightDetailsVisibility] = useState({});
 
   useEffect(() => {
     fetch("booking.json")
@@ -29,10 +31,10 @@ const BookFlight = () => {
           (a, b) => b.fare_summary.ticket_price - a.fare_summary.ticket_price
         );
         setFlightData(sortedData);
-
-        console.log(sortedData);
       });
   }, []);
+
+  console.log(singleFlightDetails);
 
   const sortByTicketPrice = (sortOrder) => {
     const sortedData = [...flightData];
@@ -57,12 +59,13 @@ const BookFlight = () => {
   };
 
   const handelVisible = (singleDataFlight) => {
-    setVisibleDetails(!visibleDetails);
-    setShowFlightDetails(true);
-    setShowFlightDetails(true);
-    setShowFlightSummary(false);
-    setShowFareRules(false);
+    const flightId = singleDataFlight._id;
+    setFlightDetailsVisibility((prevVisibility) => ({
+      ...prevVisibility,
+      [flightId]: !prevVisibility[flightId],
+    }));
     setsingleFlightDetails(singleDataFlight);
+    handleFlightDetailsClick();
   };
 
   const handleFlightDetailsClick = () => {
@@ -103,6 +106,7 @@ const BookFlight = () => {
     <section className="mb-16">
       {/* Filter Card */}
       <ShortingFlight />
+
       <section>
         <div className="flex w-full p-5 mt-10 rounded-md justify-between shadow-md">
           <button
@@ -146,7 +150,7 @@ const BookFlight = () => {
         {flightData.slice(startIndex, endIndex).map((singleFlight) => (
           <section
             key={singleFlight?._id}
-            className="shadow-md rounded-md pl-6 pr-6 pt-8 pb-8"
+            className="shadow-md w-full rounded-md pl-6 pr-6 pt-8 pb-8"
           >
             <div className=" grid grid-cols-3 lg:grid-cols-6 items-center gap-5 ">
               <div>
@@ -218,9 +222,11 @@ const BookFlight = () => {
               </div>
 
               <div align="center">
-                <button className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:text-cyan-600 hover:border-cyan-600 text-white rounded-md">
-                  Book Now
-                </button>
+                <Link to="/review">
+                  <button className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:text-cyan-600 hover:border-cyan-600 text-white rounded-md">
+                    Book Now
+                  </button>
+                </Link>
               </div>
             </div>
 
@@ -243,12 +249,12 @@ const BookFlight = () => {
 
             {/* View Details Card Section */}
 
-            {visibleDetails && (
+            {flightDetailsVisibility[singleFlight._id] && (
               <section className="mt-6 ">
                 <hr />
                 <section className="flex justify-start items-center mt-5 text-[12px]">
                   <p
-                    onClick={handleFlightDetailsClick}
+                    onClick={() => handleFlightDetailsClick()}
                     className={`border-2 p-2 rounded-md cursor-pointer ${
                       showFlightDetails ? "bg-cyan-600 text-white" : ""
                     }`}
@@ -256,7 +262,7 @@ const BookFlight = () => {
                     Flight Details
                   </p>
                   <p
-                    onClick={handleFlightSummaryClick}
+                    onClick={() => handleFlightSummaryClick()}
                     className={`border-2 p-2 rounded-md cursor-pointer ${
                       showFlightSummary ? "bg-cyan-600 text-white" : ""
                     }`}
@@ -264,7 +270,7 @@ const BookFlight = () => {
                     Fare Summary
                   </p>
                   <p
-                    onClick={handleFareRulesClick}
+                    onClick={() => handleFareRulesClick()}
                     className={`border-2 p-2 rounded-md cursor-pointer ${
                       showFareRules ? "bg-cyan-600 text-white" : ""
                     }`}

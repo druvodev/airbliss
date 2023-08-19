@@ -16,8 +16,8 @@ const HotelDiscount = () => {
     }, []);
     ;
     return (
-        <div  className="py-16">
-            <SectionTitle sectionTitle="Best Deal  for Destination"></SectionTitle>
+        <div  className="pb-16">
+            <SectionTitle sectionTitle="Best Deal  for Hotels"></SectionTitle>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 md:gap-x-4 lg:gap-x-4 gap-6">
                     {
