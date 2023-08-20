@@ -19,6 +19,7 @@ const Footer = () => {
   const svgStyle = {
     fill: "#414D5E",
   };
+  // className = "px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden";
 
   return (
     <div>
@@ -164,6 +165,24 @@ const Footer = () => {
                   </div>
 
                   <div>
+                    <Link to='/terms' className="inline-flex items-center gap-1 mt-3">
+                      <span>
+                        <AiOutlineArrowRight size={16} />
+                      </span>
+                      <span>Terms & Condition</span>
+                    </Link>
+                  </div>
+
+                  <div>
+                    <Link to='/refund' className="inline-flex items-center gap-1 mt-3">
+                      <span>
+                        <AiOutlineArrowRight size={16} />
+                      </span>
+                      <span>Refund</span>
+                    </Link>
+                  </div>
+
+                  <div>
                     <p className="inline-flex items-center gap-1 mt-3">
                       <span>
                         <AiOutlineArrowRight size={16} />
@@ -285,14 +304,89 @@ const Footer = () => {
                 </div>
               </div>
             </section>
-          </div>
-        </div>
 
-        <div className="mt-12 lg:mt-0">
-          <hr className="mt-12 text-white" />
-          <p className="pb-4 text-center text-white  mt-4">
-            &copy; 2023 Airbliess Bd Ltd. All rights reserved.
-          </p>
+            {/* Payment Partner */}
+            <div>
+              <h1 className="ml-12 text-white text-xl font-bold mb-2">
+                Payment Partner
+              </h1>
+              <hr className="w-[170px] ml-12" />
+
+              <div className="ml-10 flex lg:flex-row flex-col ">
+                <div className="flex justify-start items-center">
+                  <img
+                    className="h-16 "
+                    style={{
+                      WebkitFilter: "grayscale(100%)",
+                      filter: "grayscale(100%)",
+                    }}
+                    src="https://i.ibb.co/gTF85MF/unnamed-removebg-preview.png"
+                    alt=""
+                  />
+
+                  <img
+                    className="h-10 img_bg"
+                    style={{
+                      WebkitFilter: "grayscale(100%)",
+                      filter: "grayscale(100%)",
+                    }}
+                    src="https://i.ibb.co/bzNCqnQ/Master-Card-early-1990s-logo-svg-removebg-preview.png"
+                    alt=""
+                  />
+                </div>
+
+                <div className="flex justify-start items-center">
+                  <img
+                    className="h-6 lg:ml-1 img_bg"
+                    style={{
+                      WebkitFilter: "grayscale(100%)",
+                      filter: "grayscale(100%)",
+                    }}
+                    src="https://i.ibb.co/J2fnFdy/2560px-Pay-Pal-logo-svg.png"
+                    alt=""
+                  />
+
+                  <img
+                    className="h-16 lg:ml-1 img_bg"
+                    style={{
+                      WebkitFilter: "grayscale(100%)",
+                      filter: "grayscale(100%)",
+                    }}
+                    src="https://i.ibb.co/BPwnQFQ/Discover-logo-removebg-preview.png"
+                    alt=""
+                  />
+                </div>
+
+                <div className="flex justify-start items-center">
+                  <img
+                    className="h-6 img_bg"
+                    style={{
+                      WebkitFilter: "grayscale(100%)",
+                      filter: "grayscale(100%)",
+                    }}
+                    src="https://i.ibb.co/C6Hzwdc/logo-black-59208b9-removebg-preview.png"
+                    alt=""
+                  />
+
+                  <img
+                    className="h-16 img_bg"
+                    style={{
+                      WebkitFilter: "grayscale(100%)",
+                      filter: "grayscale(100%)",
+                    }}
+                    src="https://i.ibb.co/qMLHdgs/download-2-removebg-preview-1.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+
+            <hr className="mt-12" />
+
+            <p className="pb-4 text-white text-center mt-4">
+              &copy; 2023 Airbliess Bd Ltd. All rights reserved.
+            </p>
+          </div>
         </div>
       </section>
     </div>

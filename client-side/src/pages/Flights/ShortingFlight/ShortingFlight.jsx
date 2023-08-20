@@ -20,38 +20,19 @@ const ShortingFlight = () => {
           className="tooltip tooltip-bottom"
           data-tip="Search for Previous Day Flight"
         >
-          <FaCaretLeft className="text-[45px] text-cyan-500 cursor-pointer" />
+          <FaCaretLeft className="lg:text-[45px] text-[20] md:text-[25px] text-cyan-500 cursor-pointer" />
         </div>
-        <div className="font-sans font-semibold text-[32px]">
+        <div className="font-sans font-semibold text-[20] md:text-[25px] lg:text-[32px]">
           Flights from Dhaka to Chittagong
         </div>
         <div
           className="tooltip tooltip-bottom"
           data-tip="Search for Next Day Flight"
         >
-          <FaCaretRight className="text-[45px] text-cyan-500 cursor-pointer" />
+          <FaCaretRight className="lg:text-[45px] text-[20] md:text-[25px] text-cyan-500 cursor-pointer" />
         </div>
       </div>
-      {/* <div className='flex w-full p-5 mt-10 rounded-md justify-between shadow-2xl'>
-                <button
-                    className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${selectedButton === 'cheapest' ? 'bg-gray-100 text-white' : 'text-white'
-                        }`}
-                    onClick={() => handleButtonClick('cheapest')}
-                >
-                    <h1 className='text-[18px] font-semibold mb-2 text-gray-900'>Cheapest</h1>
-                    <p className='text-[14px] text-[#7c8db0]'>To get the cheapest available flights</p>
-                </button>
-                <div className='border self-stretch mx-5'></div>
-                <button
-                    className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${selectedButton === 'shortest' ? 'bg-gray-100 text-white' : 'text-white'
-                        }`}
-                    onClick={() => handleButtonClick('shortest')}
-                >
-                    <h1 className='text-[18px] font-semibold mb-2 text-gray-900'>Shortest</h1>
-                    <p className='text-[14px] text-[#7c8db0]'>To get the shortest available flights</p>
-                </button>
-            </div> */}
-      <div className="mt-14 p-5 shadow-md rounded-md">
+      <div className="mt-14 p-5 shadow-md rounded-md flex justify-center items-center">
         <Swiper
           slidesPerView={3}
           spaceBetween={30}
@@ -60,65 +41,65 @@ const ShortingFlight = () => {
           //     clickable: true,
           // }}
           modules={[FreeMode, Pagination]}
-          className="mySwiper"
+          className="w-[300px] md:w-[700px] lg:w-[100%] overflow-hidden"
         >
           <SwiperSlide>
-            <div className="px-8 py-5 shadow-xl flex flex-col justify-center items-center cursor-pointer">
+            <div className="md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md flex flex-col justify-center items-center cursor-pointer">
               <img
                 className="w-auto object-cover h-[40px]"
                 src="https://beebom.com/wp-content/uploads/2015/02/airline-logos-qatar-e1424574584611.png"
                 alt=""
               />
-              <h1 className="text-center font-bold text-[14px] mt-5">
+              <h1 className="text-center md:font-bold text-[10px] md:text-[14px] mt-5">
                 Qatar Airways
               </h1>
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="px-8 py-5 shadow-xl flex flex-col justify-center items-center cursor-pointer">
+            <div className="md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md flex flex-col justify-center items-center cursor-pointer">
               <img
                 className="w-auto object-cover h-[40px]"
                 src="https://beebom.com/wp-content/uploads/2018/12/Lufthansa-Logo.jpg?quality=75&strip=all"
                 alt=""
               />
-              <h1 className="text-center font-bold text-[14px] mt-5">
+              <h1 className="text-center md:font-bold text-[10px] md:text-[14px] mt-5">
                 Lufthansa
               </h1>
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="px-8 py-5 shadow-xl flex flex-col justify-center items-center cursor-pointer">
+            <div className="md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md flex flex-col justify-center items-center cursor-pointer">
               <img
                 className="w-auto object-cover h-[40px]"
                 src="https://beebom.com/wp-content/uploads/2015/02/airline-logos-egyptair.jpg?quality=75&strip=all"
                 alt=""
               />
-              <h1 className="text-center font-bold text-[14px] mt-5">
+              <h1 className="text-center md:font-bold text-[10px] md:text-[14px] mt-5">
                 EgyptAir
               </h1>
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="px-8 py-5 shadow-xl flex flex-col justify-center items-center cursor-pointer">
+            <div className="md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md flex flex-col justify-center items-center cursor-pointer">
               <img
                 className="w-auto object-cover h-[40px]"
                 src="https://beebom.com/wp-content/uploads/2015/02/airline-logos-japan-e1424575148558.png?quality=75&strip=all"
                 alt=""
               />
-              <h1 className="text-center font-bold text-[14px] mt-5">
+              <h1 className="text-center md:font-bold text-[10px] md:text-[14px] mt-5">
                 Japan Airlines
               </h1>
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="px-8 py-5 shadow-xl flex flex-col justify-center items-center cursor-pointer">
+            <div className="md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md flex flex-col justify-center items-center cursor-pointer">
               <img
                 className="w-auto object-cover h-[40px]"
                 src="https://beebom.com/wp-content/uploads/2015/02/airline-logos-srilankan.jpg?quality=75&strip=all"
                 alt=""
               />
-              <h1 className="text-center font-bold text-[14px] mt-5">
-                Hawaiian Airlines
+              <h1 className="text-center md:font-bold text-[10px] md:text-[14px] mt-5">
+                Hawaiian Air
               </h1>
             </div>
           </SwiperSlide>
