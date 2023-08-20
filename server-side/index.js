@@ -50,9 +50,9 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   const a =
     Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
     Math.cos(lat1Rad) *
-    Math.cos(lat2Rad) *
-    Math.sin(deltaLon / 2) *
-    Math.sin(deltaLon / 2);
+      Math.cos(lat2Rad) *
+      Math.sin(deltaLon / 2) *
+      Math.sin(deltaLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const distance = R * c;
@@ -132,6 +132,7 @@ async function run() {
             date: departureDate,
             city: fromCityData[fromCity][0].details.city,
             terminal: fromCityData[fromCity][0].details.terminal,
+            airportName: fromCityData[fromCity][0].airportName,
           };
           // Include "arrival" data from toCityData
           relevantFlightData.arrival = {
@@ -140,6 +141,7 @@ async function run() {
             city: toCityData[toCity][0].details.city,
             airlineName: toCityData[toCity][0].airlineName,
             terminal: toCityData[toCity][0].details.terminal,
+            airportName: toCityData[toCity][0].airportName,
           };
 
           // Calculate fare summary
