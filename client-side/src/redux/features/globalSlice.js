@@ -1,18 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+  loading: false,
+  error: null,
+};
 
 export const globalSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
     setLoading: (state, action) => {
-      const { key, loading } = action.payload;
-      state[key] = { ...state[key], loading };
+      state.loading = action.payload;
     },
     setError: (state, action) => {
-      const { key, error } = action.payload;
-      state[key] = { ...state[key], error };
+      state.error = action.payload;
     },
   },
 });

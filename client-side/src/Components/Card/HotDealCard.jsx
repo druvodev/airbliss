@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const HotDealCard = ({ deal }) => {
   const { img, offer, destination } = deal;
   return (
-    <div className="sm:border mb-24 shadow-2xl border-[#F1ECEC] rounded-[8px] sm:flex">
+    <div className="sm:border mb-24 shadow-lg border-[#F1ECEC] rounded-[8px] sm:flex">
       <img
         src={img}
         alt=""

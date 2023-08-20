@@ -20,10 +20,11 @@ const Footer = () => {
     fill: "#414D5E",
   };
   // className = "px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden";
+
   return (
     <div>
       <section className="bg-[#414D5E]  relative mt-28  ">
-        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden  -top-[78px]  left-0 md:left-0">
+        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden -top-[79px] md:-top-[109px]   left-0 md:left-0">
           <svg
             version="1.1"
             width="2000"
@@ -71,7 +72,7 @@ const Footer = () => {
           </svg>
         </div>
 
-        <div className="px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
+        <div className="px-5  sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
           <div>
             {/* Footer Item Design */}
             <section className="  text-white p-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -187,6 +188,22 @@ const Footer = () => {
                         <AiOutlineArrowRight size={16} />
                       </span>
                       <span>Booking Flight</span>
+                    </p>
+                  </div>
+                  <div>
+                    <p className="inline-flex items-center gap-1 mt-3">
+                      <span>
+                        <AiOutlineArrowRight size={16} />
+                      </span>
+                      <Link to="/terms">Terms & Conditions</Link>
+                    </p>
+                  </div>
+                  <div>
+                    <p className="inline-flex items-center gap-1 mt-3">
+                      <span>
+                        <AiOutlineArrowRight size={16} />
+                      </span>
+                      <Link to="/refund">Refund Policy</Link>
                     </p>
                   </div>
                 </div>
