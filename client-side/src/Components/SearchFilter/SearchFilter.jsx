@@ -10,30 +10,34 @@ import {
   storeFilteredFlights,
   storeFlights,
 } from "../../redux/features/flightsSlice";
+import {
+  setIsActive,
+  setFlightType,
+  setCityCount,
+  setDepartureDate,
+  setReturnDate,
+  setCalendarModal,
+} from "../../redux/features/searchFilterSlice";
 import useAxios from "../../hooks/useAxios";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 
 const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const navigate = useNavigate();
-  const [isActive, setIsActive] = useState("flight");
-  const [flightType, setFlightType] = useState("oneWay");
-  const [cityCount, setCityCount] = useState(1);
-  const [departureDate, setDepartureDate] = useState(new Date());
-  const [returnDate, setReturnDate] = useState(new Date());
-  const [calendarModal, setCalendarModal] = useState("");
-  const [locationModal, setLocationModal] = useState("");
   const [isModal, setIsModal] = useState(false);
-  const [fromCityInfo, setFromCityInfo] = useState({
-    airportName: "Shahjalal International Airport",
-    code: "DAC",
-    destination: "Dhaka, Bangladesh",
-  });
-  const [toCityInfo, setToCityInfo] = useState({
-    airportName: "Barisal Airport",
-    code: "BZL",
-    destination: "Barisal, Bangladesh",
-  });
+  const [locationModal, setLocationModal] = useState("");
+  const isActive = useSelector((state) => state.searchFilter.isActive);
+  const flightType = useSelector((state) => state.searchFilter.flightType);
+  const cityCount = useSelector((state) => state.searchFilter.cityCount);
+  const departureDate = useSelector(
+    (state) => state.searchFilter.departureDate
+  );
+  const returnDate = useSelector((state) => state.searchFilter.returnDate);
+  const calendarModal = useSelector(
+    (state) => state.searchFilter.calendarModal
+  );
+  const fromCityInfo = useSelector((state) => state.searchFilter.fromCityInfo);
+  const toCityInfo = useSelector((state) => state.searchFilter.toCityInfo);
 
   // Dispatch redux state
   const dispatch = useDispatch();
@@ -52,17 +56,17 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
 
   // Handle Departure Date
   const handleDepartureDate = (date) => {
-    setDepartureDate(date);
+    dispatch(setDepartureDate(date));
     if (flightType === "roundTrip") {
-      setCalendarModal("return");
+      dispatch(setCalendarModal("return"));
     } else {
-      setCalendarModal(null);
+      dispatch(setCalendarModal(null));
     }
   };
   // Handle Return Date
   const handleReturnDate = (date) => {
-    setReturnDate(date);
-    setCalendarModal(null);
+    dispatch(setReturnDate(date));
+    dispatch(setCalendarModal(null));
   };
 
   const handleSearch = () => {
@@ -78,7 +82,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
       .then((response) => {
         const data = response.data;
         // Handle the response data here
-        storeFilteredFlights(data);
+        dispatch(storeFilteredFlights(data));
         dispatch(storeFlights(data));
         navigate("/flights");
       })
@@ -99,7 +103,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
         {bookingType === "all" && (
           <div className="flex gap-1 bg-gray-200 p-1 rounded w-fit font-medium text-gray-600 text-sm">
             <div
-              onClick={() => setIsActive("flight")}
+              onClick={() => dispatch(setIsActive("flight"))}
               className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
                 isActive === "flight" ? "bg-cyan-300" : "bg-white"
               }`}
@@ -107,7 +111,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               <MdFlight /> Flight
             </div>
             <div
-              onClick={() => setIsActive("hotel")}
+              onClick={() => dispatch(setIsActive("hotel"))}
               className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
                 isActive === "hotel" ? "bg-cyan-300" : "bg-white"
               }`}
@@ -115,7 +119,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               <RiHotelFill /> Hotel
             </div>
             <div
-              onClick={() => setIsActive("visa")}
+              onClick={() => dispatch(setIsActive("visa"))}
               className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
                 isActive === "visa" ? "bg-cyan-300" : "bg-white"
               }`}
@@ -132,7 +136,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               value="oneWay"
               className="radio radio-accent"
               checked={flightType === "oneWay"}
-              onChange={() => setFlightType("oneWay")}
+              onChange={() => dispatch(setFlightType("oneWay"))}
             />
             One Way
           </label>
@@ -143,7 +147,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               value="roundTrip"
               className="radio radio-accent"
               checked={flightType === "roundTrip"}
-              onChange={() => setFlightType("roundTrip")}
+              onChange={() => dispatch(setFlightType("roundTrip"))}
             />
             Round Trip
           </label>
@@ -154,7 +158,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               value="multiCity"
               className="radio radio-accent"
               checked={flightType === "multiCity"}
-              onChange={() => setFlightType("multiCity")}
+              onChange={() => dispatch(setFlightType("multiCity"))}
             />
             Multi City
           </label>
@@ -203,7 +207,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                 <div className="grid grid-cols-2 border rounded-md">
                   <div
                     className="w-full p-2 border-r relative"
-                    onClick={() => setCalendarModal(!calendarModal)}
+                    onClick={() => dispatch(setCalendarModal(!calendarModal))}
                   >
                     <p className="text-sm">Departure</p>
                     <div className="cursor-pointer">
@@ -327,7 +331,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                       <button
                         className="flex items-center gap-1 text-red-500"
                         onClick={() =>
-                          setCityCount((prevCount) => prevCount - 1)
+                          dispatch(setCityCount((prevCount) => prevCount - 1))
                         }
                       >
                         <MdRemoveCircle /> Remove
@@ -337,7 +341,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                         <button
                           className="border px-3 py-1 flex items-center text-cyan-500"
                           onClick={() =>
-                            setCityCount((prevCount) => prevCount + 1)
+                            dispatch(setCityCount((prevCount) => prevCount + 1))
                           }
                         >
                           <MdAddCircle /> Add
@@ -348,7 +352,9 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                             <button
                               className="flex items-center gap-1 text-red-500"
                               onClick={() =>
-                                setCityCount((prevCount) => prevCount - 1)
+                                dispatch(
+                                  setCityCount((prevCount) => prevCount - 1)
+                                )
                               }
                             >
                               <MdRemoveCircle /> Remove
@@ -393,7 +399,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                   <div className="absolute top-24 left-0 z-40">
                     <SearchLocation
                       setIsModal={setIsModal}
-                      setCityInfo={setFromCityInfo}
+                      locationModal={locationModal}
                     />
                   </div>
                 )}
@@ -428,7 +434,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                   <div className="absolute top-24 left-0 z-40">
                     <SearchLocation
                       setIsModal={setIsModal}
-                      setCityInfo={setToCityInfo}
+                      locationModal={locationModal}
                     />
                   </div>
                 )}
@@ -436,7 +442,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               <div className="grid grid-cols-2 border rounded-md">
                 <div
                   className="w-full p-2 border-r relative"
-                  onClick={() => setCalendarModal("departure")}
+                  onClick={() => dispatch(setCalendarModal("departure"))}
                 >
                   <p className="text-sm">Departure</p>
                   <div className="cursor-pointer">
@@ -466,8 +472,8 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                   <div
                     className="w-full p-2 cursor-pointer"
                     onClick={() => {
-                      setFlightType("roundTrip");
-                      setCalendarModal("return");
+                      dispatch(setFlightType("roundTrip"));
+                      dispatch(setCalendarModal("return"));
                     }}
                   >
                     <p className="text-sm">Return</p>
@@ -479,7 +485,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                 {flightType === "roundTrip" && (
                   <div
                     className="w-full p-2 border-r relative"
-                    onClick={() => setCalendarModal("return")}
+                    onClick={() => dispatch(setCalendarModal("return"))}
                   >
                     <p className="text-sm">Return</p>
                     <div className="cursor-pointer">

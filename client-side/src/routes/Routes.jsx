@@ -32,8 +32,6 @@ export const router = createBrowserRouter([
         path: "/contact",
         element: <Contact></Contact>,
       },
-<<<<<<< HEAD
-=======
 
       {
         path: "/terms",
@@ -43,7 +41,6 @@ export const router = createBrowserRouter([
         path: "/refund",
         element: <Refund></Refund>,
       },
->>>>>>> a2edf955e369b00e82140012bad4405b40cb206e
     ],
   },
 ]);

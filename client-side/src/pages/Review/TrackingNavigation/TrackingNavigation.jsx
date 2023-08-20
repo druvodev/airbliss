@@ -125,15 +125,6 @@ const TrackingNavigation = () => {
       </div>
 
       {/* Modal */}
-<<<<<<< HEAD
-      {/* <Dialog
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        className="fixed inset-0 flex items-center justify-center p-2 z-50"
-      >
-        <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
-=======
->>>>>>> a2edf955e369b00e82140012bad4405b40cb206e
 
       {/* Open the modal using ID.showModal() method */}
 
@@ -206,13 +197,8 @@ const TrackingNavigation = () => {
               </div>
             </div>
           </div>
-<<<<<<< HEAD
-        </Dialog.Panel>
-      </Dialog> */}
-=======
         </form>
       </dialog>
->>>>>>> a2edf955e369b00e82140012bad4405b40cb206e
     </>
   );
 };

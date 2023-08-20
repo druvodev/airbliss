@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import {
+  setFromCityInfo,
+  setToCityInfo,
+} from "../../redux/features/searchFilterSlice";
 
-const SearchLocation = React.memo(({ setIsModal, setCityInfo }) => {
-  const [locations, setLocations] = useState([]);
+const SearchLocation = React.memo(({ setIsModal, locationModal }) => {
+  const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
+  const [locations, setLocations] = useState([]);
 
   useEffect(() => {
     async function fetchInitialData() {
@@ -60,7 +66,12 @@ const SearchLocation = React.memo(({ setIsModal, setCityInfo }) => {
             <div
               key={item.code}
               onClick={() => {
-                setIsModal(false), setCityInfo(item);
+                setIsModal(false);
+                if (locationModal === "from") {
+                  dispatch(setFromCityInfo(item));
+                } else if (locationModal === "to") {
+                  dispatch(setToCityInfo(item));
+                }
               }}
               className="flex items-center justify-between gap-1 px-2 py-1 hover:bg-slate-100 cursor-pointer"
             >
