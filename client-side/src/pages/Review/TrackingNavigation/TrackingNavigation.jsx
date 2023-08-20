@@ -1,21 +1,40 @@
 import React, { useState } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
+import { FaAngleRight } from "react-icons/fa";
+
 const TrackingNavigation = () => {
   const [isCollapse, setIsCollapse] = useState(true);
 
   return (
     <>
-      <div className="">
-        <div className="shadow-md rounded-xl overflow-hidden">
-          <div className="px-5">
-            <div className="flex items-center gap-1 mb-2 mt-4">
-              <h5 className="font-semibold text-gray-600">DAC-CGP</h5>
-            </div>
+      <div className=" mb-8 flex lg:justify-between lg:items-center lg:flex-row flex-col">
+        <h1 className="font-bold text-3xl text-cyan-600">
+          Review Your Booking
+        </h1>
+
+        <div className="text-cyan-600 font-semibold mt-4 lg:mt-0">
+          <h1 className="inline-flex items-center gap-3">
+            Flight Section <FaAngleRight /> Booking <FaAngleRight /> Payment
+          </h1>
+        </div>
+      </div>
+
+      {/* Traking Card */}
+      <div className="shadow-lg block rounded-xl overflow-hidden">
+        <div className="px-5">
+          <div className="flex items-center gap-1 mb-2 mt-4">
+            <h5 className="font-semibold text-gray-600">DAC-CGP</h5>
+          </div>
+          <hr />
+          <div className="text-end flex justify-end items-center -mt-12 h-10">
             <hr />
-            <div className="text-end flex justify-end items-center -mt-12 h-10">
+            <div className="text-end flex justify-end items-center  h-10">
               <div>
-                <button className="pt-1 pl-2 pr-2 pb-2 mr-12  bg-cyan-600 text-white rounded-md hover:bg-white hover:border-2 hover:border-cyan-600 hover:text-gray-500">
+                <button
+                  onClick={() => window.my_modal_1.showModal()}
+                  className="pt-1 pl-2 pr-2 pb-2 mr-12  bg-cyan-600 text-white rounded-md hover:bg-white hover:border-2 hover:border-cyan-600 hover:text-gray-500"
+                >
                   View Baggage
                 </button>
               </div>
@@ -106,15 +125,21 @@ const TrackingNavigation = () => {
       </div>
 
       {/* Modal */}
+<<<<<<< HEAD
       {/* <Dialog
         open={isOpen}
         onClose={() => setIsOpen(false)}
         className="fixed inset-0 flex items-center justify-center p-2 z-50"
       >
         <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+=======
+>>>>>>> a2edf955e369b00e82140012bad4405b40cb206e
 
-        <Dialog.Panel className="fixed inset-0 flex items-center justify-center">
-          <div className="w-full max-w-lg lg:max-w-2xl p-4 bg-white rounded-lg">
+      {/* Open the modal using ID.showModal() method */}
+
+      <dialog id="my_modal_1" className="modal ">
+        <form method="dialog" className="modal-box max-w-2xl rounded-md">
+          <div className="w-full max-w-2lg lg:max-w-4xl  bg-white rounded-md">
             <div className="mb-2 flex justify-between items-center">
               <h2>
                 <b>Dhaka to Chittagong, 18 Aug 2023</b>
@@ -181,8 +206,13 @@ const TrackingNavigation = () => {
               </div>
             </div>
           </div>
+<<<<<<< HEAD
         </Dialog.Panel>
       </Dialog> */}
+=======
+        </form>
+      </dialog>
+>>>>>>> a2edf955e369b00e82140012bad4405b40cb206e
     </>
   );
 };

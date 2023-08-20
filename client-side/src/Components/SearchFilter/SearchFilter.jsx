@@ -12,6 +12,7 @@ import {
 } from "../../redux/features/flightsSlice";
 import useAxios from "../../hooks/useAxios";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const navigate = useNavigate();
@@ -520,12 +521,14 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
         </div>
 
         <div className="flex justify-center -mb-11">
-          <button
-            className="px-10 py-3 rounded bg-cyan-600 active:bg-cyan-700 text-white font-semibold"
-            onClick={handleSearch}
-          >
-            {filterName}
-          </button>
+          <Link to="/flights">
+            <button
+              className="px-10 py-3 rounded bg-cyan-600 active:bg-cyan-700 text-white font-semibold"
+              onClick={handleSearch}
+            >
+              {filterName}
+            </button>
+          </Link>
         </div>
       </div>
     </div>
