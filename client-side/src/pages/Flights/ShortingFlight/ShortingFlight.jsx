@@ -14,13 +14,13 @@ const ShortingFlight = () => {
   // };
 
   return (
-    <div className="mb-10">
+    <div className="mb-10 overflow-hidden">
       <div className="flex justify-between items-center mb-3">
         <div
           className="tooltip tooltip-bottom"
           data-tip="Search for Previous Day Flight"
         >
-          <FaCaretLeft className="lg:text-[45px] text-[20] md:text-[25px] text-cyan-500 cursor-pointer" />
+          <FaCaretLeft className="lg:text-[45px] text-[20px] md:text-[25px] text-cyan-500 cursor-pointer" />
         </div>
         <div className="font-sans font-semibold text-[20] md:text-[25px] lg:text-[32px]">
           Flights from Dhaka to Chittagong
@@ -29,7 +29,7 @@ const ShortingFlight = () => {
           className="tooltip tooltip-bottom"
           data-tip="Search for Next Day Flight"
         >
-          <FaCaretRight className="lg:text-[45px] text-[20] md:text-[25px] text-cyan-500 cursor-pointer" />
+          <FaCaretRight className="lg:text-[45px] text-[20px] md:text-[25px] text-cyan-500 cursor-pointer" />
         </div>
       </div>
       <div className="mt-14 p-5 shadow-md rounded-md flex justify-center items-center">
