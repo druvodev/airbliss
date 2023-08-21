@@ -6,7 +6,7 @@ import ShortingFlight from "../../ShortingFlight/ShortingFlight";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Loading from "../../../../Loading/Loading";
+import { setFlightInfo } from "../../../../redux/features/bookingInfoSlice";
 
 const ITEMS_PER_PAGE = 3;
 
@@ -231,7 +231,12 @@ const BookFlight = () => {
 
               <div align="center">
                 <Link to="/review">
-                  <button className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:text-cyan-600 hover:border-cyan-600 text-white rounded-md">
+                  <button
+                    onClick={() => {
+                      dispatch(setFlightInfo(singleFlight));
+                    }}
+                    className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:text-cyan-600 hover:border-cyan-600 text-white rounded-md"
+                  >
                     Book Now
                   </button>
                 </Link>
