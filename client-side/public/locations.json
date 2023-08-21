@@ -2,121 +2,169 @@
   {
     "airportName": "Shahjalal International Airport",
     "code": "DAC",
-    "destination": "Dhaka, Bangladesh"
+    "destination": "Dhaka, Bangladesh",
+    "latitude": 23.843817091566972,
+    "longitude": 90.40333289239739
   },
   {
     "airportName": "Hazrat Shah Amanat International",
     "code": "CGP",
-    "destination": "Chittagong, Bangladesh"
+    "destination": "Chittagong, Bangladesh",
+    "latitude": 22.245911700795485,
+    "longitude": 91.81503275171208
   },
   {
     "airportName": "Osmani International Airport",
     "code": "ZYL",
-    "destination": "Sylhet, Bangladesh"
+    "destination": "Sylhet, Bangladesh",
+    "latitude": 25.057973503940612,
+    "longitude": 92.21526597558456
   },
   {
     "airportName": "Jessore Airport",
     "code": "JSR",
-    "destination": "Jessore, Bangladesh"
+    "destination": "Jessore, Bangladesh",
+    "latitude": 23.177335900621337,
+    "longitude": 89.16118946540105
   },
   {
     "airportName": "Shah Makhdum Airport",
     "code": "RJH",
-    "destination": "Rajshahi, Bangladesh"
+    "destination": "Rajshahi, Bangladesh",
+    "latitude": 24.40874698732034,
+    "longitude": 88.5959105706229
   },
   {
     "airportName": "Barisal Airport",
     "code": "BZL",
-    "destination": "Barisal, Bangladesh"
+    "destination": "Barisal, Bangladesh",
+    "latitude": 22.799001025554347,
+    "longitude": 90.3001499328477
   },
   {
     "airportName": "Cox's Bazar Airport",
     "code": "CXB",
-    "destination": "Cox's Bazar, Bangladesh"
+    "destination": "Cox's Bazar, Bangladesh",
+    "latitude": 21.450957264724455,
+    "longitude": 91.9670777923476
   },
   {
     "airportName": "Lalmonirhat Airport",
     "code": "LLJ",
-    "destination": "Lalmonirhat, Bangladesh"
+    "destination": "Lalmonirhat, Bangladesh",
+    "latitude": 25.890022078117788,
+    "longitude": 89.43181290779016
   },
   {
     "airportName": "Syedpur Airport",
     "code": "SPD",
-    "destination": "Syedpur, Bangladesh"
+    "destination": "Syedpur, Bangladesh",
+    "latitude": 25.7636106972372,
+    "longitude": 88.90978633476897
   },
   {
     "airportName": "Thakurgaon Airport",
     "code": "TKZ",
-    "destination": "Thakurgaon, Bangladesh"
+    "destination": "Thakurgaon, Bangladesh",
+    "latitude": 26.016610310355436,
+    "longitude": 88.4020039194297
   },
   {
     "airportName": "Comilla Airport",
     "code": "CLA",
-    "destination": "Comilla, Bangladesh"
+    "destination": "Comilla, Bangladesh",
+    "latitude": 23.437867564178983,
+    "longitude": 91.18977229053405
   },
   {
     "airportName": "Rangpur Airport",
     "code": "RAU",
-    "destination": "Rangpur, Bangladesh"
+    "destination": "Rangpur, Bangladesh",
+    "latitude": 25.871194772898665,
+    "longitude": 88.94044269933381
   },
   {
     "airportName": "Hilli Airport",
     "code": "HIL",
-    "destination": "Sylhet, Bangladesh"
+    "destination": "Sylhet, Bangladesh",
+    "latitude": 24.95892615253409,
+    "longitude": 91.8720441711185
   },
   {
     "airportName": "Bogra Airport",
     "code": "BOG",
-    "destination": "Bogra, Bangladesh"
+    "destination": "Bogra, Bangladesh",
+    "latitude": 25.256649533328396,
+    "longitude": 89.1721491714092
   },
   {
     "airportName": "Indira Gandhi International",
     "code": "DEL",
-    "destination": "New Delhi, India"
+    "destination": "New Delhi, India",
+    "latitude": 28.556952760211257,
+    "longitude": 77.10101176367671
   },
   {
     "airportName": "CSM International Airport",
     "code": "BOM",
-    "destination": "Mumbai, India"
+    "destination": "Mumbai, India",
+    "latitude": 19.090329408897656,
+    "longitude": 72.86342024019511
   },
   {
     "airportName": "Kempegowda International",
     "code": "BLR",
-    "destination": "Bengaluru, India"
+    "destination": "Bengaluru, India",
+    "latitude": 13.199190913184355,
+    "longitude": 77.70718860571422
   },
   {
     "airportName": "Chennai International Airport",
     "code": "MAA",
-    "destination": "Chennai, India"
+    "destination": "Chennai, India",
+    "latitude": 13.194274364920137,
+    "longitude": 80.56557162288347
   },
   {
     "airportName": "NSCB International Airport",
     "code": "CCU",
-    "destination": "Kolkata, India"
+    "destination": "Kolkata, India",
+    "latitude": 23.213630742398337,
+    "longitude": 89.42012596800755
   },
   {
     "airportName": "Rajiv Gandhi International",
     "code": "HYD",
-    "destination": "Hyderabad, India"
+    "destination": "Hyderabad, India",
+    "latitude": 31.823006628297367,
+    "longitude": 81.0484021399265
   },
   {
     "airportName": "Cochin International",
     "code": "COK",
-    "destination": "Kochi, India"
+    "destination": "Kochi, India",
+    "latitude": 11.834137153642176,
+    "longitude": 76.65663080345644
   },
   {
     "airportName": "Ahmedabad International",
     "code": "AMD",
-    "destination": "Ahmedabad, India"
+    "destination": "Ahmedabad, India",
+    "latitude": 23.073584108093364,
+    "longitude": 72.62703233656245
   },
   {
     "airportName": "Pune International",
     "code": "PNQ",
-    "destination": "Pune, India"
+    "destination": "Pune, India",
+    "latitude": 18.579541308738257,
+    "longitude": 73.90918502090882
   },
   {
     "airportName": "Goa International Airport",
     "code": "GOI",
-    "destination": "Goa, India"
+    "destination": "Goa, India",
+    "latitude": 15.380555377066656,
+    "longitude": 73.83573548617584
   }
 ]
