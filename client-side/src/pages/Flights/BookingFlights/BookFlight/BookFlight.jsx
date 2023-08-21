@@ -230,7 +230,7 @@ const BookFlight = () => {
               </div>
 
               <div align="center">
-                <Link to="/review">
+                <Link to={`/review/${singleFlight?._id}`}>
                   <button
                     onClick={() => {
                       dispatch(setFlightInfo(singleFlight));
