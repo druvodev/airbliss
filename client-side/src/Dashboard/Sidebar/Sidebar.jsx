@@ -4,8 +4,9 @@ import { GrLogout } from 'react-icons/gr'
 import { FcSettings } from 'react-icons/fc'
 import logo from '../../assets/icon/airblissBlack.png'
 import { AiOutlineBars } from 'react-icons/ai'
-// import DashboardNav from './DashbordNav/DashboardNav'
 import useAuth from '../../hooks/useAuth'
+import DashboardNav from '../DashboardNav/DashboardNav'
+import AdminNav from '../DashboardNav/AdminNav/AdminNav'
 
 const Sidebar = () => {
     const navigate = useNavigate()
@@ -46,7 +47,7 @@ const Sidebar = () => {
             </div>
             {/* Sidebar */}
             <div
-                className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-cyan-50 w-64 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${isActive && '-translate-x-full'
+                className={`z-10 px-[25px] md:fixed flex flex-col justify-between overflow-x-hidden bg-cyan-50 w-64 space-y-6 py-4 absolute inset-y-0 left-0 transform ${isActive && '-translate-x-full'
                     }  md:translate-x-0  transition duration-200 ease-in-out`}
             >
                 <div>
@@ -67,7 +68,7 @@ const Sidebar = () => {
                     <div className='flex flex-col justify-between flex-1 mt-6'>
                         <nav>
                             <>
-                                {/* <DashboardNav /> */}
+                                <DashboardNav />
                             </>
                         </nav>
                     </div>
