@@ -1,10 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { FaAngleRight } from "react-icons/fa";
 
 const TrackingNavigation = () => {
   const [isCollapse, setIsCollapse] = useState(true);
+  const [data, setData] = useState();
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const flight = useSelector((state) => state.flights.flights);
+
+  const { airlineLogo, airlineName, passengerType, stopType, duration } =
+    data || {};
+  const { aircraft, cabin, checkIn, flightNumber } = data?.flightInfo || {};
+  const { airportName, city, code, date, terminal, time } =
+    data?.departure || {};
+
+  const arrive = data?.arrival || {};
+
+  useEffect(() => {
+    if (flight && flight.flights) {
+      const singleData = flight.flights.find(
+        (singleFlight) => singleFlight._id === id
+      );
+      setData(singleData);
+    }
+  }, [flight, id]);
+
+  console.log(data);
 
   return (
     <>
@@ -57,26 +81,22 @@ const TrackingNavigation = () => {
             <div className="p-5">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                  <img
-                    className="h-12 w-12"
-                    src="https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/BG.png"
-                    alt=""
-                  />
+                  <img className="h-12 w-12" src={airlineLogo} alt="" />
                   <div>
                     <p className="text-gray-400">
-                      <small>Biman Bangladesh Airlines</small>
+                      <small>{airlineName}</small>
                     </p>
                     <h1 className="text-[14px]">
-                      <b>BG | 135</b>
+                      <b>{flightNumber}</b>
                     </h1>
                     <h3 className="text-[13px]">
-                      <b>Aircraft : Boeing 777-300</b>
+                      <b>Aircraft : {aircraft}</b>
                     </h3>
                   </div>
                 </div>
 
                 <div>
-                  <h1 className="text-[16px]">Economy Class</h1>
+                  <h1 className="text-[16px]">{data?.flightInfo?.class}</h1>
                 </div>
               </div>
 
@@ -85,16 +105,16 @@ const TrackingNavigation = () => {
                 <div>
                   <h4 className="text-gray-400 text-[13px]">Depart</h4>
                   <h2 className="mt-2 text-[15px]">
-                    <strong>7:45</strong>
+                    <strong>{time}</strong>
                   </h2>
                   <p className="-mt-1 pr-2">
-                    <small>Tue, 15 Aug 2023</small>
+                    <small>{date}</small>
                   </p>
-                  <h3 className="mt-2 text-[13px]">Dhaka, Bangladesh</h3>
+                  <h3 className="mt-2 text-[13px]">{city}</h3>
                 </div>
 
                 <div align="center" className="space-y-1 pl-2 pr-2">
-                  <p className="text-gray-400 text-[14px]">45min</p>
+                  <p className="text-gray-400 text-[14px]">{duration}</p>
                   <img
                     style={{
                       WebkitFilter: "grayscale(100%)",
@@ -104,19 +124,19 @@ const TrackingNavigation = () => {
                     alt=""
                   />
                   <p>
-                    <small>Non Stop</small>
+                    <small>{stopType}</small>
                   </p>
                 </div>
 
                 <div>
                   <h4 className="text-gray-400 text-[13px]">Arrive</h4>
                   <h2 className="mt-2 text-[15px]">
-                    <strong> 8:40</strong>
+                    <strong> {arrive?.time}</strong>
                   </h2>
                   <p className="-mt-1 pr-2">
                     <small>Tue, 15 Aug 2023</small>
                   </p>
-                  <h3 className="mt-2 text-[13px]">Chittagong, Bangladesh</h3>
+                  <h3 className="mt-2 text-[13px]">{arrive?.city}</h3>
                 </div>
               </div>
             </div>
@@ -133,7 +153,9 @@ const TrackingNavigation = () => {
           <div className="w-full max-w-2lg lg:max-w-4xl  bg-white rounded-md">
             <div className="mb-2 flex justify-between items-center">
               <h2>
-                <b>Dhaka to Chittagong, 18 Aug 2023</b>
+                <b>
+                  {city} to {arrive?.city}, {date}
+                </b>
               </h2>
               <button
                 onClick={() => setIsOpen(false)}
@@ -158,20 +180,16 @@ const TrackingNavigation = () => {
 
             <div className="border-[1px] p-4 rounded-sm mt-4 mb-24">
               <div className="flex items-center gap-2">
-                <img
-                  className="h-12 w-12"
-                  src="https://airlineimages.s3.ap-southeast-1.amazonaws.com/128/BG.png"
-                  alt=""
-                />
+                <img className="h-12 w-12" src={airlineLogo} alt="" />
                 <div>
                   <p className="text-gray-400">
-                    <small>Biman Bangladesh Airlines</small>
+                    <small>{airlineName}</small>
                   </p>
                   <h1 className="text-[13px]">
-                    <b>BG | 135</b>
+                    <b>{flightNumber}</b>
                   </h1>
                   <h3 className="text-[11px]">
-                    <b>Aircraft : Boeing 777-300</b>
+                    <b>Aircraft : {aircraft}</b>
                   </h3>
                 </div>
               </div>
@@ -180,19 +198,21 @@ const TrackingNavigation = () => {
                 <div>
                   <h2 className="mt-2 text-[14px] font-semibold">Baggage</h2>
 
-                  <h6 className="mt-2 text-[11px] text-gray-400">Adult</h6>
+                  <h6 className="mt-2 text-[11px] text-gray-400">
+                    {passengerType}
+                  </h6>
                 </div>
 
                 <div>
                   <h2 className="mt-2 text-[14px] font-semibold">Check In</h2>
 
-                  <h6 className="mt-2 text-[11px] text-gray-400">20 Kg(s)</h6>
+                  <h6 className="mt-2 text-[11px] text-gray-400">{checkIn}</h6>
                 </div>
 
                 <div>
                   <h2 className="mt-2 text-[14px] font-semibold">Cabin</h2>
 
-                  <h6 className="mt-2 text-[11px] text-gray-400">7 Kg(s)</h6>
+                  <h6 className="mt-2 text-[11px] text-gray-400">{cabin}</h6>
                 </div>
               </div>
             </div>
