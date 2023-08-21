@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
         element: <Flights />,
       },
       {
-        path: "/review",
+        path: "/review/:id",
         element: <Review />,
       },
 
@@ -46,13 +46,13 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: '/dashboard',
+    path: "/dashboard",
     element: <DashboardLayout />,
     children: [
       {
-        path: 'adminHome',
-        element: <AdminHome />
-      }
-    ]
-  }
+        path: "adminHome",
+        element: <AdminHome />,
+      },
+    ],
+  },
 ]);

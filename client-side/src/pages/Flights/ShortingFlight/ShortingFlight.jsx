@@ -32,6 +32,7 @@ const ShortingFlight = () => {
           <FaCaretRight className="lg:text-[45px] text-[20px] md:text-[25px] text-cyan-500 cursor-pointer" />
         </div>
       </div>
+
       <div className="mt-14 p-5 shadow-md rounded-md flex justify-center items-center">
         <Swiper
           slidesPerView={3}

@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
+import { handlePaymentLater } from "../../../utils/handlePaymentLater";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -21,6 +22,7 @@ const TravelerDetailsForm = () => {
   const [isContinue, setContinue] = useState(false);
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userBookingInfo.userInfo); // get user information from redux
+  const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo); // get flight information from redux
 
   const {
     register,
@@ -61,7 +63,7 @@ const TravelerDetailsForm = () => {
 
   // Handle Payment Later
   const handlePayLater = () => {
-    console.log("payment later", userInfo);
+    handlePaymentLater(flightInfo, userInfo); // This function from utils
   };
 
   return (

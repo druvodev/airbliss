@@ -43,9 +43,6 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const dispatch = useDispatch();
   const flight = useSelector((state) => state.flights.flights);
 
-  console.log("rerender");
-  console.log(isModal);
-
   // Convert Date Format
   const formattedDate = (date) => {
     return format(date, "dd MMM yy");
