@@ -1,30 +1,22 @@
 import React from "react";
 
 const FlightDetails = ({ flightFullDetails }) => {
-  const {
-    flight_name,
-    flight_image,
-    destination,
-    travel_date,
-    aircraft,
-    operated_by,
-    economy_type,
-    available_seats,
-  } = flightFullDetails?.flight || {};
+  const { airlineName, airlineLogo } = flightFullDetails || {};
+  const { airportName, city, code, date, terminal, time } =
+    flightFullDetails?.departure || {};
 
-  const { time, date, terminal, airport_name, airport_address } =
-    flightFullDetails?.flight_details?.arrival || {};
+  const { aircraft, cabin, checkIn, operatedBy } =
+    flightFullDetails?.flightInfo || {};
 
-  const { travel_duration } = flightFullDetails?.flight_details || {};
+  const { duration, passengerType, stopType } = flightFullDetails || {};
 
-  const { check_in, cabin } =
-    flightFullDetails?.flight_details?.baggage_allowance || {};
+  const arrive = flightFullDetails?.arrival || {};
 
   return (
     <section className="mt-3 border-[1px] rounded-sm ">
       <h1 className=" p-3 border-b-[1px]">
         <b>
-          {destination}, {travel_date}
+          {city} to {arrive?.city}, {date}
         </b>
       </h1>
 
@@ -32,19 +24,19 @@ const FlightDetails = ({ flightFullDetails }) => {
       <section className="p-3">
         {/* Flight Profile */}
         <div className="flex gap-4 ml-3">
-          <img className="h-12 w-12" src={flight_image} alt="" />
+          <img className="h-12 w-12" src={airlineLogo} alt="" />
           <div>
             <h1>
-              <b>{flight_name}</b>
+              <b>{airlineName}</b>
             </h1>
             <h3 className="font-semibold text-[13px]">Aircraft : {aircraft}</h3>
             <h4 className="font-semibold text-[12px]">
-              Operated by : {operated_by}
+              Operated by : {operatedBy}
             </h4>
-            <h4 className="font-semibold text-[12px]">{economy_type}</h4>
             <h4 className="font-semibold text-[12px]">
-              Available seats: {available_seats}
+              {flightFullDetails?.flightInfo?.class}
             </h4>
+            <h4 className="font-semibold text-[12px]">Available seats: 10</h4>
           </div>
         </div>
 
@@ -52,28 +44,19 @@ const FlightDetails = ({ flightFullDetails }) => {
         <section className="grid grid-cols-3 ml-4 lg:grid-cols-6 mt-4 gap-6 lg:mb-1 mb-8">
           <div>
             <h2 className="mt-2 text-[15px]">
-              <strong>
-                {flightFullDetails?.flight_details?.departure?.time}
-              </strong>
+              <strong>{time}</strong>
             </h2>
             <p className="text-gray-400 mt-2">
-              <small>{travel_date}</small>
+              <small>{date}</small>
             </p>
-            <h2 className="text-[13px] font-semibold">(DAC)</h2>
-            <p className="text-gray-400 text-[13px]">
-              {flightFullDetails?.flight_details?.departure?.terminal}
-            </p>
-            <p className="text-gray-400 text-[13px]">
-              {flightFullDetails?.flight_details?.departure?.airport_name}
-            </p>
-            <p className="text-gray-400 text-[13px]">
-              {" "}
-              {flightFullDetails?.flight_details?.departure?.airport_address}
-            </p>
+            <h2 className="text-[13px] font-semibold">{code}</h2>
+            <p className="text-gray-400 text-[13px]">{terminal}</p>
+            <p className="text-gray-400 text-[13px]">{airportName}</p>
+            <p className="text-gray-400 text-[13px]"> {city}</p>
           </div>
 
           <div align="center" className="space-y-1 pl-2 pr-2">
-            <p className="text-gray-400 text-[14px]">{travel_duration}</p>
+            <p className="text-gray-400 text-[14px]">{duration}</p>
             <img
               style={{
                 WebkitFilter: "grayscale(100%)",
@@ -83,21 +66,21 @@ const FlightDetails = ({ flightFullDetails }) => {
               alt=""
             />
             <p>
-              <small>Non Stop</small>
+              <small>{stopType}</small>
             </p>
           </div>
 
           <div>
             <h2 className="mt-2 text-[15px]">
-              <strong>{time}</strong>
+              <strong>{arrive?.time}</strong>
             </h2>
             <p className="text-gray-400 mt-2">
               <small>{date}</small>
             </p>
-            <h2 className="text-[13px] font-semibold">(CGP)</h2>
-            <p className="text-gray-400 text-[13px]">{terminal}</p>
-            <p className="text-gray-400 text-[13px]">{airport_name}</p>
-            <p className="text-gray-400 text-[13px]">{airport_address}</p>
+            <h2 className="text-[13px] font-semibold">{arrive?.code}</h2>
+            <p className="text-gray-400 text-[13px]">{arrive?.terminal}</p>
+            <p className="text-gray-400 text-[13px]">{arrive?.airportName}</p>
+            <p className="text-gray-400 text-[13px]">{arrive?.city}</p>
           </div>
 
           <div>
@@ -105,7 +88,7 @@ const FlightDetails = ({ flightFullDetails }) => {
               <strong>Baggage</strong>
             </h2>
             <p className="text-gray-400 mt-1">
-              <small>Adult</small>
+              <small>{passengerType}</small>
             </p>
           </div>
 
@@ -114,7 +97,7 @@ const FlightDetails = ({ flightFullDetails }) => {
               <strong>Check In</strong>
             </h2>
             <p className="text-gray-400 mt-1">
-              <small>{check_in}</small>
+              <small>{checkIn}</small>
             </p>
           </div>
 

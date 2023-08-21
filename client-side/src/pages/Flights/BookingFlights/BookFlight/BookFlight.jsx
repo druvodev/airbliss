@@ -5,7 +5,7 @@ import FareRuls from "../FareRuls/FareRuls";
 import ShortingFlight from "../../ShortingFlight/ShortingFlight";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setFlightInfo } from "../../../../redux/features/bookingInfoSlice";
 
 const ITEMS_PER_PAGE = 3;
@@ -18,37 +18,47 @@ const BookFlight = () => {
   const [showFareRules, setShowFareRules] = useState(false);
   const [selectedButton, setSelectedButton] = useState("cheapest");
   const [flightData, setFlightData] = useState([]);
-  const [sortOrder, setSortOrder] = useState("asc");
+
   const [singleFlightDetails, setsingleFlightDetails] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [flightDetailsVisibility, setFlightDetailsVisibility] = useState({});
-  const dispatch = useDispatch(); // Store user flight information
 
+  const dispatch = useDispatch();
+  const flight = useSelector((state) => state.flights.flights);
+
+  // Move the sorting logic inside a useEffect hook to avoid infinite re-renders
   useEffect(() => {
-    fetch("booking.json")
-      .then((res) => res.json())
-      .then((data) => {
-        // Sort the fetched data by descending ticket price
-        const sortedData = data.slice(); // Create a copy of the data array
-        sortedData.sort(
-          (a, b) => b.fare_summary.ticket_price - a.fare_summary.ticket_price
-        );
-        setFlightData(sortedData);
-      });
-  }, []);
+    if (flight && flight.flights) {
+      const sortedData = flight.flights.slice();
+      sortedData.sort((a, b) => b.fareSummary.total - a.fareSummary.total);
+      setFlightData(sortedData);
+    }
+  }, [flight]);
 
-  console.log(singleFlightDetails);
+  // useEffect(() => {
+  //   fetch("booking.json")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // Sort the fetched data by descending ticket price
+  //       const sortedData = data.slice(); // Create a copy of the data array
+  //       sortedData.sort(
+  //         (a, b) => b.fare_summary.ticket_price - a.fare_summary.ticket_price
+  //       );
+  //       setFlightData(sortedData);
+  //     });
+  // }, []);
 
   const sortByTicketPrice = (sortOrder) => {
     const sortedData = [...flightData];
     sortedData.sort((a, b) => {
       if (sortOrder === "asc") {
-        return a.fare_summary.ticket_price - b.fare_summary.ticket_price;
+        return a.fareSummary.total - b.fareSummary.total;
       } else {
-        return b.fare_summary.ticket_price - a.fare_summary.ticket_price;
+        return b.fareSummary.total - a.fareSummary.total;
       }
     });
     setFlightData(sortedData);
+    console.log(sortedData);
   };
 
   const handleButtonClick = (buttonType) => {
@@ -62,6 +72,7 @@ const BookFlight = () => {
   };
 
   const handelVisible = (singleDataFlight) => {
+    setVisibleDetails(!visibleDetails);
     const flightId = singleDataFlight._id;
     setFlightDetailsVisibility((prevVisibility) => ({
       ...prevVisibility,
@@ -145,7 +156,6 @@ const BookFlight = () => {
           </button>
         </div>
       </section>
-
       {/* Flight Details Card  Container*/}
       <section className=" mt-6">
         {/* Card Design */}
@@ -159,12 +169,12 @@ const BookFlight = () => {
               <div>
                 <img
                   className="h-12 w-12"
-                  src={singleFlight?.flight?.flight_image}
+                  src={singleFlight?.airlineLogo}
                   alt=""
                 />
                 <div>
                   <p className="text-gray-400">
-                    <small>{singleFlight?.flight?.flight_name}</small>
+                    <small>{singleFlight?.airlineName}</small>
                   </p>
                 </div>
               </div>
@@ -172,21 +182,19 @@ const BookFlight = () => {
               <div>
                 <h4 className="text-gray-400 text-[13px]">Depart</h4>
                 <h2 className="mt-2 text-[15px]">
-                  <strong>
-                    {singleFlight?.flight_details?.departure?.time}
-                  </strong>
+                  <strong>{singleFlight?.departure?.time}</strong>
                 </h2>
                 <p className="-mt-1 pr-2">
-                  <small>{singleFlight?.flight?.travel_date}</small>
+                  <small>{singleFlight?.departure?.date}</small>
                 </p>
                 <h3 className="mt-2 text-[13px]">
-                  {singleFlight?.flight_details?.departure?.airport_address}
+                  {singleFlight?.departure?.airportName}
                 </h3>
               </div>
 
               <div align="center" className="space-y-1 pl-2 pr-2">
                 <p className="text-gray-400 text-[14px]">
-                  {singleFlight?.flight_details?.travel_duration}
+                  {singleFlight?.duration}
                 </p>
                 <img
                   style={{
@@ -197,30 +205,27 @@ const BookFlight = () => {
                   alt=""
                 />
                 <p>
-                  <small>Non Stop</small>
+                  <small>{singleFlight?.stopType}</small>
                 </p>
               </div>
 
               <div>
                 <h4 className="text-gray-400 text-[13px]">Arrive</h4>
                 <h2 className="mt-2 text-[15px]">
-                  <strong>
-                    {" "}
-                    {singleFlight?.flight_details?.arrival?.time}
-                  </strong>
+                  <strong> {singleFlight?.arrival?.time}</strong>
                 </h2>
                 <p className="-mt-1 pr-2">
                   <small>{singleFlight?.flight_details?.arrival?.date}</small>
                 </p>
                 <h3 className="mt-2 text-[13px]">
-                  {singleFlight?.flight_details?.arrival?.airport_address}
+                  {singleFlight?.arrival?.airportName}
                 </h3>
               </div>
 
               <div>
                 <h4 className="text-gray-400 text-[13px]">Prise</h4>
                 <h2 className="mt-2 text-[15px]">
-                  <strong>{singleFlight?.fare_summary?.ticket_price}</strong>
+                  <strong>BDT {singleFlight?.fareSummary?.total}</strong>
                 </h2>
               </div>
 
@@ -241,7 +246,7 @@ const BookFlight = () => {
             {/* View Details Section */}
             <div className="flex justify-between items-center mt-8">
               <p>
-                <small>Partially Refundable</small>
+                <small>{singleFlight?.refundableStatus}</small>
               </p>
               <p
                 onClick={() => handelVisible(singleFlight)}
@@ -291,9 +296,7 @@ const BookFlight = () => {
                   <FlightDetails flightFullDetails={singleFlightDetails} />
                 )}
                 {showFlightSummary && (
-                  <FlightSummery
-                    flightFullDetails={singleFlightDetails?.fare_summary}
-                  />
+                  <FlightSummery flightFullDetails={singleFlightDetails} />
                 )}
                 {showFareRules && (
                   <FareRuls flightFullDetails={singleFlightDetails} />
