@@ -2,8 +2,12 @@ import FareSummary from "../FareSummary/FareSummary";
 import TrackingNavigation from "../TrackingNavigation/TrackingNavigation";
 import TravelerDetailsForm from "../TravelerDetailsForm/TravelerDetailsForm";
 import banner from "../../../assets/banner/review.webp";
+import { useSelector } from "react-redux";
 
 const Review = () => {
+  const userFlightsInfo = useSelector((state) =>
+    console.log(state.userBookingInfo.flightInfo)
+  );
   return (
     <>
       <img src={banner} className="w-full h-44 object-cover" alt="" />
