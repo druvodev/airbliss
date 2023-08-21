@@ -9,6 +9,8 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -17,7 +19,8 @@ const TravelerDetailsForm = () => {
   const [secondInputValue, setSecondInputValue] = useState("");
   const [isSecondInputDisabled, setIsSecondInputDisabled] = useState(true);
   const [isContinue, setContinue] = useState(false);
-  const [userInfo, setUserInfo] = useState({});
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state) => state.userBookingInfo.userInfo); // get user information from redux
 
   const {
     register,
@@ -51,10 +54,14 @@ const TravelerDetailsForm = () => {
   }, []);
 
   const handleContinue = (data) => {
-    console.log(data);
-    setUserInfo(data);
+    dispatch(setUserInfo(data)); // stored user information in redux
     reset();
     setContinue(true);
+  };
+
+  // Handle Payment Later
+  const handlePayLater = () => {
+    console.log("payment later", userInfo);
   };
 
   return (
@@ -106,7 +113,7 @@ const TravelerDetailsForm = () => {
             </div>
             <div className="form-control mt-5 mx-5 md:mx-10">
               <label className="cursor-pointer flex items-center gap-3">
-                <input type="checkbox" className="checkbox checkbox-info" />
+                <input type="checkbox" className="checkbox checkbox-accent" />
                 <span className="">
                   By clicking Book Now or Pay Now option I agree with the
                   Airbliss{" "}
@@ -121,7 +128,10 @@ const TravelerDetailsForm = () => {
               </label>
             </div>
             <div className="mx-5 md:mx-10 flex gap-3 mt-5">
-              <button className="text-cyan-700 border w-48 border-cyan-700 hover:bg-cyan-600 hover:tracking-wide rounded-md h-[50px] hover:text-white font-semibold text-sm">
+              <button
+                onClick={handlePayLater}
+                className="text-cyan-700 border w-48 border-cyan-700 hover:bg-cyan-600 hover:tracking-wide rounded-md h-[50px] hover:text-white font-semibold text-sm"
+              >
                 Book Now (Pay Later)
               </button>
               <button className=" bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide w-48 rounded-md h-[50px] text-white font-semibold text-sm">
