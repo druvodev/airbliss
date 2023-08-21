@@ -8,6 +8,8 @@ import Contact from "../pages/Contact/Contact";
 import Terms from "../pages/Terms/Terms";
 import Refund from "../pages/Refund/Refund";
 import Review from "../pages/Review/Review/Review";
+import DashboardLayout from "../layouts/DashboardLayout";
+import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
 
 export const router = createBrowserRouter([
   {
@@ -30,17 +32,27 @@ export const router = createBrowserRouter([
 
       {
         path: "/contact",
-        element: <Contact></Contact>,
+        element: <Contact />,
       },
 
       {
         path: "/terms",
-        element: <Terms></Terms>,
+        element: <Terms />,
       },
       {
         path: "/refund",
-        element: <Refund></Refund>,
+        element: <Refund />,
       },
     ],
   },
+  {
+    path: '/dashboard',
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: 'adminHome',
+        element: <AdminHome />
+      }
+    ]
+  }
 ]);
