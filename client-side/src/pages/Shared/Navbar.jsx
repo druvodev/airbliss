@@ -189,9 +189,9 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
                   >
                     <li>
-                      <a className="text-black" href="">
+                      <Link to='/dashboard' className="text-black" href="">
                         Dashboard
-                      </a>
+                      </Link>
                     </li>
                     <li>
                       <Link className="text-black" to="/" onClick={logOut}>
