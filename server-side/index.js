@@ -15,6 +15,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+const SSLCommerzPayment = require("sslcommerz-lts");
+const store_id = process.env.STORE_ID;
+const store_passwd = process.env.STORE_PASS;
+const is_live = false; //true for live, false for sandbox
+
 const verifyJWT = (req, res, next) => {
   const authorization = req.headers.authorization;
   if (!authorization) {
@@ -62,6 +67,7 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.8vqv4om.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, {
@@ -185,8 +191,70 @@ async function run() {
       }
     });
 
-    // Save user
+    // Store booking info when user successfully
+    async function saveBookingInfoToDatabase(bookingInfo) {
+      try {
+        const bookingsCollection = database.collection("bookings");
+        const result = await bookingsCollection.insertOne(bookingInfo);
 
+        console.log("Booking info saved to database:", result.insertedId);
+      } catch (error) {
+        console.error("Error saving booking info to database:", error);
+      } finally {
+        client.close();
+      }
+    }
+    // payment processing API
+    app.post("/process-payment", async (req, res) => {
+      const bookingInfo = req.body;
+      const { user, flight } = bookingInfo;
+      const transitionId = `tr${new ObjectId()}`;
+      const data = {
+        total_amount: parseFloat(flight.fareSummary.total),
+        currency: "BDT",
+        tran_id: transitionId,
+        success_url: "http://localhost:5173/payment-success",
+        fail_url: "http://localhost:5173/payment-failed",
+        cancel_url: "http://localhost:5173/payment-cancel",
+        ipn_url: "http://localhost:5173/ipn",
+        shipping_method: "Air Flights",
+        product_name: "Airline Ticket",
+        product_category: "Flights Tickets",
+        product_profile: "Air Tickets",
+        cus_name: `${user.first_name} ${user.last_name}`,
+        cus_email: user.traveler_email,
+        cus_add1: "none",
+        cus_add2: "none",
+        cus_city: "none",
+        cus_state: "none",
+        cus_postcode: "none",
+        cus_country: user.country,
+        cus_phone: user.phone_number,
+        cus_fax: "none",
+        ship_name: "none",
+        ship_add1: "none",
+        ship_add2: "none",
+        ship_city: "none",
+        ship_state: "none",
+        ship_postcode: "none",
+        ship_country: "none",
+      };
+
+      const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
+      sslcz
+        .init(data)
+        .then((apiResponse) => {
+          let GatewayPageURL = apiResponse.GatewayPageURL;
+          res.send({ paymentUrl: GatewayPageURL });
+        })
+        .then(async () => {
+          bookingInfo.transitionId = transitionId;
+          bookingInfo.paymentStatus = "paid";
+          await saveBookingInfoToDatabase(bookingInfo);
+        });
+    });
+
+    // Save user
     app.post("/users", async (req, res) => {
       const user = req.body;
       console.log(user);
