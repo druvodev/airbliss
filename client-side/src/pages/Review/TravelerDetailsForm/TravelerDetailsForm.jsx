@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
-import { handlePaymentLater } from "../../../utils/handlePaymentLater";
+import { paymentLater, paymentProcessing } from "../../../utils/handlePayment";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -63,7 +63,12 @@ const TravelerDetailsForm = () => {
 
   // Handle Payment Later
   const handlePayLater = () => {
-    handlePaymentLater(flightInfo, userInfo); // This function from utils
+    paymentLater(flightInfo, userInfo); // This function from utils
+  };
+
+  // Handle Processing Payment
+  const handleProcessingPayment = () => {
+    paymentProcessing(flightInfo, userInfo); // This function from utils
   };
 
   return (
@@ -136,7 +141,10 @@ const TravelerDetailsForm = () => {
               >
                 Book Now (Pay Later)
               </button>
-              <button className=" bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide w-48 rounded-md h-[50px] text-white font-semibold text-sm">
+              <button
+                onClick={handleProcessingPayment}
+                className=" bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide w-48 rounded-md h-[50px] text-white font-semibold text-sm"
+              >
                 Pay Now
               </button>
             </div>
