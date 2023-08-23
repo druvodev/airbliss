@@ -69,7 +69,7 @@ const Account = () => {
                     <div className='flex justify-between '>
                         <h1 className='text-[36px] mb-7 font-semibold text-gray-900 capitalize'>Personal Information</h1>
                         <button className='btn btn-sm' onClick={switchToEditOrUpdate}>
-                            {isEdit ? 'View' : 'Edit'}
+                            {isEdit ? 'Edit' : 'view'}
                         </button>
                     </div>
                     <form onSubmit={handleSubmit}>
@@ -115,17 +115,21 @@ const Account = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="Gender" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                                        <label htmlFor="gender" className="block mb-2 font-semibold text-[#222] text-[18px]">
                                             Gender:
                                         </label>
-                                        <input
-                                            type="text"
+                                        <select
                                             name="gender"
                                             id="gender"
-                                            placeholder="Enter Your Name Here"
                                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                        />
+                                        >
+                                            <option value="">Select Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
                                     </div>
+
                                 </div>
                                 <div className='mt-8'>
                                     <div>
@@ -211,16 +215,19 @@ const Account = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="Gender" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                                        <label htmlFor="gender" className="block mb-2 font-semibold text-[#222] text-[18px]">
                                             Gender:
                                         </label>
-                                        <input
-                                            type="text"
+                                        <select
                                             name="gender"
                                             id="gender"
-                                            placeholder="Enter Your Name Here"
                                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                        />
+                                        >
+                                            <option value="">Select Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div className='mt-8'>
