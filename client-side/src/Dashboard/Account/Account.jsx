@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
+import UseAxiosSecure from '../../hooks/UseAxiosSecure';
 
 const Account = () => {
     const { user } = useAuth()
     const [isEdit, setIsEdit] = useState(true);
+    const [axiosSecure] = UseAxiosSecure()
 
     const switchToEditOrUpdate = () => {
         setIsEdit((prevMode) => !prevMode);
     };
+
+    useEffect(() => {
+        axiosSecure.get('/users')
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, [axiosSecure]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -168,8 +180,8 @@ const Account = () => {
                                             name="name"
                                             id="name"
                                             placeholder="Enter Your Name Here"
-                                                className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                                value={user?.displayName}
+                                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                            value={user?.displayName}
                                         />
                                     </div>
                                     <div>
@@ -251,14 +263,12 @@ const Account = () => {
                                         ></textarea>
                                     </div>
                                 </div>
+                                <input
+                                    className='btn bg-cyan-500 px-8 py-4 text-white rounded-md mt-5 border-2 hover:border-cyan-500 border-cyan-500 hover:bg-transparent hover:text-cyan-500'
+                                    type="submit"
+                                    value="Update"
+                                />
                             </>
-                        )}
-                        {isEdit && (
-                            <input
-                                className='btn bg-cyan-500 px-8 py-4 text-white rounded-md mt-5 border-2 hover:border-cyan-500 border-cyan-500 hover:bg-transparent hover:text-cyan-500'
-                                type="submit"
-                                value="Update"
-                            />
                         )}
                     </form>
                 </div>
