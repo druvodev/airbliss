@@ -1,5 +1,6 @@
 import { format, parseISO } from "date-fns";
 import emailjs from "@emailjs/browser";
+import useAxios from "../hooks/useAxios";
 
 const userBookingInfo = {};
 
@@ -73,14 +74,14 @@ function formatDateTime(date) {
 }
 
 //------------------------------------------- Handle Pending Payment Flights
-export const handlePaymentLater = (flightInfo, userInfo) => {
+export const paymentLater = (flightInfo, userInfo) => {
   userBookingInfo.bookingReference = generateBookingId();
   userBookingInfo.user = {
     ...userInfo,
     PNR: generatePNR(),
   };
   userBookingInfo.flight = transformFlightInfo(flightInfo);
-  userBookingInfo.status = "pending";
+  userBookingInfo.paymentStatus = "pending";
   userBookingInfo.bookingDateTime = formatDateTime(new Date());
 
   if (userBookingInfo) {
@@ -121,4 +122,36 @@ export const handlePaymentLater = (flightInfo, userInfo) => {
         }
       );
   }
+};
+
+// -----------------------------------Handle Processing Payment
+export const paymentProcessing = (flightInfo, userInfo) => {
+  userBookingInfo.bookingReference = generateBookingId();
+  userBookingInfo.user = {
+    ...userInfo,
+    PNR: generatePNR(),
+  };
+  userBookingInfo.flight = transformFlightInfo(flightInfo);
+  userBookingInfo.paymentStatus = "processing";
+  userBookingInfo.bookingDateTime = formatDateTime(new Date());
+
+  // Make a POST request using Axios from useAxios hook
+  useAxios
+    .post("/process-payment", userBookingInfo, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      if (response.data.paymentUrl) {
+        const paymentURL = response.data.paymentUrl;
+        console.log("Payment URL: ", paymentURL);
+        window.location.replace(paymentURL);
+      } else {
+        console.log("Payment Processing Failed: ", response.data);
+      }
+    })
+    .catch((error) => {
+      console.error("An error occurred during payment processing: ", error);
+    });
 };

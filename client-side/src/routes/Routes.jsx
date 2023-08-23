@@ -10,7 +10,12 @@ import Refund from "../pages/Refund/Refund";
 import Review from "../pages/Review/Review/Review";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
+<<<<<<< HEAD
 import ETicket from "../Components/Ticket/ETicket";
+=======
+import ManageUsers from "../Dashboard/Admin/ManageUsers/ManageUsers";
+import Account from "../Dashboard/Account/Account";
+>>>>>>> 6f5307d2f8f63125166b074caffd655ddeb6f5c1
 
 export const router = createBrowserRouter([
   {
@@ -58,6 +63,14 @@ export const router = createBrowserRouter([
         path: "adminHome",
         element: <AdminHome />,
       },
+      {
+        path: "manageUsers",
+        element: <ManageUsers />,
+      },
+      {
+        path: "account",
+        element: <Account />,
+      }
     ],
   },
 ]);

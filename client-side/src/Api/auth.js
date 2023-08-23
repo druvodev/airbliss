@@ -5,6 +5,7 @@ export const saveUser = async (user) => {
         email: user?.email,
         name: user?.displayName ? user.displayName : user.name,
         photo: user?.photoURL,
+        role: 'user',
     };
 
     try {
