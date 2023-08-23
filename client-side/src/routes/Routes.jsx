@@ -10,6 +10,7 @@ import Refund from "../pages/Refund/Refund";
 import Review from "../pages/Review/Review/Review";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
+import ETicket from "../Components/Ticket/ETicket";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: "/refund",
         element: <Refund />,
+      },
+      {
+        path: "/ticket",
+        element: <ETicket />,
       },
     ],
   },
