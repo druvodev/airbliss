@@ -1,13 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useAuth from '../../hooks/useAuth';
+import UseAxiosSecure from '../../hooks/UseAxiosSecure';
 
 const Account = () => {
     const { user } = useAuth()
     const [isEdit, setIsEdit] = useState(true);
+    const [axiosSecure] = UseAxiosSecure()
 
     const switchToEditOrUpdate = () => {
         setIsEdit((prevMode) => !prevMode);
     };
+
+    useEffect(() => {
+        axiosSecure.get('/users')
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    }, [axiosSecure]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -57,7 +69,7 @@ const Account = () => {
                     <div className='flex justify-between '>
                         <h1 className='text-[36px] mb-7 font-semibold text-gray-900 capitalize'>Personal Information</h1>
                         <button className='btn btn-sm' onClick={switchToEditOrUpdate}>
-                            {isEdit ? 'View' : 'Edit'}
+                            {isEdit ? 'Edit' : 'view'}
                         </button>
                     </div>
                     <form onSubmit={handleSubmit}>
@@ -103,17 +115,21 @@ const Account = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="Gender" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                                        <label htmlFor="gender" className="block mb-2 font-semibold text-[#222] text-[18px]">
                                             Gender:
                                         </label>
-                                        <input
-                                            type="text"
+                                        <select
                                             name="gender"
                                             id="gender"
-                                            placeholder="Enter Your Name Here"
                                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                        />
+                                        >
+                                            <option value="">Select Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
                                     </div>
+
                                 </div>
                                 <div className='mt-8'>
                                     <div>
@@ -168,8 +184,8 @@ const Account = () => {
                                             name="name"
                                             id="name"
                                             placeholder="Enter Your Name Here"
-                                                className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                                value={user?.displayName}
+                                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                            value={user?.displayName}
                                         />
                                     </div>
                                     <div>
@@ -199,16 +215,19 @@ const Account = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label htmlFor="Gender" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                                        <label htmlFor="gender" className="block mb-2 font-semibold text-[#222] text-[18px]">
                                             Gender:
                                         </label>
-                                        <input
-                                            type="text"
+                                        <select
                                             name="gender"
                                             id="gender"
-                                            placeholder="Enter Your Name Here"
                                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                        />
+                                        >
+                                            <option value="">Select Gender</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div className='mt-8'>
@@ -251,14 +270,12 @@ const Account = () => {
                                         ></textarea>
                                     </div>
                                 </div>
+                                <input
+                                    className='btn bg-cyan-500 px-8 py-4 text-white rounded-md mt-5 border-2 hover:border-cyan-500 border-cyan-500 hover:bg-transparent hover:text-cyan-500'
+                                    type="submit"
+                                    value="Update"
+                                />
                             </>
-                        )}
-                        {isEdit && (
-                            <input
-                                className='btn bg-cyan-500 px-8 py-4 text-white rounded-md mt-5 border-2 hover:border-cyan-500 border-cyan-500 hover:bg-transparent hover:text-cyan-500'
-                                type="submit"
-                                value="Update"
-                            />
                         )}
                     </form>
                 </div>

@@ -82,8 +82,9 @@ async function run() {
   try {
     const database = client.db("airbliss");
     const flightsCollection = database.collection("flights");
-    const usersCollection = database.collection("users");
     const bookingsCollection = database.collection("bookings");
+    const seatsCollection = database.collection("seats");
+    const usersCollection = database.collection("users");
 
     app.post("/jwt", (req, res) => {
       const user = req.body;
@@ -93,6 +94,13 @@ async function run() {
 
       res.send({ token });
     });
+
+    // Flights Get
+    app.get("/flights", async (req, res) => {
+      const result = await flightsCollection.find().toArray();
+      res.send(result);
+    });
+
 
     // Searching Flights using by destination
     app.get("/flights/search", async (req, res) => {
@@ -141,6 +149,7 @@ async function run() {
             city: fromCityData[fromCity][0].details.city,
             terminal: fromCityData[fromCity][0].details.terminal,
             airportName: fromCityData[fromCity][0].airportName,
+            seats: fromCityData[fromCity][0].totalSeats,
           };
           // Include "arrival" data from toCityData
           relevantFlightData.arrival = {
@@ -191,19 +200,49 @@ async function run() {
       }
     });
 
-    // Store booking info when user successfully
+    // Store booking info when user successfully books a flight
     async function saveBookingInfoToDatabase(bookingInfo) {
       try {
-        const bookingsCollection = database.collection("bookings");
-        const result = await bookingsCollection.insertOne(bookingInfo);
+        const bookingDate = bookingInfo.flight.departureDate;
+        const airportCode = bookingInfo.flight.departureAirport;
 
-        console.log("Booking info saved to database:", result.insertedId);
+        // check if the bookingDate exists
+        const existingDateEntry = await bookingsCollection.findOne({
+          [bookingDate]: { $exists: true },
+        });
+
+        if (existingDateEntry) {
+          //if the airportCode exists in the existingDateEntry
+          if (existingDateEntry[bookingDate][airportCode]) {
+            // if the airportCode exists then push the new bookingInfo into the array
+            existingDateEntry[bookingDate][airportCode].push(bookingInfo);
+          } else {
+            // if the airportCode does not exist then create a new array with bookingInfo
+            existingDateEntry[bookingDate][airportCode] = [bookingInfo];
+          }
+
+          // update the existing entry in the collection
+          await bookingsCollection.updateOne(
+            { [bookingDate]: { $exists: true } },
+            { $set: existingDateEntry }
+          );
+        } else {
+          // if the bookingDate does not exist then create a new entry with bookingInfo
+          const newEntry = {
+            [bookingDate]: {
+              [airportCode]: [bookingInfo],
+            },
+          };
+          await bookingsCollection.insertOne(newEntry);
+        }
+        console.log("Booking info saved to database.");
       } catch (error) {
         console.error("Error saving booking info to database:", error);
       } finally {
-        client.close();
+        // Todo----client.close();
       }
     }
+
     // payment processing API
     app.post("/process-payment", async (req, res) => {
       const bookingInfo = req.body;
@@ -213,10 +252,10 @@ async function run() {
         total_amount: parseFloat(flight.fareSummary.total),
         currency: "BDT",
         tran_id: transitionId,
-        success_url: "http://localhost:5173/payment-success",
-        fail_url: "http://localhost:5173/payment-failed",
-        cancel_url: "http://localhost:5173/payment-cancel",
-        ipn_url: "http://localhost:5173/ipn",
+        success_url: `http://localhost:5000/booking-confirmed/${bookingInfo.bookingReference}`,
+        fail_url: "http://localhost:5000/booking-failed",
+        cancel_url: "http://localhost:5000/booking-cancel",
+        ipn_url: "http://localhost:5000/ipn",
         shipping_method: "Air Flights",
         product_name: "Airline Ticket",
         product_category: "Flights Tickets",
@@ -252,6 +291,55 @@ async function run() {
           bookingInfo.paymentStatus = "paid";
           await saveBookingInfoToDatabase(bookingInfo);
         });
+      app.post("/booking-confirmed/:bookingId", async (req, res) => {
+        res.redirect(
+          `http://localhost:5173/booking-confirmed/${req.params.bookingId}`
+        );
+      });
+    });
+
+    // get specific bookings information
+    app.get("/bookings/:bookingReference", async (req, res) => {
+      const bookingReference = req.params.bookingReference;
+
+      try {
+        const bookings = await bookingsCollection.find().toArray();
+
+        let foundBooking = null;
+
+        for (const booking of bookings) {
+          for (const dateKey in booking) {
+            for (const airportCodeKey in booking[dateKey]) {
+              const bookingObj = booking[dateKey][airportCodeKey][0];
+              if (bookingObj.bookingReference === bookingReference) {
+                foundBooking = bookingObj;
+                break;
+              }
+            }
+            if (foundBooking) {
+              break;
+            }
+          }
+          if (foundBooking) {
+            break;
+          }
+        }
+
+        if (foundBooking) {
+          res.json(foundBooking);
+        } else {
+          res.status(404).json({ message: "Booking not found" });
+        }
+      } catch (err) {
+        console.error("Error fetching booking:", err);
+        res.status(500).json({ error: "An error occurred" });
+      }
+    });
+
+    // get users
+    app.get("/bookings", async (req, res) => {
+      const result = await bookingsCollection.find().toArray();
+      res.send(result);
     });
 
     // Save user
@@ -275,7 +363,7 @@ async function run() {
     });
 
     // // Send a ping to confirm a successful connection
-    // await client.db("admin").command({ ping: 0 });
+    await client.db("admin").command({ ping: 0 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );

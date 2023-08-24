@@ -10,8 +10,10 @@ import Refund from "../pages/Refund/Refund";
 import Review from "../pages/Review/Review/Review";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
+import ETicket from "../Components/Ticket/ETicket";
 import ManageUsers from "../Dashboard/Admin/ManageUsers/ManageUsers";
 import Account from "../Dashboard/Account/Account";
+import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +47,10 @@ export const router = createBrowserRouter([
         path: "/refund",
         element: <Refund />,
       },
+      {
+        path: "/booking-confirmed/:bookingId",
+        element: <ETicket />,
+      },
     ],
   },
   {
@@ -62,6 +68,10 @@ export const router = createBrowserRouter([
       {
         path: "account",
         element: <Account />,
+      },
+      {
+        path: "flightStatus",
+        element: <FlightStatus></FlightStatus>,
       },
     ],
   },
