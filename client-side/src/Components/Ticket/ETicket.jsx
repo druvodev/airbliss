@@ -164,7 +164,7 @@ const ETicket = () => {
             </div>
             <div className="md:flex md:w-[45px] items-center justify-center">
               <span className="-rotate-90  font-semibold px-2 whitespace-nowrap text-lg uppercase">
-                AUG23TD7OX4
+                XXXXXXXXX
               </span>
             </div>
             <div className="p-2 md:border-r-4 pr-10 border-white border-dotted">
@@ -176,21 +176,21 @@ const ETicket = () => {
               <div className="flex gap-5 pb-2 border-b-2 border-white border-dotted ">
                 <div>
                   <p>Boarding Time</p>
-                  <p className="font-semibold">09.00 AM</p>
+                  <p className="font-semibold">XX.XX AM</p>
                 </div>
                 <div>
                   <p>Gate</p>
-                  <p className="font-semibold">12</p>
+                  <p className="font-semibold">XX</p>
                 </div>
                 <div>
                   <p>Flight</p>
-                  <p className="font-semibold">A1 234</p>
+                  <p className="font-semibold">XX XXX</p>
                 </div>
               </div>
               <div className="flex gap-11 pb-2 border-b-2 border-white border-dotted ">
                 <div>
                   <p>Date</p>
-                  <p className="font-semibold">15.12.2023</p>
+                  <p className="font-semibold">XX.XX.XXXX</p>
                 </div>
                 <div>
                   <p>From</p>
@@ -204,11 +204,11 @@ const ETicket = () => {
               <div className="flex gap-[92px]">
                 <div>
                   <p>Seat</p>
-                  <p className="font-semibold">12</p>
+                  <p className="font-semibold">XX</p>
                 </div>
                 <div>
                   <p>Group</p>
-                  <p className="font-semibold">D</p>
+                  <p className="font-semibold">X</p>
                 </div>
               </div>
             </div>
