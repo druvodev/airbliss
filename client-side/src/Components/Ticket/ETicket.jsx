@@ -82,7 +82,6 @@ const ETicket = () => {
       <h2 className="text-2xl font-bold text-center pt-20 md:text-3xl">
         E-Ticket
       </h2>
-      <img src={img} alt="" />
       <div id="downloadTicket">
         <div className="px-4 pt-16  md:px-6 ">
           <div className="md:flex overflow-x-auto md:justify-between border-cyan-700 md:rounded-lg pr-0 max-w-4xl mx-auto bg-base-100 border-2">
