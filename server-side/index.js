@@ -15,6 +15,11 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+const SSLCommerzPayment = require("sslcommerz-lts");
+const store_id = process.env.STORE_ID;
+const store_passwd = process.env.STORE_PASS;
+const is_live = false; //true for live, false for sandbox
+
 const verifyJWT = (req, res, next) => {
   const authorization = req.headers.authorization;
   if (!authorization) {
@@ -62,6 +67,7 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.8vqv4om.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, {
@@ -76,8 +82,9 @@ async function run() {
   try {
     const database = client.db("airbliss");
     const flightsCollection = database.collection("flights");
-    const usersCollection = database.collection("users");
     const bookingsCollection = database.collection("bookings");
+    const seatsCollection = database.collection("seats");
+    const usersCollection = database.collection("users");
 
     app.post("/jwt", (req, res) => {
       const user = req.body;
@@ -86,6 +93,57 @@ async function run() {
       });
 
       res.send({ token });
+    });
+
+    // Flights Get
+    app.get("/flights", async (req, res) => {
+      const result = await flightsCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.get("/flights", async (req, res) => {
+      const result = await flightsCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.post("/add_flight/:id", async (req, res) => {
+      const id = req.params.id;
+      const formAirportCode = req.query.airportCode;
+      const newFlightObject = req.body;
+
+      try {
+        const findFlight = await flightsCollection.find().toArray();
+        const singleFlight = findFlight.find(
+          (flight) => flight._id.toString() === id
+        );
+
+        if (!singleFlight) {
+          return res.status(404).send("Flight not found");
+        }
+
+        if (!(formAirportCode in singleFlight)) {
+          return res.status(400).send("Invalid airport code");
+        }
+
+        singleFlight[formAirportCode].push(newFlightObject);
+
+        const result = await flightsCollection.updateOne(
+          {
+            [formAirportCode]: {
+              $exists: true,
+            },
+          },
+
+          { $push: { [formAirportCode]: newFlightObject } } // removed unnecessary template string
+        );
+
+        console.log("Single Flight:", singleFlight);
+
+        res.send(result);
+      } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("An error occurred");
+      }
     });
 
     // Searching Flights using by destination
@@ -135,6 +193,7 @@ async function run() {
             city: fromCityData[fromCity][0].details.city,
             terminal: fromCityData[fromCity][0].details.terminal,
             airportName: fromCityData[fromCity][0].airportName,
+            seats: fromCityData[fromCity][0].totalSeats,
           };
           // Include "arrival" data from toCityData
           relevantFlightData.arrival = {
@@ -185,8 +244,149 @@ async function run() {
       }
     });
 
-    // Save user
+    // Store booking info when user successfully books a flight
+    async function saveBookingInfoToDatabase(bookingInfo) {
+      try {
+        const bookingDate = bookingInfo.flight.departureDate;
+        const airportCode = bookingInfo.flight.departureAirport;
 
+        // check if the bookingDate exists
+        const existingDateEntry = await bookingsCollection.findOne({
+          [bookingDate]: { $exists: true },
+        });
+
+        if (existingDateEntry) {
+          //if the airportCode exists in the existingDateEntry
+          if (existingDateEntry[bookingDate][airportCode]) {
+            // if the airportCode exists then push the new bookingInfo into the array
+            existingDateEntry[bookingDate][airportCode].push(bookingInfo);
+          } else {
+            // if the airportCode does not exist then create a new array with bookingInfo
+            existingDateEntry[bookingDate][airportCode] = [bookingInfo];
+          }
+
+          // update the existing entry in the collection
+          await bookingsCollection.updateOne(
+            { [bookingDate]: { $exists: true } },
+            { $set: existingDateEntry }
+          );
+        } else {
+          // if the bookingDate does not exist then create a new entry with bookingInfo
+          const newEntry = {
+            [bookingDate]: {
+              [airportCode]: [bookingInfo],
+            },
+          };
+          await bookingsCollection.insertOne(newEntry);
+        }
+        console.log("Booking info saved to database.");
+      } catch (error) {
+        console.error("Error saving booking info to database:", error);
+      } finally {
+        // Todo----client.close();
+      }
+    }
+
+    // payment processing API
+    app.post("/process-payment", async (req, res) => {
+      const bookingInfo = req.body;
+      const { user, flight } = bookingInfo;
+      const transitionId = `tr${new ObjectId()}`;
+      const data = {
+        total_amount: parseFloat(flight.fareSummary.total),
+        currency: "BDT",
+        tran_id: transitionId,
+        success_url: `http://localhost:5000/booking-confirmed/${bookingInfo.bookingReference}`,
+        fail_url: "http://localhost:5000/booking-failed",
+        cancel_url: "http://localhost:5000/booking-cancel",
+        ipn_url: "http://localhost:5000/ipn",
+        shipping_method: "Air Flights",
+        product_name: "Airline Ticket",
+        product_category: "Flights Tickets",
+        product_profile: "Air Tickets",
+        cus_name: `${user.first_name} ${user.last_name}`,
+        cus_email: user.traveler_email,
+        cus_add1: "none",
+        cus_add2: "none",
+        cus_city: "none",
+        cus_state: "none",
+        cus_postcode: "none",
+        cus_country: user.country,
+        cus_phone: user.phone_number,
+        cus_fax: "none",
+        ship_name: "none",
+        ship_add1: "none",
+        ship_add2: "none",
+        ship_city: "none",
+        ship_state: "none",
+        ship_postcode: "none",
+        ship_country: "none",
+      };
+
+      const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live);
+      sslcz
+        .init(data)
+        .then((apiResponse) => {
+          let GatewayPageURL = apiResponse.GatewayPageURL;
+          res.send({ paymentUrl: GatewayPageURL });
+        })
+        .then(async () => {
+          bookingInfo.transitionId = transitionId;
+          bookingInfo.paymentStatus = "paid";
+          await saveBookingInfoToDatabase(bookingInfo);
+        });
+      app.post("/booking-confirmed/:bookingId", async (req, res) => {
+        res.redirect(
+          `http://localhost:5173/booking-confirmed/${req.params.bookingId}`
+        );
+      });
+    });
+
+    // get specific bookings information
+    app.get("/bookings/:bookingReference", async (req, res) => {
+      const bookingReference = req.params.bookingReference;
+
+      try {
+        const bookings = await bookingsCollection.find().toArray();
+
+        let foundBooking = null;
+
+        for (const booking of bookings) {
+          for (const dateKey in booking) {
+            for (const airportCodeKey in booking[dateKey]) {
+              const bookingObj = booking[dateKey][airportCodeKey][0];
+              if (bookingObj.bookingReference === bookingReference) {
+                foundBooking = bookingObj;
+                break;
+              }
+            }
+            if (foundBooking) {
+              break;
+            }
+          }
+          if (foundBooking) {
+            break;
+          }
+        }
+
+        if (foundBooking) {
+          res.json(foundBooking);
+        } else {
+          res.status(404).json({ message: "Booking not found" });
+        }
+      } catch (err) {
+        console.error("Error fetching booking:", err);
+        res.status(500).json({ error: "An error occurred" });
+      }
+    });
+
+    // get users
+    app.get("/bookings", async (req, res) => {
+      const result = await bookingsCollection.find().toArray();
+      res.send(result);
+    });
+
+    // Save user
     app.post("/users", async (req, res) => {
       const user = req.body;
       console.log(user);
@@ -207,7 +407,7 @@ async function run() {
     });
 
     // // Send a ping to confirm a successful connection
-    // await client.db("admin").command({ ping: 0 });
+    await client.db("admin").command({ ping: 0 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"
     );

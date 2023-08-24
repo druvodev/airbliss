@@ -1,10 +1,10 @@
 import PopUpOffer from "../../../Components/PopUpOffer/PopUpOffer";
+
 import Hero from "../Hero/Hero";
 import HotDeals from "../HotDeals/HotDeals";
 import HotelDiscount from "../HotelDiscount/HotelDiscount";
 import OurServices from "../OurServices/OurServices";
 import RecommendedFlights from "../RecommendedFlight/RecommendedFlights";
-import Weather from "../Weather/Weather";
 
 const Home = () => {
   return (

@@ -17,7 +17,7 @@ const AdminNav = () => {
                 <span className='mx-4 font-medium'>Admin Home</span>
             </NavLink>
             <NavLink
-                to='users'
+                to='manageUsers'
                 className={({ isActive }) =>
                     `flex items-center rounded-md px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-cyan-300   hover:text-gray-700 ${isActive ? 'bg-cyan-300  text-gray-700' : 'text-gray-600'
                     }`
@@ -39,7 +39,7 @@ const AdminNav = () => {
                 <span className='mx-4 font-medium'>Add Flight</span>
             </NavLink>
             <NavLink
-                to='manageFlight'
+                to='flightStatus'
                 className={({ isActive }) =>
                     `flex items-center rounded-md px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-cyan-300   hover:text-gray-700 ${isActive ? 'bg-cyan-300  text-gray-700' : 'text-gray-600'
                     }`
@@ -50,7 +50,7 @@ const AdminNav = () => {
                 <span className='mx-4 font-medium'>Manage Flight</span>
             </NavLink>
             <NavLink
-                to='Account'
+                to='account'
                 className={({ isActive }) =>
                     `flex items-center rounded-md px-4 py-2 mt-5  transition-colors duration-300 transform  hover:bg-cyan-300   hover:text-gray-700 ${isActive ? 'bg-cyan-300  text-gray-700' : 'text-gray-600'
                     }`

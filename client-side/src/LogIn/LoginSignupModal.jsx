@@ -5,6 +5,7 @@ import { FaFacebook, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../providers/AuthProvider";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { toast } from "react-hot-toast";
+import { saveUser } from "../Api/auth";
 
 const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
   const { user } = useContext(AuthContext);
@@ -55,6 +56,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
             updateUserProfile(name, imageUrl)
               .then(() => {
                 toast.success("User Created Successfully");
+                saveUser(result.user)
                 navigate(from, { replace: true });
               })
               .catch((err) => {
@@ -87,6 +89,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signIn(email, password)
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false);
       })
@@ -101,6 +104,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signInWithGoogle()
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false);
       })
@@ -115,6 +119,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signInWithFacebook()
       .then((result) => {
         console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false);
       })
@@ -127,7 +132,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-75 bg-gray-900">
-      <div className="modal-container h-[95%] bg-white rounded-lg lg:w-[830px] relative overflow-hidden">
+      <div className="modal-container h-fit bg-white rounded-lg lg:w-[830px] relative overflow-hidden">
         <button
           onClick={onClose}
           // className="text-red-500 z-50 hover:text-gray-700 absolute top-4 right-4"
@@ -321,7 +326,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
           </div>
           <div className="hidden md:flex flex-col">
             <LogInSlider />
-            <Link className="flex justify-center mb-14 mt-2">
+            <Link className="flex justify-center mt-2">
               <button className="text-cyan-500 btn btn-sm btn-outline hover:bg-cyan-500 hover:text-white hover:border-cyan-500 my-5">
                 Learn about Our Service
               </button>

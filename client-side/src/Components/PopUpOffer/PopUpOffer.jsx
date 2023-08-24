@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./PopUpOffer.css";
 import LoginSignupModal from "../../LogIn/LoginSignupModal";
 import { FaTimesCircle } from "react-icons/fa";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const PopUpOffer = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+
+  const { user } = useContext(AuthContext);
 
   const closePopup = () => {
     setShowPopup(false);
@@ -23,7 +26,7 @@ const PopUpOffer = () => {
 
   return (
     <>
-      {showPopup && (
+      {!user && showPopup && (
         <div className="popup-container">
           <div className="popup">
             <img
@@ -34,16 +37,14 @@ const PopUpOffer = () => {
             <button onClick={closePopup} className="popup-close-btn">
               <FaTimesCircle />
             </button>
-            <button
-              onClick={() => setIsLoginSignupModalOpen(true)}
-              className="get-discount"
-            >
+            <button onClick={() => setOpenModal(true)} className="get-discount">
               Get Discount
             </button>
           </div>
-          {isLoginSignupModalOpen && (
+          {openModal && (
             <LoginSignupModal
-              onClose={() => setIsLoginSignupModalOpen(false)}
+              setIsLoginSignupModalOpen={setOpenModal}
+              onClose={() => setOpenModal(false)}
             />
           )}
         </div>
