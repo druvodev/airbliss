@@ -1,6 +1,9 @@
 import React from 'react';
 
-const View = () => {
+const View = ({ currentUser }) => {
+
+    const {name, photo, role, email, about, dateOfBirth, gender, occupation, phone} = currentUser || {};
+
     return (
         <>
             <form>
@@ -14,7 +17,8 @@ const View = () => {
                             name="name"
                             id="name"
                             placeholder="Enter Your Name Here"
-                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            className="w-full border-none px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            value={name}
                         />
                     </div>
                     <div>
@@ -26,7 +30,8 @@ const View = () => {
                             name="occupation"
                             id="occupation"
                             placeholder="Enter Your Occupation Here"
-                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            className="w-full border-none px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            value={occupation}
                         />
                     </div>
                 </div>
@@ -40,7 +45,8 @@ const View = () => {
                             name="dateOfBirth"
                             id="dateOfBirth"
                             placeholder="Enter Your Name Here"
-                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            className="w-full border-none px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            value={dateOfBirth}
                         />
                     </div>
                     <div>
@@ -50,7 +56,8 @@ const View = () => {
                         <select
                             name="gender"
                             id="gender"
-                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            className="w-full border-none px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            value={gender}
                         >
                             <option value="">Select Gender</option>
                             <option value="male">Male</option>
@@ -70,8 +77,9 @@ const View = () => {
                             name="email"
                             id="email"
                             placeholder="Enter Your Email Here"
-                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            className="w-full border-none px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
                             data-temp-mail-org="0"
+                            value={email}
                         />
                     </div>
                     <div className='mt-8'>
@@ -83,7 +91,8 @@ const View = () => {
                             name="phone"
                             id="phone"
                             placeholder="Enter Your Phone Here"
-                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            className="w-full border-none px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            value={phone}
                         />
                     </div>
                     <div className='mt-8'>
@@ -94,7 +103,8 @@ const View = () => {
                             name="about"
                             id="about"
                             placeholder="Enter Your Cover Letter Here"
-                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            className="w-full border-none px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            value={about}
                             cols="30"
                             rows="5"
                         ></textarea>
