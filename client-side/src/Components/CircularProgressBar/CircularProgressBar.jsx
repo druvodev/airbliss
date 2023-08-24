@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./circularProgressBar.css";
 
 const CircularProgressBar = ({ val, icon }) => {
-  const [progressStartValue, setProgressStartValue] = useState(0);
-  const progressEndValue = val;
-  const speed = 20;
+  let [progressStartValue, setProgressStartValue] = useState(0);
+  let progressEndValue = val;
+  let speed = 20;
 
   useEffect(() => {
     const progress = setInterval(() => {

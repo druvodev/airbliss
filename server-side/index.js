@@ -101,6 +101,50 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/flights", async (req, res) => {
+      const result = await flightsCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.post("/add_flight/:id", async (req, res) => {
+      const id = req.params.id;
+      const formAirportCode = req.query.airportCode;
+      const newFlightObject = req.body;
+
+      try {
+        const findFlight = await flightsCollection.find().toArray();
+        const singleFlight = findFlight.find(
+          (flight) => flight._id.toString() === id
+        );
+
+        if (!singleFlight) {
+          return res.status(404).send("Flight not found");
+        }
+
+        if (!(formAirportCode in singleFlight)) {
+          return res.status(400).send("Invalid airport code");
+        }
+
+        singleFlight[formAirportCode].push(newFlightObject);
+
+        const result = await flightsCollection.updateOne(
+          {
+            [formAirportCode]: {
+              $exists: true,
+            },
+          },
+
+          { $push: { [formAirportCode]: newFlightObject } } // removed unnecessary template string
+        );
+
+        console.log("Single Flight:", singleFlight);
+
+        res.send(result);
+      } catch (error) {
+        console.error("Error:", error);
+        res.status(500).send("An error occurred");
+      }
+    });
 
     // Searching Flights using by destination
     app.get("/flights/search", async (req, res) => {
