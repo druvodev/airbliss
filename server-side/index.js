@@ -95,6 +95,13 @@ async function run() {
       res.send({ token });
     });
 
+    // Flights Get
+    app.get("/flights", async (req, res) => {
+      const result = await flightsCollection.find().toArray();
+      res.send(result);
+    });
+
+
     // Searching Flights using by destination
     app.get("/flights/search", async (req, res) => {
       const { fromCity, toCity, departureDate } = req.query;

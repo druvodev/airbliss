@@ -13,6 +13,7 @@ import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
 import ETicket from "../Components/Ticket/ETicket";
 import ManageUsers from "../Dashboard/Admin/ManageUsers/ManageUsers";
 import Account from "../Dashboard/Account/Account";
+import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
 
 export const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ export const router = createBrowserRouter([
         path: "account",
         element: <Account />,
       },
+      {
+        path: "flightStatus",
+        element: <FlightStatus></FlightStatus>
+      }
     ],
   },
 ]);
