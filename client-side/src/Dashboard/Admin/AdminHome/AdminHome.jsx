@@ -81,6 +81,7 @@ const AdminHome = () => {
                 <p className="text-lg font-semibold">Total User</p>
                 <h2 className="text-2xl font-bold">536</h2>
               </div>
+              {/* <CircularProgressBar /> */}
               <div
                 className="radial-progress text-cyan-600"
                 style={{ "--value": 70 }}
