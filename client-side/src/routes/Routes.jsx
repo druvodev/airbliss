@@ -10,6 +10,7 @@ import Refund from "../pages/Refund/Refund";
 import Review from "../pages/Review/Review/Review";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
+import AddFlight from "../Dashboard/Admin/AddFlights/AddFlight/AddFlight";
 
 export const router = createBrowserRouter([
   {
@@ -52,6 +53,11 @@ export const router = createBrowserRouter([
       {
         path: "adminHome",
         element: <AdminHome />,
+      },
+
+      {
+        path: "addFlight",
+        element: <AddFlight />,
       },
     ],
   },
