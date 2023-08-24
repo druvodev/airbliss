@@ -18,6 +18,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import CircularProgressBar from "../../../Components/CircularProgressBar/CircularProgressBar";
 
 const AdminHome = () => {
   const data = [
@@ -81,13 +82,13 @@ const AdminHome = () => {
                 <p className="text-lg font-semibold">Total User</p>
                 <h2 className="text-2xl font-bold">536</h2>
               </div>
-              {/* <CircularProgressBar /> */}
-              <div
+              <CircularProgressBar val="65" />
+              {/* <div
                 className="radial-progress text-cyan-600"
                 style={{ "--value": 70 }}
               >
                 <FaUserAlt />
-              </div>
+              </div> */}
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
@@ -191,41 +192,6 @@ const AdminHome = () => {
               />
             </AreaChart>
           </ResponsiveContainer>
-          {/* <ResponsiveContainer width="100%" height="80%">
-            <AreaChart
-              data={data}
-              margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
-            >
-              <defs>
-                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-                </linearGradient>
-                <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                  <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="name" />
-              <YAxis />
-              <CartesianGrid strokeDasharray="3 3" />
-              <Tooltip />
-              <Area
-                type="monotone"
-                dataKey="uv"
-                stroke="#8884d8"
-                fillOpacity={1}
-                fill="url(#colorUv)"
-              />
-              <Area
-                type="monotone"
-                dataKey="pv"
-                stroke="#82ca9d"
-                fillOpacity={1}
-                fill="url(#colorPv)"
-              />
-            </AreaChart>
-          </ResponsiveContainer> */}
         </div>
       </div>
     </section>

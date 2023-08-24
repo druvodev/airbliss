@@ -1,29 +1,28 @@
 import React from "react";
 import "./circularProgressBar.css";
 
-const CircularProgressBar = () => {
-  return (
-    <div className="circularProgress flex items-center justify-center">
-      <div className="outer">
-        <div className="inner">
-          <div id="number">65%</div>
-        </div>
-      </div>
+const CircularProgressBar = ({ val }) => {
+  let progressCircular = document.querySelector(".circularProgress");
+  let value = document.querySelector(".value");
+  let start = 0;
+  const newValue = val;
 
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-        width="80px"
-        height="80px"
-      >
-        <defs>
-          <linearGradient id="GradientColor">
-            <stop offset="0%" stop-color="#e91e63" />
-            <stop offset="100%" stop-color="#673ab7" />
-          </linearGradient>
-        </defs>
-        <circle cx="42" cy="42" r="32" stroke-linecap="round" />
-      </svg>
+  //   console.log(val);
+
+  function handleCircularProgress() {
+    let progress = setInterval(() => {
+      start++;
+      console.log(start);
+      console.log(newValue);
+      if (start == val) {
+        clearInterval(progress);
+      }
+    });
+  }
+
+  return (
+    <div className="circularProgress">
+      <span className="value">{val}%</span>
     </div>
   );
 };

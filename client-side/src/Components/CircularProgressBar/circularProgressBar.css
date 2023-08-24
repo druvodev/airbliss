@@ -1,50 +1,26 @@
 .circularProgress{
-    width: 80px;
-    height: 80px;
-    /* background: cornflowerblue; */
     position: relative;
-}
-.outer{
     width: 80px;
-    height: 80px;
+    height: 80px; 
     border-radius: 50%;
-    /* border: 1px solid red; */
-    box-shadow: 4px 4px 6px -1px rgba(0,0,0,0.15),
-                -4px -4px 6px -1px rgba(255,255,255,0.7);
-    padding: 9px;
+    background: conic-gradient(#08889c 30deg, #ededed 0deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
 }
 
-.inner{
-   height: 60px;
+.circularProgress::after{
+   position: absolute; 
+   content: "";
    width: 60px;
+   height: 60px;
    border-radius: 50%;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   /* border: 1px solid red; */
-   box-shadow: inset 3px 3px 5px -1px rgba(0,0,0,0.2),
-               inset -3px -3px 5px -1px rgba(255,255,255,0.7),
-               -0.5px -0.5px 0px rgba(255,255,255,1),
-               0.5px 0.5px 0px rgba(0,0,0,0.15),
-               0px 8px 6px -6px rgba(0,0,0,0.05);
-   
+   background: #fff;
 }
-
-#number{
+.value{
+    font-size: 20px;
     font-weight: 600;
-    color: #555;
-}
-
-circle{
-    fill: none;
-    stroke: url(#GradientColor);
-    stroke-width: 10px;
-    stroke-dasharray: 400;
-    stroke-dashoffset: 0;
-}
-
-svg{
-    position:absolute;
-    top: 0;
-    left: 0;
+    color: #08889c;
+    z-index: 9;
 }
