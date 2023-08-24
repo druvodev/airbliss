@@ -1,23 +1,69 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import DomToImage from "dom-to-image";
-import jsPDF from "jspdf";
+import { useSelector } from "react-redux";
 
 const ETicket = () => {
-  const generateImage = () => {
-    const content = document.getElementById("downloadTicket");
-    if (content) {
-      DomToImage.toBlob(content).then(function (blob) {
-        const link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "ticket.png";
-        link.click();
-        console.log(link);
-      });
+  const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo);
+  const userInfo = useSelector((state) => state.userBookingInfo.userInfo);
+
+  console.log(flightInfo, userInfo, "mybooking");
+
+  const [img, setImg] = useState(null);
+  const [isDownload, setDownload] = useState("download");
+
+  useEffect(() => {
+    const generateImage = () => {
+      const content = document.getElementById("downloadTicket");
+      if (content) {
+        DomToImage.toBlob(content).then(function (blob) {
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "ticket.png";
+          link.click();
+          setImg(blob);
+        });
+      }
+    };
+    generateImage();
+    uploadToImgBB();
+  }, [isDownload]);
+  const uploadToImgBB = () => {
+    if (img) {
+      const formData = new FormData();
+      formData.append("image", img);
+
+      fetch(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data); // You can handle the response from ImgBB here
+        })
+        .catch((error) => {
+          console.error("Error uploading image:", error);
+        });
     }
   };
 
-  // // GeneratePDF
+  // const generateImage = () => {
+  //   const content = document.getElementById("downloadTicket");
+  //   if (content) {
+  //     DomToImage.toBlob(content).then(function (blob) {
+  //       const link = document.createElement("a");
+  //       link.href = URL.createObjectURL(blob);
+  //       link.download = "ticket.png";
+  //       link.click();
+  //       setImg(link);
+  //     });
+  //   }
+  // };
+
+  // GeneratePDF
   // const generatePDF = () => {
   //   const content = document.getElementById("downloadTicket");
   //   if (content) {
@@ -223,7 +269,9 @@ const ETicket = () => {
       <div className="flex justify-center">
         <button
           className="btn bg-cyan-600 -mt-12 mb-24 text-white hover:bg-cyan-800"
-          onClick={generateImage}
+          onClick={() => {
+            uploadToImgBB, setDownload(new Date());
+          }}
         >
           Download Ticket
         </button>
