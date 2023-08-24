@@ -12,6 +12,8 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
+  ReferenceLine,
+  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
@@ -20,54 +22,55 @@ import {
 const AdminHome = () => {
   const data = [
     {
-      name: "January",
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: "February",
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: "March",
+      month: "January",
       uv: 2000,
       pv: 9800,
       amt: 2290,
     },
     {
-      name: "April",
+      month: "February",
       uv: 2780,
       pv: 3908,
       amt: 2000,
     },
     {
-      name: "May",
+      month: "March",
       uv: 1890,
       pv: 4800,
       amt: 2181,
     },
     {
-      name: "June",
+      month: "April",
       uv: 2390,
       pv: 3800,
       amt: 2500,
     },
     {
-      name: "July",
+      month: "May",
       uv: 3490,
       pv: 4300,
       amt: 2100,
     },
     {
-      name: "August",
-      uv: 3790,
-      pv: 4100,
+      month: "June",
+      uv: 3690,
+      pv: 4300,
+      amt: 2100,
+    },
+    {
+      month: "July",
+      uv: 3390,
+      pv: 4300,
+      amt: 2100,
+    },
+    {
+      month: "August",
+      uv: 3590,
+      pv: 4300,
       amt: 2100,
     },
   ];
+
   return (
     <section>
       <div>
@@ -147,42 +150,81 @@ const AdminHome = () => {
             </div>
           </div>
         </div>
-        <div className="mt-20 w-full">
-          <AreaChart
-            width={1024}
-            height={250}
-            data={data}
-            margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-          >
-            <defs>
-              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip />
-            <Area
-              type="monotone"
-              dataKey="uv"
-              stroke="#8884d8"
-              fillOpacity={1}
-              fill="url(#colorUv)"
-            />
-            <Area
-              type="monotone"
-              dataKey="pv"
-              stroke="#82ca9d"
-              fillOpacity={1}
-              fill="url(#colorPv)"
-            />
-          </AreaChart>
+        <div className="mt-12 bg-white shadow-lg rounded-xl p-2 md:p-5">
+          <div className="flex justify-between items-center my-5">
+            <div>
+              <h2 className="text-2xl font-bold">Monthly Revenue</h2>
+              <p className="font-semibold text-gray-500 tracking-wider">
+                Total revenue this month
+              </p>
+            </div>
+
+            <div className="text-right">
+              <h2 className="text-2xl font-bold">$450K</h2>
+              <p className="font-semibold text-gray-500 ">
+                <span className="text-cyan-600">+1.5%</span> than last Month
+              </p>
+            </div>
+          </div>
+          <ResponsiveContainer width="100%" height={300}>
+            <AreaChart
+              data={data}
+              margin={{ top: 20, right: 0, left: 0, bottom: 0 }}
+            >
+              <XAxis dataKey="month" />
+              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
+              <ReferenceLine x="January" stroke="green" />
+              <ReferenceLine
+                y={4000}
+                label="Max"
+                stroke="red"
+                strokeDasharray="3 3"
+              />
+              <Area
+                type="monotone"
+                dataKey="uv"
+                stroke="#0097A7"
+                fill="#bfffff"
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+          {/* <ResponsiveContainer width="100%" height="80%">
+            <AreaChart
+              data={data}
+              margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
+            >
+              <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+                </linearGradient>
+                <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                  <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+                </linearGradient>
+              </defs>
+              <XAxis dataKey="name" />
+              <YAxis />
+              <CartesianGrid strokeDasharray="3 3" />
+              <Tooltip />
+              <Area
+                type="monotone"
+                dataKey="uv"
+                stroke="#8884d8"
+                fillOpacity={1}
+                fill="url(#colorUv)"
+              />
+              <Area
+                type="monotone"
+                dataKey="pv"
+                stroke="#82ca9d"
+                fillOpacity={1}
+                fill="url(#colorPv)"
+              />
+            </AreaChart>
+          </ResponsiveContainer> */}
         </div>
       </div>
     </section>
