@@ -1,12 +1,16 @@
 import React from "react";
+import { CircularProgressbar } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 import {
   FaCertificate,
   FaCreativeCommons,
   FaPlaneDeparture,
+  FaTicketAlt,
   FaUserAlt,
   FaWallet,
 } from "react-icons/fa";
-import { FcCancel } from "react-icons/fc";
+import { MdAirplaneTicket } from "react-icons/md";
+import { TiCancelOutline } from "react-icons/ti";
 import { GiReturnArrow } from "react-icons/gi";
 import {
   Area,
@@ -72,6 +76,13 @@ const AdminHome = () => {
     },
   ];
 
+  const userIcon = <FaUserAlt />;
+  const planIcon = <FaPlaneDeparture />;
+  const walletIcon = <FaWallet />;
+  const ticketIcon = <MdAirplaneTicket />;
+  const cancelIcon = <TiCancelOutline />;
+  const returnIcon = <GiReturnArrow />;
+
   return (
     <section>
       <div>
@@ -82,73 +93,43 @@ const AdminHome = () => {
                 <p className="text-lg font-semibold">Total User</p>
                 <h2 className="text-2xl font-bold">536</h2>
               </div>
-              <CircularProgressBar val="65" />
-              {/* <div
-                className="radial-progress text-cyan-600"
-                style={{ "--value": 70 }}
-              >
-                <FaUserAlt />
-              </div> */}
+              <CircularProgressBar val="65" icon={userIcon} />
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
                 <p className="text-lg font-semibold">Running Flight</p>
                 <h2 className="text-2xl font-bold">200</h2>
               </div>
-              <div
-                className="radial-progress text-cyan-600"
-                style={{ "--value": 60 }}
-              >
-                <FaPlaneDeparture />
-              </div>
+              <CircularProgressBar val={20} icon={planIcon} />
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
                 <p className="text-lg font-semibold">Revenue</p>
                 <h2 className="text-2xl font-bold">$200M</h2>
               </div>
-              <div
-                className="radial-progress text-cyan-600"
-                style={{ "--value": 80 }}
-              >
-                <FaWallet />
-              </div>
+              <CircularProgressBar val={90} icon={walletIcon} />
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
                 <p className="text-lg font-semibold">Total booking ticket</p>
                 <h2 className="text-2xl font-bold">350M</h2>
               </div>
-              <div
-                className="radial-progress text-cyan-600"
-                style={{ "--value": 70 }}
-              >
-                <FaCertificate />
-              </div>
+              <CircularProgressBar val="80" icon={ticketIcon} />
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
                 <p className="text-lg font-semibold">Cancel Flight</p>
                 <h2 className="text-2xl font-bold">175</h2>
               </div>
-              <div
-                className="radial-progress text-cyan-600"
-                style={{ "--value": 30 }}
-              >
-                <FcCancel />
-              </div>
+              <CircularProgressBar val={40} icon="B" />
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
                 <p className="text-lg font-semibold">Refund request</p>
                 <h2 className="text-2xl font-bold">85</h2>
               </div>
-              <div
-                className="radial-progress text-cyan-600"
-                style={{ "--value": 40 }}
-              >
-                <GiReturnArrow />
-              </div>
+
+              <CircularProgressBar val="20" icon={returnIcon} />
             </div>
           </div>
         </div>

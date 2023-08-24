@@ -1,28 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./circularProgressBar.css";
 
-const CircularProgressBar = ({ val }) => {
-  let progressCircular = document.querySelector(".circularProgress");
-  let value = document.querySelector(".value");
-  let start = 0;
-  const newValue = val;
+const CircularProgressBar = ({ val, icon }) => {
+  const [progressStartValue, setProgressStartValue] = useState(0);
+  const progressEndValue = val;
+  const speed = 20;
 
-  //   console.log(val);
-
-  function handleCircularProgress() {
-    let progress = setInterval(() => {
-      start++;
-      console.log(start);
-      console.log(newValue);
-      if (start == val) {
+  useEffect(() => {
+    const progress = setInterval(() => {
+      if (progressStartValue < progressEndValue) {
+        setProgressStartValue((prevValue) => prevValue + 1);
+        progressStartValue++;
+      } else {
         clearInterval(progress);
       }
-    });
-  }
+    }, speed);
+
+    return () => {
+      clearInterval(progress);
+    };
+  }, [progressStartValue, progressEndValue]); // Added progressStartValue and progressEndValue as dependencies
+
+  const progressDegrees = progressStartValue * 3.5;
 
   return (
     <div className="circularProgress">
-      <span className="value">{val}%</span>
+      <span className="progress-value">{icon}</span>
+      <style>
+        {`.circularProgress {
+          background: conic-gradient(#08889c ${progressDegrees}deg, #ededed ${progressDegrees}deg);
+        }`}
+      </style>
     </div>
   );
 };
