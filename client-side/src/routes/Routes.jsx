@@ -71,8 +71,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "flightStatus",
-        element: <FlightStatus></FlightStatus>
-      }
+        element: <FlightStatus></FlightStatus>,
+      },
     ],
   },
 ]);
