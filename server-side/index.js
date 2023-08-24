@@ -246,9 +246,9 @@ async function run() {
         currency: "BDT",
         tran_id: transitionId,
         success_url: `http://localhost:5000/booking-confirmed/${bookingInfo.bookingReference}`,
-        fail_url: "http://localhost:5173/booking-failed",
-        cancel_url: "http://localhost:5173/booking-cancel",
-        ipn_url: "http://localhost:5173/ipn",
+        fail_url: "http://localhost:5000/booking-failed",
+        cancel_url: "http://localhost:5000/booking-cancel",
+        ipn_url: "http://localhost:5000/ipn",
         shipping_method: "Air Flights",
         product_name: "Airline Ticket",
         product_category: "Flights Tickets",
@@ -289,6 +289,50 @@ async function run() {
           `http://localhost:5173/booking-confirmed/${req.params.bookingId}`
         );
       });
+    });
+
+    // get specific bookings information
+    app.get("/bookings/:bookingReference", async (req, res) => {
+      const bookingReference = req.params.bookingReference;
+
+      try {
+        const bookings = await bookingsCollection.find().toArray();
+
+        let foundBooking = null;
+
+        for (const booking of bookings) {
+          for (const dateKey in booking) {
+            for (const airportCodeKey in booking[dateKey]) {
+              const bookingObj = booking[dateKey][airportCodeKey][0];
+              if (bookingObj.bookingReference === bookingReference) {
+                foundBooking = bookingObj;
+                break;
+              }
+            }
+            if (foundBooking) {
+              break;
+            }
+          }
+          if (foundBooking) {
+            break;
+          }
+        }
+
+        if (foundBooking) {
+          res.json(foundBooking);
+        } else {
+          res.status(404).json({ message: "Booking not found" });
+        }
+      } catch (err) {
+        console.error("Error fetching booking:", err);
+        res.status(500).json({ error: "An error occurred" });
+      }
+    });
+
+    // get users
+    app.get("/bookings", async (req, res) => {
+      const result = await bookingsCollection.find().toArray();
+      res.send(result);
     });
 
     // Save user
