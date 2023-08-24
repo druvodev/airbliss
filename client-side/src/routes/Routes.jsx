@@ -47,7 +47,7 @@ export const router = createBrowserRouter([
         element: <Refund />,
       },
       {
-        path: "/ticket",
+        path: "/booking-confirmed/:bookingId",
         element: <ETicket />,
       },
     ],

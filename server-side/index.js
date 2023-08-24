@@ -246,7 +246,7 @@ async function run() {
         total_amount: parseFloat(flight.fareSummary.total),
         currency: "BDT",
         tran_id: transitionId,
-        success_url: "http://localhost:5173/booking-confirmed",
+        success_url: `http://localhost:5173/booking-confirmed/${bookingInfo.bookingReference}`,
         fail_url: "http://localhost:5173/booking-failed",
         cancel_url: "http://localhost:5173/booking-cancel",
         ipn_url: "http://localhost:5173/ipn",
