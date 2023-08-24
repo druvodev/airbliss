@@ -228,7 +228,6 @@ async function run() {
           };
           await bookingsCollection.insertOne(newEntry);
         }
-
         console.log("Booking info saved to database.");
       } catch (error) {
         console.error("Error saving booking info to database:", error);
@@ -246,7 +245,7 @@ async function run() {
         total_amount: parseFloat(flight.fareSummary.total),
         currency: "BDT",
         tran_id: transitionId,
-        success_url: `http://localhost:5173/booking-confirmed/${bookingInfo.bookingReference}`,
+        success_url: `http://localhost:5000/booking-confirmed/${bookingInfo.bookingReference}`,
         fail_url: "http://localhost:5173/booking-failed",
         cancel_url: "http://localhost:5173/booking-cancel",
         ipn_url: "http://localhost:5173/ipn",
@@ -285,6 +284,11 @@ async function run() {
           bookingInfo.paymentStatus = "paid";
           await saveBookingInfoToDatabase(bookingInfo);
         });
+      app.post("/booking-confirmed/:bookingId", async (req, res) => {
+        res.redirect(
+          `http://localhost:5173/booking-confirmed/${req.params.bookingId}`
+        );
+      });
     });
 
     // Save user
