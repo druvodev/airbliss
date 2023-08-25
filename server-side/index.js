@@ -138,6 +138,7 @@ async function run() {
         );
 
         console.log("Single Flight:", singleFlight);
+        console.log("Result:", result);
 
         res.send(result);
       } catch (error) {
