@@ -56,9 +56,9 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   const a =
     Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
     Math.cos(lat1Rad) *
-    Math.cos(lat2Rad) *
-    Math.sin(deltaLon / 2) *
-    Math.sin(deltaLon / 2);
+      Math.cos(lat2Rad) *
+      Math.sin(deltaLon / 2) *
+      Math.sin(deltaLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const distance = R * c;
@@ -380,7 +380,7 @@ async function run() {
       }
     });
 
-    // get users
+    // get all bookings
     app.get("/bookings", async (req, res) => {
       const result = await bookingsCollection.find().toArray();
       res.send(result);
@@ -406,7 +406,7 @@ async function run() {
       res.send(result);
     });
 
-    app.patch('/users/:id', async (req, res) => {
+    app.patch("/users/:id", async (req, res) => {
       const id = req.params.id;
       const usersData = req.body.usersData; // No need for req.body.usersData
 
