@@ -56,9 +56,9 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   const a =
     Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
     Math.cos(lat1Rad) *
-    Math.cos(lat2Rad) *
-    Math.sin(deltaLon / 2) *
-    Math.sin(deltaLon / 2);
+      Math.cos(lat2Rad) *
+      Math.sin(deltaLon / 2) *
+      Math.sin(deltaLon / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const distance = R * c;
@@ -342,7 +342,7 @@ async function run() {
       });
     });
 
-    // get specific bookings information
+    // get user booking information
     app.get("/bookings/:bookingReference", async (req, res) => {
       const bookingReference = req.params.bookingReference;
 
@@ -353,10 +353,14 @@ async function run() {
 
         for (const booking of bookings) {
           for (const dateKey in booking) {
-            for (const airportCodeKey in booking[dateKey]) {
-              const bookingObj = booking[dateKey][airportCodeKey][0];
-              if (bookingObj.bookingReference === bookingReference) {
-                foundBooking = bookingObj;
+            const airportCodes = booking[dateKey];
+            for (const airportCodeKey in airportCodes) {
+              const bookingsForAirport = airportCodes[airportCodeKey];
+              const foundBookingObj = bookingsForAirport.find(
+                (bookingObj) => bookingObj.bookingReference === bookingReference
+              );
+              if (foundBookingObj) {
+                foundBooking = foundBookingObj;
                 break;
               }
             }
@@ -386,6 +390,41 @@ async function run() {
       res.send(result);
     });
 
+    app.post("/addNewFlights", async (req, res) => {
+      const airportCode = req.body.airportCode;
+      const newFlights = req.body.newFlights;
+
+      try {
+        // Check exists airport
+        const existingAirport = await flightsCollection.findOne({
+          [airportCode]: { $exists: true },
+        });
+
+        if (existingAirport) {
+          // Add new flights in existing airport
+          const result = await flightsCollection.updateOne(
+            { [airportCode]: { $exists: true } },
+            { $push: { [airportCode]: { $each: newFlights } } }
+          );
+
+          client.close();
+
+          if (result.modifiedCount > 0) {
+            res
+              .status(200)
+              .json({ message: "New flights added successfully." });
+          } else {
+            res.status(400).json({ message: "Failed to add new flights." });
+          }
+        } else {
+          res.status(404).json({ message: "Airport code not found." });
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error." });
+      }
+    });
+
     // Save user
     app.post("/users", async (req, res) => {
       const user = req.body;
@@ -401,12 +440,12 @@ async function run() {
     });
 
     // get users
-    app.get("/users", verifyJWT, async (req, res) => {
+    app.get("/users", async (req, res) => {
       const result = await usersCollection.find().toArray();
       res.send(result);
     });
 
-    app.patch('/users/:id', async (req, res) => {
+    app.patch("/users/:id", async (req, res) => {
       const id = req.params.id;
       const usersData = req.body.usersData; // No need for req.body.usersData
 
