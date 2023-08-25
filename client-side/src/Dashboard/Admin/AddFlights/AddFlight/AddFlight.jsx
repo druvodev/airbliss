@@ -1,9 +1,48 @@
 import React, { useEffect, useState } from "react";
+import { setLoading } from "../../../../redux/features/globalSlice";
+import { toast } from "react-hot-toast";
+import shortid from "shortid";
+
+const initialFormData = {
+  airportName: "",
+  airlineLogo: "",
+  airlineName: "",
+  amountPerKm: "",
+  taxesAndFees: "",
+  totalSeats: "",
+  passengerType: "",
+  stopType: "",
+  refundableStatus: "",
+  flightInfo: {
+    flightNumber: "",
+    aircraft: "",
+    operatedBy: "",
+    class: "",
+    baggage: "",
+    checkIn: "",
+    cabin: "",
+  },
+  cancellationRules: [{ rule: "", amountPerKm: "" }],
+  dateChangeRules: [{ rule: "", amountPerKm: "" }],
+  details: {
+    code: "",
+    time: "",
+    city: "",
+    latitude: "",
+    longitude: "",
+    terminal: "",
+  },
+  notes: [],
+  durationPerKm: "",
+};
 
 const AddFlight = () => {
   const [allFlights, setAllFlights] = useState([]);
   const [selectAirportId, setSelectAirportId] = useState("");
   const [selectAirportCode, setSelectAirportCode] = useState("");
+  const [formData, setFormData] = useState(initialFormData);
+  const [notes, setNotes] = useState(initialFormData.notes);
+  const [chekAirportSelect, setchekAirportSelect] = useState(true);
 
   useEffect(() => {
     fetch("http://localhost:5000/flights")
@@ -17,17 +56,117 @@ const AddFlight = () => {
       event.target.options[event.target.selectedIndex].text;
     setSelectAirportId(selectedAirportId);
     setSelectAirportCode(selectedAirportCode);
+
+    if (selectedAirportCode.length >= 1) {
+      setchekAirportSelect(false);
+    }
+  };
+
+  const updateFlightInfo = (field, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      flightInfo: {
+        ...prevData.flightInfo,
+        [field]: value,
+      },
+    }));
+  };
+
+  const updateDetails = (field, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      details: {
+        ...prevData.details,
+        [field]: value,
+      },
+    }));
+  };
+
+  const updateDateChangeRules = (ruleIndex, field, value) => {
+    setFormData((prevData) => {
+      const updatedDateChangeRules = [...prevData.dateChangeRules];
+      updatedDateChangeRules[ruleIndex] = {
+        ...updatedDateChangeRules[ruleIndex],
+        [field]: value,
+      };
+
+      return {
+        ...prevData,
+        dateChangeRules: updatedDateChangeRules,
+      };
+    });
+  };
+
+  const updateCancellationRules = (ruleIndex, field, value) => {
+    setFormData((prevData) => {
+      const updatedCancellationRules = [...prevData.cancellationRules];
+      updatedCancellationRules[ruleIndex] = {
+        ...updatedCancellationRules[ruleIndex],
+        [field]: value,
+      };
+
+      return {
+        ...prevData,
+        cancellationRules: updatedCancellationRules,
+      };
+    });
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name.startsWith("flightInfo")) {
+      const field = name.split(".")[1];
+      updateFlightInfo(field, value);
+    } else if (name.startsWith("details")) {
+      const field = name.split(".")[1];
+      updateDetails(field, value);
+    } else if (name.startsWith("dateChangeRules")) {
+      const ruleIndex = parseInt(name.match(/\[(\d+)\]/)[1]);
+      const field = name.match(/\.(.*)/)[1];
+      updateDateChangeRules(ruleIndex, field, value);
+    } else if (name.startsWith("cancellationRules")) {
+      const ruleIndex = parseInt(name.match(/\[(\d+)\]/)[1]);
+      const field = name.match(/\.(.*)/)[1];
+      updateCancellationRules(ruleIndex, field, value);
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleAddNote = () => {
+    setNotes([...notes, ""]);
+  };
+
+  const handleRemoveNote = (index) => {
+    const updatedNotes = [...notes];
+    updatedNotes.splice(index, 1);
+    setNotes(updatedNotes);
   };
 
   const handelSubmit = (event) => {
     event.preventDefault();
 
-    const flightData = {
-      name: "jishan",
-      flight: "zet plain",
+    if (chekAirportSelect) {
+      return toast.error("Please Select Airport From Top");
+    }
+
+    const generatedId = shortid.generate();
+    // Update the notes in formData
+    const updatedFormData = {
+      ...formData,
+      notes: notes,
     };
 
-    console.log(selectAirportId, selectAirportCode);
+    // Add the generated ID and airportName to the formData
+    const finalFormData = {
+      ...updatedFormData,
+      _id: generatedId,
+      airportName: selectAirportCode,
+    };
 
     const queryString = `airportId=${selectAirportId}&airportCode=${selectAirportCode}`;
 
@@ -38,25 +177,31 @@ const AddFlight = () => {
         headers: {
           "content-type": "application/json",
         },
-        body: JSON.stringify(flightData),
+        body: JSON.stringify(finalFormData),
       }
     )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
+      .then((res) => {
+        res.json();
+      })
+      .then((insertResult) => {
+        toast.success("Flight Added Successfully");
       });
   };
 
   return (
-    <section className="shadow-md m-8 rounded-sm ">
+    <section className="shadow-md bg-white m-8 rounded-sm ">
       <div className="flex justify-between items-center p-4">
         <div>
           <h1 className="font-bold text-[18px]">Add New Flights</h1>
           <p className="text-[10px]">Airbliss Ltd.</p>
         </div>
 
-        <div className="flex items-center bg-cyan-50 p-4 rounded-md mr-6">
-          <select className="bg-cyan-50 " onChange={handleAirportSelect}>
+        <div className="flex items-center bg-cyan-100 p-4 rounded-md mr-6">
+          <select
+            required
+            className="bg-cyan-100 "
+            onChange={handleAirportSelect}
+          >
             <option className="border-0" value="">
               Select Airport
             </option>
@@ -76,35 +221,388 @@ const AddFlight = () => {
       <hr className="mb-2" />
 
       <div className="p-4 ">
-        <form
-          onSubmit={handelSubmit}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mb-16"
-          action=""
-        >
-          <input
-            className="p-2 border-b-[0.5px] border-black"
-            type="text"
-            name=""
-            id=""
-            placeholder="Airline Logo"
-          />
+        <form className="  mb-8" onSubmit={handelSubmit}>
+          {/* Ariport Info */}
+          <section className="">
+            <div className="ml-[5px] mb-1">
+              <p className="text-sm font-semibold ">Airline Information</p>
+            </div>
+            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="airportName"
+                  value={formData.airportName}
+                  onChange={handleChange}
+                  placeholder="Airport Name"
+                  required
+                />
+              </div>
 
-          <input
-            className="p-2 border-b-[0.5px] border-black"
-            type="text"
-            name=""
-            id=""
-            placeholder="Airline Logo"
-          />
-          <input
-            className="p-2 border-b-[0.5px] border-black"
-            type="text"
-            name=""
-            id=""
-            placeholder="Airline Logo"
-          />
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="airlineName"
+                  value={formData.airlineName}
+                  onChange={handleChange}
+                  placeholder="Airline Name"
+                  required
+                />
+              </div>
 
-          <button type="submit" className="btn bg-cyan-500 text-white">
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="airlineLogo"
+                  value={formData.airlineLogo}
+                  onChange={handleChange}
+                  placeholder="Airline Logo"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="number"
+                  name="amountPerKm"
+                  value={formData.amountPerKm}
+                  onChange={handleChange}
+                  placeholder="Amount Per Km"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="number"
+                  name="taxesAndFees"
+                  value={formData.taxesAndFees}
+                  onChange={handleChange}
+                  placeholder="Taxes and Fees"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="number"
+                  name="totalSeats"
+                  value={formData.totalSeats}
+                  onChange={handleChange}
+                  placeholder="Total Seats"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="passengerType"
+                  value={formData.passengerType}
+                  onChange={handleChange}
+                  placeholder="Passenger Type"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="stopType"
+                  value={formData.stopType}
+                  onChange={handleChange}
+                  placeholder="Stop Type"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="refundableStatus"
+                  value={formData.refundableStatus}
+                  onChange={handleChange}
+                  placeholder="Refundable Status"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="durationPerKm"
+                  value={formData.durationPerKm}
+                  onChange={handleChange}
+                  placeholder="Duration Per Km"
+                  required
+                />
+              </div>
+            </div>
+          </section>
+
+          <section className="">
+            <div className="ml-[5px] mb-2 mt-6">
+              <p className="text-sm font-semibold ">Flight Information</p>
+            </div>
+
+            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="flightInfo.aircraft"
+                  value={formData.flightInfo.aircraft}
+                  onChange={handleChange}
+                  placeholder="Aircraft"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="flightInfo.operatedBy"
+                  value={formData.flightInfo.operatedBy}
+                  onChange={handleChange}
+                  placeholder="Operated By"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="flightInfo.flightNumber"
+                  value={formData.flightInfo.flightNumber}
+                  onChange={handleChange}
+                  placeholder="Flight Number"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="flightInfo.class"
+                  value={formData.flightInfo.class}
+                  onChange={handleChange}
+                  placeholder="Class"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="flightInfo.baggage"
+                  value={formData.flightInfo.baggage}
+                  onChange={handleChange}
+                  placeholder="Baggage"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="flightInfo.checkIn"
+                  value={formData.flightInfo.checkIn}
+                  onChange={handleChange}
+                  placeholder="Check-in"
+                  required
+                />
+              </div>
+
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="flightInfo.cabin"
+                  value={formData.flightInfo.cabin}
+                  onChange={handleChange}
+                  placeholder="Cabin"
+                  required
+                />
+              </div>
+            </div>
+          </section>
+
+          <section className="">
+            <div className="ml-[5px] mb-1 mt-6">
+              <p className="text-sm font-semibold ">Flight Details</p>
+            </div>
+
+            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="details.code"
+                  value={formData.details.code}
+                  onChange={handleChange}
+                  placeholder="Details Code"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="details.time"
+                  value={formData.details.time}
+                  onChange={handleChange}
+                  placeholder="Details Time"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="details.city"
+                  value={formData.details.city}
+                  onChange={handleChange}
+                  placeholder="Details City"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="details.latitude"
+                  value={formData.details.latitude}
+                  onChange={handleChange}
+                  placeholder="Details Latitude"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="details.longitude"
+                  value={formData.details.longitude}
+                  onChange={handleChange}
+                  placeholder="Details Longitude"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="details.terminal"
+                  value={formData.details.terminal}
+                  onChange={handleChange}
+                  placeholder="Details Terminal"
+                  required
+                />
+              </div>
+            </div>
+          </section>
+
+          <section className="">
+            <div className="ml-[5px] mb-1 mt-6">
+              <p className="text-sm font-semibold ">Flight Ruls</p>
+            </div>
+
+            <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
+              <div>
+                {/* Adding date change rules */}
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="dateChangeRules[0].rule"
+                  onChange={handleChange}
+                  placeholder="Date Change Rules"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="number"
+                  name="dateChangeRules[0].amountPerKm"
+                  onChange={handleChange}
+                  placeholder="Date Change Prise"
+                  required
+                />
+              </div>
+              <div>
+                {/* Adding cancellation rules */}
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="text"
+                  name="cancellationRules[0].rule"
+                  onChange={handleChange}
+                  placeholder="Cancellation Rules"
+                  required
+                />
+              </div>
+              <div>
+                <input
+                  className="p-2 border-b-[0.5px] border-black"
+                  type="number"
+                  name="cancellationRules[0].amountPerKm"
+                  onChange={handleChange}
+                  placeholder="Cancellation Prise"
+                  required
+                />
+              </div>
+            </div>
+          </section>
+
+          <div>
+            <button
+              className="p-1 shadow border-[1px]  mt-5"
+              onClick={handleAddNote}
+            >
+              Add Fare Regulation +
+            </button>
+
+            {notes.map((note, index) => (
+              <div
+                key={index}
+                className="mt-2 p-2 border border-gray-300 rounded shadow"
+              >
+                <input
+                  type="text"
+                  required
+                  className="w-full border p-2 border-black"
+                  placeholder="Enter Fare Ruls"
+                  value={note}
+                  onChange={(e) => {
+                    const updatedNotes = [...notes];
+                    updatedNotes[index] = e.target.value;
+                    setNotes(updatedNotes);
+                  }}
+                />
+                <button
+                  className="btn btn-sm mt-2 bg-cyan-400 text-white"
+                  onClick={() => handleRemoveNote(index)}
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+
+          <button className="btn text-white mt-8 bg-cyan-500" type="submit">
             Add Flights
           </button>
         </form>
