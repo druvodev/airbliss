@@ -8,16 +8,12 @@ import useAuth from '../../hooks/useAuth'
 import DashboardNav from '../DashboardNav/DashboardNav'
 import AdminNav from '../DashboardNav/AdminNav/AdminNav'
 
-const Sidebar = () => {
+const Sidebar = ({isActive}) => {
     const navigate = useNavigate()
-    const [toggle, setToggle] = useState(false)
+    // const [toggle, setToggle] = useState(false)
     const { user, logOut } = useAuth()
 
-    const [isActive, setActive] = useState('false')
-    // Sidebar Responsive Handler
-    const handleToggle = () => {
-        setActive(!isActive)
-    }
+    
     const handleLogOut = () => {
         logOut()
         navigate('/')
@@ -38,12 +34,11 @@ const Sidebar = () => {
                     </div>
                 </div>
 
-                <button
-                    onClick={handleToggle}
+                {/* <button
                     className='mobile-menu-button p-4 focus:outline-none focus:bg-gray-200'
                 >
                     <AiOutlineBars className='h-5 w-5' />
-                </button>
+                </button> */}
             </div>
             {/* Sidebar */}
             <div

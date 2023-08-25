@@ -10,8 +10,8 @@ const InforMation = ({ currentUser }) => {
             <div>
                 <img
                     src={
-                        user?.photoURL
-                            ? user?.photoURL
+                        photo
+                            ? photo
                             : "https://i.ibb.co/Ws1r9fp/images.png"
                     }
                     alt={user?.displayName}

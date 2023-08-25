@@ -73,13 +73,13 @@ const Account = () => {
             <div className='bg-white p-5 rounded-xl'>
                 <h1 className='text-[22px] font-semibold text-gray-900 capitalize'><span className='text-[24px] font-bold'>{user?.displayName}</span>'s AirBliss Account</h1>
             </div>
-            <div className='grid grid-cols-3 gap-8 mt-8'>
-                <div className='bg-white col-span-1 py-[50px] px-[30px] h-fit rounded-xl'>
+            <div className='grid lg:grid-cols-3 grid-cols-1 gap-8 mt-8'>
+                <div className='bg-white lg:col-span-1 py-[50px] px-[30px] h-fit rounded-xl'>
                     <InforMation
                         currentUser={currentUser}
                     />
                 </div>
-                <div className='bg-white col-span-2 py-[30px] px-[50px] rounded-xl'>
+                <div className='bg-white lg:col-span-2 py-[30px] px-[50px] rounded-xl'>
                     <div className='flex justify-between '>
                         <h1 className='text-[36px] mb-7 font-semibold text-gray-900 capitalize'>Personal Information</h1>
                         <button className='btn btn-sm' onClick={switchToEditOrUpdate}>
