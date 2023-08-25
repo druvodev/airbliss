@@ -10,6 +10,7 @@ import Refund from "../pages/Refund/Refund";
 import Review from "../pages/Review/Review/Review";
 import DashboardLayout from "../layouts/DashboardLayout";
 import AdminHome from "../Dashboard/Admin/AdminHome/AdminHome";
+import AddFlight from "../Dashboard/Admin/AddFlights/AddFlight/AddFlight";
 import ETicket from "../Components/Ticket/ETicket";
 import ManageUsers from "../Dashboard/Admin/ManageUsers/ManageUsers";
 import Account from "../Dashboard/Account/Account";
@@ -61,6 +62,11 @@ export const router = createBrowserRouter([
         path: "adminHome",
         element: <AdminHome />,
       },
+
+      {
+        path: "addFlight",
+        element: <AddFlight />,
+      },
       {
         path: "manageUsers",
         element: <ManageUsers />,
@@ -71,8 +77,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "flightStatus",
-        element: <FlightStatus></FlightStatus>
-      }
+        element: <FlightStatus></FlightStatus>,
+      },
     ],
   },
 ]);
