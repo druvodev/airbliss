@@ -7,7 +7,7 @@ const View = ({ currentUser }) => {
     return (
         <>
             <form>
-                <div className='grid grid-cols-2 gap-8 mt-8'>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8'>
                     <div>
                         <label htmlFor="name" className="block mb-2 font-semibold text-[#222] text-[18px]">
                             Full Name:
@@ -35,7 +35,7 @@ const View = ({ currentUser }) => {
                         />
                     </div>
                 </div>
-                <div className='grid grid-cols-2 gap-8 mt-8'>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8'>
                     <div>
                         <label htmlFor="DateOfBirth" className="block mb-2 font-semibold text-[#222] text-[18px]">
                             Date Of Birth:

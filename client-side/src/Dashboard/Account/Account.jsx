@@ -81,7 +81,7 @@ const Account = () => {
                 </div>
                 <div className='bg-white lg:col-span-2 py-[30px] px-[50px] rounded-xl'>
                     <div className='flex justify-between '>
-                        <h1 className='text-[36px] mb-7 font-semibold text-gray-900 capitalize'>Personal Information</h1>
+                        <h1 className='lg:text-[36px] text-xl mb-7 font-semibold text-gray-900 capitalize'>Personal Information</h1>
                         <button className='btn btn-sm' onClick={switchToEditOrUpdate}>
                             {isEdit ? 'View' : 'Edit'}
                         </button>
