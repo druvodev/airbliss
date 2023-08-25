@@ -1,13 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import DomToImage from "dom-to-image";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router";
+import useAxios from "../../hooks/useAxios";
+import airbliss from "../../assets/banner/airblibanner.png";
 
 const ETicket = () => {
-  const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo);
-  const userInfo = useSelector((state) => state.userBookingInfo.userInfo);
+  const [myBooking, setBooking] = useState({});
+  console.log(myBooking);
+  const refID = useParams();
+  console.log(refID);
+  useEffect(() => {
+    useAxios
+      .get(`/bookings/${refID.bookingId}`)
+      .then((res) => setBooking(res.data))
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
-  console.log(flightInfo, userInfo, "mybooking");
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/bookings/${refID.bookingId}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setBooking(data))
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //     });
+  // }, []);
 
   const [img, setImg] = useState(null);
   const [isDownload, setDownload] = useState("download");
@@ -76,36 +95,48 @@ const ETicket = () => {
   //     });
   //   }
   // };
+  const fullName =
+    myBooking.user?.title +
+    " " +
+    myBooking.user?.first_name +
+    " " +
+    myBooking.user?.last_name;
+  console.log(myBooking?.flight?.departureDate);
 
   return (
     <div>
-      <h2 className="text-2xl font-bold text-center pt-20 md:text-3xl">
+      <img src={airbliss} className="w-full h-52 object-cover" alt="" />
+      <h2 className="text-2xl font-bold mt-2 text-center md:text-3xl">
         E-Ticket
       </h2>
       <div id="downloadTicket">
-        <div className="px-4 pt-16  md:px-6 ">
+        <div className="px-4 pt-10 mt-2  md:px-6 ">
           <div className="md:flex overflow-x-auto md:justify-between border-cyan-700 md:rounded-lg pr-0 max-w-4xl mx-auto bg-base-100 border-2">
+            {/* Airblisss area */}
             <div className="md:flex md:w-12 md:items-center md:justify-center bg-cyan-600 md:rounded-r-xl text-white">
               <span className="md:-rotate-90 font-bold p-2 whitespace-nowrap text-lg uppercase">
                 A i r B l i s s
               </span>
             </div>
+            {/* Booking reference date area */}
             <div className="md:flex md:w-8 items-center justify-center">
-              <div className="-rotate-90"></div>
-              <span className="-rotate-90 font-semibold px-2 whitespace-nowrap text-lg uppercase">
-                AUG23TD7OX4
+              <span className="-rotate-90  font-semibold px-2 whitespace-nowrap text-lg uppercase">
+                {myBooking?.bookingReference}
               </span>
             </div>
+            {/* passenger details area */}
             <div className="text-cyan-900 p-2 md:border-r-4 pr-10 border-cyan-600 border-dotted">
-              <div className=" pb-2 border-b-2 border-cyan-600 border-dotted">
+              <div className="pb-2 border-b-2 border-cyan-600 border-dotted">
                 <p>Passenger</p>
-                <p className="font-semibold">Name Passenger</p>
+                <p className="font-semibold">{fullName}</p>
               </div>
               <hr className="text-cyan-500 font-bold" />
               <div className="flex gap-5 pb-2 border-b-2 border-cyan-600 border-dotted ">
                 <div>
                   <p>Boarding Time</p>
-                  <p className="font-semibold">09.00 AM</p>
+                  <p className="font-semibold">
+                    {myBooking?.flight?.departureTime}
+                  </p>
                 </div>
                 <div>
                   <p>Gate</p>
@@ -113,22 +144,30 @@ const ETicket = () => {
                 </div>
                 <div>
                   <p>Flight</p>
-                  <p className="font-semibold">A1 234</p>
+                  <p className="font-semibold">
+                    {myBooking.flight?.flightNumber}
+                  </p>
                 </div>
               </div>
               <div className="flex gap-11 pb-2 border-b-2 border-cyan-600 border-dotted ">
                 <div>
                   <p>Date</p>
-                  <p className="font-semibold">15.12.2023</p>
+                  <p className="font-semibold">
+                    {myBooking?.flight?.departureDate}
+                  </p>
                 </div>
                 <div>
                   <p>From</p>
-                  <p className="font-semibold">Dhaka City</p>
+                  <p className="font-semibold">
+                    {myBooking?.flight?.departureCity} City
+                  </p>
                 </div>
               </div>
               <div className="pb-2 border-b-2 border-cyan-600 border-dotted">
                 <p>To</p>
-                <p className="font-semibold">Borcelle City</p>
+                <p className="font-semibold">
+                  {myBooking?.flight?.arrivalCity} City
+                </p>
               </div>
               <div className="flex gap-[92px]">
                 <div>
@@ -141,6 +180,7 @@ const ETicket = () => {
                 </div>
               </div>
             </div>
+            {/* seat Class area */}
             <div className="flex flex-col justify-center items-center">
               <h3 className="text-2xl font-bold text-cyan-900 mt-6">
                 First Class
@@ -151,18 +191,21 @@ const ETicket = () => {
                 boarding ends 15 min before departure
               </p>
             </div>
+            {/* colored info area */}
             <div className="md:py-2 mt-2 md:mt-0 text-white">
-              <div className=" md:rounded-l-3xl p-5 h-[100%]  bg-cyan-600">
-                <div className=" border-r-2 pr-10 border-cyan-600  border-dotted">
+              <div className=" md:rounded-l-3xl p-5 pr-0 h-[100%]  bg-cyan-600">
+                <div className=" border-r-2 pr-5 border-cyan-600  border-dotted">
                   <div className=" pb-2 border-b-2 border-white border-dotted">
                     <p>Passenger</p>
-                    <p className="font-semibold">Name Passenger</p>
+                    <p className="font-semibold">{fullName}</p>
                   </div>
 
                   <div className="flex gap-5 pb-2 border-b-2 border-white border-dotted ">
                     <div>
                       <p>Boarding Time</p>
-                      <p className="font-semibold">09.00 AM</p>
+                      <p className="font-semibold">
+                        {myBooking?.flight?.departureTime}
+                      </p>
                     </div>
                     <div>
                       <p>Gate</p>
@@ -170,25 +213,33 @@ const ETicket = () => {
                     </div>
                     <div>
                       <p>Flight</p>
-                      <p className="font-semibold">A1 234</p>
+                      <p className="font-semibold">
+                        {myBooking.flight?.flightNumber}
+                      </p>
                     </div>
                   </div>
                   <div className="flex pb-2 border-b-2 border-white border-dotted ">
                     <div className="flex gap-10">
                       <div>
                         <p>From</p>
-                        <p className="font-semibold">Dhaka City</p>
+                        <p className="font-semibold">
+                          {myBooking?.flight?.departureCity} City
+                        </p>
                       </div>
                       <div>
                         <p>To</p>
-                        <p className="font-semibold">Borcelle City</p>
+                        <p className="font-semibold">
+                          {myBooking?.flight?.arrivalCity} City
+                        </p>
                       </div>
                     </div>
                   </div>
                   <div className="pb-2 ">
                     <div>
                       <p>Date</p>
-                      <p className="font-semibold">15.12.2023</p>
+                      <p className="font-semibold">
+                        {myBooking?.flight?.departureDate}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -199,62 +250,72 @@ const ETicket = () => {
 
         {/* frontTicket */}
         <div className="px-4 mt-2 md:px-6 lg:px-8 xl:px-10 pb-20">
-          <div
-            id="downloadTicket"
-            className="md:flex overflow-x-auto md:justify-between border-cyan-700 md:rounded-lg pr-0 max-w-4xl mx-auto bg-cyan-600 text-white border-2"
-          >
+          <div className="md:flex overflow-x-auto md:justify-between border-cyan-700 md:rounded-lg pr-0 max-w-4xl mx-auto bg-cyan-600 text-white border-2">
+            {/* AirBliss area */}
             <div className="md:flex md:w-12 md:items-center md:justify-center bg-white border-r-2  border-cyan-900 md:rounded-r-xl text-white">
-              <span className="md:-rotate-90 text-cyan-900  p-2 whitespace-nowrap font-bold text-lg uppercase">
+              <span className="md:-rotate-90 text-black font-bold p-2 whitespace-nowrap text-lg uppercase">
                 A i r B l i s s
               </span>
             </div>
-            <div className="md:flex md:w-[45px] items-center justify-center">
-              <span className="-rotate-90  font-semibold px-2 whitespace-nowrap text-lg uppercase">
-                XXXXXXXXX
+            {/* reference area */}
+            <div className="md:flex md:w-[55px] items-center justify-center">
+              <span className="-rotate-90  font-semibold whitespace-nowrap text-lg uppercase">
+                {myBooking?.bookingReference}
               </span>
             </div>
-            <div className="p-2 md:border-r-4 pr-10 border-white border-dotted">
+            {/* passenger details area */}
+            <div className="text-white p-2 md:border-r-4 pr-10 border-white border-dotted">
               <div className=" pb-2 border-b-2 border-white border-dotted">
                 <p>Passenger</p>
-                <p className="font-semibold">Name Passenger</p>
+                <p className="font-semibold">{fullName}</p>
               </div>
 
               <div className="flex gap-5 pb-2 border-b-2 border-white border-dotted ">
                 <div>
                   <p>Boarding Time</p>
-                  <p className="font-semibold">XX.XX AM</p>
+                  <p className="font-semibold">
+                    {myBooking?.flight?.departureTime}
+                  </p>
                 </div>
                 <div>
                   <p>Gate</p>
-                  <p className="font-semibold">XX</p>
+                  <p className="font-semibold">12</p>
                 </div>
                 <div>
                   <p>Flight</p>
-                  <p className="font-semibold">XX XXX</p>
+                  <p className="font-semibold">
+                    {myBooking.flight?.flightNumber}
+                  </p>
                 </div>
               </div>
               <div className="flex gap-11 pb-2 border-b-2 border-white border-dotted ">
                 <div>
                   <p>Date</p>
-                  <p className="font-semibold">XX.XX.XXXX</p>
+                  <p className="font-semibold">
+                    {myBooking?.flight?.departureDate}
+                  </p>
                 </div>
                 <div>
                   <p>From</p>
-                  <p className="font-semibold">Dhaka City</p>
+                  <p className="font-semibold">
+                    {myBooking?.flight?.departureCity} City
+                  </p>
                 </div>
               </div>
               <div className="pb-2 border-b-2 border-white border-dotted">
                 <p>To</p>
-                <p className="font-semibold">Borcelle City</p>
+                <p className="font-semibold">
+                  {myBooking?.flight?.arrivalCity} City
+                </p>
               </div>
               <div className="flex gap-[92px]">
                 <div>
                   <p>Seat</p>
-                  <p className="font-semibold">XX</p>
+                  <p className="font-semibold">12</p>
                 </div>
                 <div>
                   <p>Group</p>
-                  <p className="font-semibold">X</p>
+                  <p className="font-semibold">D</p>
                 </div>
               </div>
             </div>
