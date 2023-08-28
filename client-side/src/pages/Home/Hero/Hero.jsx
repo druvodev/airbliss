@@ -1,10 +1,11 @@
+import React, { useEffect, useState, useRef } from "react";
 import SearchFilter from "../../../Components/SearchFilter/SearchFilter";
 import cover from "../../../assets/banner/skybg.jpg";
 import plain from "../../../assets/banner/plain.png";
-import { useEffect, useState } from "react";
 
 const Hero = () => {
   const [scrollOffset, setScrollOffset] = useState(0);
+  const imgRef = useRef(null); // Create a ref to hold the img element
 
   const handleScroll = () => {
     setScrollOffset(window.pageYOffset);
@@ -19,9 +20,11 @@ const Hero = () => {
   }, []);
 
   const updateAnimation = () => {
-    const plainOffset = scrollOffset * 0.5;
-    const img = document.getElementById("plainImg");
-    img.style.transform = `translateX(${plainOffset}px)`;
+    if (imgRef.current) {
+      // Check if the ref is not null
+      const plainOffset = scrollOffset * 0.5;
+      imgRef.current.style.transform = `translateX(${plainOffset}px)`;
+    }
     requestAnimationFrame(updateAnimation);
   };
 
@@ -40,7 +43,7 @@ const Hero = () => {
         }}
       >
         <img
-          id="plainImg"
+          ref={imgRef} // Attach the ref to the img element
           src={plain}
           alt=""
           className="mx-auto pt-20"
