@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import { FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const ShortingFlight = () => {
+const ShortingFlight = ({ destenation }) => {
   // const [selectedButton, setSelectedButton] = useState('cheapest');
 
   // const handleButtonClick = (buttonType) => {
@@ -23,7 +23,8 @@ const ShortingFlight = () => {
           <FaCaretLeft className="lg:text-[45px] text-[20px] md:text-[25px] text-cyan-500 cursor-pointer" />
         </div>
         <div className="font-sans font-semibold text-[20] md:text-[25px] lg:text-[32px]">
-          Flights from Dhaka to Chittagong
+          Flights {destenation[0]?.departure?.city} to{" "}
+          {destenation[0]?.arrival?.city}
         </div>
         <div
           className="tooltip tooltip-bottom"

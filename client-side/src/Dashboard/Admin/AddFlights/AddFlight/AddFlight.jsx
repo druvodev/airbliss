@@ -57,6 +57,8 @@ const AddFlight = () => {
     setSelectAirportId(selectedAirportId);
     setSelectAirportCode(selectedAirportCode);
 
+    console.log(selectedAirportId);
+
     if (selectedAirportCode.length >= 1) {
       setchekAirportSelect(false);
     }

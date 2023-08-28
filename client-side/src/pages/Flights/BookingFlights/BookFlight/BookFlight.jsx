@@ -24,7 +24,9 @@ const BookFlight = () => {
   const [flightDetailsVisibility, setFlightDetailsVisibility] = useState({});
 
   const dispatch = useDispatch();
-  const flight = useSelector((state) => state.flights.flights);
+  const flight = useSelector((state) => state.flights.filteredFlights);
+
+  console.log(flight);
 
   // Move the sorting logic inside a useEffect hook to avoid infinite re-renders
   useEffect(() => {
@@ -34,19 +36,6 @@ const BookFlight = () => {
       setFlightData(sortedData);
     }
   }, [flight]);
-
-  // useEffect(() => {
-  //   fetch("booking.json")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       // Sort the fetched data by descending ticket price
-  //       const sortedData = data.slice(); // Create a copy of the data array
-  //       sortedData.sort(
-  //         (a, b) => b.fare_summary.ticket_price - a.fare_summary.ticket_price
-  //       );
-  //       setFlightData(sortedData);
-  //     });
-  // }, []);
 
   const sortByTicketPrice = (sortOrder) => {
     const sortedData = [...flightData];
@@ -119,7 +108,7 @@ const BookFlight = () => {
   return (
     <section className="mb-16">
       {/* Filter Card */}
-      <ShortingFlight />
+      <ShortingFlight destenation={flightData} />
 
       <section>
         <div className="flex w-full p-5 mt-10 rounded-md justify-between shadow-md">
