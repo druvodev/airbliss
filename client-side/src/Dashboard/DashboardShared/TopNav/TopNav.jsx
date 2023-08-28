@@ -6,7 +6,12 @@ const TopNav = ({ handleToggle }) => {
   const { user } = useAuth()
   return (
     <>
-      <div className="navbar lg:flex-row flex-row-reverse justify-between lg:w-[80%] w-[90%] mx-auto mt-2 py-0 rounded-full shadow-lg px-10 bg-cyan-200">
+      <div
+        className="navbar lg:flex-row flex-row-reverse justify-between lg:w-[80%] w-[90%] mx-auto mt-2 py-0 rounded-full shadow-lg px-10 bg-cyan-200"
+        style={{
+          backgroundImage: 'linear-gradient(to right, #70cfc9 , #5daad6 )',
+        }}
+      >
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost ml-24 lg:hidden">
@@ -40,10 +45,10 @@ const TopNav = ({ handleToggle }) => {
             </ul>
           </div>
           <div className=''>
-            <h4 className='mx-2 font-medium text-[8px] lg:text-[18px] text-gray-800  hover:underline'>
+            <h4 className='mx-2 font-medium text-[8px] lg:text-[18px] text-gray-50  hover:underline'>
               {user?.displayName}
             </h4>
-            <p className='mx-2 text-[8px] lg:text-[14px] font-medium -mt-1 text-gray-600  hover:underline'>
+            <p className='mx-2 text-[8px] lg:text-[14px] font-medium -mt-1 text-gray-100  hover:underline'>
               {user?.email}
             </p>
           </div>
