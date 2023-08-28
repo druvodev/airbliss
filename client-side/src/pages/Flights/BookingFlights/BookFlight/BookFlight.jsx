@@ -24,7 +24,7 @@ const BookFlight = () => {
   const [flightDetailsVisibility, setFlightDetailsVisibility] = useState({});
 
   const dispatch = useDispatch();
-  const flight = useSelector((state) => state.flights.flights);
+  const flight = useSelector((state) => state.flights.filteredFlights);
 
   // Move the sorting logic inside a useEffect hook to avoid infinite re-renders
   useEffect(() => {
