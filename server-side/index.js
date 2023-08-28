@@ -67,6 +67,7 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const { addMinutes, format, isTomorrow } = require("date-fns");
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.8vqv4om.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -185,30 +186,10 @@ async function run() {
             relevantFlightData[field] = flight[field];
           }
 
-          // Include "departure" data from fromCityData
-          relevantFlightData.departure = {
-            code: fromCityData[fromCity][0].details.code,
-            time: fromCityData[fromCity][0].details.time,
-            date: departureDate,
-            city: fromCityData[fromCity][0].details.city,
-            terminal: fromCityData[fromCity][0].details.terminal,
-            airportName: fromCityData[fromCity][0].airportName,
-            seats: fromCityData[fromCity][0].totalSeats,
-          };
-          // Include "arrival" data from toCityData
-          relevantFlightData.arrival = {
-            code: toCityData[toCity][0].details.code,
-            time: toCityData[toCity][0].details.time,
-            city: toCityData[toCity][0].details.city,
-            airlineName: toCityData[toCity][0].airlineName,
-            terminal: toCityData[toCity][0].details.terminal,
-            airportName: toCityData[toCity][0].airportName,
-          };
-
           // Calculate fare summary
           const distance = calculateDistance(
-            fromCityData[fromCity][0].details.latitude,
-            fromCityData[fromCity][0].details.longitude,
+            flight.details.latitude,
+            flight.details.longitude,
             toCityData[toCity][0].details.latitude,
             toCityData[toCity][0].details.longitude
           );
@@ -217,8 +198,40 @@ async function run() {
             distance * parseFloat(flight.durationPerKm)
           );
 
-          const amountPerKm = fromCityData[fromCity][0].amountPerKm;
-          const taxesAndFees = fromCityData[fromCity][0].taxesAndFees;
+          // Include "departure" data from fromCityData
+          relevantFlightData.departure = {
+            code: flight.details.code,
+            time: flight.details.time,
+            date: departureDate,
+            city: flight.details.city,
+            terminal: flight.details.terminal,
+            airportName: flight.airportName,
+            seats: flight.totalSeats,
+          };
+
+          // Include "arrival" data in relevantFlightData
+          const departureDateTime = new Date(
+            `${departureDate}T${flight.details.time}`
+          );
+          const arrivalTime = addMinutes(
+            departureDateTime,
+            relevantFlightData.duration
+          );
+
+          if (isTomorrow(arrivalTime)) {
+            arrivalTime.setDate(departureDateTime.getDate() + 1);
+          }
+          relevantFlightData.arrival = {
+            code: toCityData[toCity][0].details.code,
+            time: format(arrivalTime, "HH:mm"),
+            date: format(arrivalTime, "yyyy-MM-dd"),
+            city: toCityData[toCity][0].details.city,
+            airlineName: toCityData[toCity][0].airlineName,
+            terminal: toCityData[toCity][0].details.terminal,
+            airportName: toCityData[toCity][0].airportName,
+          };
+          const amountPerKm = flight.amountPerKm;
+          const taxesAndFees = flight.taxesAndFees;
 
           const baseFare = (amountPerKm * distance).toFixed();
           const calculatedFees = (baseFare * taxesAndFees) / 100;
