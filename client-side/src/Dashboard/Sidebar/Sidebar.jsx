@@ -24,7 +24,7 @@ const Sidebar = ({ isActive }) => {
               className='hidden md:block'
               width='100'
               height='100'
-              src="https://i.ibb.co/FbFzwxM/4425949-2411-removebg-preview.png"
+              src={logo}
               alt=""
             />
           </div>
@@ -42,7 +42,7 @@ const Sidebar = ({ isActive }) => {
         <div>
           {/* Branding & Profile Info */}
           <div>
-            <div className='w-full hidden md:flex py-2 justify-center items-center rounded-md mx-auto'>
+            <div className='w-full bg-white hidden md:flex py-2 justify-center items-center rounded-lg shadow-lg mx-auto'>
               <img
                 className='hidden md:block'
                 width='100'
@@ -54,7 +54,7 @@ const Sidebar = ({ isActive }) => {
           </div>
 
           {/* Nav Items */}
-          <div className='flex flex-col justify-between flex-1 mt-6'>
+          <div className='flex lg:mt-32 flex-col justify-between flex-1 mt-6'>
             <nav>
               <>
                 <DashboardNav />

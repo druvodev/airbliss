@@ -8,7 +8,7 @@ const TopNav = ({ handleToggle }) => {
   return (
     <>
       <div
-        className="navbar lg:flex-row flex-row-reverse justify-between lg:w-[50%] w-[90%] mx-auto mt-2 py-0 rounded-full shadow-lg px-10 bg-cyan-200"
+        className="navbar lg:gap-10 gap-0 lg:flex-row flex-row-reverse justify-between lg:w-[55%] w-[90%] mx-auto mt-2 py-0 rounded-full shadow-lg px-10 bg-cyan-200"
         style={{
           backgroundImage: 'linear-gradient(to right, #70cfc9 , #5daad6 )',
         }}
