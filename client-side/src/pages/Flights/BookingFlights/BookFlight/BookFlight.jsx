@@ -26,6 +26,8 @@ const BookFlight = () => {
   const dispatch = useDispatch();
   const flight = useSelector((state) => state?.flights?.flights?.flights);
 
+  console.log("filteredFlights", flight);
+
   // Move the sorting logic inside a useEffect hook to avoid infinite re-renders
   useEffect(() => {
     if (flight) {

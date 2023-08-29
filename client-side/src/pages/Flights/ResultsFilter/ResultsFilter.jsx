@@ -5,14 +5,15 @@ import { PiSunHorizonFill } from "react-icons/pi";
 import { BsSunrise } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { storeFilteredFlights } from "../../../redux/features/flightsSlice";
-// import {
-//   baggageAllowanceLength,
-//   highestPrice,
-//   lowestPrice,
-//   noTransitTimeLength,
-//   nonStopLength,
-//   refundableLength,
-// } from "../../../utils/flightsFilter";
+import {
+  baggageAllowanceLength,
+  highestPrice,
+  lowestPrice,
+  noTransitTimeLength,
+  nonStopLength,
+  refundableLength,
+} from "../../../utils/flightsFilter";
+import { set } from "date-fns";
 
 const ResultsFilter = () => {
   const flights = useSelector((state) => state.flights.flights.flights);
@@ -25,7 +26,20 @@ const ResultsFilter = () => {
   const [baggageAllowanceChecked, setBaggageAllowanceChecked] = useState(false);
   const [refundableChecked, setRefundableChecked] = useState(false);
   const [noTransitTimeChecked, setNoTransitTimeChecked] = useState(false);
+  const [baggageL, setBaggageL] = useState(0);
+  const [noTranTimeL, setNoTranTimeL] = useState(0);
+  const [nonStopL, setNonStopL] = useState(0);
+  const [refundableL, setRefundableL] = useState(0);
 
+  useEffect(() => {
+    setMaxPrice(parseInt(flights && highestPrice(flights)));
+    setMinPrice(parseInt(flights && lowestPrice(flights)));
+    setPrice(parseInt(flights && highestPrice(flights)));
+    setBaggageL(flights && baggageAllowanceLength(flights));
+    setNoTranTimeL(flights && noTransitTimeLength(flights));
+    setNonStopL(flights && nonStopLength(flights));
+    setRefundableL(flights && refundableLength(flights));
+  }, [flights]);
   const clearFilters = () => {
     setPrice(5010);
     setDepartureTime("");
@@ -178,7 +192,7 @@ const ResultsFilter = () => {
               onChange={() => setNonStopChecked(!nonStopChecked)}
               className="checkbox checkbox-sm checkbox-accent"
             />{" "}
-            <span>Non Stop </span>
+            <span>Non Stop ({nonStopL})</span>
           </div>
         </div>
       </div>
@@ -194,7 +208,7 @@ const ResultsFilter = () => {
             }
             className="checkbox checkbox-sm checkbox-accent"
           />{" "}
-          <span>20 KG </span>
+          <span>20 KG ({baggageL})</span>
         </div>
       </div>
       <hr className="text-gray-300" />
@@ -207,7 +221,7 @@ const ResultsFilter = () => {
             onChange={() => setRefundableChecked(!refundableChecked)}
             className="checkbox checkbox-sm checkbox-accent"
           />{" "}
-          <span>Partially Refundable</span>
+          <span>Partially Refundable ({refundableL})</span>
         </div>
       </div>
       <hr className="text-gray-300" />
@@ -222,7 +236,7 @@ const ResultsFilter = () => {
             onChange={() => setNoTransitTimeChecked(!noTransitTimeChecked)}
             className="checkbox checkbox-sm checkbox-accent"
           />{" "}
-          <span>No Transit Time </span>
+          <span>No Transit Time ({noTranTimeL})</span>
         </div>
       </div>
       <div className="p-5">
