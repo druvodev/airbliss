@@ -22,4 +22,15 @@
 }
 
 
+.btn-disabled-hack {
+  transition: none; /* Disable transition effects */
+}
+
+.btn-disabled-hack:hover {
+  background-color: #f3f3f3 !important; /* Apply desired hover effect for disabled buttons */
+  color: #999 !important;
+  cursor: not-allowed !important;
+  border-color: #ccc !important;
+}
+
 
