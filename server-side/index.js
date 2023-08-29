@@ -150,6 +150,7 @@ async function run() {
     // Searching Flights using by destination
     app.get("/flights/search", async (req, res) => {
       const { fromCity, toCity, departureDate } = req.query;
+
       const flightsResult = [];
 
       try {
