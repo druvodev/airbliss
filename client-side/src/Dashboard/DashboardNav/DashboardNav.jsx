@@ -25,21 +25,15 @@ const DashboardNav = () => {
     const userType = currentUser?.role;
 
     const renderNavigation = () => {
-        if (userType === 'admin') {
+        if (userType === "admin") {
             return <AdminNav />;
-        } else if (userType === 'user') {
+        } else if (userType === "user") {
             return <UserNav />;
         }
         return null;
     };
 
-    return (
-        <>
-            {
-                renderNavigation()
-            }
-        </>
-    );
+    return <>{renderNavigation()}</>;
 };
 
 export default DashboardNav;

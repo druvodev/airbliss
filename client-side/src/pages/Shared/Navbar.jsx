@@ -189,7 +189,7 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
                   >
                     <li>
-                      <Link to='/dashboard' className="text-black" href="">
+                      <Link to="/dashboard" className="text-black" href="">
                         Dashboard
                       </Link>
                     </li>

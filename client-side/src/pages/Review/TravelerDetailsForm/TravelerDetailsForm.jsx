@@ -23,6 +23,7 @@ const TravelerDetailsForm = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userBookingInfo.userInfo); // get user information from redux
   const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo); // get flight information from redux
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); //for Check box checked State
 
   const {
     register,
@@ -69,6 +70,11 @@ const TravelerDetailsForm = () => {
   // Handle Processing Payment
   const handleProcessingPayment = () => {
     paymentProcessing(flightInfo, userInfo); // This function from utils
+  };
+
+  // Check box Handler
+  const handleCheckboxChange = (event) => {
+    setIsCheckboxChecked(event.target.checked);
   };
 
   return (
@@ -120,7 +126,11 @@ const TravelerDetailsForm = () => {
             </div>
             <div className="form-control mt-5 mx-5 md:mx-10">
               <label className="cursor-pointer flex items-center gap-3">
-                <input type="checkbox" className="checkbox checkbox-accent" />
+                <input
+                  type="checkbox"
+                  onChange={handleCheckboxChange}
+                  className="checkbox checkbox-accent"
+                />
                 <span className="">
                   By clicking Book Now or Pay Now option I agree with the
                   Airbliss{" "}
@@ -137,13 +147,23 @@ const TravelerDetailsForm = () => {
             <div className="mx-5 md:mx-10 flex gap-3 mt-5">
               <button
                 onClick={handlePayLater}
-                className="text-cyan-700 border w-48 border-cyan-700 hover:bg-cyan-600 hover:tracking-wide rounded-md h-[50px] hover:text-white font-semibold text-sm"
+                className={`${
+                  isCheckboxChecked
+                    ? "hover:bg-cyan-600 hover:tracking-wide hover:text-white"
+                    : "opacity-50 cursor-not-allowed"
+                } text-cyan-700 border w-48 border-cyan-700  rounded-md h-[50px]  font-semibold text-sm`}
+                disabled={!isCheckboxChecked}
               >
                 Book Now (Pay Later)
               </button>
               <button
                 onClick={handleProcessingPayment}
-                className=" bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide w-48 rounded-md h-[50px] text-white font-semibold text-sm"
+                className={`${
+                  isCheckboxChecked
+                    ? "hover:bg-cyan-600 hover:tracking-wide"
+                    : "opacity-50 cursor-not-allowed"
+                } bg-cyan-700  w-48 rounded-md h-[50px] text-white font-semibold text-sm`}
+                disabled={!isCheckboxChecked}
               >
                 Pay Now
               </button>
