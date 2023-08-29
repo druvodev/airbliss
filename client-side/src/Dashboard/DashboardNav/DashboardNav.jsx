@@ -1,26 +1,20 @@
-import React, { useState } from 'react';
-import UserNav from './UserNav/UserNav';
-import AdminNav from './AdminNav/AdminNav';
+import React, { useState } from "react";
+import UserNav from "./UserNav/UserNav";
+import AdminNav from "./AdminNav/AdminNav";
 
 const DashboardNav = () => {
-    const userType = 'admin';
+  const userType = "user";
 
-    const renderNavigation = () => {
-        if (userType === 'admin') {
-            return <AdminNav />;
-        } else if (userType === 'user') {
-            return <UserNav />;
-        }
-        return null;
-    };
+  const renderNavigation = () => {
+    if (userType === "admin") {
+      return <AdminNav />;
+    } else if (userType === "user") {
+      return <UserNav />;
+    }
+    return null;
+  };
 
-    return (
-        <>
-            {
-                renderNavigation()
-            }
-        </>
-    );
+  return <>{renderNavigation()}</>;
 };
 
 export default DashboardNav;
