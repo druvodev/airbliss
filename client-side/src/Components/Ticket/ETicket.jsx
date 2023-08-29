@@ -4,16 +4,48 @@ import DomToImage from "dom-to-image";
 import { useParams } from "react-router";
 import useAxios from "../../hooks/useAxios";
 import airbliss from "../../assets/banner/airblibanner.png";
+import emailjs from "@emailjs/browser";
 
 const ETicket = () => {
   const [myBooking, setBooking] = useState({});
   console.log(myBooking);
   const refID = useParams();
-  console.log(refID);
+  console.log(myBooking);
+
   useEffect(() => {
     useAxios
       .get(`/bookings/${refID.bookingId}`)
-      .then((res) => setBooking(res.data))
+      .then((res) => {
+        setBooking(res.data);
+        const info = res.data;
+        const templateParams = {
+          bookingID: info?.bookingReference,
+          transitionId: info?.transitionId,
+          from_name: `${info?.user.first_name} ${info?.user.last_name}`,
+          from_email: info?.user.traveler_email,
+          amount: info?.flight.fareSummary.total,
+          departureDate: info?.flight.departureDate,
+        };
+        emailjs
+          .send(
+            "service_y6ldylc",
+            "template_3zv6g6c",
+            templateParams,
+            "w9Pnw6KhtfQAcLD4k"
+          )
+          .then(
+            (response) => {
+              console.log(
+                "Invoice Send SUCCESS!",
+                response.status,
+                response.text
+              );
+            },
+            (err) => {
+              console.log("FAILED...", err);
+            }
+          );
+      })
       .catch((err) => {
         console.log(err.message);
       });
