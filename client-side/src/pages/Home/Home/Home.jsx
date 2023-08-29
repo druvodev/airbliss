@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import PopUpOffer from "../../../Components/PopUpOffer/PopUpOffer";
+import { useCountdownContext } from "../../../providers/CountdownContext";
 
 import Hero from "../Hero/Hero";
 import HotDeals from "../HotDeals/HotDeals";
@@ -7,6 +9,10 @@ import OurServices from "../OurServices/OurServices";
 import RecommendedFlights from "../RecommendedFlight/RecommendedFlights";
 
 const Home = () => {
+  const { setIsStart } = useCountdownContext();
+  useEffect(() => {
+    setIsStart(false);
+  }, []);
   return (
     <div>
       <Hero />

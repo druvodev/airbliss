@@ -21,8 +21,10 @@ import {
 import useAxios from "../../hooks/useAxios";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import { useCountdownContext } from "../../providers/CountdownContext";
 
 const SearchFilter = React.memo(({ bookingType, filterName }) => {
+  const { setIsStart } = useCountdownContext();
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
   const [locationModal, setLocationModal] = useState("");
@@ -67,6 +69,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
   };
 
   const handleSearch = () => {
+    setIsStart(false); // Reset Session Countdown
     const fromCity = fromCityInfo.code;
     const toCity = toCityInfo.code;
     const date = format(departureDate, "yyyy-MM-dd");
@@ -89,10 +92,13 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
       });
   };
 
-  // redux state test
+  // recall when reload filter page
   useEffect(() => {
+    if (filterName === "Modify Search") {
+      handleSearch();
+    }
     console.log("Search Filter", flight);
-  }, [flight]);
+  }, [filterName]);
 
   return (
     <div className="max-w-7xl mx-auto grid justify-center">

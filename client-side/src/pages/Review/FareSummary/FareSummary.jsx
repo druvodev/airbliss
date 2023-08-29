@@ -1,9 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import CountdownTimer from "../../../Components/CountdownTimer/CountdownTimer";
 import { useSelector } from "react-redux";
 
-const FareSummary = () => {
+const FareSummary = React.memo(() => {
   const [isCollapse, setIsCollapse] = useState(true);
   const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo);
   const { airlineLogo, airlineName, fareSummary } = flightInfo;
@@ -81,6 +81,6 @@ const FareSummary = () => {
       </div>
     </div>
   );
-};
+});
 
 export default FareSummary;
