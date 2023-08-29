@@ -1,20 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useCountdownContext } from "../../providers/CountdownContext";
+import { useLocation } from "react-router";
 
 const CountdownTimer = () => {
-  const [remainingTime, setRemainingTime] = useState(20 * 60);
-
+  const { remainingTime, setIsStart } = useCountdownContext();
+  const location = useLocation();
   useEffect(() => {
-    const timerInterval = setInterval(() => {
-      if (remainingTime > 0) {
-        setRemainingTime((prevTime) => prevTime - 1);
-      }
-    }, 1000);
-
-    return () => {
-      clearInterval(timerInterval);
-    };
-  }, [remainingTime]);
-
+    setIsStart(true);
+    console.log(location);
+  }, [location]);
   const minutes = Math.floor(remainingTime / 60);
   const seconds = remainingTime % 60;
 
