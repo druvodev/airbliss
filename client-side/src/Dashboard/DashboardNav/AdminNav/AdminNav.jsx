@@ -1,5 +1,9 @@
 import React from "react";
 import { FaHome, FaHouseUser } from "react-icons/fa";
+import { TiGroup } from "react-icons/ti";
+import { BiSolidAddToQueue } from "react-icons/bi";
+import { MdManageSearch } from "react-icons/md";
+import { BsFillPersonFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 
 const AdminNav = () => {
@@ -28,7 +32,7 @@ const AdminNav = () => {
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <TiGroup className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Manage Users</span>
       </NavLink>
@@ -42,7 +46,7 @@ const AdminNav = () => {
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <BiSolidAddToQueue className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Add Flight</span>
       </NavLink>
@@ -56,7 +60,7 @@ const AdminNav = () => {
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <MdManageSearch className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Manage Flight</span>
       </NavLink>
@@ -70,7 +74,7 @@ const AdminNav = () => {
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <BsFillPersonFill className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Account</span>
       </NavLink>
