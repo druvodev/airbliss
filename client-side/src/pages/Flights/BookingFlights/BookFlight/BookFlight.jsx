@@ -24,14 +24,12 @@ const BookFlight = () => {
   const [flightDetailsVisibility, setFlightDetailsVisibility] = useState({});
 
   const dispatch = useDispatch();
-  const flight = useSelector((state) => state.flights.filteredFlights);
-
-  console.log(flight);
+  const flight = useSelector((state) => state?.flights?.flights?.flights);
 
   // Move the sorting logic inside a useEffect hook to avoid infinite re-renders
   useEffect(() => {
-    if (flight && flight.flights) {
-      const sortedData = flight.flights.slice();
+    if (flight) {
+      const sortedData = flight.slice();
       sortedData.sort((a, b) => b.fareSummary.total - a.fareSummary.total);
       setFlightData(sortedData);
     }

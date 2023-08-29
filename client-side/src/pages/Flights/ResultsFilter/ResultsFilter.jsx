@@ -1,12 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CountdownTimer from "../../../Components/CountdownTimer/CountdownTimer";
 import { MdOutlineWbSunny } from "react-icons/md";
 import { PiSunHorizonFill } from "react-icons/pi";
+import { BsSunrise } from "react-icons/bs";
+import { useDispatch, useSelector } from "react-redux";
+import { storeFilteredFlights } from "../../../redux/features/flightsSlice";
+// import {
+//   baggageAllowanceLength,
+//   highestPrice,
+//   lowestPrice,
+//   noTransitTimeLength,
+//   nonStopLength,
+//   refundableLength,
+// } from "../../../utils/flightsFilter";
 
 const ResultsFilter = () => {
-  const [minPrice, setMinPrice] = useState(2100); // Soon Changes
-  const [maxPrice, setMaxPrice] = useState(5010); // Soon Changes
-  const [price, setPrice] = useState(5010); // Soon Changes
+  const flights = useSelector((state) => state.flights.flights.flights);
+  const dispatch = useDispatch();
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(0);
+  const [price, setPrice] = useState(0);
   const [departureTime, setDepartureTime] = useState("");
   const [nonStopChecked, setNonStopChecked] = useState(false);
   const [baggageAllowanceChecked, setBaggageAllowanceChecked] = useState(false);
@@ -21,6 +34,64 @@ const ResultsFilter = () => {
     setRefundableChecked(false);
     setNoTransitTimeChecked(false);
   };
+
+  const applyFilters = () => {
+    const updatedFilteredFlights = flights?.filter((flight) => {
+      // Apply filters based on filter values
+      const meetsPriceCriteria = parseFloat(flight.fareSummary.total) <= price;
+
+      let meetsDepartureTimeCriteria = true;
+      if (departureTime) {
+        const flightDepartureTimeHours = parseInt(
+          flight.departure.time.split(":")[0],
+          10
+        );
+        const isMorning =
+          flightDepartureTimeHours >= 6 && flightDepartureTimeHours < 12;
+        const isNoon =
+          flightDepartureTimeHours >= 12 && flightDepartureTimeHours < 18;
+        const isEvening =
+          flightDepartureTimeHours >= 18 && flightDepartureTimeHours <= 23;
+
+        meetsDepartureTimeCriteria =
+          (departureTime === "morning" && isMorning) ||
+          (departureTime === "noon" && isNoon) ||
+          (departureTime === "evening" && isEvening);
+      }
+
+      const meetsNonStopCriteria =
+        !nonStopChecked || flight.stopType === "Non Stop";
+      const meetsBaggageAllowanceCriteria =
+        !baggageAllowanceChecked || flight.flightInfo.baggage.includes("20 Kg");
+      const meetsRefundableCriteria =
+        !refundableChecked || flight.refundableStatus.includes("Refundable");
+      const meetsNoTransitTimeCriteria =
+        !noTransitTimeChecked || flight.duration <= 60;
+
+      return (
+        meetsPriceCriteria &&
+        meetsDepartureTimeCriteria &&
+        meetsNonStopCriteria &&
+        meetsBaggageAllowanceCriteria &&
+        meetsRefundableCriteria &&
+        meetsNoTransitTimeCriteria
+      );
+    });
+
+    dispatch(storeFilteredFlights(updatedFilteredFlights));
+  };
+
+  // Call applyFilters whenever any filter value changes
+  useEffect(() => {
+    applyFilters();
+  }, [
+    price,
+    departureTime,
+    nonStopChecked,
+    baggageAllowanceChecked,
+    refundableChecked,
+    noTransitTimeChecked,
+  ]);
 
   return (
     <div className="rounded-2xl shadow-md sm:py-5">
@@ -49,21 +120,36 @@ const ResultsFilter = () => {
       <hr className="text-gray-300" />
       <div className="p-5">
         <p className="text-lg font-semibold mb-4">Departure time in Dhaka</p>
-        <div className="flex gap-5 sm:gap-10">
-          <div
-            className={`shadow rounded py-4 w-full text-center cursor-pointer ${
-              departureTime === "noon"
-                ? "border border-cyan-600  bg-cyan-600 text-white"
-                : "border border-black/40"
-            }`}
-            onClick={() => setDepartureTime("noon")}
-          >
-            <MdOutlineWbSunny className="mx-auto text-2xl" />
-            <p className="text-sm font-semibold mt-2">After noon</p>
-            <p className="text-sm">
-              <small>12:00</small> - <small>17:59</small>
-              <small>{` (${12})`}</small>
-            </p>
+        <div>
+          <div className="flex gap-5 w-full mb-5">
+            <div
+              className={`shadow rounded py-4 w-full text-center cursor-pointer ${
+                departureTime === "morning"
+                  ? "border border-cyan-600  bg-cyan-600 text-white"
+                  : "border border-black/40"
+              }`}
+              onClick={() => setDepartureTime("morning")}
+            >
+              <BsSunrise className="mx-auto text-2xl" />
+              <p className="text-sm font-semibold mt-2">Morning</p>
+              <p className="text-sm">
+                <small>06.00</small> - <small>11:59</small>
+              </p>
+            </div>
+            <div
+              className={`shadow rounded py-4 w-full text-center cursor-pointer ${
+                departureTime === "noon"
+                  ? "border border-cyan-600  bg-cyan-600 text-white"
+                  : "border border-black/40"
+              }`}
+              onClick={() => setDepartureTime("noon")}
+            >
+              <MdOutlineWbSunny className="mx-auto text-2xl" />
+              <p className="text-sm font-semibold mt-2">After noon</p>
+              <p className="text-sm">
+                <small>12:00</small> - <small>17:59</small>
+              </p>
+            </div>
           </div>
           <div
             className={`shadow rounded py-4 w-full text-center cursor-pointer ${
@@ -77,7 +163,6 @@ const ResultsFilter = () => {
             <p className="text-sm font-semibold mt-2">Evening</p>
             <p className="text-sm">
               <small>18:00</small> - <small>23:59</small>
-              <small>{` (${4})`}</small>
             </p>
           </div>
         </div>
@@ -93,9 +178,8 @@ const ResultsFilter = () => {
               onChange={() => setNonStopChecked(!nonStopChecked)}
               className="checkbox checkbox-sm checkbox-accent"
             />{" "}
-            <span>Non Stop {` (${14})`}</span>
+            <span>Non Stop </span>
           </div>
-          <p>BDT {2901}</p>
         </div>
       </div>
       <hr className="text-gray-300" />
@@ -110,7 +194,7 @@ const ResultsFilter = () => {
             }
             className="checkbox checkbox-sm checkbox-accent"
           />{" "}
-          <span>20 KG {` (${14})`}</span>
+          <span>20 KG </span>
         </div>
       </div>
       <hr className="text-gray-300" />
@@ -123,7 +207,7 @@ const ResultsFilter = () => {
             onChange={() => setRefundableChecked(!refundableChecked)}
             className="checkbox checkbox-sm checkbox-accent"
           />{" "}
-          <span>20 KG {` (${14})`}</span>
+          <span>Partially Refundable</span>
         </div>
       </div>
       <hr className="text-gray-300" />
@@ -138,7 +222,7 @@ const ResultsFilter = () => {
             onChange={() => setNoTransitTimeChecked(!noTransitTimeChecked)}
             className="checkbox checkbox-sm checkbox-accent"
           />{" "}
-          <span>No Transit Time {` (${14})`}</span>
+          <span>No Transit Time </span>
         </div>
       </div>
       <div className="p-5">

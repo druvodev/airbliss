@@ -67,6 +67,7 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+const { addMinutes, format, isTomorrow } = require("date-fns");
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.8vqv4om.mongodb.net/?retryWrites=true&w=majority`;
 
@@ -200,30 +201,10 @@ async function run() {
             relevantFlightData[field] = flight[field];
           }
 
-          // Include "departure" data from fromCityData
-          relevantFlightData.departure = {
-            code: fromCityData[fromCity][0].details.code,
-            time: fromCityData[fromCity][0].details.time,
-            date: departureDate,
-            city: fromCityData[fromCity][0].details.city,
-            terminal: fromCityData[fromCity][0].details.terminal,
-            airportName: fromCityData[fromCity][0].airportName,
-            seats: fromCityData[fromCity][0].totalSeats,
-          };
-          // Include "arrival" data from toCityData
-          relevantFlightData.arrival = {
-            code: toCityData[toCity][0].details.code,
-            time: toCityData[toCity][0].details.time,
-            city: toCityData[toCity][0].details.city,
-            airlineName: toCityData[toCity][0].airlineName,
-            terminal: toCityData[toCity][0].details.terminal,
-            airportName: toCityData[toCity][0].airportName,
-          };
-
           // Calculate fare summary
           const distance = calculateDistance(
-            fromCityData[fromCity][0].details.latitude,
-            fromCityData[fromCity][0].details.longitude,
+            flight.details.latitude,
+            flight.details.longitude,
             toCityData[toCity][0].details.latitude,
             toCityData[toCity][0].details.longitude
           );
@@ -232,8 +213,40 @@ async function run() {
             distance * parseFloat(flight.durationPerKm)
           );
 
-          const amountPerKm = fromCityData[fromCity][0].amountPerKm;
-          const taxesAndFees = fromCityData[fromCity][0].taxesAndFees;
+          // Include "departure" data from fromCityData
+          relevantFlightData.departure = {
+            code: flight.details.code,
+            time: flight.details.time,
+            date: departureDate,
+            city: flight.details.city,
+            terminal: flight.details.terminal,
+            airportName: flight.airportName,
+            seats: flight.totalSeats,
+          };
+
+          // Include "arrival" data in relevantFlightData
+          const departureDateTime = new Date(
+            `${departureDate}T${flight.details.time}`
+          );
+          const arrivalTime = addMinutes(
+            departureDateTime,
+            relevantFlightData.duration
+          );
+
+          if (isTomorrow(arrivalTime)) {
+            arrivalTime.setDate(departureDateTime.getDate() + 1);
+          }
+          relevantFlightData.arrival = {
+            code: toCityData[toCity][0].details.code,
+            time: format(arrivalTime, "HH:mm"),
+            date: format(arrivalTime, "yyyy-MM-dd"),
+            city: toCityData[toCity][0].details.city,
+            airlineName: toCityData[toCity][0].airlineName,
+            terminal: toCityData[toCity][0].details.terminal,
+            airportName: toCityData[toCity][0].airportName,
+          };
+          const amountPerKm = flight.amountPerKm;
+          const taxesAndFees = flight.taxesAndFees;
 
           const baseFare = (amountPerKm * distance).toFixed();
           const calculatedFees = (baseFare * taxesAndFees) / 100;
@@ -357,7 +370,7 @@ async function run() {
       });
     });
 
-    // get specific bookings information
+    // get user booking information
     app.get("/bookings/:bookingReference", async (req, res) => {
       const bookingReference = req.params.bookingReference;
 
@@ -368,10 +381,14 @@ async function run() {
 
         for (const booking of bookings) {
           for (const dateKey in booking) {
-            for (const airportCodeKey in booking[dateKey]) {
-              const bookingObj = booking[dateKey][airportCodeKey][0];
-              if (bookingObj.bookingReference === bookingReference) {
-                foundBooking = bookingObj;
+            const airportCodes = booking[dateKey];
+            for (const airportCodeKey in airportCodes) {
+              const bookingsForAirport = airportCodes[airportCodeKey];
+              const foundBookingObj = bookingsForAirport.find(
+                (bookingObj) => bookingObj.bookingReference === bookingReference
+              );
+              if (foundBookingObj) {
+                foundBooking = foundBookingObj;
                 break;
               }
             }
@@ -395,10 +412,45 @@ async function run() {
       }
     });
 
-    // get users
+    // get all bookings
     app.get("/bookings", async (req, res) => {
       const result = await bookingsCollection.find().toArray();
       res.send(result);
+    });
+
+    app.post("/addNewFlights", async (req, res) => {
+      const airportCode = req.body.airportCode;
+      const newFlights = req.body.newFlights;
+
+      try {
+        // Check exists airport
+        const existingAirport = await flightsCollection.findOne({
+          [airportCode]: { $exists: true },
+        });
+
+        if (existingAirport) {
+          // Add new flights in existing airport
+          const result = await flightsCollection.updateOne(
+            { [airportCode]: { $exists: true } },
+            { $push: { [airportCode]: { $each: newFlights } } }
+          );
+
+          client.close();
+
+          if (result.modifiedCount > 0) {
+            res
+              .status(200)
+              .json({ message: "New flights added successfully." });
+          } else {
+            res.status(400).json({ message: "Failed to add new flights." });
+          }
+        } else {
+          res.status(404).json({ message: "Airport code not found." });
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error." });
+      }
     });
 
     // Save user
@@ -416,8 +468,24 @@ async function run() {
     });
 
     // get users
-    app.get("/users", verifyJWT, async (req, res) => {
+    app.get("/users", async (req, res) => {
       const result = await usersCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.patch("/users/:id", async (req, res) => {
+      const id = req.params.id;
+      const usersData = req.body.usersData; // No need for req.body.usersData
+
+      console.log(usersData);
+
+      const filter = { _id: new ObjectId(id) };
+      const updateDoc = {
+        $set: {
+          ...usersData,
+        },
+      };
+      const result = await usersCollection.updateOne(filter, updateDoc);
       res.send(result);
     });
 
