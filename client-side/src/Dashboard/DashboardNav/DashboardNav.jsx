@@ -3,7 +3,7 @@ import UserNav from "./UserNav/UserNav";
 import AdminNav from "./AdminNav/AdminNav";
 
 const DashboardNav = () => {
-  const userType = "user";
+  const userType = "admin";
 
   const renderNavigation = () => {
     if (userType === "admin") {

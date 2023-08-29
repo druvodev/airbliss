@@ -6,11 +6,12 @@ const AdminNav = () => {
   return (
     <>
       <NavLink
-        to="adminHome"
+        to="/dashboard"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
-            ? 'bg-white text-gray-800 active:border rounded-full'
-            : 'text-white'
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+            isActive
+              ? "bg-white text-gray-800 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -20,9 +21,10 @@ const AdminNav = () => {
       <NavLink
         to="manageUsers"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
-            ? 'bg-white text-gray-800 active:border rounded-full'
-            : 'text-white'
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+            isActive
+              ? "bg-white text-gray-800 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -33,9 +35,10 @@ const AdminNav = () => {
       <NavLink
         to="addFlight"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
-            ? 'bg-white text-gray-800 active:border rounded-full'
-            : 'text-white'
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+            isActive
+              ? "bg-white text-gray-800 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -46,9 +49,10 @@ const AdminNav = () => {
       <NavLink
         to="flightStatus"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
-            ? 'bg-white text-gray-800 active:border rounded-full'
-            : 'text-white'
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+            isActive
+              ? "bg-white text-gray-800 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -59,9 +63,10 @@ const AdminNav = () => {
       <NavLink
         to="account"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
-            ? 'bg-white text-gray-800 active:border rounded-full'
-            : 'text-white'
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+            isActive
+              ? "bg-white text-gray-800 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -75,9 +80,10 @@ const AdminNav = () => {
       <NavLink
         to="/"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
-            ? 'bg-white text-gray-800 active:border rounded-full'
-            : 'text-white'
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+            isActive
+              ? "bg-white text-gray-800 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
