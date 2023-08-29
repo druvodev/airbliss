@@ -150,7 +150,9 @@ async function run() {
     // Searching Flights using by destination
     app.get("/flights/search", async (req, res) => {
       const { fromCity, toCity, departureDate } = req.query;
-
+      if (!fromCity || !toCity || !departureDate) {
+        return res.json("Not found proper url!");
+      }
       const flightsResult = [];
 
       try {
@@ -347,9 +349,9 @@ async function run() {
         .then(async () => {
           bookingInfo.transitionId = transitionId;
           bookingInfo.paymentStatus = "paid";
-          await saveBookingInfoToDatabase(bookingInfo);
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
+        await saveBookingInfoToDatabase(bookingInfo);
         res.redirect(
           `http://localhost:5173/booking-confirmed/${req.params.bookingId}`
         );
