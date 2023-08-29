@@ -23,6 +23,8 @@ const UserHome = () => {
               <th>Flight name</th>
               <th>Flight booking date</th>
               <th>Ticket Price</th>
+              <th>Travel Path</th>
+              <th>Passport Number</th>
               <th>Flight Status</th>
               <th>Action</th>
             </tr>
@@ -46,6 +48,10 @@ const UserHome = () => {
                 <td>{flight.flightName}</td>
                 <td>{flight.bookingDate}</td>
                 <td>$ {flight.ticketPrice}</td>
+                <td>
+                  {flight.from} To {flight.to}
+                </td>
+                <td>{flight.passport}</td>
                 <td>{flight.flightStatus}</td>
                 <td className="flex gap-2 mt-2">
                   <button
