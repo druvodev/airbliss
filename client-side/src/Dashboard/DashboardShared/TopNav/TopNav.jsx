@@ -14,14 +14,14 @@ const TopNav = ({ handleToggle }) => {
         }}
       >
         <div className="navbar-start">
-          <div className='border-[1px] bg-white w-ful md:w-auto py-2 rounded-full shadow-sm hover:shadow-md transition cursor-pointer'>
+          <div className='border-[1px] hidden lg:flex bg-white w-ful md:w-auto py-2 rounded-full shadow-sm hover:shadow-md transition cursor-pointer'>
             <div className='flex flex-row items-center justify-between'>
               <div className='text-sm font-semibold px-6'>Anywhere</div>
               <div className='hidden sm:block text-sm font-semibold px-6 border-x-[1px] flex-1 text-center'>
                 Any Week
               </div>
               <div className='text-sm pl-6 pr-2 text-gray-600 flex flex-row items-center gap-3'>
-                <div className='hidden sm:block'>Add Guests</div>
+                <div className='hidden sm:block'>Any Day's</div>
                 <div className='p-1 bg-cyan-500 rounded-full text-white'>
                   <BiSearch size={18} />
                 </div>
