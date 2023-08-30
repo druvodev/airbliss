@@ -17,7 +17,7 @@ import Account from "../Dashboard/Account/Account";
 import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
 import UserHome from "../Dashboard/UserHome/UserHome";
 
-const userType = "user";
+const userType = "admin";
 
 export const router = createBrowserRouter([
   {

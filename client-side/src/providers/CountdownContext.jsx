@@ -11,7 +11,7 @@ export const CountdownProvider = ({ children }) => {
   useEffect(() => {
     let timerInterval = null;
 
-    if (isStart) {
+    if (isStart === "1") {
       timerInterval = setInterval(() => {
         if (remainingTime > 0) {
           setRemainingTime((prevTime) => prevTime - 1);
