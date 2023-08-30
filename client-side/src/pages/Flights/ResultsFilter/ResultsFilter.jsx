@@ -91,8 +91,7 @@ const ResultsFilter = () => {
         meetsNoTransitTimeCriteria
       );
     });
-
-    dispatch(storeFilteredFlights(updatedFilteredFlights));
+    dispatch(storeFilteredFlights({ flights: updatedFilteredFlights }));
   };
 
   // Call applyFilters whenever any filter value changes
