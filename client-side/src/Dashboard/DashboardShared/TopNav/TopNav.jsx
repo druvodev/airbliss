@@ -8,20 +8,20 @@ const TopNav = ({ handleToggle }) => {
   return (
     <>
       <div
-        className="navbar lg:flex-row flex-row-reverse justify-between lg:w-[50%] w-[90%] mx-auto mt-2 py-0 rounded-full shadow-lg px-10 bg-cyan-200"
+        className="navbar lg:gap-10 gap-0 lg:flex-row flex-row-reverse justify-between lg:w-[55%] w-[90%] mx-auto mt-2 py-0 rounded-full shadow-lg px-10 bg-cyan-200"
         style={{
           backgroundImage: 'linear-gradient(to right, #70cfc9 , #5daad6 )',
         }}
       >
         <div className="navbar-start">
-          <div className='border-[1px] bg-white w-ful md:w-auto py-2 rounded-full shadow-sm hover:shadow-md transition cursor-pointer'>
+          <div className='border-[1px] hidden lg:flex bg-white w-ful md:w-auto py-2 rounded-full shadow-sm hover:shadow-md transition cursor-pointer'>
             <div className='flex flex-row items-center justify-between'>
               <div className='text-sm font-semibold px-6'>Anywhere</div>
               <div className='hidden sm:block text-sm font-semibold px-6 border-x-[1px] flex-1 text-center'>
                 Any Week
               </div>
               <div className='text-sm pl-6 pr-2 text-gray-600 flex flex-row items-center gap-3'>
-                <div className='hidden sm:block'>Add Guests</div>
+                <div className='hidden sm:block'>Any Day's</div>
                 <div className='p-1 bg-cyan-500 rounded-full text-white'>
                   <BiSearch size={18} />
                 </div>

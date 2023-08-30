@@ -275,6 +275,7 @@ async function run() {
       }
     });
 
+    // ###################################### Flight Booking Methods #########################################
     // Store booking info when user successfully books a flight
     async function saveBookingInfoToDatabase(bookingInfo) {
       try {
@@ -308,6 +309,7 @@ async function run() {
               [airportCode]: [bookingInfo],
             },
           };
+
           await bookingsCollection.insertOne(newEntry);
         }
         console.log("Booking info saved to database.");
@@ -318,6 +320,66 @@ async function run() {
       }
     }
 
+    // Generate seat data model for specific flight
+    async function generateSeatData(totalSeats, flightId, bookingDate) {
+      // Check if the flightId already exists for the given date
+      const existingDateEntry = await seatsCollection.findOne({
+        [bookingDate]: { $elemMatch: { flightId: flightId } },
+      });
+
+      if (existingDateEntry) {
+        console.log(
+          `Seats for flight ${flightId} on ${bookingDate} already exist.`
+        );
+        return;
+      }
+
+      const rows = ["A", "B"];
+      const seatsPerRow = Math.floor(totalSeats / rows.length);
+      const remainderSeats = totalSeats % rows.length;
+
+      const seatData = {
+        flightId: flightId,
+        totalSeat: totalSeats,
+        available: totalSeats,
+        seats: [],
+      };
+
+      let seatCounter = 0;
+
+      for (let row of rows) {
+        const rowSeats = seatsPerRow + (seatCounter < remainderSeats ? 1 : 0);
+
+        for (let seatNumber = 1; seatNumber <= rowSeats; seatNumber++) {
+          const seatNo = `${row}${seatNumber}`;
+
+          seatData.seats.push({
+            seatNo: seatNo,
+            available: true,
+          });
+
+          seatCounter++;
+        }
+      }
+
+      // Add the new seat data to the appropriate date
+      const updateQuery = {
+        $push: {
+          [bookingDate]: seatData,
+        },
+      };
+
+      await seatsCollection.updateOne({}, updateQuery, { upsert: true });
+      console.log(seatData);
+      console.log(
+        `New seat data generated for flight ${flightId} on ${bookingDate}.`
+      );
+    }
+
+    app.get("/addSeats", async (req, res) => {
+      const result = await seatsCollection.find().toArray();
+      res.json(result);
+    });
     // payment processing API
     app.post("/process-payment", async (req, res) => {
       const bookingInfo = req.body;
@@ -362,8 +424,11 @@ async function run() {
           res.send({ paymentUrl: GatewayPageURL });
         })
         .then(async () => {
+          const { totalSeat, flightId, flight } = bookingInfo;
           bookingInfo.transitionId = transitionId;
           bookingInfo.paymentStatus = "paid";
+          // Generate seat plan before store booking information
+          await generateSeatData(totalSeat, flightId, flight?.departureDate);
           await saveBookingInfoToDatabase(bookingInfo);
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
@@ -373,6 +438,7 @@ async function run() {
       });
     });
 
+    // #############################################################################
     // get user booking information
     app.get("/bookings/:bookingReference", async (req, res) => {
       const bookingReference = req.params.bookingReference;

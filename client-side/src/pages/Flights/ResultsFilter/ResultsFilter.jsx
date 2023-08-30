@@ -91,7 +91,6 @@ const ResultsFilter = () => {
         meetsNoTransitTimeCriteria
       );
     });
-
     dispatch(storeFilteredFlights({ flights: updatedFilteredFlights }));
   };
 

@@ -23,7 +23,7 @@ const InforMation = ({ currentUser }) => {
                 <h1 className='lg:text-2xl font-medium text-[#333]'>About</h1>
                 <p className='text-[#999] mt-2'>{about}</p>
             </div>
-            <div className='grid grid-cols-2 px-[20px] mt-12'>
+            <div className='grid grid-cols-2 gap-2 px-[20px] mt-12'>
                 <div>
                     <h1 className='lg:text-2xl font-medium text-[#333]'>Occupation</h1>
                     <p className='text-[#999] mt-2'>{occupation}</p>

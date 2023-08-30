@@ -131,9 +131,12 @@ export const paymentProcessing = (flightInfo, userInfo) => {
     ...userInfo,
     PNR: generatePNR(),
   };
+
   userBookingInfo.flight = transformFlightInfo(flightInfo);
   userBookingInfo.paymentStatus = "processing";
   userBookingInfo.bookingDateTime = formatDateTime(new Date());
+  userBookingInfo.totalSeat = flightInfo?.departure.seats;
+  userBookingInfo.flightId = flightInfo?._id;
 
   // Make a POST request using Axios from useAxios hook
   useAxios
@@ -146,7 +149,7 @@ export const paymentProcessing = (flightInfo, userInfo) => {
       if (response.data.paymentUrl) {
         const paymentURL = response.data.paymentUrl;
         console.log("Payment URL: ", paymentURL);
-        window.location.replace(paymentURL);
+        // window.location.replace(paymentURL);
       } else {
         console.log("Payment Processing Failed: ", response.data);
       }
