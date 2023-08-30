@@ -23,7 +23,7 @@ const ShortingFlight = () => {
           <FaCaretLeft className="lg:text-[45px] text-[20px] md:text-[25px] text-cyan-500 cursor-pointer" />
         </div>
         <div className="font-sans font-semibold text-[20] md:text-[25px] lg:text-[32px]">
-          Flights from Dhaka to Chittagong
+          Flights Dhaka to Chattagram
         </div>
         <div
           className="tooltip tooltip-bottom"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { setLoading } from "../../../../redux/features/globalSlice";
 import { toast } from "react-hot-toast";
 import shortid from "shortid";
+import { MdOutlineCloudUpload } from "react-icons/md";
 
 const initialFormData = {
   airportName: "",
@@ -56,6 +57,8 @@ const AddFlight = () => {
       event.target.options[event.target.selectedIndex].text;
     setSelectAirportId(selectedAirportId);
     setSelectAirportCode(selectedAirportCode);
+
+    console.log(selectedAirportId);
 
     if (selectedAirportCode.length >= 1) {
       setchekAirportSelect(false);
@@ -145,6 +148,36 @@ const AddFlight = () => {
     const updatedNotes = [...notes];
     updatedNotes.splice(index, 1);
     setNotes(updatedNotes);
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      // Send the image to ImgBB
+      const imgbbResponse = await fetch(
+        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const imgbbData = await imgbbResponse.json();
+
+      if (imgbbData && imgbbData.data) {
+        // Set the image link in your form data
+        setFormData((prevData) => ({
+          ...prevData,
+          airlineLogo: imgbbData.data.url,
+        }));
+      } else {
+        console.error("Error uploading image to ImgBB");
+      }
+    }
   };
 
   const handelSubmit = (event) => {
@@ -253,7 +286,7 @@ const AddFlight = () => {
               </div>
 
               <div>
-                <input
+                {/* <input
                   className="p-2 border-b-[0.5px] border-black"
                   type="text"
                   name="airlineLogo"
@@ -261,7 +294,20 @@ const AddFlight = () => {
                   onChange={handleChange}
                   placeholder="Airline Logo"
                   required
-                />
+                /> */}
+
+                <label className=" relative border-b-[1px] border-black w-[195px] py-2 px-4 cursor-pointer flex items-center">
+                  <span className="absolute inset-0 z-10"></span>
+                  <MdOutlineCloudUpload className="mr-2" />
+                  Airline Image
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageUpload}
+                    required
+                    className="absolute inset-0 z-20 w-full h-full opacity-0 cursor-pointer"
+                  />
+                </label>
               </div>
 
               <div>
