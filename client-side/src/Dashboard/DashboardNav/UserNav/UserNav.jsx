@@ -1,4 +1,5 @@
 import React from "react";
+import { BsFillPersonFill } from "react-icons/bs";
 import { FaHome, FaHouseUser } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
@@ -27,7 +28,7 @@ const UserNav = () => {
                     }`
                 }
             >
-                <FaHouseUser className='w-5 h-5' />
+                <BsFillPersonFill className='w-5 h-5' />
 
                 <span className='mx-4 font-medium'>Account</span>
             </NavLink>

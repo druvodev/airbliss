@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../layouts/Main";
 import Home from "../pages/Home/Home/Home";
 import Flights from "../pages/Flights/Flights/Flights";
-
 import Error from "../Error/Error";
 import Contact from "../pages/Contact/Contact";
 import Terms from "../pages/Terms/Terms";
@@ -15,7 +14,7 @@ import ETicket from "../Components/Ticket/ETicket";
 import ManageUsers from "../Dashboard/Admin/ManageUsers/ManageUsers";
 import Account from "../Dashboard/Account/Account";
 import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
-import UserHome from "../Dashboard/UserHome/UserHome";
+import UserHome from "../Dashboard/User/UserHome/UserHome";
 
 const userType = "admin";
 
@@ -67,7 +66,12 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: "managebooking",
+        path: "adminHome",
+        element: <AdminHome />
+      },
+
+      {
+        path: "booking",
         element: <UserHome />,
       },
 

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { BiSearch } from 'react-icons/bi';
 
 const TopNav = ({ handleToggle }) => {
-  const { user } = useAuth()
+  const { user, logOut } = useAuth()
   return (
     <>
       <div
@@ -53,7 +53,7 @@ const TopNav = ({ handleToggle }) => {
                 </Link>
               </li>
               <li className=''>
-                <Link to='/' className="hover:bg-cyan-300">
+                <Link  to="/" onClick={logOut} className="hover:bg-cyan-300">
                   Logout
                 </Link>
               </li>
