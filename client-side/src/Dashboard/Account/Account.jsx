@@ -29,9 +29,6 @@ const Account = () => {
 
     const currentUser = users.find(userData => userData?.email === user?.email);
 
-
-    console.log(currentUser);
-
     const handleSubmit = (event) => {
         event.preventDefault();
         const usersData = {

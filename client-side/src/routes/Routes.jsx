@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Main from "../layouts/Main";
 import Home from "../pages/Home/Home/Home";
 import Flights from "../pages/Flights/Flights/Flights";
-
 import Error from "../Error/Error";
 import Contact from "../pages/Contact/Contact";
 import Terms from "../pages/Terms/Terms";
@@ -17,7 +16,7 @@ import Account from "../Dashboard/Account/Account";
 import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
 import UserHome from "../Dashboard/User/UserHome/UserHome";
 
-const userType = "user";
+const userType = "admin";
 
 export const router = createBrowserRouter([
   {
