@@ -15,7 +15,7 @@ import ETicket from "../Components/Ticket/ETicket";
 import ManageUsers from "../Dashboard/Admin/ManageUsers/ManageUsers";
 import Account from "../Dashboard/Account/Account";
 import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
-import UserHome from "../Dashboard/UserHome/UserHome";
+import UserHome from "../Dashboard/User/UserHome/UserHome";
 
 const userType = "user";
 
@@ -67,7 +67,12 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: "managebooking",
+        path: "adminHome",
+        element: <AdminHome />
+      },
+
+      {
+        path: "booking",
         element: <UserHome />,
       },
 
