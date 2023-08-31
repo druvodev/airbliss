@@ -8,6 +8,9 @@ import logoWhite from "../../assets/icon/airblissWhite.png";
 import LoginSignupModal from "../../LogIn/LoginSignupModal";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import UseAxiosSecure from "../../hooks/UseAxiosSecure";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "../../redux/features/UsersSlice";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -17,6 +20,29 @@ const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
+  const [users, setUsers] = useState([])
+  const [axiosSecure] = UseAxiosSecure()
+
+  useEffect(() => {
+    axiosSecure.get('/users')
+      .then(response => {
+        setUsers(response?.data)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+  }, [axiosSecure]);
+
+  const currentUser = users.find(userData => userData?.email === user?.email);
+
+  const isAdmin = currentUser?.role === 'admin'
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(setUserInfo(currentUser));
+    console.log("current user", currentUser);
+  }, [currentUser])
 
   const handleScroll = () => {
     const currentScrollPos = window.pageYOffset;
@@ -189,9 +215,15 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
                   >
                     <li>
-                      <Link to="/dashboard" className="text-black" href="">
-                        Dashboard
-                      </Link>
+                      {isAdmin ? (
+                        <Link to="/dashboard/adminHome" className="text-black">
+                          Dashboard
+                        </Link>
+                      ) : (
+                        <Link to="/dashboard/booking" className="text-black">
+                          Dashboard
+                        </Link>
+                      )}
                     </li>
                     <li>
                       <Link className="text-black" to="/" onClick={logOut}>
