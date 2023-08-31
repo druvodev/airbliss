@@ -149,7 +149,7 @@ export const paymentProcessing = (flightInfo, userInfo) => {
       if (response.data.paymentUrl) {
         const paymentURL = response.data.paymentUrl;
         console.log("Payment URL: ", paymentURL);
-        // window.location.replace(paymentURL);
+        window.location.replace(paymentURL);
       } else {
         console.log("Payment Processing Failed: ", response.data);
       }

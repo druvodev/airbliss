@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -6,12 +6,23 @@ import "swiper/css/pagination";
 import { FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const ShortingFlight = () => {
-  // const [selectedButton, setSelectedButton] = useState('cheapest');
+const ShortingFlight = ({ destenation }) => {
+  const [airlines, setAirlines] = useState([]);
 
-  // const handleButtonClick = (buttonType) => {
-  //     setSelectedButton(buttonType);
-  // };
+  useEffect(() => {
+    destenation.forEach((item) => {
+      const { airlineName, airlineLogo } = item;
+      // Check if the airlineName is already in the array
+      if (!airlines.some((airline) => airline.airlineName === airlineName)) {
+        setAirlines((prevAirlines) => [
+          ...prevAirlines,
+          { airlineName, airlineLogo },
+        ]);
+      }
+    });
+  }, []);
+
+  // console.log(airlines);
 
   return (
     <div className="mb-10 overflow-hidden">

@@ -72,7 +72,7 @@ const ResultsFilter = () => {
           (departureTime === "noon" && isNoon) ||
           (departureTime === "evening" && isEvening);
       }
-
+      console.log("total Flights: ", flights);
       const meetsNonStopCriteria =
         !nonStopChecked || flight.stopType === "Non Stop";
       const meetsBaggageAllowanceCriteria =
