@@ -132,6 +132,23 @@ const BookFlight = () => {
     return `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
   }
 
+  function calculateArrivalDate(departureDate, departureTime, arrivalTime) {
+    const [depHour, depMinute] = departureTime.split(":").map(Number);
+    const [arrHour, arrMinute] = arrivalTime.split(":").map(Number);
+
+    const departureDateTime = new Date(departureDate);
+    departureDateTime.setHours(depHour, depMinute, 0, 0);
+
+    if (arrHour < depHour || (arrHour === depHour && arrMinute < depMinute)) {
+      departureDateTime.setDate(departureDateTime.getDate() + 1);
+    }
+
+    const arrivalDate = departureDateTime.toISOString().slice(0, 10);
+    const formattedArrivalDate = formatDate(arrivalDate);
+
+    return formattedArrivalDate;
+  }
+
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
@@ -243,7 +260,11 @@ const BookFlight = () => {
                     </h2>
                     <p className="-mt-1 pr-2">
                       <small>
-                        {singleFlight?.flight_details?.arrival?.date}
+                        {calculateArrivalDate(
+                          singleFlight?.departure?.date,
+                          singleFlight?.departure?.time,
+                          singleFlight?.arrival?.time
+                        )}
                       </small>
                     </p>
                     <h3 className="mt-2 text-[13px]">
