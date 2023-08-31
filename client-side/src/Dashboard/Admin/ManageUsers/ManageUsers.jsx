@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react';
 import UseAxiosSecure from '../../../hooks/UseAxiosSecure';
 import { toast } from 'react-hot-toast';
 import AllUsers from './AllUsers';
-import { useSelector } from 'react-redux';
 
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([])
     const [axiosSecure] = UseAxiosSecure()
     const [selectedUserId, setSelectedUserId] = useState(null);
-
-    const selector = useSelector(state => state?.userInfo)
-    console.log(selector);
+    const [selectedUserRole, setSelectedUserRole] = useState("");
+    const [selectedUserStatus, setSelectedUserStatus] = useState("");
 
     useEffect(() => {
         axiosSecure.get('/users')
@@ -24,8 +22,10 @@ const ManageUsers = () => {
     }, [axiosSecure]);
 
 
-    const handleModalOpen = (userId) => {
+    const handleModalOpen = (userId, role, status) => {
         setSelectedUserId(userId);
+        setSelectedUserRole(role);
+        setSelectedUserStatus(status);
         window.my_modal_3.showModal();
     };
 
@@ -47,20 +47,22 @@ const ManageUsers = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({usersData}),
+                body: JSON.stringify({ usersData }), // Use usersData instead of formData
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    // if (data.acknowledged === true) {
-                    //     toast.success('User Data submitted successfully');
-                    //     setUsers((prevUsers) =>
-                    //         prevUsers.map((user) =>
-                    //             user._id === selectedUserId ? { ...user, role: formData.role } : user
-                    //         )
-                    //     );
-                    // } else {
-                    //     toast.error('Failed to update user data');
-                    // }
+                    if (data.acknowledged === true) {
+                        toast.success('User Data submitted successfully');
+                        setUsers((prevUsers) =>
+                            prevUsers.map((user) =>
+                                user._id === selectedUserId
+                                    ? { ...user, role: usersData.role, status: usersData.status }
+                                    : user
+                            )
+                        );
+                    } else {
+                        toast.error('Failed to update user data');
+                    }
                     console.log(data);
                 })
                 .catch((err) => {
@@ -70,6 +72,7 @@ const ManageUsers = () => {
             console.log(usersData);
         }
     };
+
 
 
 
@@ -123,6 +126,8 @@ const ManageUsers = () => {
                                         name="role"
                                         id="role"
                                         className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                        value={selectedUserRole}
+                                        onChange={(e) => setSelectedUserRole(e.target.value)}
                                     >
                                         <option value="">Select Role</option>
                                         <option value="admin">Admin</option>
@@ -136,8 +141,9 @@ const ManageUsers = () => {
                                     <select
                                         name="status"
                                         id="status"
-                                        // value={}
                                         className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                        value={selectedUserStatus}
+                                        onChange={(e) => setSelectedUserStatus(e.target.value)}
                                     >
                                         <option value="">Select Status</option>
                                         <option value="normal">Normal</option>

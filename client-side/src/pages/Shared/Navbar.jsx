@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useDispatch } from "react-redux";
-import { setUserInfo } from "../../redux/features/bookingInfoSlice";
+import { setUserInfo } from "../../redux/features/UsersSlice";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -38,7 +38,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(setUserInfo(currentUser))
+    dispatch(setUserInfo(currentUser));
     console.log("current user", currentUser);
   }, [currentUser])
 

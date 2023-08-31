@@ -37,7 +37,7 @@ const AllUsers = ({ user, index, handleModalOpen }) => {
                 </td>
                 <td>
                     <button
-                        onClick={() => handleModalOpen(_id)}
+                        onClick={() => handleModalOpen(_id, role, status)}
                         className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-500`}
                     >
                         <AiFillSetting />

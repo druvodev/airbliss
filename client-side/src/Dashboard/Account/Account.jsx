@@ -28,12 +28,6 @@ const Account = () => {
 
     const currentUser = users.find(userData => userData?.email === user?.email);
 
-    // const dispatch = useDispatch()
-
-    // useEffect(() => { 
-    //     dispatch(setUserInfo(currentUser))
-    //     console.log("current user",currentUser);
-    // }, [currentUser])
 
     const handleSubmit = (event) => {
         event.preventDefault();
