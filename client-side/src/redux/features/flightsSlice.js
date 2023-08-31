@@ -3,8 +3,8 @@ import { setLoading, setError } from "./globalSlice";
 import useAxios from "../../hooks/useAxios";
 
 const initialState = {
-  flights: {},
-  filteredFlights: {},
+  flights: [],
+  filteredFlights: [],
 };
 
 export const flightsSlice = createSlice({

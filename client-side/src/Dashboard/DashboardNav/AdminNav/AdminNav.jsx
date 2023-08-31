@@ -1,17 +1,20 @@
 import React from "react";
 import { FaHome, FaHouseUser } from "react-icons/fa";
+import { TiGroup } from "react-icons/ti";
+import { BiSolidAddToQueue } from "react-icons/bi";
+import { MdManageSearch } from "react-icons/md";
+import { BsFillPersonFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 
 const AdminNav = () => {
   return (
     <>
       <NavLink
-        to="/dashboard"
+        to="adminHome"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
-            isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
+            ? "bg-white text-gray-800 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
@@ -21,56 +24,52 @@ const AdminNav = () => {
       <NavLink
         to="manageUsers"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
-            isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
+            ? "bg-white text-gray-800 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <TiGroup className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Manage Users</span>
       </NavLink>
       <NavLink
         to="addFlight"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
-            isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
+            ? "bg-white text-gray-800 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <BiSolidAddToQueue className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Add Flight</span>
       </NavLink>
       <NavLink
         to="flightStatus"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
-            isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
+            ? "bg-white text-gray-800 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <MdManageSearch className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Manage Flight</span>
       </NavLink>
       <NavLink
         to="account"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
-            isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
+            ? "bg-white text-gray-800 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <BsFillPersonFill className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Account</span>
       </NavLink>
@@ -80,10 +79,9 @@ const AdminNav = () => {
       <NavLink
         to="/"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
-            isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
+            ? "bg-white text-gray-800 active:border rounded-full"
+            : "text-white"
           }`
         }
       >

@@ -14,8 +14,7 @@ const TrackingNavigation = () => {
   const { airlineLogo, airlineName, passengerType, stopType, duration } =
     data || {};
   const { aircraft, cabin, checkIn, flightNumber } = data?.flightInfo || {};
-  const { airportName, city, code, date, terminal, time } =
-    data?.departure || {};
+  const { city, date, time } = data?.departure || {};
 
   const arrive = data?.arrival || {};
 
@@ -28,8 +27,6 @@ const TrackingNavigation = () => {
     }
   }, [flight, id]);
 
-  console.log(data);
-
   return (
     <>
       <div className=" mb-8 flex lg:justify-between lg:items-center lg:flex-row flex-col">
@@ -37,9 +34,10 @@ const TrackingNavigation = () => {
           Review Your Booking
         </h1>
 
-        <div className="text-cyan-600 font-semibold mt-4 lg:mt-0">
+        <div className="text-cyan-600  mt-4 lg:mt-0">
           <h1 className="inline-flex items-center gap-3">
-            Flight Section <FaAngleRight /> Booking <FaAngleRight /> Payment
+            Flight Section <FaAngleRight /> <strong>Booking</strong>{" "}
+            <FaAngleRight /> Payment
           </h1>
         </div>
       </div>
