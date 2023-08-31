@@ -361,10 +361,61 @@ async function run() {
       );
     }
 
-    app.get("/addSeats", async (req, res) => {
-      const result = await seatsCollection.find().toArray();
-      res.json(result);
-    });
+    // Select available seat form seat collection
+    async function selectAvailableSeat(flightId, bookingDate) {
+      try {
+        const query = {};
+        query[bookingDate] = { $exists: true };
+        const flightsData = await seatsCollection.findOne(query);
+        if (!flightsData) {
+          throw new Error("Flights not found for the specified date.");
+        }
+
+        const flightsOnDate = flightsData[bookingDate];
+
+        const flight = flightsOnDate.find((f) => f.flightId === flightId);
+
+        if (!flight) {
+          throw new Error("Flight not found for the specified flightId.");
+        }
+
+        const availableSeat = flight.seats.find((seat) => seat.available);
+
+        if (availableSeat) {
+          availableSeat.available = false;
+
+          // Decrease available seat count for the flight
+          flight.available--;
+
+          // Update the seat availability and available seat count in the database
+          await seatsCollection.updateOne(
+            {
+              _id: flightsData._id,
+              [bookingDate]: { $elemMatch: { flightId: flightId } },
+            },
+            {
+              $set: {
+                [`${bookingDate}.$[flight].seats.$[seat].available`]: false,
+                [`${bookingDate}.$[flight].available`]: flight.available,
+              },
+            },
+            {
+              arrayFilters: [
+                { "flight.flightId": flightId },
+                { "seat.seatNo": availableSeat.seatNo },
+              ],
+            }
+          );
+
+          return availableSeat.seatNo;
+        } else {
+          throw new Error("No available seats for the specified flight.");
+        }
+      } catch (error) {
+        throw error;
+      }
+    }
+
     // payment processing API
     app.post("/process-payment", async (req, res) => {
       const bookingInfo = req.body;
@@ -414,6 +465,11 @@ async function run() {
           bookingInfo.paymentStatus = "paid";
           // Generate seat plan before store booking information
           await generateSeatData(totalSeat, flightId, flight?.departureDate);
+          const seatNo = await selectAvailableSeat(
+            flightId,
+            flight?.departureDate
+          );
+          bookingInfo.seat = seatNo;
           await saveBookingInfoToDatabase(bookingInfo);
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
