@@ -70,17 +70,7 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: "/dashboard",
-        element: <AdminHome />
-      },
-
-      {
         path: "booking",
-        element: <UserHome />,
-      },
-
-      {
-        path: "/dashboard",
         element: <UserHome />,
       },
 

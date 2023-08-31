@@ -35,6 +35,8 @@ const Navbar = () => {
 
   const currentUser = users.find(userData => userData?.email === user?.email);
 
+  const isAdmin = currentUser?.role === 'admin'
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -213,9 +215,15 @@ const Navbar = () => {
                     className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
                   >
                     <li>
-                      <Link to="/dashboard" className="text-black" href="">
-                        Dashboard
-                      </Link>
+                      {isAdmin ? (
+                        <Link to="/dashboard/adminHome" className="text-black">
+                          Dashboard
+                        </Link>
+                      ) : (
+                        <Link to="/dashboard/booking" className="text-black">
+                          Dashboard
+                        </Link>
+                      )}
                     </li>
                     <li>
                       <Link className="text-black" to="/" onClick={logOut}>
