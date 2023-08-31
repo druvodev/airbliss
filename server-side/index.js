@@ -162,6 +162,38 @@ async function run() {
       }
     });
 
+    // ###################################### Flights Search Methods #########################################
+
+    // find available seat for specific flight
+    async function availableSeats(flightId, bookingDate) {
+      try {
+        const query = {};
+        query[bookingDate] = { $exists: true };
+        const flightsData = await seatsCollection.findOne(query);
+
+        if (flightsData) {
+          const flightInfo = flightsData[bookingDate].find(
+            (flight) => flight.flightId === flightId
+          );
+
+          if (flightInfo) {
+            return flightInfo.available;
+          } else {
+            console.log(
+              "Flight not found for the given flightId and bookingDate."
+            );
+            return;
+          }
+        } else {
+          console.log("No data found for the given bookingDate.");
+          return;
+        }
+      } catch (error) {
+        console.error("Error fetching available seats:", error);
+        throw error;
+      }
+    }
+
     // Searching Flights using by destination
     app.get("/flights/search", async (req, res) => {
       const { fromCity, toCity, departureDate } = req.query;
@@ -215,7 +247,11 @@ async function run() {
           relevantFlightData.duration = parseInt(
             distance * parseFloat(flight.durationPerKm)
           );
-
+          // get available seat for specific flight
+          const availableSeat =
+            (await availableSeats(flight._id, departureDate)) ||
+            flight.totalSeats;
+          console.log(availableSeat);
           // Include "departure" data from fromCityData
           relevantFlightData.departure = {
             code: flight.details.code,
@@ -225,6 +261,7 @@ async function run() {
             terminal: flight.details.terminal,
             airportName: flight.airportName,
             seats: flight.totalSeats,
+            availableSeat: availableSeat,
           };
 
           // Include "arrival" data in relevantFlightData
@@ -537,9 +574,9 @@ async function run() {
       }
     });
 
-    // get all bookings
-    app.get("/bookings", async (req, res) => {
-      const result = await bookingsCollection.find().toArray();
+    // get all seats
+    app.get("/seats", async (req, res) => {
+      const result = await seatsCollection.find().toArray();
       res.send(result);
     });
 
