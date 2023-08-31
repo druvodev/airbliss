@@ -20,7 +20,6 @@ const Account = () => {
         axiosSecure.get('/users')
             .then(response => {
                 setUsers(response?.data)
-                // console.log(response.data);
             })
             .catch(error => {
                 console.error('Error fetching data:', error);
@@ -28,6 +27,13 @@ const Account = () => {
     }, [axiosSecure]);
 
     const currentUser = users.find(userData => userData?.email === user?.email);
+
+    // const dispatch = useDispatch()
+
+    // useEffect(() => { 
+    //     dispatch(setUserInfo(currentUser))
+    //     console.log("current user",currentUser);
+    // }, [currentUser])
 
     const handleSubmit = (event) => {
         event.preventDefault();

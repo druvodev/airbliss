@@ -15,8 +15,11 @@ import ManageUsers from "../Dashboard/Admin/ManageUsers/ManageUsers";
 import Account from "../Dashboard/Account/Account";
 import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
 import UserHome from "../Dashboard/User/UserHome/UserHome";
+import PrivateRoute from "./PrivateRoute";
 
-const userType = "admin";
+
+// const selector = useSelector(state =>console.log(state))
+// const userType = "admin";
 
 export const router = createBrowserRouter([
   {
@@ -60,10 +63,6 @@ export const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashboardLayout />,
     children: [
-      {
-        path: "/dashboard",
-        element: userType == "admin" ? <AdminHome /> : <UserHome />,
-      },
 
       {
         path: "adminHome",
@@ -71,7 +70,17 @@ export const router = createBrowserRouter([
       },
 
       {
+        path: "/dashboard",
+        element: <AdminHome />
+      },
+
+      {
         path: "booking",
+        element: <UserHome />,
+      },
+
+      {
+        path: "/dashboard",
         element: <UserHome />,
       },
 
@@ -89,7 +98,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "flightStatus",
-        element: <FlightStatus></FlightStatus>,
+        element: <FlightStatus />,
       },
     ],
   },

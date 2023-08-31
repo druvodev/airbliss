@@ -2,11 +2,16 @@ import React, { useEffect, useState } from 'react';
 import UseAxiosSecure from '../../../hooks/UseAxiosSecure';
 import { toast } from 'react-hot-toast';
 import AllUsers from './AllUsers';
+import { useSelector } from 'react-redux';
+
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([])
     const [axiosSecure] = UseAxiosSecure()
     const [selectedUserId, setSelectedUserId] = useState(null);
+
+    const selector = useSelector(state => state?.userInfo)
+    console.log(selector);
 
     useEffect(() => {
         axiosSecure.get('/users')
@@ -32,7 +37,9 @@ const ManageUsers = () => {
         event.preventDefault();
         const usersData = {
             role: event.target.role.value,
+            status: event.target.status.value,
         };
+        console.log(usersData);
 
         if (selectedUserId) {
             fetch(`http://localhost:5000/users/${selectedUserId}`, {
@@ -40,20 +47,20 @@ const ManageUsers = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ usersData }),
+                body: JSON.stringify({usersData}),
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    if (data.acknowledged === true) {
-                        toast.success('User Data submitted successfully');
-                        setUsers((prevUsers) =>
-                            prevUsers.map((user) =>
-                                user._id === selectedUserId ? { ...user, role: usersData.role } : user
-                            )
-                        );
-                    } else {
-                        toast.error('Failed to update user data');
-                    }
+                    // if (data.acknowledged === true) {
+                    //     toast.success('User Data submitted successfully');
+                    //     setUsers((prevUsers) =>
+                    //         prevUsers.map((user) =>
+                    //             user._id === selectedUserId ? { ...user, role: formData.role } : user
+                    //         )
+                    //     );
+                    // } else {
+                    //     toast.error('Failed to update user data');
+                    // }
                     console.log(data);
                 })
                 .catch((err) => {
@@ -63,6 +70,7 @@ const ManageUsers = () => {
             console.log(usersData);
         }
     };
+
 
 
     return (
@@ -81,6 +89,7 @@ const ManageUsers = () => {
                             <th>Email</th>
                             <th>Occupation</th>
                             <th>Role</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -102,28 +111,39 @@ const ManageUsers = () => {
                             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                         </form>
                         <form onSubmit={handleSubmit}>
-                            <h1
-                                className='text-xl font-semibold text-gray-950'
-                            >
-                                Change the user role
+                            <h1 className='text-xl font-semibold mb-3 text-gray-950'>
+                                Change the user role and status
                             </h1>
-                            <div>
-                                <label
-                                    htmlFor="gender"
-                                    className="block mb-2 font-semibold text-[#222] text-[18px]"
-                                >
-                                    Role:
-                                </label>
-                                <select
-                                    name="role"
-                                    id="role"
-                                    className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                >
-                                    <option value="">Select Gender</option>
-                                    <option value="admin">Admin</option>
-                                    <option value="user">User</option>
-                                    <option value="other">Other</option>
-                                </select>
+                            <div className='grid grid-cols-2 gap-5'>
+                                <div>
+                                    <label htmlFor="role" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                                        Role:
+                                    </label>
+                                    <select
+                                        name="role"
+                                        id="role"
+                                        className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                    >
+                                        <option value="">Select Role</option>
+                                        <option value="admin">Admin</option>
+                                        <option value="user">User</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label htmlFor="status" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                                        Status:
+                                    </label>
+                                    <select
+                                        name="status"
+                                        id="status"
+                                        // value={}
+                                        className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                    >
+                                        <option value="">Select Status</option>
+                                        <option value="normal">Normal</option>
+                                        <option value="ban">Ban</option>
+                                    </select>
+                                </div>
                             </div>
                             <input
                                 className='btn bg-cyan-500 px-8 py-4 text-white rounded-md mt-5 border-2 hover:border-cyan-500 border-cyan-500 hover:bg-transparent hover:text-cyan-500'
