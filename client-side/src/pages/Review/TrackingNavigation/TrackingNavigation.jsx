@@ -19,6 +19,16 @@ const TrackingNavigation = () => {
 
   const arrive = data?.arrival || {};
 
+  useEffect(() => {
+    if (flight && flight.flights) {
+      const singleData = flight.flights.find(
+        (singleFlight) => singleFlight._id === id
+      );
+      setData(singleData);
+      setIsLoading(false);
+    }
+  }, [flight, id]);
+
   function formatDate(dateString) {
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const monthsOfYear = [
@@ -45,15 +55,22 @@ const TrackingNavigation = () => {
     return `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
   }
 
-  useEffect(() => {
-    if (flight && flight.flights) {
-      const singleData = flight.flights.find(
-        (singleFlight) => singleFlight._id === id
-      );
-      setData(singleData);
-      setIsLoading(false);
+  function calculateArrivalDate(departureDate, departureTime, arrivalTime) {
+    const [depHour, depMinute] = departureTime.split(":").map(Number);
+    const [arrHour, arrMinute] = arrivalTime.split(":").map(Number);
+
+    const departureDateTime = new Date(departureDate);
+    departureDateTime.setHours(depHour, depMinute, 0, 0);
+
+    if (arrHour < depHour || (arrHour === depHour && arrMinute < depMinute)) {
+      departureDateTime.setDate(departureDateTime.getDate() + 1);
     }
-  }, [flight, id]);
+
+    const arrivalDate = departureDateTime.toISOString().slice(0, 10);
+    const formattedArrivalDate = formatDate(arrivalDate);
+
+    return formattedArrivalDate;
+  }
 
   return (
     <section>
@@ -176,7 +193,9 @@ const TrackingNavigation = () => {
                           {arrive?.time}
                         </h2>
                         <p className="-mt-1 pr-2">
-                          <small>Tue, 15 Aug 2023</small>
+                          <small>
+                            {calculateArrivalDate(date, time, arrive?.time)}
+                          </small>
                         </p>
                         <p className="mt-1 -ml-[1px]">({arrive?.code})</p>
                         <h3 className=" text-[13px]">{arrive?.city}</h3>
