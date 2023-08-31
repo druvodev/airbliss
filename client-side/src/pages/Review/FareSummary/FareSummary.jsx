@@ -40,9 +40,9 @@ const FareSummary = React.memo(() => {
               <div className="text-end">
                 <p>
                   BDT{" "}
-                  <span className="font-semibold">{fareSummary.baseFare}</span>
+                  <span className="font-semibold">{fareSummary?.baseFare}</span>
                 </p>
-                <p className="text-xs text-gray-500">{`( 1 x ${fareSummary.baseFare} )`}</p>
+                <p className="text-xs text-gray-500">{`( 1 x ${fareSummary?.baseFare} )`}</p>
               </div>
             </div>
             <div className="flex justify-between mt-1 mb-2">
@@ -51,17 +51,17 @@ const FareSummary = React.memo(() => {
                 <p>
                   BDT{" "}
                   <span className="font-semibold">
-                    {fareSummary.taxesAndFees}
+                    {fareSummary?.taxesAndFees}
                   </span>
                 </p>
-                <p className="text-xs text-gray-500">{`( 1 x ${fareSummary.taxesAndFees} )`}</p>
+                <p className="text-xs text-gray-500">{`( 1 x ${fareSummary?.taxesAndFees} )`}</p>
               </div>
             </div>
             <hr />
             <div className="flex justify-between mt-2">
               <p className="text-gray-500 text-sm">Sub Total</p>
               <p>
-                BDT <span className="font-semibold">{fareSummary.total}</span>
+                BDT <span className="font-semibold">{fareSummary?.total}</span>
               </p>
             </div>
           </div>
@@ -72,7 +72,7 @@ const FareSummary = React.memo(() => {
                 {"(for 1 traveler)"}
               </span>
             </p>
-            <p className="font-semibold">BDT {fareSummary.total}</p>
+            <p className="font-semibold">BDT {fareSummary?.total}</p>
           </div>
         </div>
       </div>

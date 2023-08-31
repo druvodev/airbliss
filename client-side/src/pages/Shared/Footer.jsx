@@ -160,33 +160,6 @@ const Footer = () => {
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
-                      <span>Destination</span>
-                    </p>
-                  </div>
-
-                  <div>
-                    <Link to='/terms' className="inline-flex items-center gap-1 mt-3">
-                      <span>
-                        <AiOutlineArrowRight size={16} />
-                      </span>
-                      <span>Terms & Condition</span>
-                    </Link>
-                  </div>
-
-                  <div>
-                    <Link to='/refund' className="inline-flex items-center gap-1 mt-3">
-                      <span>
-                        <AiOutlineArrowRight size={16} />
-                      </span>
-                      <span>Refund</span>
-                    </Link>
-                  </div>
-
-                  <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
-                      <span>
-                        <AiOutlineArrowRight size={16} />
-                      </span>
                       <span>Booking Flight</span>
                     </p>
                   </div>

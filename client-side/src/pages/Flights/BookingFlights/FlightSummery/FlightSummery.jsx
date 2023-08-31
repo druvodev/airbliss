@@ -7,9 +7,7 @@ const FlightSummery = ({ flightFullDetails }) => {
 
   return (
     <section className="mt-3 border-[1px] rounded-sm">
-      <h1 className=" p-3 border-b-[1px]">
-        <b>Fare breakdown</b>
-      </h1>
+      <h1 className=" p-3 border-b-[1px] font-semibold">Fare breakdown</h1>
 
       {/* Table Body */}
       <section className="p-3">
