@@ -68,7 +68,7 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
                   src={singleAirline?.airlineLogo}
                   alt=""
                 />
-                <h1 className="text-center md:font-bold text-[10px] md:text-[14px] mt-4">
+                <h1 className="text-center md:font-semibold text-[10px] md:text-[14px] mt-4">
                   {singleAirline?.airlineName}
                 </h1>
               </div>

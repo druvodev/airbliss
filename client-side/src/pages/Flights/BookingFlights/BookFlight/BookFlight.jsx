@@ -105,7 +105,10 @@ const BookFlight = () => {
   };
 
   const handelCardComapnyFilter = (airlineName) => {
-    console.log("Click Work", airlineName);
+    const filteredData = flight.filter(
+      (item) => item.airlineName === airlineName
+    );
+    setFlightData(filteredData);
   };
 
   function formatDate(dateString) {
@@ -162,7 +165,7 @@ const BookFlight = () => {
         <section>
           {/* Filter Card */}
           <ShortingFlight
-            destenation={flightData}
+            destenation={flight}
             handelCardComapnyFilter={handelCardComapnyFilter}
           />
 
