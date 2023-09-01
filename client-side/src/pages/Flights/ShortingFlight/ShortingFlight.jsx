@@ -22,7 +22,7 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
     const uniqueAirlinesArray = Object.values(uniqueAirlines);
 
     setAirlines(uniqueAirlinesArray);
-  }, []);
+  }, [destenation]);
 
   // console.log(airlines);
 
