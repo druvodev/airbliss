@@ -162,6 +162,38 @@ async function run() {
       }
     });
 
+    // ###################################### Flights Search Methods #########################################
+
+    // find available seat for specific flight
+    async function availableSeats(flightId, bookingDate) {
+      try {
+        const query = {};
+        query[bookingDate] = { $exists: true };
+        const flightsData = await seatsCollection.findOne(query);
+
+        if (flightsData) {
+          const flightInfo = flightsData[bookingDate].find(
+            (flight) => flight.flightId === flightId
+          );
+
+          if (flightInfo) {
+            return flightInfo.available;
+          } else {
+            console.log(
+              "Flight not found for the given flightId and bookingDate."
+            );
+            return;
+          }
+        } else {
+          console.log("No data found for the given bookingDate.");
+          return;
+        }
+      } catch (error) {
+        console.error("Error fetching available seats:", error);
+        throw error;
+      }
+    }
+
     // Searching Flights using by destination
     app.get("/flights/search", async (req, res) => {
       const { fromCity, toCity, departureDate } = req.query;
@@ -215,7 +247,11 @@ async function run() {
           relevantFlightData.duration = parseInt(
             distance * parseFloat(flight.durationPerKm)
           );
-
+          // get available seat for specific flight
+          const availableSeat =
+            (await availableSeats(flight._id, departureDate)) ||
+            flight.totalSeats;
+          console.log(availableSeat);
           // Include "departure" data from fromCityData
           relevantFlightData.departure = {
             code: flight.details.code,
@@ -225,6 +261,7 @@ async function run() {
             terminal: flight.details.terminal,
             airportName: flight.airportName,
             seats: flight.totalSeats,
+            availableSeat: availableSeat,
           };
 
           // Include "arrival" data in relevantFlightData
@@ -376,10 +413,61 @@ async function run() {
       );
     }
 
-    app.get("/addSeats", async (req, res) => {
-      const result = await seatsCollection.find().toArray();
-      res.json(result);
-    });
+    // Select available seat form seat collection
+    async function selectAvailableSeat(flightId, bookingDate) {
+      try {
+        const query = {};
+        query[bookingDate] = { $exists: true };
+        const flightsData = await seatsCollection.findOne(query);
+        if (!flightsData) {
+          throw new Error("Flights not found for the specified date.");
+        }
+
+        const flightsOnDate = flightsData[bookingDate];
+
+        const flight = flightsOnDate.find((f) => f.flightId === flightId);
+
+        if (!flight) {
+          throw new Error("Flight not found for the specified flightId.");
+        }
+
+        const availableSeat = flight.seats.find((seat) => seat.available);
+
+        if (availableSeat) {
+          availableSeat.available = false;
+
+          // Decrease available seat count for the flight
+          flight.available--;
+
+          // Update the seat availability and available seat count in the database
+          await seatsCollection.updateOne(
+            {
+              _id: flightsData._id,
+              [bookingDate]: { $elemMatch: { flightId: flightId } },
+            },
+            {
+              $set: {
+                [`${bookingDate}.$[flight].seats.$[seat].available`]: false,
+                [`${bookingDate}.$[flight].available`]: flight.available,
+              },
+            },
+            {
+              arrayFilters: [
+                { "flight.flightId": flightId },
+                { "seat.seatNo": availableSeat.seatNo },
+              ],
+            }
+          );
+
+          return availableSeat.seatNo;
+        } else {
+          throw new Error("No available seats for the specified flight.");
+        }
+      } catch (error) {
+        throw error;
+      }
+    }
+
     // payment processing API
     app.post("/process-payment", async (req, res) => {
       const bookingInfo = req.body;
@@ -429,6 +517,11 @@ async function run() {
           bookingInfo.paymentStatus = "paid";
           // Generate seat plan before store booking information
           await generateSeatData(totalSeat, flightId, flight?.departureDate);
+          const seatNo = await selectAvailableSeat(
+            flightId,
+            flight?.departureDate
+          );
+          bookingInfo.seat = seatNo;
           await saveBookingInfoToDatabase(bookingInfo);
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
@@ -481,6 +574,7 @@ async function run() {
       }
     });
 
+<<<<<<< HEAD
     // Get user's all booking by email----------
     app.get("/userBooking/:email", async (req, res) => {
       const traveler_email = req.params.email;
@@ -519,6 +613,11 @@ async function run() {
     // get all bookings
     app.get("/bookings", async (req, res) => {
       const result = await bookingsCollection.find().toArray();
+=======
+    // get all seats
+    app.get("/seats", async (req, res) => {
+      const result = await seatsCollection.find().toArray();
+>>>>>>> 187640f804178c3ae32847fbd3e3a4b9e3861858
       res.send(result);
     });
 

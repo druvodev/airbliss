@@ -40,6 +40,8 @@ const BookFlight = () => {
     }
   }, [flight]);
 
+  console.log(flightData);
+
   const sortByTicketPrice = (sortOrder) => {
     const sortedData = [...flightData];
     sortedData.sort((a, b) => {
@@ -104,6 +106,49 @@ const BookFlight = () => {
     }
   };
 
+  function formatDate(dateString) {
+    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const monthsOfYear = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    const date = new Date(dateString);
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    const dayOfMonth = date.getDate();
+    const month = monthsOfYear[date.getMonth()];
+    const year = date.getFullYear();
+
+    return `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
+  }
+
+  function calculateArrivalDate(departureDate, departureTime, arrivalTime) {
+    const [depHour, depMinute] = departureTime.split(":").map(Number);
+    const [arrHour, arrMinute] = arrivalTime.split(":").map(Number);
+
+    const departureDateTime = new Date(departureDate);
+    departureDateTime.setHours(depHour, depMinute, 0, 0);
+
+    if (arrHour < depHour || (arrHour === depHour && arrMinute < depMinute)) {
+      departureDateTime.setDate(departureDateTime.getDate() + 1);
+    }
+
+    const arrivalDate = departureDateTime.toISOString().slice(0, 10);
+    const formattedArrivalDate = formatDate(arrivalDate);
+
+    return formattedArrivalDate;
+  }
+
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
@@ -158,12 +203,12 @@ const BookFlight = () => {
             {flightData?.slice(startIndex, endIndex)?.map((singleFlight) => (
               <section
                 key={singleFlight?._id}
-                className="shadow-md w-full rounded-md pl-6 pr-6 pt-8 pb-8"
+                className="shadow-md w-full rounded-md px-6 py-8 mt-8 border-[1px] border-gray-100"
               >
-                <div className=" grid grid-cols-3 lg:grid-cols-6 items-center gap-5 ">
+                <div className=" grid grid-cols-3 lg:grid-cols-6 gap-5 ">
                   <div>
                     <img
-                      className="h-12 w-12"
+                      className="h-20 w-20 -ml-2"
                       src={singleFlight?.airlineLogo}
                       alt=""
                     />
@@ -176,20 +221,24 @@ const BookFlight = () => {
 
                   <div>
                     <h4 className="text-gray-400 text-[13px]">Depart</h4>
-                    <h2 className="mt-2 text-[15px]">
-                      <strong>{singleFlight?.departure?.time}</strong>
+                    <h2 className="mt-2 text-[15px] font-semibold">
+                      {singleFlight?.departure?.time}
                     </h2>
                     <p className="-mt-1 pr-2">
-                      <small>{singleFlight?.departure?.date}</small>
+                      <small>{formatDate(singleFlight?.departure?.date)}</small>
                     </p>
                     <h3 className="mt-2 text-[13px]">
-                      {singleFlight?.departure?.airportName}
+                      {singleFlight?.departure?.city}
                     </h3>
                   </div>
 
-                  <div align="center" className="space-y-1 pl-2 pr-2">
+                  <div align="center" className="space-y-1  pr-2">
                     <p className="text-gray-400 text-[14px]">
-                      {singleFlight?.duration}
+                      {singleFlight?.duration < 60
+                        ? `${singleFlight?.duration} min`
+                        : `${Math.floor(singleFlight?.duration / 60)} hr ${
+                            singleFlight?.duration % 60
+                          } min`}
                     </p>
                     <img
                       style={{
@@ -206,23 +255,27 @@ const BookFlight = () => {
 
                   <div>
                     <h4 className="text-gray-400 text-[13px]">Arrive</h4>
-                    <h2 className="mt-2 text-[15px]">
-                      <strong> {singleFlight?.arrival?.time}</strong>
+                    <h2 className="mt-2 text-[15px] font-semibold">
+                      {singleFlight?.arrival?.time}
                     </h2>
                     <p className="-mt-1 pr-2">
                       <small>
-                        {singleFlight?.flight_details?.arrival?.date}
+                        {calculateArrivalDate(
+                          singleFlight?.departure?.date,
+                          singleFlight?.departure?.time,
+                          singleFlight?.arrival?.time
+                        )}
                       </small>
                     </p>
                     <h3 className="mt-2 text-[13px]">
-                      {singleFlight?.arrival?.airportName}
+                      {singleFlight?.arrival?.city}
                     </h3>
                   </div>
 
                   <div>
                     <h4 className="text-gray-400 text-[13px]">Prise</h4>
-                    <h2 className="mt-2 text-[15px]">
-                      <strong>BDT {singleFlight?.fareSummary?.total}</strong>
+                    <h2 className="mt-2 text-[15px] font-semibold">
+                      BDT {singleFlight?.fareSummary?.total}
                     </h2>
                   </div>
 
@@ -241,7 +294,7 @@ const BookFlight = () => {
                 </div>
 
                 {/* View Details Section */}
-                <div className="flex justify-between items-center mt-8">
+                <div className="flex justify-between items-center mt-8 lg:mt-1">
                   <p>
                     <small>{singleFlight?.refundableStatus}</small>
                   </p>
