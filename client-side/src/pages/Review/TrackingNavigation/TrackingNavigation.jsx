@@ -131,7 +131,7 @@ const TrackingNavigation = () => {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">
                       <img
-                        className="h-16 w-16 -ml-2"
+                        className="h-16 w-16 rounded-full -ml-2"
                         src={airlineLogo}
                         alt=""
                       />
@@ -241,7 +241,11 @@ const TrackingNavigation = () => {
 
                 <div className="border-[1px] p-4 rounded-sm mt-4 mb-24">
                   <div className="flex items-center gap-2">
-                    <img className="h-16 w-16 -ml-2" src={airlineLogo} alt="" />
+                    <img
+                      className="h-16 w-16 rounded-full -ml-2"
+                      src={airlineLogo}
+                      alt=""
+                    />
                     <div>
                       <p className="text-gray-400">
                         <small>{airlineName}</small>

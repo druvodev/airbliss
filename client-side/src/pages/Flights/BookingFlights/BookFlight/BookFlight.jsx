@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFlightInfo } from "../../../../redux/features/bookingInfoSlice";
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 4;
 
 const BookFlight = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,8 +39,6 @@ const BookFlight = () => {
       setIsLoading(false);
     }
   }, [flight]);
-
-  console.log(flightData);
 
   const sortByTicketPrice = (sortOrder) => {
     const sortedData = [...flightData];
@@ -106,6 +104,10 @@ const BookFlight = () => {
     }
   };
 
+  const handelCardComapnyFilter = (airlineName) => {
+    console.log("Click Work", airlineName);
+  };
+
   function formatDate(dateString) {
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const monthsOfYear = [
@@ -159,7 +161,10 @@ const BookFlight = () => {
       ) : (
         <section>
           {/* Filter Card */}
-          <ShortingFlight destenation={flightData} />
+          <ShortingFlight
+            destenation={flightData}
+            handelCardComapnyFilter={handelCardComapnyFilter}
+          />
 
           <section>
             <div className="flex w-full p-5 mt-10 rounded-md justify-between shadow-md">
@@ -208,7 +213,7 @@ const BookFlight = () => {
                 <div className=" grid grid-cols-3 lg:grid-cols-6 gap-5 ">
                   <div>
                     <img
-                      className="h-20 w-20 -ml-2"
+                      className="h-20 w-20 rounded-full -ml-2"
                       src={singleFlight?.airlineLogo}
                       alt=""
                     />
