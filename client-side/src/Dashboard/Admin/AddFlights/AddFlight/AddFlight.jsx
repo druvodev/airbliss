@@ -222,7 +222,7 @@ const AddFlight = () => {
   };
 
   return (
-    <section className="shadow-md bg-white m-8 rounded-sm ">
+    <section className="shadow-md bg-white m-2 lg:m-8 rounded-sm ">
       <div className="flex justify-between items-center p-4">
         <div>
           <h1 className="font-bold text-[18px]">Add New Flights</h1>
@@ -232,10 +232,10 @@ const AddFlight = () => {
         <div className="flex items-center bg-cyan-100 p-4 rounded-md mr-6">
           <select
             required
-            className="bg-cyan-100 "
+            className="bg-cyan-100 cursor-pointer "
             onChange={handleAirportSelect}
           >
-            <option className="border-0" value="">
+            <option className="border-0 " value="">
               Select Airport
             </option>
             {allFlights.map((airportData) => {
@@ -263,7 +263,7 @@ const AddFlight = () => {
             <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px]  border-black"
                   type="text"
                   name="airportName"
                   value={formData.airportName}
