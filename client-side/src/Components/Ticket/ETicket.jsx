@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import useAxios from "../../hooks/useAxios";
 import airbliss from "../../assets/banner/airblibanner.png";
 import emailjs from "@emailjs/browser";
+import { generate } from "shortid";
 
 const ETicket = () => {
   const [myBooking, setBooking] = useState({});
@@ -63,22 +64,6 @@ const ETicket = () => {
   const [img, setImg] = useState(null);
   const [isDownload, setDownload] = useState("download");
 
-  useEffect(() => {
-    const generateImage = () => {
-      const content = document.getElementById("downloadTicket");
-      if (content) {
-        DomToImage.toBlob(content).then(function (blob) {
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = "ticket.png";
-          link.click();
-          setImg(blob);
-        });
-      }
-    };
-    generateImage();
-    uploadToImgBB();
-  }, [isDownload]);
   const uploadToImgBB = () => {
     if (img) {
       const formData = new FormData();
@@ -101,18 +86,18 @@ const ETicket = () => {
     }
   };
 
-  // const generateImage = () => {
-  //   const content = document.getElementById("downloadTicket");
-  //   if (content) {
-  //     DomToImage.toBlob(content).then(function (blob) {
-  //       const link = document.createElement("a");
-  //       link.href = URL.createObjectURL(blob);
-  //       link.download = "ticket.png";
-  //       link.click();
-  //       setImg(link);
-  //     });
-  //   }
-  // };
+  const generateImage = () => {
+    const content = document.getElementById("downloadTicket");
+    if (content) {
+      DomToImage.toBlob(content).then(function (blob) {
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "ticket.png";
+        link.click();
+        setImg(link);
+      });
+    }
+  };
 
   // GeneratePDF
   // const generatePDF = () => {
@@ -363,7 +348,7 @@ const ETicket = () => {
         <button
           className="btn bg-cyan-600 -mt-12 mb-24 text-white hover:bg-cyan-800"
           onClick={() => {
-            uploadToImgBB, setDownload(new Date());
+            uploadToImgBB(), generateImage();
           }}
         >
           Download Ticket
