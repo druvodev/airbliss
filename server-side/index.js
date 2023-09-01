@@ -574,9 +574,44 @@ async function run() {
       }
     });
 
-    // get all seats
-    app.get("/seats", async (req, res) => {
-      const result = await seatsCollection.find().toArray();
+    // Get user's all booking by email----------
+    app.get("/userBooking/:email", async (req, res) => {
+      const traveler_email = req.params.email;
+      console.log(traveler_email);
+      let myBookings = [];
+      try {
+        const bookings = await bookingsCollection.find().toArray();
+
+        for (const booking of bookings) {
+          for (const dateKey in booking) {
+            const airportCodes = booking[dateKey];
+            for (const airportCodeKey in airportCodes) {
+              const bookingsForAirport = airportCodes[airportCodeKey];
+              const foundBookingObj = bookingsForAirport.find(
+                (bookingObj) =>
+                  bookingObj.user.traveler_email === traveler_email
+              );
+              if (foundBookingObj) {
+                console.log(foundBookingObj);
+                myBookings.push(foundBookingObj);
+              }
+            }
+          }
+        }
+        if (myBookings) {
+          res.json(myBookings);
+        } else {
+          res.status(404).json({ message: "Booking not found" });
+        }
+      } catch (err) {
+        console.error("Error fetching booking:", err);
+        res.status(500).json({ error: "An error occurred" });
+      }
+    });
+
+    // get all bookings
+    app.get("/bookings", async (req, res) => {
+      const result = await bookingsCollection.find().toArray();
       res.send(result);
     });
 

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFlightInfo } from "../../../../redux/features/bookingInfoSlice";
 
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 4;
 
 const BookFlight = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,8 +39,6 @@ const BookFlight = () => {
       setIsLoading(false);
     }
   }, [flight]);
-
-  console.log(flightData);
 
   const sortByTicketPrice = (sortOrder) => {
     const sortedData = [...flightData];
@@ -106,6 +104,13 @@ const BookFlight = () => {
     }
   };
 
+  const handelCardComapnyFilter = (airlineName) => {
+    const filteredData = flight.filter(
+      (item) => item.airlineName === airlineName
+    );
+    setFlightData(filteredData);
+  };
+
   function formatDate(dateString) {
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const monthsOfYear = [
@@ -132,6 +137,23 @@ const BookFlight = () => {
     return `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
   }
 
+  function calculateArrivalDate(departureDate, departureTime, arrivalTime) {
+    const [depHour, depMinute] = departureTime.split(":").map(Number);
+    const [arrHour, arrMinute] = arrivalTime.split(":").map(Number);
+
+    const departureDateTime = new Date(departureDate);
+    departureDateTime.setHours(depHour, depMinute, 0, 0);
+
+    if (arrHour < depHour || (arrHour === depHour && arrMinute < depMinute)) {
+      departureDateTime.setDate(departureDateTime.getDate() + 1);
+    }
+
+    const arrivalDate = departureDateTime.toISOString().slice(0, 10);
+    const formattedArrivalDate = formatDate(arrivalDate);
+
+    return formattedArrivalDate;
+  }
+
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
@@ -142,7 +164,10 @@ const BookFlight = () => {
       ) : (
         <section>
           {/* Filter Card */}
-          <ShortingFlight destenation={flightData} />
+          <ShortingFlight
+            destenation={flight}
+            handelCardComapnyFilter={handelCardComapnyFilter}
+          />
 
           <section>
             <div className="flex w-full p-5 mt-10 rounded-md justify-between shadow-md">
@@ -191,7 +216,7 @@ const BookFlight = () => {
                 <div className=" grid grid-cols-3 lg:grid-cols-6 gap-5 ">
                   <div>
                     <img
-                      className="h-20 w-20 -ml-2"
+                      className="h-20 w-20 rounded-full -ml-2"
                       src={singleFlight?.airlineLogo}
                       alt=""
                     />
@@ -243,7 +268,11 @@ const BookFlight = () => {
                     </h2>
                     <p className="-mt-1 pr-2">
                       <small>
-                        {singleFlight?.flight_details?.arrival?.date}
+                        {calculateArrivalDate(
+                          singleFlight?.departure?.date,
+                          singleFlight?.departure?.time,
+                          singleFlight?.arrival?.time
+                        )}
                       </small>
                     </p>
                     <h3 className="mt-2 text-[13px]">

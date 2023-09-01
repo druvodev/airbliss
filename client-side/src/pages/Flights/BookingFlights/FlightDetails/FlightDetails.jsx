@@ -22,7 +22,11 @@ const FlightDetails = ({ flightFullDetails }) => {
       <section className="p-3">
         {/* Flight Profile */}
         <div className="flex gap-4 ml-3">
-          <img className="h-16 w-16 -ml-2" src={airlineLogo} alt="" />
+          <img
+            className="h-16 w-16 rounded-full -ml-2"
+            src={airlineLogo}
+            alt=""
+          />
           <div>
             <h1 className="font-semibold">{airlineName}</h1>
             <h3 className="font-semibold text-[13px]">Aircraft : {aircraft}</h3>

@@ -19,6 +19,16 @@ const TrackingNavigation = () => {
 
   const arrive = data?.arrival || {};
 
+  useEffect(() => {
+    if (flight && flight.flights) {
+      const singleData = flight.flights.find(
+        (singleFlight) => singleFlight._id === id
+      );
+      setData(singleData);
+      setIsLoading(false);
+    }
+  }, [flight, id]);
+
   function formatDate(dateString) {
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     const monthsOfYear = [
@@ -45,15 +55,22 @@ const TrackingNavigation = () => {
     return `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
   }
 
-  useEffect(() => {
-    if (flight && flight.flights) {
-      const singleData = flight.flights.find(
-        (singleFlight) => singleFlight._id === id
-      );
-      setData(singleData);
-      setIsLoading(false);
+  function calculateArrivalDate(departureDate, departureTime, arrivalTime) {
+    const [depHour, depMinute] = departureTime.split(":").map(Number);
+    const [arrHour, arrMinute] = arrivalTime.split(":").map(Number);
+
+    const departureDateTime = new Date(departureDate);
+    departureDateTime.setHours(depHour, depMinute, 0, 0);
+
+    if (arrHour < depHour || (arrHour === depHour && arrMinute < depMinute)) {
+      departureDateTime.setDate(departureDateTime.getDate() + 1);
     }
-  }, [flight, id]);
+
+    const arrivalDate = departureDateTime.toISOString().slice(0, 10);
+    const formattedArrivalDate = formatDate(arrivalDate);
+
+    return formattedArrivalDate;
+  }
 
   return (
     <section>
@@ -114,7 +131,7 @@ const TrackingNavigation = () => {
                   <div className="flex justify-between items-center">
                     <div className="flex items-center gap-2">
                       <img
-                        className="h-16 w-16 -ml-2"
+                        className="h-16 w-16 rounded-full -ml-2"
                         src={airlineLogo}
                         alt=""
                       />
@@ -176,7 +193,9 @@ const TrackingNavigation = () => {
                           {arrive?.time}
                         </h2>
                         <p className="-mt-1 pr-2">
-                          <small>Tue, 15 Aug 2023</small>
+                          <small>
+                            {calculateArrivalDate(date, time, arrive?.time)}
+                          </small>
                         </p>
                         <p className="mt-1 -ml-[1px]">({arrive?.code})</p>
                         <h3 className=" text-[13px]">{arrive?.city}</h3>
@@ -222,7 +241,11 @@ const TrackingNavigation = () => {
 
                 <div className="border-[1px] p-4 rounded-sm mt-4 mb-24">
                   <div className="flex items-center gap-2">
-                    <img className="h-16 w-16 -ml-2" src={airlineLogo} alt="" />
+                    <img
+                      className="h-16 w-16 rounded-full -ml-2"
+                      src={airlineLogo}
+                      alt=""
+                    />
                     <div>
                       <p className="text-gray-400">
                         <small>{airlineName}</small>
