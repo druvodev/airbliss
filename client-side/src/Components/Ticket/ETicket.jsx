@@ -112,6 +112,8 @@ const ETicket = () => {
   //     });
   //   }
   // };
+
+  // name joining.........
   const fullName =
     myBooking.user?.title +
     " " +
@@ -119,6 +121,11 @@ const ETicket = () => {
     " " +
     myBooking.user?.last_name;
   console.log(myBooking?.flight?.departureDate);
+
+  // seat and group identify................
+  const group = myBooking?.seat?.charAt(0);
+  const seat = myBooking?.seat?.substring(1);
+  console.log(group, seat);
 
   return (
     <div>
@@ -189,11 +196,11 @@ const ETicket = () => {
               <div className="flex gap-[92px]">
                 <div>
                   <p>Seat</p>
-                  <p className="font-semibold">12</p>
+                  <p className="font-semibold">{seat}</p>
                 </div>
                 <div>
                   <p>Group</p>
-                  <p className="font-semibold">D</p>
+                  <p className="font-semibold">{group}</p>
                 </div>
               </div>
             </div>
@@ -328,11 +335,11 @@ const ETicket = () => {
               <div className="flex gap-[92px]">
                 <div>
                   <p>Seat</p>
-                  <p className="font-semibold">12</p>
+                  <p className="font-semibold">{seat}</p>
                 </div>
                 <div>
                   <p>Group</p>
-                  <p className="font-semibold">D</p>
+                  <p className="font-semibold">{group}</p>
                 </div>
               </div>
             </div>
