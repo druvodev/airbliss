@@ -574,7 +574,6 @@ async function run() {
       }
     });
 
-<<<<<<< HEAD
     // Get user's all booking by email----------
     app.get("/userBooking/:email", async (req, res) => {
       const traveler_email = req.params.email;
@@ -613,11 +612,6 @@ async function run() {
     // get all bookings
     app.get("/bookings", async (req, res) => {
       const result = await bookingsCollection.find().toArray();
-=======
-    // get all seats
-    app.get("/seats", async (req, res) => {
-      const result = await seatsCollection.find().toArray();
->>>>>>> 187640f804178c3ae32847fbd3e3a4b9e3861858
       res.send(result);
     });
 
