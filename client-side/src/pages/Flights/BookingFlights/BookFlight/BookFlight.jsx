@@ -216,7 +216,7 @@ const BookFlight = () => {
                 <div className=" grid grid-cols-3 lg:grid-cols-6 gap-5 ">
                   <div>
                     <img
-                      className="h-20 w-20 rounded-full -ml-2"
+                      className="h-16 w-16 rounded-full -ml-2"
                       src={singleFlight?.airlineLogo}
                       alt=""
                     />
