@@ -8,8 +8,8 @@ import TotalAmount from './TotalAmount';
 
 const UserHome = () => {
   return (
-    <>
-      <div className='grid grid-rows-2 gap-5'>
+    <div className='grid grid-cols-4'>
+      <div className='grid col-span-3 grid-rows-2 gap-5'>
         <div className='grid grid-cols-3 gap-5'>
           <TotalBooking />
           <TotalCancel />
@@ -21,7 +21,10 @@ const UserHome = () => {
           <TotalAmount />
         </div>
       </div>
-    </>
+      <div className='col-span-1'>
+        hello
+      </div>
+    </div>
   );
 };
 
