@@ -7,13 +7,13 @@ const FareSummary = React.memo(() => {
   const [isCollapse, setIsCollapse] = useState(true);
   const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo);
   const { airlineLogo, airlineName, fareSummary } = flightInfo;
-  console.log("fareSummary", flightInfo);
+
   return (
     <div className="">
       <div className="shadow-lg rounded-xl overflow-hidden">
         <div className="px-5">
           <div className="flex items-center gap-1 mb-2">
-            <img className="h-12 w-12" src={airlineLogo} alt=" " />{" "}
+            <img className="h-12 w-12 rounded-full" src={airlineLogo} alt=" " />{" "}
             <h5 className="font-semibold text-gray-600">{airlineName}</h5>
           </div>
           <hr />
