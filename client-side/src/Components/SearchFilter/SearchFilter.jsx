@@ -28,22 +28,24 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
   const [locationModal, setLocationModal] = useState("");
-  const isActive = useSelector((state) => state.searchFilter.isActive);
-  const flightType = useSelector((state) => state.searchFilter.flightType);
-  const cityCount = useSelector((state) => state.searchFilter.cityCount);
+  const isActive = useSelector((state) => state?.searchFilter?.isActive);
+  const flightType = useSelector((state) => state?.searchFilter?.flightType);
+  const cityCount = useSelector((state) => state?.searchFilter?.cityCount);
   const departureDate = useSelector(
-    (state) => state.searchFilter.departureDate
+    (state) => state?.searchFilter?.departureDate
   );
-  const returnDate = useSelector((state) => state.searchFilter.returnDate);
+  const returnDate = useSelector((state) => state?.searchFilter?.returnDate);
   const calendarModal = useSelector(
-    (state) => state.searchFilter.calendarModal
+    (state) => state?.searchFilter?.calendarModal
   );
-  const fromCityInfo = useSelector((state) => state.searchFilter.fromCityInfo);
-  const toCityInfo = useSelector((state) => state.searchFilter.toCityInfo);
+  const fromCityInfo = useSelector(
+    (state) => state?.searchFilter?.fromCityInfo
+  );
+  const toCityInfo = useSelector((state) => state?.searchFilter?.toCityInfo);
 
   // Dispatch redux state
   const dispatch = useDispatch();
-  const flight = useSelector((state) => state.flights.flights);
+  const flight = useSelector((state) => state?.flights?.flights);
 
   // Convert Date Format
   const formattedDate = (date) => {
@@ -70,8 +72,8 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
 
   const handleSearch = () => {
     setIsStart(false); // Reset Session Countdown
-    const fromCity = fromCityInfo.code;
-    const toCity = toCityInfo.code;
+    const fromCity = fromCityInfo?.code;
+    const toCity = toCityInfo?.code;
     const date = format(departureDate, "yyyy-MM-dd");
 
     const searchQuery = `fromCity=${fromCity}&toCity=${toCity}&departureDate=${date}`;
@@ -97,7 +99,6 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
     if (filterName === "Modify Search") {
       handleSearch();
     }
-    console.log("Search Filter", flight);
   }, [filterName]);
 
   return (
@@ -178,12 +179,12 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                       id="fromCity"
                       type="text"
                       className="text-xl font-semibold outline-none"
-                      value={fromCityInfo.destination.split(",")[0]}
+                      value={fromCityInfo?.destination?.split(",")[0]}
                     />
                     <div className="cursor-pointer">
                       <small className="text-xs my-0">
                         <span title="" className="">
-                          {fromCityInfo.airportName}
+                          {fromCityInfo?.airportName}
                         </span>
                       </small>
                     </div>
@@ -196,12 +197,12 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                       id="toCity"
                       type="text"
                       className="text-lg sm:text-xl font-semibold outline-none"
-                      value={toCityInfo.destination.split(",")[0]}
+                      value={toCityInfo?.destination.split(",")[0]}
                     />
                     <div className="cursor-pointer">
                       <small className="text-xs my-0">
                         <span title="" className="">
-                          {toCityInfo.airportName}
+                          {toCityInfo?.airportName}
                         </span>
                       </small>
                     </div>
