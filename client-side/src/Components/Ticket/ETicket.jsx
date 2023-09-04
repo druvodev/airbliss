@@ -123,8 +123,8 @@ const ETicket = () => {
   console.log(myBooking?.flight?.departureDate);
 
   // seat and group identify................
-  const group = myBooking?.seat?.charAt(0);
-  const seat = myBooking?.seat?.substring(1);
+  const group = myBooking?.user?.seatNo?.charAt(0);
+  const seat = myBooking?.user?.seatNo?.substring(1);
   console.log(group, seat);
 
   return (
