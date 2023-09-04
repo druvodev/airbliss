@@ -164,6 +164,64 @@ async function run() {
 
     // ###################################### Flights Search Methods #########################################
 
+    // Generate seat data model for specific flight
+    async function generateSeatData(totalSeats, flightId, bookingDate) {
+      // Check if the flightId already exists for the given date
+      const existingDateEntry = await seatsCollection.findOne({
+        [bookingDate]: { $elemMatch: { flightId: flightId } },
+      });
+
+      if (existingDateEntry) {
+        console.log(
+          `Seats for flight ${flightId} on ${bookingDate} already exist.`
+        );
+        return;
+      }
+
+      const rows = ["A", "B"];
+      const seatsPerRow = Math.floor(totalSeats / rows.length);
+      const remainderSeats = totalSeats % rows.length;
+
+      const seatData = {
+        flightId: flightId,
+        totalSeat: totalSeats,
+        available: totalSeats,
+        seats: [],
+      };
+
+      let seatCounter = 0;
+
+      for (let row of rows) {
+        const rowSeats = seatsPerRow + (seatCounter < remainderSeats ? 1 : 0);
+
+        for (let seatNumber = 1; seatNumber <= rowSeats; seatNumber++) {
+          const seatNo = `${row}${seatNumber}`;
+
+          seatData.seats.push({
+            seatNo: seatNo,
+            available: true,
+          });
+
+          seatCounter++;
+        }
+      }
+
+      // Add the new seat data to the appropriate date
+      const updateQuery = {
+        $push: {
+          [bookingDate]: seatData,
+        },
+      };
+
+      await seatsCollection.updateOne({}, updateQuery, { upsert: true });
+      console.log(seatData);
+      console.log(
+        `New seat data generated for flight ${flightId} on ${bookingDate}.`
+      );
+      // get available seat from this function
+      return await availableSeats(flightId, bookingDate);
+    }
+
     // find available seat for specific flight
     async function availableSeats(flightId, bookingDate) {
       try {
@@ -177,7 +235,7 @@ async function run() {
           );
 
           if (flightInfo) {
-            return flightInfo.available;
+            return flightInfo;
           } else {
             console.log(
               "Flight not found for the given flightId and bookingDate."
@@ -250,8 +308,13 @@ async function run() {
           // get available seat for specific flight
           const availableSeat =
             (await availableSeats(flight._id, departureDate)) ||
-            flight.totalSeats;
-          console.log(availableSeat);
+            (await generateSeatData(
+              flight.totalSeats,
+              flight._id,
+              departureDate
+            ));
+          relevantFlightData.availableSeats = availableSeat;
+
           // Include "departure" data from fromCityData
           relevantFlightData.departure = {
             code: flight.details.code,
@@ -261,7 +324,6 @@ async function run() {
             terminal: flight.details.terminal,
             airportName: flight.airportName,
             seats: flight.totalSeats,
-            availableSeat: availableSeat,
           };
 
           // Include "arrival" data in relevantFlightData
@@ -357,112 +419,59 @@ async function run() {
       }
     }
 
-    // Generate seat data model for specific flight
-    async function generateSeatData(totalSeats, flightId, bookingDate) {
-      // Check if the flightId already exists for the given date
-      const existingDateEntry = await seatsCollection.findOne({
-        [bookingDate]: { $elemMatch: { flightId: flightId } },
-      });
-
-      if (existingDateEntry) {
-        console.log(
-          `Seats for flight ${flightId} on ${bookingDate} already exist.`
-        );
-        return;
-      }
-
-      const rows = ["A", "B"];
-      const seatsPerRow = Math.floor(totalSeats / rows.length);
-      const remainderSeats = totalSeats % rows.length;
-
-      const seatData = {
-        flightId: flightId,
-        totalSeat: totalSeats,
-        available: totalSeats,
-        seats: [],
-      };
-
-      let seatCounter = 0;
-
-      for (let row of rows) {
-        const rowSeats = seatsPerRow + (seatCounter < remainderSeats ? 1 : 0);
-
-        for (let seatNumber = 1; seatNumber <= rowSeats; seatNumber++) {
-          const seatNo = `${row}${seatNumber}`;
-
-          seatData.seats.push({
-            seatNo: seatNo,
-            available: true,
-          });
-
-          seatCounter++;
-        }
-      }
-
-      // Add the new seat data to the appropriate date
-      const updateQuery = {
-        $push: {
-          [bookingDate]: seatData,
-        },
-      };
-
-      await seatsCollection.updateOne({}, updateQuery, { upsert: true });
-      console.log(seatData);
-      console.log(
-        `New seat data generated for flight ${flightId} on ${bookingDate}.`
-      );
-    }
-
     // Select available seat form seat collection
-    async function selectAvailableSeat(flightId, bookingDate) {
+    async function selectAvailableSeat(flightId, bookingDate, seatNo) {
       try {
         const query = {};
         query[bookingDate] = { $exists: true };
         const flightsData = await seatsCollection.findOne(query);
+
         if (!flightsData) {
           throw new Error("Flights not found for the specified date.");
         }
 
         const flightsOnDate = flightsData[bookingDate];
+        const flightIndex = flightsOnDate.findIndex(
+          (f) => f.flightId === flightId
+        );
 
-        const flight = flightsOnDate.find((f) => f.flightId === flightId);
-
-        if (!flight) {
+        if (flightIndex === -1) {
           throw new Error("Flight not found for the specified flightId.");
         }
 
-        const availableSeat = flight.seats.find((seat) => seat.available);
+        const flight = flightsOnDate[flightIndex];
+        const seatIndex = flight.seats.findIndex(
+          (seat) => seat.seatNo === seatNo
+        );
 
-        if (availableSeat) {
-          availableSeat.available = false;
-
-          // Decrease available seat count for the flight
-          flight.available--;
-
-          // Update the seat availability and available seat count in the database
-          await seatsCollection.updateOne(
-            {
-              _id: flightsData._id,
-              [bookingDate]: { $elemMatch: { flightId: flightId } },
-            },
-            {
-              $set: {
-                [`${bookingDate}.$[flight].seats.$[seat].available`]: false,
-                [`${bookingDate}.$[flight].available`]: flight.available,
-              },
-            },
-            {
-              arrayFilters: [
-                { "flight.flightId": flightId },
-                { "seat.seatNo": availableSeat.seatNo },
-              ],
-            }
-          );
-
-          return availableSeat.seatNo;
-        } else {
-          throw new Error("No available seats for the specified flight.");
+        if (seatIndex === -1 || !flight.seats[seatIndex].available) {
+          throw new Error("Seat not found or already booked.");
         }
+
+        // Decrease available seat count for the flight
+        flight.available--;
+
+        // Mark the seat as unavailable
+        flight.seats[seatIndex].available = false;
+
+        // Update the seat availability and available seat count in the database
+        await seatsCollection.updateOne(
+          {
+            _id: flightsData._id,
+            [bookingDate]: { $elemMatch: { flightId: flightId } },
+          },
+          {
+            $set: {
+              [`${bookingDate}.$[flight].seats.${seatIndex}.available`]: false,
+              [`${bookingDate}.$[flight].available`]: flight.available,
+            },
+          },
+          {
+            arrayFilters: [{ "flight.flightId": flightId }],
+          }
+        );
+
+        return seatNo;
       } catch (error) {
         throw error;
       }
@@ -516,12 +525,14 @@ async function run() {
           bookingInfo.transitionId = transitionId;
           bookingInfo.paymentStatus = "paid";
           // Generate seat plan before store booking information
-          await generateSeatData(totalSeat, flightId, flight?.departureDate);
+          // await generateSeatData(totalSeat, flightId, flight?.departureDate);
           const seatNo = await selectAvailableSeat(
             flightId,
-            flight?.departureDate
+            flight?.departureDate,
+            user?.seatNo
           );
-          bookingInfo.seat = seatNo;
+          // bookingInfo.seat = seatNo;
+          console.log(seatNo);
           await saveBookingInfoToDatabase(bookingInfo);
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {

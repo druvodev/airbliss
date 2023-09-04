@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
 import { paymentLater, paymentProcessing } from "../../../utils/handlePayment";
+import SeatModel from "../../../Components/SeatModel/SeatModel";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -24,6 +25,7 @@ const TravelerDetailsForm = () => {
   const userInfo = useSelector((state) => state.userBookingInfo.userInfo); // get user information from redux
   const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo); // get flight information from redux
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); //for Check box checked State
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const {
     register,
@@ -60,6 +62,18 @@ const TravelerDetailsForm = () => {
     dispatch(setUserInfo(data)); // stored user information in redux
     reset();
     setContinue(true);
+    // document.body.classList.add("modal-open");
+    openModal();
+  };
+
+  // Function to open the modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Function to close the modal
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   // Handle Payment Later
@@ -429,6 +443,19 @@ const TravelerDetailsForm = () => {
                   </button>
                 </form>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Seat selecting Modal */}
+      {isModalOpen && (
+        <div className="fixed top-0 left-0 z-50 w-screen sm:w-full h-full overflow-y-auto">
+          <div className="w-screen sm:w-full bg-white/20 backdrop-blur-md backdrop-filter shadow-md sm:p-10">
+            <div className="text-center">
+              <h3 className="mb-5 text-3xl sm:text-4xl font-bold bg-slate-500/30 backdrop-blur py-2 px-5 w-fit mx-auto rounded-xl shadow shadow-cyan-100">
+                Choose Your Seating Preference
+              </h3>
+              <SeatModel setIsModalOpen={setIsModalOpen} />
             </div>
           </div>
         </div>
