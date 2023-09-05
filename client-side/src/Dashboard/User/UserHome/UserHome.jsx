@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { AiFillSetting } from "react-icons/ai";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
+import { setIsActive } from "../../../redux/features/searchFilterSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const ITEMS_PER_PAGE = 5;
 
 const UserHome = () => {
   const [booking, setBooking] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const isActive = useSelector((state) => state?.searchFilter?.isActive);
+  const dispatch = useDispatch();
   useEffect(() => {
     fetch("/manageBooking.json")
       .then((res) => res.json())
@@ -34,7 +38,42 @@ const UserHome = () => {
   return (
     <div>
       <div className="overflow-x-auto mx-7 mt-[50px] px-10 py-5 rounded-xl bg-white">
-        <table className="table">
+        <div className="flex gap-1 bg-gray-50  p-1 rounded w-fit font-medium text-gray-600 text-sm">
+          <div
+            onClick={() => dispatch(setIsActive("flight"))}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "flight"
+                ? "border-t-2 shadow bg-white  border-black  "
+                : ""
+            }`}
+          >
+            All Flight
+          </div>
+          <div
+            onClick={() => dispatch(setIsActive("hotel"))}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "hotel"
+                ? "border-t-2 shadow bg-white  border-black"
+                : ""
+            }`}
+          >
+            Cancel Flight
+          </div>
+          <div
+            onClick={() => dispatch(setIsActive("visa"))}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "visa"
+                ? "border-t-2 bg-white shadow border-black"
+                : ""
+            }`}
+          >
+            Arrive Flight
+          </div>
+        </div>
+
+        <hr className="mt-3 " />
+
+        <table className="table mt-3">
           {/* head */}
           <thead>
             <tr>
@@ -103,8 +142,9 @@ const UserHome = () => {
             (_, index) => (
               <h3
                 key={index}
-                className={`px-3 py-[6px] border-[1px] cursor-pointer ${index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
-                  }`}
+                className={`px-3 py-[6px] border-[1px] cursor-pointer ${
+                  index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                }`}
                 onClick={() => setCurrentPage(index + 1)}
               >
                 {index + 1}
