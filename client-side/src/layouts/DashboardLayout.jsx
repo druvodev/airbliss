@@ -15,7 +15,7 @@ const DashboardLayout = () => {
       <Sidebar
         isActive={isActive}
       />
-      <div className='flex-1 md:ml-64 bg-[#f7f8fe]'>
+      <div className='flex-1 md:ml-64 bg-[#fffafa]'>
         <TopNav
           handleToggle={handleToggle}
         />
