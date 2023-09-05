@@ -7,6 +7,7 @@ import TotalRefundAmount from "./TotalRefundAmount";
 import TotalAmount from "./TotalAmount";
 import BookingChart from "./BookingChart";
 import BookingCalendar from "./BookingCalendar";
+import BookingRefundChart from "./BookingRefundChart";
 
 const UserHome = () => {
   return (
@@ -25,7 +26,7 @@ const UserHome = () => {
       </div>
       <div className="grid grid-cols-2 gap-7">
         <BookingChart />
-        <BookingCalendar />
+        <BookingRefundChart />
       </div>
     </div>
     // <div className='grid grid-cols-4'>
