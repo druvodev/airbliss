@@ -2,50 +2,30 @@ import React, { useEffect, useState } from "react";
 import { AiFillSetting } from "react-icons/ai";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
-import useAuth from "../../../hooks/useAuth";
 import logo from "../../../assets/icon/airblissBlack.png";
+import { useSelector } from "react-redux";
 
 const ITEMS_PER_PAGE = 5;
 
 const ManageBooking = () => {
-  const [bookings, setBookings] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
-  const { user } = useAuth();
 
-  // console.log("User from auth", user?.email);
+  const bookings = useSelector((state) => state?.userInfo?.userBookings);
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/userBooking/${user?.email}`)
-      .then((res) => res.json())
-      .then((data) => setBookings(data));
-  }, []);
-
-  // console.log(booking);
-  // console.log(flightRef);
-
-  const myFlight = bookings.find(
+  const myFlight = bookings?.find(
     (flight) => flight.bookingReference === flightRef
   );
 
   console.log(myFlight);
 
-  const handleCancelClick = () => {
-    // Open the modal when the cancel button is clicked
+  const openModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleModalClose = () => {
-    // Close the modal
-    setIsModalOpen(false);
-  };
-
-  const handleModalConfirm = () => {
-    // Perform the cancellation logic here
-    // You can implement your cancellation logic and update the state accordingly
-
-    // Close the modal after confirming
+  // Function to close the modal
+  const closeModal = () => {
     setIsModalOpen(false);
   };
 
@@ -56,7 +36,7 @@ const ManageBooking = () => {
   };
 
   const handlePaginationNext = () => {
-    const totalPages = Math.ceil(bookings.length / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(bookings?.length / ITEMS_PER_PAGE);
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
@@ -89,7 +69,7 @@ const ManageBooking = () => {
             </tr>
           </thead>
           <tbody>
-            {bookings.slice(startIndex, endIndex).map((flight, index) => (
+            {bookings?.slice(startIndex, endIndex).map((flight, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
                 <td>
@@ -242,7 +222,7 @@ const ManageBooking = () => {
           <div className="modal-action flex items-center gap-2">
             {/* if there is a button, it will close the modal */}
             <button
-              type="submit"
+              onClick={() => console.log("this button is clicked")}
               className="ml-auto bg-cyan-700 hover:bg-cyan-600  px-5 rounded-lg h-[48px] text-white font-semibold"
             >
               Cancel & Refund
