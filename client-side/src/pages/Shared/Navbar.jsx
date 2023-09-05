@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useDispatch } from "react-redux";
-import { setUserInfo } from "../../redux/features/UsersSlice";
+import { setUserInfo } from "../../redux/features/usersSlice";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -220,7 +220,7 @@ const Navbar = () => {
                           Dashboard
                         </Link>
                       ) : (
-                        <Link to="/dashboard/booking" className="text-black">
+                        <Link to="/dashboard/userHome" className="text-black">
                           Dashboard
                         </Link>
                       )}

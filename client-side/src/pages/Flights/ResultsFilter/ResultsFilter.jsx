@@ -16,7 +16,7 @@ import {
 import { set } from "date-fns";
 
 const ResultsFilter = () => {
-  const flights = useSelector((state) => state.flights.flights.flights);
+  const flights = useSelector((state) => state?.flights?.flights?.flights);
   const dispatch = useDispatch();
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
@@ -52,7 +52,8 @@ const ResultsFilter = () => {
   const applyFilters = () => {
     const updatedFilteredFlights = flights?.filter((flight) => {
       // Apply filters based on filter values
-      const meetsPriceCriteria = parseFloat(flight.fareSummary.total) <= price;
+      const meetsPriceCriteria =
+        parseFloat(flight?.fareSummary?.total) <= price;
 
       let meetsDepartureTimeCriteria = true;
       if (departureTime) {
@@ -72,15 +73,16 @@ const ResultsFilter = () => {
           (departureTime === "noon" && isNoon) ||
           (departureTime === "evening" && isEvening);
       }
-      console.log("total Flights: ", flights);
+
       const meetsNonStopCriteria =
-        !nonStopChecked || flight.stopType === "Non Stop";
+        !nonStopChecked || flight?.stopType === "Non Stop";
       const meetsBaggageAllowanceCriteria =
-        !baggageAllowanceChecked || flight.flightInfo.baggage.includes("20 Kg");
+        !baggageAllowanceChecked ||
+        flight?.flightInfo?.baggage.includes("20 Kg");
       const meetsRefundableCriteria =
-        !refundableChecked || flight.refundableStatus.includes("Refundable");
+        !refundableChecked || flight?.refundableStatus.includes("Refundable");
       const meetsNoTransitTimeCriteria =
-        !noTransitTimeChecked || flight.duration <= 60;
+        !noTransitTimeChecked || flight?.duration <= 60;
 
       return (
         meetsPriceCriteria &&

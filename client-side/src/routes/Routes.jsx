@@ -16,6 +16,7 @@ import Account from "../Dashboard/Account/Account";
 import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
 import UserHome from "../Dashboard/User/UserHome/UserHome";
 import PrivateRoute from "./PrivateRoute";
+import ManageBooking from "../Dashboard/User/ManageBooking/ManageBooking";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -68,8 +69,13 @@ export const router = createBrowserRouter([
       },
 
       {
+        path: "userHome",
+        element: <UserHome />
+      },
+
+      {
         path: "booking",
-        element: <UserHome />,
+        element: <ManageBooking />,
       },
 
       {
