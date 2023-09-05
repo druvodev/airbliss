@@ -8,7 +8,7 @@ import logo from "../../../assets/icon/airblissBlack.png";
 const ITEMS_PER_PAGE = 5;
 
 const ManageBooking = () => {
-  const [booking, setBooking] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
@@ -19,13 +19,13 @@ const ManageBooking = () => {
   useEffect(() => {
     fetch(`http://localhost:5000/userBooking/${user?.email}`)
       .then((res) => res.json())
-      .then((data) => setBooking(data));
+      .then((data) => setBookings(data));
   }, []);
 
   // console.log(booking);
   // console.log(flightRef);
 
-  const myFlight = booking.find(
+  const myFlight = bookings.find(
     (flight) => flight.bookingReference === flightRef
   );
 
@@ -56,7 +56,7 @@ const ManageBooking = () => {
   };
 
   const handlePaginationNext = () => {
-    const totalPages = Math.ceil(booking.length / ITEMS_PER_PAGE);
+    const totalPages = Math.ceil(bookings.length / ITEMS_PER_PAGE);
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
@@ -89,7 +89,7 @@ const ManageBooking = () => {
             </tr>
           </thead>
           <tbody>
-            {booking.slice(startIndex, endIndex).map((flight, index) => (
+            {bookings.slice(startIndex, endIndex).map((flight, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
                 <td>
@@ -143,7 +143,7 @@ const ManageBooking = () => {
           </button>
           {/* Render pagination buttons based on the total number of pages */}
           {Array.from(
-            { length: Math.ceil(booking.length / ITEMS_PER_PAGE) },
+            { length: Math.ceil(bookings.length / ITEMS_PER_PAGE) },
             (_, index) => (
               <h3
                 key={index}

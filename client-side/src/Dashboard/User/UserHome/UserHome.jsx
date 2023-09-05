@@ -10,21 +10,21 @@ import BookingCalendar from "./BookingCalendar";
 
 const UserHome = () => {
   return (
-    <div className='grid grid-cols-4'>
-      <div className='grid col-span-3 grid-rows-6 gap-5'>
-        <div className='grid grid-cols-2 row-span-1 gap-5'>
+    <div className="grid grid-cols-4">
+      <div className="grid col-span-3 grid-rows-6 gap-5">
+        <div className="grid grid-cols-2 row-span-1 gap-5">
           <TotalBooking />
           <TotalCancel />
         </div>
-        <div className='grid grid-cols-2 row-span-1 gap-5'>
+        <div className="grid grid-cols-2 row-span-1 gap-5">
           <PendingRefundAmount />
           <TotalRefundAmount />
         </div>
-        <div className='grid grid-cols-2 row-span-1 gap-5'>
+        <div className="grid grid-cols-2 row-span-1 gap-5">
           <TotalRefund />
           <TotalAmount />
         </div>
-        <div className='grid grid-cols-2 gap-5 row-span-3'>
+        <div className="grid grid-cols-2 gap-5 row-span-3">
           <BookingChart />
           <BookingCalendar />
         </div>

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
 import { paymentLater, paymentProcessing } from "../../../utils/handlePayment";
 import SeatModel from "../../../Components/SeatModel/SeatModel";
+import useAuth from "../../../hooks/useAuth";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -26,6 +27,7 @@ const TravelerDetailsForm = () => {
   const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo); // get flight information from redux
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); //for Check box checked State
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user } = useAuth();
 
   const {
     register,
@@ -374,6 +376,8 @@ const TravelerDetailsForm = () => {
                       <input
                         type="email"
                         name=""
+                        defaultValue={user?.email}
+                        readOnly
                         id=""
                         {...register("traveler_email", { required: true })}
                         placeholder="Email"
