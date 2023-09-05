@@ -1,12 +1,12 @@
-import React from 'react';
-import TotalBooking from './TotalBooking';
-import TotalCancel from './TotalCancel';
-import TotalRefund from './TotalRefund';
-import PendingRefundAmount from './PendingRefundAmount';
-import TotalRefundAmount from './TotalRefundAmount';
-import TotalAmount from './TotalAmount';
-import BookingChart from './BookingChart';
-import BookingCalendar from './BookingCalendar';
+import React from "react";
+import TotalBooking from "./TotalBooking";
+import TotalCancel from "./TotalCancel";
+import TotalRefund from "./TotalRefund";
+import PendingRefundAmount from "./PendingRefundAmount";
+import TotalRefundAmount from "./TotalRefundAmount";
+import TotalAmount from "./TotalAmount";
+import BookingChart from "./BookingChart";
+import BookingCalendar from "./BookingCalendar";
 
 const UserHome = () => {
   return (
@@ -29,9 +29,7 @@ const UserHome = () => {
           <BookingCalendar />
         </div>
       </div>
-      <div className='col-span-1'>
-        hello
-      </div>
+      <div className="col-span-1">hello</div>
     </div>
   );
 };
