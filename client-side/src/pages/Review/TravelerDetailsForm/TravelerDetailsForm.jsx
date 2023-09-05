@@ -4,7 +4,8 @@ import {
   MdKeyboardArrowUp,
   MdRMobiledata,
 } from "react-icons/md";
-import { FaExclamationCircle } from "react-icons/fa";
+// import { FaExclamationCircle } from "react-icons/bi";
+import { HiOutlineExternalLink } from "react-icons/hi";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useForm } from "react-hook-form";
@@ -138,6 +139,56 @@ const TravelerDetailsForm = () => {
                 </div>
               </div>
             </div>
+            <div className="mt-5 mx-5 md:mx-10">
+              <div className="border-2 border-accent py-5 px-2 rounded-xl relative">
+                <p className="absolute -top-4 left-10 px-2 font-semibold bg-white text-accent">
+                  Select Travel Insurance Option
+                </p>
+                <div className="form-control">
+                  <label className="flex gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="radio-10"
+                      className="radio radio-accent"
+                      checked
+                    />
+                    <div className="label-text">
+                      <p className="font-semibold">
+                        Yes, insure my trip for only 120 Taka.
+                      </p>
+                      <small className="flex gap-1">
+                        I have read, understand and agree to the terms and
+                        conditions of the
+                        <span className="text-accent font-semibold flex items-center gap-[1px]">
+                          Policy of Insurance <HiOutlineExternalLink />
+                        </span>
+                        and
+                        <span className="text-accent font-semibold flex items-center gap-[1px]">
+                          Important Disclosures <HiOutlineExternalLink />
+                        </span>
+                      </small>
+                    </div>
+                  </label>
+                </div>
+                <div className="form-control">
+                  <label className="flex gap-2 mt-4 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="radio-10"
+                      className="radio radio-accent"
+                    />
+                    <div className="label-text">
+                      <p className="font-semibold">
+                        No, I will travel without this insurance for my 2010
+                        Taka trip. I understand that by declining coverage I may
+                        be responsible for substantial cancellation fees and
+                        delay expenses.
+                      </p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
             <div className="form-control mt-5 mx-5 md:mx-10">
               <label className="cursor-pointer flex items-center gap-3">
                 <input
@@ -218,9 +269,7 @@ const TravelerDetailsForm = () => {
                   Personal Details (Adult)
                 </h2>
                 <div className="flex items-center text-gray-400 gap-2 text-sm mt-2">
-                  <span>
-                    <FaExclamationCircle />
-                  </span>
+                  <span>{/* <FaExclamationCircle /> */}</span>
                   <span>
                     as mentioned on your passport or government approved IDs
                   </span>
@@ -360,9 +409,7 @@ const TravelerDetailsForm = () => {
                   <div className="mt-10">
                     <h2 className="font-semibold text-2xl">Contact Details</h2>
                     <div className="flex items-center text-gray-400 gap-2 text-sm mt-2">
-                      <span>
-                        <FaExclamationCircle />
-                      </span>
+                      <span>{/* <FaExclamationCircle /> */}</span>
                       <span>receive booking confirmation & updates</span>
                     </div>
                   </div>

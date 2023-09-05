@@ -30,9 +30,9 @@ const SeatModel = ({ setIsModalOpen }) => {
         alt=""
         className="mr-[2px] -scale-x-100 mt-10 hidden lg:block"
       />
-      <div className="grid justify-center max-w-96 font-semibold tracking-widest">
+      <div className="grid justify-center w-80 font-semibold tracking-widest">
         <img src={frontSide} className="w-full" alt="" />
-        <div className="flex justify-between w-full gap-12 mx-auto bg-[#F5F7FD] px-5">
+        <div className="flex justify-between w-80 gap-12 mx-auto bg-[#F5F7FD] px-5">
           <div className="grid grid-cols-2 gap-y-7 gap-x-5">
             {aSeats.map((seat) => (
               <div
