@@ -537,7 +537,7 @@ async function run() {
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
         res.redirect(
-          `http://localhost:5173/booking-confirmed/${req.params.bookingId}`
+          `https://airbliss-flight-booking.web.app/booking-confirmed/${req.params.bookingId}`
         );
       });
     });
@@ -593,18 +593,18 @@ async function run() {
       try {
         const bookings = await bookingsCollection.find().toArray();
 
-        for (const booking of bookings) {
-          for (const dateKey in booking) {
+        for (let booking of bookings) {
+          for (let dateKey in booking) {
             const airportCodes = booking[dateKey];
-            for (const airportCodeKey in airportCodes) {
+            for (let airportCodeKey in airportCodes) {
               const bookingsForAirport = airportCodes[airportCodeKey];
-              const foundBookingObj = bookingsForAirport.find(
+              const foundBookingObj = bookingsForAirport.filter(
                 (bookingObj) =>
                   bookingObj.user.traveler_email === traveler_email
               );
               if (foundBookingObj) {
                 console.log(foundBookingObj);
-                myBookings.push(foundBookingObj);
+                myBookings = myBookings.concat(foundBookingObj);
               }
             }
           }
