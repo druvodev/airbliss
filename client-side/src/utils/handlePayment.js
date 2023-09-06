@@ -6,7 +6,7 @@ const userBookingInfo = {};
 
 const transformFlightInfo = (flightInfo) => {
   return {
-    flightNumber: flightInfo.flightInfo.flightNumber,
+    flightNumber: flightInfo?.flightInfo?.flightNumber,
     airline: flightInfo.airlineName,
     aircraft: flightInfo.flightInfo.aircraft,
     departureAirport: flightInfo.departure.code,

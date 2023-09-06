@@ -147,7 +147,7 @@ const ManageBooking = () => {
           </button>
           {/* Render pagination buttons based on the total number of pages */}
           {Array.from(
-            { length: Math.ceil(bookings.length / ITEMS_PER_PAGE) },
+            { length: Math.ceil(bookings?.length / ITEMS_PER_PAGE) },
             (_, index) => (
               <h3
                 key={index}
@@ -176,7 +176,7 @@ const ManageBooking = () => {
           } transition-opacity duration-300 `}
         >
           {/* Modal content */}
-          <div className="bg-white w-10/12 max-w-3xl max-h-[95vh] md:max-h-[100vh] overflow-y-scroll md:overflow-auto rounded-lg shadow-lg p-6">
+          <div className="bg-white w-10/12 max-w-2xl max-h-[95vh] md:max-h-[100vh] overflow-y-scroll md:overflow-auto rounded-lg shadow-lg p-6">
             <div className="flex gap-2 md:gap-5 lg:gap-10 items-center mb-5">
               <img className="w-24" src={logo} alt="Website Logo" />
               <h2 className="text-lg md:text-xl font-semibold">
@@ -187,11 +187,11 @@ const ManageBooking = () => {
             <div className="flex gap-5 md:gap-10 items-center my-2">
               <div>
                 <h2 className="text-lg font-semibold">Booking Date:</h2>
-                <p className="text-sm">{myFlight?.bookingDateTime}</p>
+                <p className="">{myFlight?.bookingDateTime}</p>
               </div>
               <div>
                 <h2 className="text-lg font-semibold">Traveler:</h2>
-                <p className="text-sm">
+                <p className="">
                   {myFlight?.user?.title} {myFlight?.user?.first_name}{" "}
                   {myFlight?.user?.last_name}
                 </p>
@@ -221,7 +221,7 @@ const ManageBooking = () => {
                   </p>
                 </div>
                 <div>
-                  <h2 className="font-semibold">Arrival Date</h2>
+                  <h2 className=" font-semibold">Arrival Date</h2>
                   <p>
                     {myFlight?.flight?.arrivalDate}{" "}
                     {myFlight?.flight?.arrivalTime}
@@ -233,18 +233,18 @@ const ManageBooking = () => {
             <div className="mt-5">
               <h2 className="text-lg font-semibold">Cancelation and Refund</h2>
               <hr />
-              <div className="grid grid-cols-2 mt-2 font-semibold">
+              <div className="grid grid-cols-2 mt-2">
                 <p>Your paid amount for this flight</p>
                 <p>= {paidAmount} BDT</p>
               </div>
-              <div className="grid grid-cols-2 font-semibold">
+              <div className="grid grid-cols-2">
                 <p>Deducted 30% cancelation fee</p>
                 <p>= {deductedAmount} BDT</p>
               </div>
               <div className="w-3/4">
                 <hr />
               </div>
-              <div className="grid grid-cols-2 font-semibold">
+              <div className="grid grid-cols-2 ">
                 <p>Total refund amount</p>
                 <p>= {refundAmount} BDT</p>
               </div>

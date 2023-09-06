@@ -3,8 +3,8 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { FaHome, FaHouseUser } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { setUserBookings } from "../../../redux/features/usersSlice";
 import useAuth from "../../../hooks/useAuth";
+import { setUserBookings } from "../../../redux/features/usersSlice";
 
 const UserNav = () => {
   const { user } = useAuth();
@@ -24,9 +24,9 @@ const UserNav = () => {
       <NavLink
         to="UserHome"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
             isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
+              ? "bg-white text-cyan-500 active:border rounded-full"
               : "text-white"
           }`
         }
@@ -38,9 +38,9 @@ const UserNav = () => {
       <NavLink
         to="booking"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
             isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
+              ? "bg-white text-cyan-500 active:border rounded-full"
               : "text-white"
           }`
         }
@@ -52,9 +52,9 @@ const UserNav = () => {
       <NavLink
         to="account"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
             isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
+              ? "bg-white text-cyan-500 active:border rounded-full"
               : "text-white"
           }`
         }
@@ -62,21 +62,6 @@ const UserNav = () => {
         <BsFillPersonFill className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Account</span>
-      </NavLink>
-      <div className="divider"></div>
-      <NavLink
-        to="/"
-        className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
-            isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
-              : "text-white"
-          }`
-        }
-      >
-        <FaHome className="w-5 h-5" />
-
-        <span className="mx-4 font-medium">Home</span>
       </NavLink>
     </div>
   );
