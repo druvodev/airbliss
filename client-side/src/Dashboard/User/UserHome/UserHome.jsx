@@ -24,9 +24,13 @@ const UserHome = () => {
           <TotalAmount />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-7">
-        <BookingChart />
-        <BookingRefundChart />
+      <div className="grid grid-cols-3 gap-7">
+        <div className="col-span-1">
+          <BookingCalendar />
+        </div>
+        <div className="col-span-2">
+          <BookingChart />
+        </div>
       </div>
     </div>
     // <div className='grid grid-cols-4'>
