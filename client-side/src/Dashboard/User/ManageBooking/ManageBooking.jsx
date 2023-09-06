@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { AiFillSetting } from "react-icons/ai";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
 import logo from "../../../assets/icon/airblissBlack.png";
 import { useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -14,11 +15,23 @@ const ManageBooking = () => {
 
   const bookings = useSelector((state) => state?.userInfo?.userBookings);
 
+  const [formData, setFormData] = useState({});
+  // Initialize your form data state here
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    getValues,
+    reset,
+    formState: { errors },
+  } = useForm();
+
   const myFlight = bookings?.find(
     (flight) => flight.bookingReference === flightRef
   );
 
-  console.log(myFlight);
+  // console.log(myFlight);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -42,6 +55,18 @@ const ManageBooking = () => {
     }
   };
 
+  const handleCancelFlight = (data) => {
+    // console.log(data);
+    const cancelFlightInfo = {
+      cancelReason: data?.cancelReason,
+      bookingReference: myFlight?.bookingReference,
+      refundAmount,
+    };
+    console.log(cancelFlightInfo);
+    reset();
+    closeModal();
+  };
+
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
@@ -54,7 +79,6 @@ const ManageBooking = () => {
     <div>
       <div className="overflow-x-auto mx-7 mt-[50px] px-10 py-5 rounded-xl bg-white">
         <table className="table">
-          {/* head */}
           <thead>
             <tr>
               <th>#</th>
@@ -103,7 +127,7 @@ const ManageBooking = () => {
                   <button
                     className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400`}
                     onClick={() => {
-                      window.my_modal_4.showModal();
+                      openModal();
                       setFlightRef(flight?.bookingReference);
                     }}
                   >
@@ -145,92 +169,118 @@ const ManageBooking = () => {
         </section>
       </div>
 
-      <dialog id="my_modal_4" className="modal">
-        <form method="dialog" className="modal-box w-11/12 max-w-2xl">
-          <div className="flex gap-2 md:gap-5 lg:gap-10 items-center mb-5">
-            <img className="w-24" src={logo} alt="Website Logo" />
-            <h2 className="text-lg md:text-xl font-semibold">
-              Flight Cancelation and Refund Requisition
-            </h2>
-          </div>
-          <hr />
-          <div className="flex gap-5 md:gap-10 items-center my-2">
-            <div>
-              <h2 className="text-lg font-semibold">Booking Date:</h2>
-              <p className="text-sm">{myFlight?.bookingDateTime}</p>
+      {isModalOpen && (
+        <div
+          className={`fixed inset-0 flex items-center justify-center z-40 ${
+            isModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+          } transition-opacity duration-300 `}
+        >
+          {/* Modal content */}
+          <div className="bg-white w-10/12 max-w-3xl max-h-[95vh] md:max-h-[100vh] overflow-y-scroll md:overflow-auto rounded-lg shadow-lg p-6">
+            <div className="flex gap-2 md:gap-5 lg:gap-10 items-center mb-5">
+              <img className="w-24" src={logo} alt="Website Logo" />
+              <h2 className="text-lg md:text-xl font-semibold">
+                Flight Cancelation and Refund Requisition
+              </h2>
             </div>
-            <div>
-              <h2 className="text-lg font-semibold">Traveler:</h2>
-              <p className="text-sm">
-                {myFlight?.user?.title} {myFlight?.user?.first_name}{" "}
-                {myFlight?.user?.last_name}
-              </p>
-            </div>
-          </div>
-          <hr />
-          <div className="mb-2 mt-5">
-            <h2 className="text-lg font-semibold">Flight Details</h2>
             <hr />
-            <div className="flex gap-5 items-center">
+            <div className="flex gap-5 md:gap-10 items-center my-2">
               <div>
-                <h2 className="font-semibold">Airline</h2>
-                <p>{myFlight?.flight?.airline}</p>
+                <h2 className="text-lg font-semibold">Booking Date:</h2>
+                <p className="text-sm">{myFlight?.bookingDateTime}</p>
               </div>
               <div>
-                <h2 className="font-semibold">Route</h2>
-                <p>
-                  {myFlight?.flight?.departureCity} to{" "}
-                  {myFlight?.flight?.arrivalCity}
-                </p>
-              </div>
-              <div>
-                <h2 className="font-semibold">Departure Date</h2>
-                <p>
-                  {myFlight?.flight?.departureDate}{" "}
-                  {myFlight?.flight?.departureTime}
-                </p>
-              </div>
-              <div>
-                <h2 className="font-semibold">Arrival Date</h2>
-                <p>
-                  {myFlight?.flight?.arrivalDate}{" "}
-                  {myFlight?.flight?.arrivalTime}
+                <h2 className="text-lg font-semibold">Traveler:</h2>
+                <p className="text-sm">
+                  {myFlight?.user?.title} {myFlight?.user?.first_name}{" "}
+                  {myFlight?.user?.last_name}
                 </p>
               </div>
             </div>
-          </div>
-
-          <div className="mt-5">
-            <h2 className="text-lg font-semibold">Cancelation and Refund</h2>
             <hr />
-            <div className="grid grid-cols-2 mt-2 font-semibold">
-              <p>Your paid amount for this flight</p>
-              <p>= {paidAmount} BDT</p>
-            </div>
-            <div className="grid grid-cols-2 font-semibold">
-              <p>Deducted 30% cancelation fee</p>
-              <p>= {deductedAmount} BDT</p>
-            </div>
-            <div className="w-3/4">
+            <div className="mb-2 mt-5">
+              <h2 className="text-lg font-semibold">Flight Details</h2>
               <hr />
+              <div className="flex gap-5 items-center">
+                <div>
+                  <h2 className="font-semibold">Airline</h2>
+                  <p>{myFlight?.flight?.airline}</p>
+                </div>
+                <div>
+                  <h2 className="font-semibold">Route</h2>
+                  <p>
+                    {myFlight?.flight?.departureCity} to{" "}
+                    {myFlight?.flight?.arrivalCity}
+                  </p>
+                </div>
+                <div>
+                  <h2 className="font-semibold">Departure Date</h2>
+                  <p>
+                    {myFlight?.flight?.departureDate}{" "}
+                    {myFlight?.flight?.departureTime}
+                  </p>
+                </div>
+                <div>
+                  <h2 className="font-semibold">Arrival Date</h2>
+                  <p>
+                    {myFlight?.flight?.arrivalDate}{" "}
+                    {myFlight?.flight?.arrivalTime}
+                  </p>
+                </div>
+              </div>
             </div>
-            <div className="grid grid-cols-2 font-semibold">
-              <p>Total refund amount</p>
-              <p>= {refundAmount} BDT</p>
+
+            <div className="mt-5">
+              <h2 className="text-lg font-semibold">Cancelation and Refund</h2>
+              <hr />
+              <div className="grid grid-cols-2 mt-2 font-semibold">
+                <p>Your paid amount for this flight</p>
+                <p>= {paidAmount} BDT</p>
+              </div>
+              <div className="grid grid-cols-2 font-semibold">
+                <p>Deducted 30% cancelation fee</p>
+                <p>= {deductedAmount} BDT</p>
+              </div>
+              <div className="w-3/4">
+                <hr />
+              </div>
+              <div className="grid grid-cols-2 font-semibold">
+                <p>Total refund amount</p>
+                <p>= {refundAmount} BDT</p>
+              </div>
             </div>
+            <form onSubmit={handleSubmit(handleCancelFlight)}>
+              <div className="mt-4">
+                <label htmlFor="exampleField" className="block font-bold mb-2">
+                  Why you want to cancel the flight?
+                </label>
+                <textarea
+                  type="text"
+                  id="exampleField"
+                  {...register("cancelReason", { required: true })}
+                  className="block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  placeholder="Enter something"
+                />
+              </div>
+              {/* End of form fields */}
+              <div className="flex justify-end mt-2">
+                <button
+                  type="submit"
+                  className="bg-cyan-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-150"
+                >
+                  Submit
+                </button>
+                <div
+                  onClick={closeModal}
+                  className="btn ml-2 btn-warning border-none bg-red-400 hover:bg-red-500 text-white"
+                >
+                  Close
+                </div>
+              </div>
+            </form>
           </div>
-          <div className="modal-action flex items-center gap-2">
-            {/* if there is a button, it will close the modal */}
-            <button
-              onClick={() => console.log("this button is clicked")}
-              className="ml-auto bg-cyan-700 hover:bg-cyan-600  px-5 rounded-lg h-[48px] text-white font-semibold"
-            >
-              Cancel & Refund
-            </button>
-            <button className="btn">Close</button>
-          </div>
-        </form>
-      </dialog>
+        </div>
+      )}
     </div>
   );
 };
