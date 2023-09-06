@@ -66,17 +66,17 @@ const Account = () => {
 
   return (
     <div>
-      <div className="bg-white p-5 rounded-xl">
+      <div className="bg-white p-5 shadow rounded-xl">
         <h1 className="text-[22px] font-semibold text-gray-900 capitalize">
           <span className="text-[24px] font-bold">{user?.displayName}</span>'s
           AirBliss Account
         </h1>
       </div>
       <div className="grid lg:grid-cols-3 grid-cols-1 gap-8 mt-8">
-        <div className="bg-white lg:col-span-1 py-[50px] px-[30px] h-fit rounded-xl">
+        <div className="bg-white shadow lg:col-span-1 py-[50px] px-[30px] h-fit rounded-xl">
           <InforMation currentUser={currentUser} />
         </div>
-        <div className="bg-white lg:col-span-2 py-[30px] px-[50px] rounded-xl">
+        <div className="bg-white shadow lg:col-span-2 py-[30px] px-[50px] rounded-xl">
           <div className="flex justify-between ">
             <h1 className="lg:text-[36px] text-xl mb-7 font-semibold text-gray-900 capitalize">
               Personal Information
