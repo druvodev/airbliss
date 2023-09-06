@@ -3,6 +3,7 @@ import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdRMobiledata,
+  MdVerifiedUser,
 } from "react-icons/md";
 // import { FaExclamationCircle } from "react-icons/bi";
 import { HiOutlineExternalLink } from "react-icons/hi";
@@ -27,6 +28,9 @@ const TravelerDetailsForm = () => {
   const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo); // get flight information from redux
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); //for Check box checked State
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInsuranceModal, setIsInsuranceModal] = useState(false);
+  const [hasInsuranceModalShown, setHasInsuranceModalShown] = useState(false);
+  const [isNoInsuranceSelected, setIsNoInsuranceSelected] = useState(false);
 
   const {
     register,
@@ -90,6 +94,19 @@ const TravelerDetailsForm = () => {
   // Check box Handler
   const handleCheckboxChange = (event) => {
     setIsCheckboxChecked(event.target.checked);
+  };
+
+  // Insurance Modal Showing After 2sec
+  if (isContinue && !isModalOpen && !hasInsuranceModalShown) {
+    setTimeout(() => {
+      setIsInsuranceModal(true);
+      !setHasInsuranceModalShown(true);
+    }, 2000);
+  }
+
+  const handleNoInsuranceButtonClick = () => {
+    setIsInsuranceModal(false);
+    setIsNoInsuranceSelected(true);
   };
 
   return (
@@ -176,6 +193,7 @@ const TravelerDetailsForm = () => {
                       type="radio"
                       name="radio-10"
                       className="radio radio-accent"
+                      checked={isNoInsuranceSelected}
                     />
                     <div className="label-text">
                       <p className="font-semibold">
@@ -503,6 +521,74 @@ const TravelerDetailsForm = () => {
                 Choose Your Seating Preference
               </h3>
               <SeatModel setIsModalOpen={setIsModalOpen} />
+            </div>
+          </div>
+        </div>
+      )}
+      {isContinue && isInsuranceModal && (
+        <div className="fixed top-0 left-0 z-50 w-full min-h-screen bg-black/20 overflow-y-auto flex items-center justify-center">
+          <div className="bg-white rounded-xl border p-5 w-fit relative">
+            <h2 className="text-3xl font-semibold mb-4 text-center">
+              Travel Insurance Preference
+            </h2>
+            <div className="">
+              <p className="mb-4">
+                Protect your trip with our travel insurance for only
+                <span className="font-semibold"> 120 Taka</span>. Here's what it
+                covers:
+              </p>
+              <ul className="font-semibold">
+                <li className="flex gap-1 items-center">
+                  <MdVerifiedUser /> Trip cancellation coverage
+                </li>
+                <li className="flex gap-1 items-center">
+                  <MdVerifiedUser /> Delayed flight coverage
+                </li>
+                <li className="flex gap-1 items-center">
+                  <MdVerifiedUser /> Lost luggage coverage
+                </li>
+                <li className="flex gap-1 items-center">
+                  <MdVerifiedUser /> Medical coverage during your trip
+                </li>
+              </ul>
+              <p className="mt-4">
+                By accepting the insurance, you agree to the terms and
+                conditions of the{" "}
+                <a
+                  href="#"
+                  className="text-accent font-semibold hover:underline"
+                >
+                  Policy of Insurance
+                </a>{" "}
+                and
+                <a
+                  href="#"
+                  className="text-accent font-semibold hover:underline"
+                >
+                  {" "}
+                  Important Disclosures
+                </a>
+                .
+              </p>
+              <p className="mt-4">
+                If you decline coverage, please be aware that you may be
+                responsible for substantial cancellation fees and delay
+                expenses.
+              </p>
+            </div>
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={() => setIsInsuranceModal(false)}
+                className="bg-cyan-600 text-white font-semibold py-2 px-6 rounded-full hover:bg-cyan-700"
+              >
+                Yes, insure my trip
+              </button>
+              <button
+                onClick={handleNoInsuranceButtonClick}
+                className="text-cyan-600 font-semibold py-2 px-6 ml-4 border border-cyan-600 rounded-full hover:bg-cyan-100 hover:border-cyan-700"
+              >
+                No, I will travel without insurance
+              </button>
             </div>
           </div>
         </div>
