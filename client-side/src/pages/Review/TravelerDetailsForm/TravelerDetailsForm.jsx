@@ -176,13 +176,19 @@ const TravelerDetailsForm = () => {
                       <small className="flex gap-1">
                         I have read, understand and agree to the terms and
                         conditions of the
-                        <span className="text-accent font-semibold flex items-center gap-[1px]">
+                        <Link
+                          to="/insurance-policy"
+                          className="text-accent font-semibold flex items-center gap-[1px]"
+                        >
                           Policy of Insurance <HiOutlineExternalLink />
-                        </span>
+                        </Link>
                         and
-                        <span className="text-accent font-semibold flex items-center gap-[1px]">
+                        <Link
+                          to="/insurance-policy"
+                          className="text-accent font-semibold flex items-center gap-[1px]"
+                        >
                           Important Disclosures <HiOutlineExternalLink />
-                        </span>
+                        </Link>
                       </small>
                     </div>
                   </label>
@@ -221,7 +227,7 @@ const TravelerDetailsForm = () => {
                     Privacy Policy
                   </Link>{" "}
                   and{" "}
-                  <Link to="/terms" className="text-cyan-800 font-semibold">
+                  <Link to="" className="text-cyan-800 font-semibold">
                     Terms & Conditions
                   </Link>
                 </span>
@@ -554,20 +560,20 @@ const TravelerDetailsForm = () => {
               <p className="mt-4">
                 By accepting the insurance, you agree to the terms and
                 conditions of the{" "}
-                <a
-                  href="#"
+                <Link
+                  to="/insurance-policy"
                   className="text-accent font-semibold hover:underline"
                 >
                   Policy of Insurance
-                </a>{" "}
+                </Link>{" "}
                 and
-                <a
-                  href="#"
+                <Link
+                  to="/insurance-policy"
                   className="text-accent font-semibold hover:underline"
                 >
                   {" "}
                   Important Disclosures
-                </a>
+                </Link>
                 .
               </p>
               <p className="mt-4">

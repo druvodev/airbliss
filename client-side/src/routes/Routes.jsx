@@ -17,6 +17,7 @@ import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
 import UserHome from "../Dashboard/User/UserHome/UserHome";
 import PrivateRoute from "./PrivateRoute";
 import ManageBooking from "../Dashboard/User/ManageBooking/ManageBooking";
+import InsurancePolicy from "../pages/InsurancePolicy/InsurancePolicy";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
         path: "/booking-confirmed/:bookingId",
         element: <ETicket />,
       },
+      {
+        path: "/insurance-policy",
+        element: <InsurancePolicy />,
+      },
     ],
   },
   {
@@ -70,7 +75,7 @@ export const router = createBrowserRouter([
 
       {
         path: "userHome",
-        element: <UserHome />
+        element: <UserHome />,
       },
 
       {
