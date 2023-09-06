@@ -253,12 +253,16 @@ const ManageBooking = () => {
               <div className="mt-4">
                 <label htmlFor="exampleField" className="block font-bold mb-2">
                   Why you want to cancel the flight?
+                  <span className="text-red-600">*</span>
                 </label>
                 <textarea
                   type="text"
                   id="exampleField"
                   {...register("cancelReason", { required: true })}
-                  className="block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                  className={`block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                    errors.cancelReason &&
+                    "focus:border-red-500 focus:ring-red-500 "
+                  }`}
                   placeholder="Enter something"
                 />
               </div>

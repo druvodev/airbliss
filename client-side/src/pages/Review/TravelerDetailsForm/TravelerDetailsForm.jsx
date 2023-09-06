@@ -270,7 +270,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("first_name", { required: true })}
                         placeholder="First Name"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.first_name &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -283,7 +286,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("last_name", { required: true })}
                         placeholder="Last Name"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.last_name &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -296,7 +302,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("date_of_birth", { required: true })}
                         placeholder="Select Date"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.date_of_birth &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -309,7 +318,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("passport_number", { required: true })}
                         placeholder="Passport Number"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.passport_number &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -336,7 +348,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("city", { required: true })}
                         placeholder="City"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.city &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -349,7 +364,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("country", { required: true })}
                         placeholder="Country"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.country &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       >
                         {countries.map((country, index) => (
                           <option key={index} value={country.name.common}>
@@ -405,6 +423,11 @@ const TravelerDetailsForm = () => {
                           required: true,
                         }}
                       />
+                      {errors.phone_number && (
+                        <span className="text-red-500">
+                          Phone number is required
+                        </span>
+                      )}
                     </div>
                     <div className="flex flex-col">
                       <label className="font-semibold">
