@@ -10,7 +10,7 @@ import BookingCalendar from "./BookingCalendar";
 
 const UserHome = () => {
   return (
-    <div className='grid gap-7 mt-10'>
+    <div className="grid gap-7 mt-10">
       <div className="grid grid-rows-2 gap-7">
         <div className="grid lg:grid-cols-3 grid-cols-1 gap-7">
           <TotalBooking />
