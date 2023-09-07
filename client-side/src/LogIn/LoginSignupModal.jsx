@@ -39,9 +39,8 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     const formData = new FormData();
     formData.append("image", image);
 
-    const url = `https://api.imgbb.com/1/upload?key=${
-      import.meta.env.VITE_IMGBB_KEY
-    }`;
+    const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY
+      }`;
 
     fetch(url, {
       method: "POST",
@@ -215,10 +214,13 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
                       className="bg-cyan-500 w-full rounded-md px-5 py-2 text-white"
                     >
                       {loading ? (
-                        <TbFidgetSpinner
-                          size={24}
-                          className="m-auto animate-spin"
-                        />
+                        <div className="flex items-center gap-3">
+                          <TbFidgetSpinner
+                            size={24}
+                            className="m-auto animate-spin"
+                          />
+                          Loading...
+                        </div>
                       ) : (
                         "SignIn"
                       )}
@@ -302,10 +304,13 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
                     className="bg-cyan-500 w-full rounded-md px-5 py-2 text-white"
                   >
                     {loading ? (
-                      <TbFidgetSpinner
-                        size={24}
-                        className="m-auto animate-spin"
-                      />
+                      <div className="flex items-center gap-3">
+                        <TbFidgetSpinner
+                          size={24}
+                          className="m-auto animate-spin"
+                        />
+                        Loading...
+                      </div>
                     ) : (
                       "Continue"
                     )}
