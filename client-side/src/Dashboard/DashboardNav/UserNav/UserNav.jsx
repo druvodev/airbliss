@@ -3,11 +3,12 @@ import { BsFillPersonFill } from "react-icons/bs";
 import { FaHome, FaHouseUser } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUserBookings } from "../../../redux/features/usersSlice";
 
 const UserNav = () => {
   const { user } = useAuth();
+  const refetch = useSelector((state) => state.userInfo.refetch);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,9 +16,8 @@ const UserNav = () => {
       .then((res) => res.json())
       .then((data) => {
         dispatch(setUserBookings(data));
-        // setBookings(data);
       });
-  }, [user]);
+  }, [user, refetch]);
 
   return (
     <div>
