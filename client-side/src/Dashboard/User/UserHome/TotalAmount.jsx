@@ -10,8 +10,8 @@ const TotalAmount = () => {
                     <FaMoneyBillTrendUp className='text-white text-4xl font-bold' />
                 </div>
                 <div>
-                    <h1 className='text-2xl font-light text-gray-600'>Total Ticket Booking</h1>
-                    <p className='text-[#96a3c4] text-3xl font-semibold mt-4'>30 times</p>
+                    <h1 className='lg:text-2xl font-light text-gray-600'>Total Ticket Booking</h1>
+                    <p className='text-[#96a3c4] lg:text-3xl text-xl font-semibold mt-4'>30 times</p>
                 </div>
             </div>
             <div>
