@@ -3,6 +3,8 @@ import { AiFillSetting } from "react-icons/ai";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
 import logo from "../../../assets/icon/airblissBlack.png";
+import { Link } from "react-router-dom";
+import { GoHistory } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 
@@ -12,6 +14,11 @@ const ManageBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
+  const [isActive, setIsActive] = useState("allflight");
+
+  const handleTabClick = (tab) => {
+    setIsActive(tab);
+  };
 
   const bookings = useSelector((state) => state?.userInfo?.userBookings);
 
@@ -77,7 +84,42 @@ const ManageBooking = () => {
   //   console.log(booking);
   return (
     <div>
-      <div className="overflow-x-auto mx-7 mt-[50px] px-10 py-5 rounded-xl bg-white">
+      {/* Tab */}
+      <section className="bg-white p-4 shadow-md mt-5 flex items-center mx-7 space-x-4">
+        <div>
+          <h1 className="font-semibold">Filter Ticket: </h1>
+        </div>
+        <div className="flex gap-1  rounded font-medium text-gray-600 text-sm">
+          <div
+            onClick={() => handleTabClick("allflight")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "allflight"
+                ? "border-t-2 bg-gray-100 border-black"
+                : ""
+            }`}
+          >
+            All Flight
+          </div>
+          <div
+            onClick={() => handleTabClick("cancel")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "cancel" ? "border-t-2 bg-gray-100 border-black" : ""
+            }`}
+          >
+            Cancel Flight
+          </div>
+          <div
+            onClick={() => handleTabClick("arrive")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "arrive" ? "border-t-2 bg-gray-100 border-black" : ""
+            }`}
+          >
+            Arrive Flight
+          </div>
+        </div>
+      </section>
+
+      <div className="overflow-x-auto shadow-md mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
         <table className="table">
           <thead>
             <tr>
@@ -118,12 +160,19 @@ const ManageBooking = () => {
                 <td>{flight?.user?.passport_number}</td>
                 <td>Approved</td>
                 <td className="flex gap-2 mt-2">
-                  <button
-                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-500
-                    }`}
+                  <Link
+                    to={{
+                      pathname: `/dashboard/ticketHistory/${flight?.bookingReference}`,
+                    }}
                   >
-                    <AiFillSetting />
-                  </button>
+                    <button
+                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-500
+                    }`}
+                    >
+                      <GoHistory />
+                    </button>
+                  </Link>
+
                   <button
                     className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400`}
                     onClick={() => {
@@ -175,113 +224,120 @@ const ManageBooking = () => {
             isModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           } transition-opacity duration-300 `}
         >
-          {/* Modal content */}
-          <div className="bg-white w-10/12 max-w-2xl max-h-[95vh] md:max-h-[100vh] overflow-y-scroll md:overflow-auto rounded-lg shadow-lg p-6">
-            <div className="flex gap-2 md:gap-5 lg:gap-10 items-center mb-5">
-              <img className="w-24" src={logo} alt="Website Logo" />
-              <h2 className="text-lg md:text-xl font-semibold">
-                Flight Cancelation and Refund Requisition
-              </h2>
-            </div>
-            <hr />
-            <div className="flex gap-5 md:gap-10 items-center my-2">
-              <div>
-                <h2 className="text-lg font-semibold">Booking Date:</h2>
-                <p className="">{myFlight?.bookingDateTime}</p>
+          <div className=" bg-black/20 min-h-screen w-full flex justify-center items-center">
+            {/* Modal content */}
+            <div className="bg-white w-10/12 max-w-2xl max-h-[95vh] md:max-h-[100vh] overflow-y-scroll md:overflow-auto rounded-lg shadow-lg p-6">
+              <div className="flex gap-2 md:gap-5 lg:gap-10 items-center mb-5">
+                <img className="w-24" src={logo} alt="Website Logo" />
+                <h2 className="text-lg md:text-xl font-semibold">
+                  Flight Cancelation and Refund Requisition
+                </h2>
               </div>
-              <div>
-                <h2 className="text-lg font-semibold">Traveler:</h2>
-                <p className="">
-                  {myFlight?.user?.title} {myFlight?.user?.first_name}{" "}
-                  {myFlight?.user?.last_name}
-                </p>
-              </div>
-            </div>
-            <hr />
-            <div className="mb-2 mt-5">
-              <h2 className="text-lg font-semibold">Flight Details</h2>
               <hr />
-              <div className="flex gap-5 items-center">
+              <div className="flex gap-5 md:gap-10 items-center my-2">
                 <div>
-                  <h2 className="font-semibold">Airline</h2>
-                  <p>{myFlight?.flight?.airline}</p>
+                  <h2 className="text-lg font-semibold">Booking Date:</h2>
+                  <p className="">{myFlight?.bookingDateTime}</p>
                 </div>
                 <div>
-                  <h2 className="font-semibold">Route</h2>
-                  <p>
-                    {myFlight?.flight?.departureCity} to{" "}
-                    {myFlight?.flight?.arrivalCity}
-                  </p>
-                </div>
-                <div>
-                  <h2 className="font-semibold">Departure Date</h2>
-                  <p>
-                    {myFlight?.flight?.departureDate}{" "}
-                    {myFlight?.flight?.departureTime}
-                  </p>
-                </div>
-                <div>
-                  <h2 className=" font-semibold">Arrival Date</h2>
-                  <p>
-                    {myFlight?.flight?.arrivalDate}{" "}
-                    {myFlight?.flight?.arrivalTime}
+                  <h2 className="text-lg font-semibold">Traveler:</h2>
+                  <p className="">
+                    {myFlight?.user?.title} {myFlight?.user?.first_name}{" "}
+                    {myFlight?.user?.last_name}
                   </p>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-5">
-              <h2 className="text-lg font-semibold">Cancelation and Refund</h2>
               <hr />
-              <div className="grid grid-cols-2 mt-2">
-                <p>Your paid amount for this flight</p>
-                <p>= {paidAmount} BDT</p>
-              </div>
-              <div className="grid grid-cols-2">
-                <p>Deducted 30% cancelation fee</p>
-                <p>= {deductedAmount} BDT</p>
-              </div>
-              <div className="w-3/4">
+              <div className="mb-2 mt-5">
+                <h2 className="text-lg font-semibold">Flight Details</h2>
                 <hr />
-              </div>
-              <div className="grid grid-cols-2 ">
-                <p>Total refund amount</p>
-                <p>= {refundAmount} BDT</p>
-              </div>
-            </div>
-            <form onSubmit={handleSubmit(handleCancelFlight)}>
-              <div className="mt-4">
-                <label htmlFor="exampleField" className="block font-bold mb-2">
-                  Why you want to cancel the flight?
-                  <span className="text-red-600">*</span>
-                </label>
-                <textarea
-                  type="text"
-                  id="exampleField"
-                  {...register("cancelReason", { required: true })}
-                  className={`block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
-                    errors.cancelReason &&
-                    "focus:border-red-500 focus:ring-red-500 "
-                  }`}
-                  placeholder="Enter something"
-                />
-              </div>
-              {/* End of form fields */}
-              <div className="flex justify-end mt-2">
-                <button
-                  type="submit"
-                  className="bg-cyan-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-150"
-                >
-                  Submit
-                </button>
-                <div
-                  onClick={closeModal}
-                  className="btn ml-2 btn-warning border-none bg-red-400 hover:bg-red-500 text-white"
-                >
-                  Close
+                <div className="flex gap-5 items-center">
+                  <div>
+                    <h2 className="font-semibold">Airline</h2>
+                    <p>{myFlight?.flight?.airline}</p>
+                  </div>
+                  <div>
+                    <h2 className="font-semibold">Route</h2>
+                    <p>
+                      {myFlight?.flight?.departureCity} to{" "}
+                      {myFlight?.flight?.arrivalCity}
+                    </p>
+                  </div>
+                  <div>
+                    <h2 className="font-semibold">Departure Date</h2>
+                    <p>
+                      {myFlight?.flight?.departureDate}{" "}
+                      {myFlight?.flight?.departureTime}
+                    </p>
+                  </div>
+                  <div>
+                    <h2 className=" font-semibold">Arrival Date</h2>
+                    <p>
+                      {myFlight?.flight?.arrivalDate}{" "}
+                      {myFlight?.flight?.arrivalTime}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </form>
+
+              <div className="mt-5">
+                <h2 className="text-lg font-semibold">
+                  Cancelation and Refund
+                </h2>
+                <hr />
+                <div className="grid grid-cols-2 mt-2">
+                  <p>Your paid amount for this flight</p>
+                  <p>= {paidAmount} BDT</p>
+                </div>
+                <div className="grid grid-cols-2">
+                  <p>Deducted 30% cancelation fee</p>
+                  <p>= {deductedAmount} BDT</p>
+                </div>
+                <div className="w-3/4">
+                  <hr />
+                </div>
+                <div className="grid grid-cols-2 ">
+                  <p>Total refund amount</p>
+                  <p>= {refundAmount} BDT</p>
+                </div>
+              </div>
+              <form onSubmit={handleSubmit(handleCancelFlight)}>
+                <div className="mt-4">
+                  <label
+                    htmlFor="exampleField"
+                    className="block font-bold mb-2"
+                  >
+                    Why you want to cancel the flight?
+                    <span className="text-red-600">*</span>
+                  </label>
+                  <textarea
+                    type="text"
+                    id="exampleField"
+                    {...register("cancelReason", { required: true })}
+                    className={`block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                      errors.cancelReason &&
+                      "focus:border-red-500 focus:ring-red-500 "
+                    }`}
+                    placeholder="Enter something"
+                  />
+                </div>
+                {/* End of form fields */}
+                <div className="flex justify-end mt-2">
+                  <button
+                    type="submit"
+                    className="bg-cyan-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-150"
+                  >
+                    Submit
+                  </button>
+                  <div
+                    onClick={closeModal}
+                    className="btn ml-2 btn-warning border-none bg-red-400 hover:bg-red-500 text-white"
+                  >
+                    Close
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       )}
