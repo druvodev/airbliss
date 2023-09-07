@@ -3,8 +3,10 @@ import {
   MdKeyboardArrowDown,
   MdKeyboardArrowUp,
   MdRMobiledata,
+  MdVerifiedUser,
 } from "react-icons/md";
-import { FaExclamationCircle } from "react-icons/fa";
+// import { FaExclamationCircle } from "react-icons/bi";
+import { HiOutlineExternalLink } from "react-icons/hi";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useForm } from "react-hook-form";
@@ -13,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
 import { paymentLater, paymentProcessing } from "../../../utils/handlePayment";
 import SeatModel from "../../../Components/SeatModel/SeatModel";
+import useAuth from "../../../hooks/useAuth";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -26,6 +29,10 @@ const TravelerDetailsForm = () => {
   const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo); // get flight information from redux
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); //for Check box checked State
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isInsuranceModal, setIsInsuranceModal] = useState(false);
+  const [hasInsuranceModalShown, setHasInsuranceModalShown] = useState(false);
+  const [isNoInsuranceSelected, setIsNoInsuranceSelected] = useState(false);
+  const { user } = useAuth();
 
   const {
     register,
@@ -91,6 +98,19 @@ const TravelerDetailsForm = () => {
     setIsCheckboxChecked(event.target.checked);
   };
 
+  // Insurance Modal Showing After 2sec
+  if (isContinue && !isModalOpen && !hasInsuranceModalShown) {
+    setTimeout(() => {
+      setIsInsuranceModal(true);
+      !setHasInsuranceModalShown(true);
+    }, 2000);
+  }
+
+  const handleNoInsuranceButtonClick = () => {
+    setIsInsuranceModal(false);
+    setIsNoInsuranceSelected(true);
+  };
+
   return (
     <section>
       {isContinue ? (
@@ -135,6 +155,57 @@ const TravelerDetailsForm = () => {
                   <p className="mb-3">
                     {userInfo.frequent_flyer ? userInfo.frequent_flyer : "N/A"}
                   </p>
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 mx-5 md:mx-10">
+              <div className="border-2 border-accent py-5 px-2 rounded-xl relative">
+                <p className="absolute -top-4 left-10 px-2 font-semibold bg-white text-accent">
+                  Select Travel Insurance Option
+                </p>
+                <div className="form-control">
+                  <label className="flex gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="radio-10"
+                      className="radio radio-accent"
+                      checked
+                    />
+                    <div className="label-text">
+                      <p className="font-semibold">
+                        Yes, insure my trip for only 120 Taka.
+                      </p>
+                      <small className="flex gap-1">
+                        I have read, understand and agree to the terms and
+                        conditions of the
+                        <span className="text-accent font-semibold flex items-center gap-[1px]">
+                          Policy of Insurance <HiOutlineExternalLink />
+                        </span>
+                        and
+                        <span className="text-accent font-semibold flex items-center gap-[1px]">
+                          Important Disclosures <HiOutlineExternalLink />
+                        </span>
+                      </small>
+                    </div>
+                  </label>
+                </div>
+                <div className="form-control">
+                  <label className="flex gap-2 mt-4 cursor-pointer">
+                    <input
+                      type="radio"
+                      name="radio-10"
+                      className="radio radio-accent"
+                      checked={isNoInsuranceSelected}
+                    />
+                    <div className="label-text">
+                      <p className="font-semibold">
+                        No, I will travel without this insurance for my 2010
+                        Taka trip. I understand that by declining coverage I may
+                        be responsible for substantial cancellation fees and
+                        delay expenses.
+                      </p>
+                    </div>
+                  </label>
                 </div>
               </div>
             </div>
@@ -217,11 +288,11 @@ const TravelerDetailsForm = () => {
                 <h2 className="font-semibold text-2xl">
                   Personal Details (Adult)
                 </h2>
-                <div className="flex items-center text-gray-400 gap-2 text-sm mt-2">
+                <div className=" text-gray-400  text-sm mt-2">
                   <span>
-                    <FaExclamationCircle />
-                  </span>
-                  <span>
+                    <span className="px-2 rounded-full bg-gray-100 text-red-400">
+                      !
+                    </span>{" "}
                     as mentioned on your passport or government approved IDs
                   </span>
                 </div>
@@ -268,7 +339,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("first_name", { required: true })}
                         placeholder="First Name"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.first_name &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -281,7 +355,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("last_name", { required: true })}
                         placeholder="Last Name"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.last_name &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -294,7 +371,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("date_of_birth", { required: true })}
                         placeholder="Select Date"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.date_of_birth &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -307,7 +387,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("passport_number", { required: true })}
                         placeholder="Passport Number"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.passport_number &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -334,7 +417,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("city", { required: true })}
                         placeholder="City"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.city &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -347,7 +433,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("country", { required: true })}
                         placeholder="Country"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.country &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       >
                         {countries.map((country, index) => (
                           <option key={index} value={country.name.common}>
@@ -359,11 +448,13 @@ const TravelerDetailsForm = () => {
                   </div>
                   <div className="mt-10">
                     <h2 className="font-semibold text-2xl">Contact Details</h2>
-                    <div className="flex items-center text-gray-400 gap-2 text-sm mt-2">
+                    <div className=" text-gray-400  text-sm mt-2">
                       <span>
-                        <FaExclamationCircle />
+                        <span className="px-2 rounded-full bg-gray-100 text-red-400">
+                          !
+                        </span>{" "}
+                        receive booking confirmation & updates
                       </span>
-                      <span>receive booking confirmation & updates</span>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -377,6 +468,7 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("traveler_email", { required: true })}
                         placeholder="Email"
+                        defaultValue={user?.email}
                         className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
@@ -401,6 +493,11 @@ const TravelerDetailsForm = () => {
                           required: true,
                         }}
                       />
+                      {errors.phone_number && (
+                        <span className="text-red-500">
+                          Phone number is required
+                        </span>
+                      )}
                     </div>
                     <div className="flex flex-col">
                       <label className="font-semibold">
@@ -456,6 +553,74 @@ const TravelerDetailsForm = () => {
                 Choose Your Seating Preference
               </h3>
               <SeatModel setIsModalOpen={setIsModalOpen} />
+            </div>
+          </div>
+        </div>
+      )}
+      {isContinue && isInsuranceModal && (
+        <div className="fixed top-0 left-0 z-50 w-full min-h-screen bg-black/20 overflow-y-auto flex items-center justify-center">
+          <div className="bg-white rounded-xl border p-5 w-fit relative">
+            <h2 className="text-3xl font-semibold mb-4 text-center">
+              Travel Insurance Preference
+            </h2>
+            <div className="">
+              <p className="mb-4">
+                Protect your trip with our travel insurance for only
+                <span className="font-semibold"> 120 Taka</span>. Here's what it
+                covers:
+              </p>
+              <ul className="font-semibold">
+                <li className="flex gap-1 items-center">
+                  <MdVerifiedUser /> Trip cancellation coverage
+                </li>
+                <li className="flex gap-1 items-center">
+                  <MdVerifiedUser /> Delayed flight coverage
+                </li>
+                <li className="flex gap-1 items-center">
+                  <MdVerifiedUser /> Lost luggage coverage
+                </li>
+                <li className="flex gap-1 items-center">
+                  <MdVerifiedUser /> Medical coverage during your trip
+                </li>
+              </ul>
+              <p className="mt-4">
+                By accepting the insurance, you agree to the terms and
+                conditions of the{" "}
+                <a
+                  href="#"
+                  className="text-accent font-semibold hover:underline"
+                >
+                  Policy of Insurance
+                </a>{" "}
+                and
+                <a
+                  href="#"
+                  className="text-accent font-semibold hover:underline"
+                >
+                  {" "}
+                  Important Disclosures
+                </a>
+                .
+              </p>
+              <p className="mt-4">
+                If you decline coverage, please be aware that you may be
+                responsible for substantial cancellation fees and delay
+                expenses.
+              </p>
+            </div>
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={() => setIsInsuranceModal(false)}
+                className="bg-cyan-600 text-white font-semibold py-2 px-6 rounded-full hover:bg-cyan-700"
+              >
+                Yes, insure my trip
+              </button>
+              <button
+                onClick={handleNoInsuranceButtonClick}
+                className="text-cyan-600 font-semibold py-2 px-6 ml-4 border border-cyan-600 rounded-full hover:bg-cyan-100 hover:border-cyan-700"
+              >
+                No, I will travel without insurance
+              </button>
             </div>
           </div>
         </div>
