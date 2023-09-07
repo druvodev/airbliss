@@ -1,7 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../../assets/icon/airblissBlack.png";
+import { useLocation, useParams } from "react-router";
+import useAuth from "../../../hooks/useAuth";
+import { formatDate } from "../../../utils/formatDate";
+import ETicket from "../../../Components/Ticket/ETicket";
 
 const TicketHistory = () => {
+  const { bookingReference } = useParams();
+  const [booking, setBooking] = useState("");
+  const { user } = useAuth();
+
+  console.log(booking);
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/userBooking/${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const singleData = data?.find(
+          (singleFlight) => singleFlight?.bookingReference === bookingReference
+        );
+
+        setBooking(singleData);
+      });
+  }, []);
+
+  const {
+    title,
+    first_name,
+    last_name,
+    traveler_email,
+    phone_number,
+    seatNo,
+    passport_number,
+  } = booking?.user || {};
+
+  const {
+    flightNumber,
+    airline,
+    aircraft,
+    departureAirport,
+    departureCity,
+    arrivalAirport,
+    arrivalCity,
+    departureDate,
+    departureTime,
+    arrivalDate,
+    arrivalTime,
+    fareSummary,
+  } = booking?.flight || {};
+
   return (
     <section className="p-4">
       {/* Top Logo  */}
@@ -23,7 +70,7 @@ const TicketHistory = () => {
 
           <div className="p-3 bg-cyan-500 rounded-sm">
             <h4 className="text-white font-semibold">
-              Booking Refference: ZS680ODPSE4
+              Booking Refference: {bookingReference}
             </h4>
           </div>
         </div>
@@ -38,11 +85,13 @@ const TicketHistory = () => {
             <p className="mb-3 font-semibold">Passport No: </p>
           </div>
           <div className="ml-9 md:ml-0">
-            <p className="mb-3">Jishan</p>
-            <p className="mb-3">imranislamjishan200@gmail.com</p>
-            <p className="mb-3">08</p>
-            <p className="mb-3">01575390042</p>
-            <p className="mb-3">IOFJWEOIFJMV086DWEF</p>
+            <p className="mb-3">
+              {title} {first_name} {last_name}{" "}
+            </p>
+            <p className="mb-3">{traveler_email}</p>
+            <p className="mb-3">{seatNo}</p>
+            <p className="mb-3">{phone_number}</p>
+            <p className="mb-3">{passport_number}</p>
           </div>
         </div>
 
@@ -65,9 +114,9 @@ const TicketHistory = () => {
               </div>
               <div className="ml-9 md:ml-0 ">
                 <p className="mb-4 text-sm text-white">airline</p>
-                <p className="text-sm">Biman Bangladesh</p>
-                <p className="text-sm">boing707</p>
-                <p className=" text-sm">AJ474 || BG</p>
+                <p className="text-sm">{airline}</p>
+                <p className="text-sm">{aircraft}</p>
+                <p className=" text-sm">{flightNumber}</p>
               </div>
             </div>
 
@@ -84,10 +133,10 @@ const TicketHistory = () => {
               </div>
               <div className="ml-9 md:ml-0 ">
                 <p className="mb-4 text-sm text-white">airline</p>
-                <p className="text-sm">Biman Bangladesh</p>
-                <p className="text-sm">boing707</p>
-                <p className=" text-sm">AJ474 || BG</p>
-                <p className=" text-sm">24 Jul 2023</p>
+                <p className="text-sm">{departureTime}</p>
+                <p className="text-sm">{departureCity}</p>
+                <p className=" text-sm">{departureAirport}</p>
+                <p className=" text-sm">{formatDate(departureDate)}</p>
               </div>
             </div>
 
@@ -104,10 +153,10 @@ const TicketHistory = () => {
               </div>
               <div className="ml-9 md:ml-0 ">
                 <p className="mb-4 text-sm text-white">airline</p>
-                <p className="text-sm">Biman Bangladesh</p>
-                <p className="text-sm">boing707</p>
-                <p className=" text-sm">AJ474 || BG</p>
-                <p className=" text-sm">24 Jul 2023</p>
+                <p className="text-sm">{arrivalTime}</p>
+                <p className="text-sm">{arrivalCity}</p>
+                <p className=" text-sm">{arrivalAirport}</p>
+                <p className=" text-sm">{formatDate(arrivalDate)}</p>
               </div>
             </div>
 
@@ -124,24 +173,17 @@ const TicketHistory = () => {
               </div>
               <div className="ml-9 md:ml-0 ">
                 <p className="mb-4 text-sm text-white">airline</p>
-                <p className="text-sm">2500 BDT</p>
-                <p className="text-sm">55 BDT</p>
-                <p className=" text-sm">Paid</p>
-                <p className=" text-sm">CODJSFE80</p>
+                <p className="text-sm">{fareSummary?.total} BDT</p>
+                <p className="text-sm">{fareSummary?.taxesAndFees} BDT</p>
+                <p className=" text-sm">{booking?.paymentStatus}</p>
+                <p className=" text-sm">{booking?.transitionId}</p>
               </div>
             </div>
           </div>
 
           {/* Ticket Download */}
           <div className="mt-6 mb-6">
-            <div className="flex justify-center">
-              <img src={logo} alt="" />
-            </div>
-            <div className="text-center">
-              <button className="btn bg-cyan-500 mt-4 text-white">
-                Download Ticket
-              </button>
-            </div>
+            <ETicket booking={booking} />
           </div>
         </div>
       </section>

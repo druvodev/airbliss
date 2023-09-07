@@ -3,6 +3,7 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaAngleRight } from "react-icons/fa";
+import { formatDate } from "../../../utils/formatDate";
 
 const TrackingNavigation = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -21,39 +22,13 @@ const TrackingNavigation = () => {
 
   useEffect(() => {
     if (flight && flight.flights) {
-      const singleData = flight.flights.find(
-        (singleFlight) => singleFlight._id === id
+      const singleData = flight?.flights?.find(
+        (singleFlight) => singleFlight?._id === id
       );
       setData(singleData);
       setIsLoading(false);
     }
   }, [flight, id]);
-
-  function formatDate(dateString) {
-    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const monthsOfYear = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-
-    const date = new Date(dateString);
-    const dayOfWeek = daysOfWeek[date.getDay()];
-    const dayOfMonth = date.getDate();
-    const month = monthsOfYear[date.getMonth()];
-    const year = date.getFullYear();
-
-    return `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
-  }
 
   function calculateArrivalDate(departureDate, departureTime, arrivalTime) {
     const [depHour, depMinute] = departureTime.split(":").map(Number);
