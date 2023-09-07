@@ -7,7 +7,6 @@ import TotalRefundAmount from "./TotalRefundAmount";
 import TotalAmount from "./TotalAmount";
 import BookingChart from "./BookingChart";
 import BookingCalendar from "./BookingCalendar";
-import BookingRefundChart from "./BookingRefundChart";
 
 const UserHome = () => {
   return (
