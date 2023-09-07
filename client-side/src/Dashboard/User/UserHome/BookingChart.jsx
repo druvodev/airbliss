@@ -74,8 +74,8 @@ const BookingChart = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="pv" fill="#37517e" />
-                    <Bar dataKey="uv" fill="#fd7279" />
+                    <Bar dataKey="pv" fill="#70cfc9" />
+                    <Bar dataKey="uv" fill="#5daad6" />
                 </BarChart>
             </ResponsiveContainer>
         </div>
