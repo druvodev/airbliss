@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
 import { paymentLater, paymentProcessing } from "../../../utils/handlePayment";
 import SeatModel from "../../../Components/SeatModel/SeatModel";
+import useAuth from "../../../hooks/useAuth";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -31,6 +32,7 @@ const TravelerDetailsForm = () => {
   const [isInsuranceModal, setIsInsuranceModal] = useState(false);
   const [hasInsuranceModalShown, setHasInsuranceModalShown] = useState(false);
   const [isNoInsuranceSelected, setIsNoInsuranceSelected] = useState(false);
+  const { user } = useAuth();
 
   const {
     register,
@@ -292,9 +294,11 @@ const TravelerDetailsForm = () => {
                 <h2 className="font-semibold text-2xl">
                   Personal Details (Adult)
                 </h2>
-                <div className="flex items-center text-gray-400 gap-2 text-sm mt-2">
-                  <span>{/* <FaExclamationCircle /> */}</span>
+                <div className=" text-gray-400  text-sm mt-2">
                   <span>
+                    <span className="px-2 rounded-full bg-gray-100 text-red-400">
+                      !
+                    </span>{" "}
                     as mentioned on your passport or government approved IDs
                   </span>
                 </div>
@@ -341,7 +345,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("first_name", { required: true })}
                         placeholder="First Name"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.first_name &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -354,7 +361,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("last_name", { required: true })}
                         placeholder="Last Name"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.last_name &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -367,7 +377,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("date_of_birth", { required: true })}
                         placeholder="Select Date"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.date_of_birth &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -380,7 +393,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("passport_number", { required: true })}
                         placeholder="Passport Number"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.passport_number &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -407,7 +423,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("city", { required: true })}
                         placeholder="City"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.city &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       />
                     </div>
                     <div className="flex flex-col">
@@ -420,7 +439,10 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("country", { required: true })}
                         placeholder="Country"
-                        className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
+                        className={`block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.country &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
                       >
                         {countries.map((country, index) => (
                           <option key={index} value={country.name.common}>
@@ -432,9 +454,13 @@ const TravelerDetailsForm = () => {
                   </div>
                   <div className="mt-10">
                     <h2 className="font-semibold text-2xl">Contact Details</h2>
-                    <div className="flex items-center text-gray-400 gap-2 text-sm mt-2">
-                      <span>{/* <FaExclamationCircle /> */}</span>
-                      <span>receive booking confirmation & updates</span>
+                    <div className=" text-gray-400  text-sm mt-2">
+                      <span>
+                        <span className="px-2 rounded-full bg-gray-100 text-red-400">
+                          !
+                        </span>{" "}
+                        receive booking confirmation & updates
+                      </span>
                     </div>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -448,6 +474,7 @@ const TravelerDetailsForm = () => {
                         id=""
                         {...register("traveler_email", { required: true })}
                         placeholder="Email"
+                        defaultValue={user?.email}
                         className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
@@ -472,6 +499,11 @@ const TravelerDetailsForm = () => {
                           required: true,
                         }}
                       />
+                      {errors.phone_number && (
+                        <span className="text-red-500">
+                          Phone number is required
+                        </span>
+                      )}
                     </div>
                     <div className="flex flex-col">
                       <label className="font-semibold">

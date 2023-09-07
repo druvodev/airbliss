@@ -4,8 +4,8 @@ const initialState = {
   isActive: "flight",
   flightType: "oneWay",
   cityCount: 1,
-  departureDate: new Date(),
-  returnDate: new Date(),
+  departureDate: new Date().getTime(), // Initialize as timestamp
+  returnDate: new Date().getTime(), // Initialize as timestamp
   calendarModal: "",
   locationModal: "",
   fromCityInfo: {
@@ -34,10 +34,18 @@ export const searchFilterSlice = createSlice({
       state.cityCount = action.payload;
     },
     setDepartureDate: (state, action) => {
-      state.departureDate = action.payload;
+      // Ensure action.payload is a valid date before converting to timestamp
+      const date = new Date(action.payload);
+      if (!isNaN(date)) {
+        state.departureDate = date.getTime(); // Store as timestamp
+      }
     },
     setReturnDate: (state, action) => {
-      state.returnDate = action.payload;
+      // Ensure action.payload is a valid date before converting to timestamp
+      const date = new Date(action.payload);
+      if (!isNaN(date)) {
+        state.returnDate = date.getTime(); // Store as timestamp
+      }
     },
     setCalendarModal: (state, action) => {
       state.calendarModal = action.payload;

@@ -16,6 +16,7 @@ import Account from "../Dashboard/Account/Account";
 import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
 import UserHome from "../Dashboard/User/UserHome/UserHome";
 import PrivateRoute from "./PrivateRoute";
+import TicketHistory from "../Dashboard/User/TicketHistory/TicketHistory";
 import ManageBooking from "../Dashboard/User/ManageBooking/ManageBooking";
 import InsurancePolicy from "../pages/InsurancePolicy/InsurancePolicy";
 
@@ -81,6 +82,11 @@ export const router = createBrowserRouter([
       {
         path: "booking",
         element: <ManageBooking />,
+      },
+
+      {
+        path: "ticketHistory/:bookingReference",
+        element: <TicketHistory />,
       },
 
       {

@@ -541,7 +541,7 @@ async function run() {
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
         res.redirect(
-          `https://airbliss-flight-booking.web.app/booking-confirmed/${req.params.bookingId}`
+          `https://localhost:5000/booking-confirmed/${req.params.bookingId}`
         );
       });
     });
