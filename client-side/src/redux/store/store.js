@@ -4,7 +4,7 @@ import globalReducer from "../features/globalSlice";
 import searchFilterReducer from "../features/searchFilterSlice";
 import bookingInfoReducer from "../features/bookingInfoSlice";
 import usersReducer from "../features/usersSlice";
-
+import ticketHistorySlice from "../features/ticketHistorySlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,5 +13,6 @@ export const store = configureStore({
     searchFilter: searchFilterReducer,
     userBookingInfo: bookingInfoReducer,
     userInfo: usersReducer,
+    booking: ticketHistorySlice,
   },
 });

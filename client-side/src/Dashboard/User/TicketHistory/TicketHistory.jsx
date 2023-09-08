@@ -5,14 +5,18 @@ import useAuth from "../../../hooks/useAuth";
 import { formatDate } from "../../../utils/formatDate";
 import ETicket from "../../../Components/Ticket/ETicket";
 
+import { useSelector, useDispatch } from "react-redux";
+import { setBookingData } from "../../../redux/features/ticketHistorySlice";
+
 const TicketHistory = () => {
   const { bookingReference } = useParams();
-  const [booking, setBooking] = useState("");
   const { user } = useAuth();
 
-  console.log(booking);
+  const booking = useSelector((state) => state.booking.bookingData);
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    // Dispatch an action to set booking data in Redux store
     fetch(`http://localhost:5000/userBooking/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
@@ -20,9 +24,10 @@ const TicketHistory = () => {
           (singleFlight) => singleFlight?.bookingReference === bookingReference
         );
 
-        setBooking(singleData);
+        // Dispatch the action to set the booking data
+        dispatch(setBookingData(singleData));
       });
-  }, []);
+  }, [bookingReference, user, dispatch]);
 
   const {
     title,
