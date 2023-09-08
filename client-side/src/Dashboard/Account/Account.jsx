@@ -43,7 +43,7 @@ const Account = () => {
 
     console.log(usersData);
 
-    fetch(`https://server-side-tawny-sigma.vercel.app/users/${currentUser._id}`, {
+    fetch(`http://localhost:5000/users/${currentUser._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
