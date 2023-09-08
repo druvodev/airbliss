@@ -12,13 +12,13 @@ const RecommendedFlights = () => {
             <GiAirplaneDeparture /> --------
           </p> */}
           <SectionTitle sectionTitle={"Recommended Flights"} />
-          <p className="text-xs mb-10">
+          <p className=" text-sm sm:text-base mb-10">
             Most famous Flights of us. Our happy clients always happy with these
             Flights. <br /> The flights are always maintenance there roles and
             regulations
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-7">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
           <div className="border overflow-hidden rounded-md shadow-lg p-5">
             <div>
               <div className="flex gap-5 container ">
@@ -28,7 +28,7 @@ const RecommendedFlights = () => {
                 />
               </div>
             </div>
-            <div className="flex mt-2 justify-between items-center">
+            <div className="flex mt-2 gap-x-2 justify-between items-center">
               <div>
                 <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
                   <GiAirplaneDeparture />
@@ -63,7 +63,7 @@ const RecommendedFlights = () => {
                 />
               </div>
             </div>
-            <div className="flex mt-2 justify-between items-center">
+            <div className="flex mt-2 gap-x-2  justify-between items-center">
               <div>
                 <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
                   <GiAirplaneDeparture />
@@ -93,19 +93,19 @@ const RecommendedFlights = () => {
             <div>
               <div className="flex gap-5 container ">
                 <img
-                  className="object-cover rounded-md shadow-md h-52 mb-14 w-full "
+                  className="object-cover rounded-md shadow-md h-52 mb-5 w-full "
                   src="https://www.traveloffpath.com/wp-content/uploads/2021/11/New%E2%80%8B-Low-Cost-Airline-Set-To-Launch-In-Calgary-Next-Year.jpg"
                 />
               </div>
             </div>
-            <div className="flex mt-2 justify-between items-center">
+            <div className="flex mt-2 gap-x-2 justify-between items-center">
               <div>
                 <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
                   <GiAirplaneDeparture />
                 </p>
               </div>
               <div>
-                <h3 className="card-title mr-16">Bengaluru to Paris</h3>
+                <h3 className="card-title lg:mr-16">Bengaluru to Paris</h3>
                 <p className="text-semibold text-xs font-semibold">
                   ONE WAY FLIGHT
                 </p>

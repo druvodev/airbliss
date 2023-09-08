@@ -2,7 +2,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { Link } from "react-router-dom";
 
 const DiscountedHotelCard = ({ hotel }) => {
-  const { name, details, star, distance, cost, discount, img } = hotel;
+  const { name, details, star, distance, cost, discount, img, id } = hotel;
   return (
     <div className="shadow-2xl p-4 rounded-lg">
       <img className="object-cover h-56 rounded-md" src={img} alt="" />

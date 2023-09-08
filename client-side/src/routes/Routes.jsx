@@ -18,7 +18,7 @@ import UserHome from "../Dashboard/User/UserHome/UserHome";
 import PrivateRoute from "./PrivateRoute";
 import TicketHistory from "../Dashboard/User/TicketHistory/TicketHistory";
 import ManageBooking from "../Dashboard/User/ManageBooking/ManageBooking";
-import InsurancePolicy from "../pages/InsurancePolicy/InsurancePolicy";
+import HotDealDetails from "../pages/Home/HotDeals/HotDealDetails";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -60,9 +60,9 @@ export const router = createBrowserRouter([
         element: <ETicket />,
       },
       {
-        path: "/insurance-policy",
-        element: <InsurancePolicy />,
-      },
+        path: "hotDeals/:id",
+        element: <HotDealDetails></HotDealDetails>  
+      }
     ],
   },
   {
