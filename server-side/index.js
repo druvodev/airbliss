@@ -488,10 +488,10 @@ async function run() {
         total_amount: parseFloat(flight.fareSummary.total),
         currency: "BDT",
         tran_id: transitionId,
-        success_url: `http://localhost:5000/booking-confirmed/${bookingInfo.bookingReference}`,
-        fail_url: "http://localhost:5000/booking-failed",
-        cancel_url: "http://localhost:5000/booking-cancel",
-        ipn_url: "http://localhost:5000/ipn",
+        success_url: `https://server-side-tawny-sigma.vercel.app/booking-confirmed/${bookingInfo.bookingReference}`,
+        fail_url: "https://server-side-tawny-sigma.vercel.app/booking-failed",
+        cancel_url: "https://server-side-tawny-sigma.vercel.app/booking-cancel",
+        ipn_url: "https://server-side-tawny-sigma.vercel.app/ipn",
         shipping_method: "Air Flights",
         product_name: "Airline Ticket",
         product_category: "Flights Tickets",
@@ -758,7 +758,7 @@ async function run() {
       const existingUser = await usersCollection.findOne(query);
       console.log(existingUser, "existing user");
       if (existingUser) {
-        return res.send({ message: "User already exists" });
+        return;  //res.send({ message: "User already exists" });
       }
       const result = await usersCollection.insertOne(user);
       res.send(result);
