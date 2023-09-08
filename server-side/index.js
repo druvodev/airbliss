@@ -541,7 +541,7 @@ async function run() {
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
         res.redirect(
-          `https://localhost:5000/booking-confirmed/${req.params.bookingId}`
+          `http://localhost:5173/booking-confirmed/${req.params.bookingId}`
         );
       });
     });

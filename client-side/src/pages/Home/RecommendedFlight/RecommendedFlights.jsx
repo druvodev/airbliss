@@ -23,8 +23,8 @@ const RecommendedFlights = () => {
             <div>
               <div className="flex gap-5 container ">
                 <img
-                  className="object-cover rounded-md shadow-md h-52 mb-5 w-full"
-                  src="https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg"
+                  className="object-cover rounded-md shadow-md h-52 mb-14 w-full"
+                  src="https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                 />
               </div>
             </div>
@@ -35,7 +35,7 @@ const RecommendedFlights = () => {
                 </p>
               </div>
               <div>
-                <h3 className="card-title lg:mr-16">Bengaluru to Paris</h3>
+                <h3 className="card-title mr-16">Dhaka to Barishal</h3>
                 <p className="text-semibold text-xs font-semibold">
                   ONE WAY FLIGHTS
                 </p>
@@ -58,8 +58,8 @@ const RecommendedFlights = () => {
             <div>
               <div className="flex gap-5 container ">
                 <img
-                  className="object-cover rounded-md shadow-md h-52 mb-5 w-full"
-                  src="https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+                  className="object-cover rounded-md shadow-md h-52 mb-14 w-full"
+                  src="https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg"
                 />
               </div>
             </div>
@@ -70,7 +70,7 @@ const RecommendedFlights = () => {
                 </p>
               </div>
               <div>
-                <h3 className="card-title lg:mr-16">Bengaluru to Paris</h3>
+                <h3 className="card-title mr-16">Dhaka to Cox's Bazar</h3>
                 <p className="text-semibold text-xs font-semibold">
                   ONE WAY FLIGHT
                 </p>

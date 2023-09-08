@@ -1,35 +1,31 @@
 [
-    {
-        "id": 1,
-        "name": "Wonders Hostel Boat Quayland",
-        "distance": "5 min away from  Mumbai Airport",
-        "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
-        "cost": 685,
-        "discount": 35,
-        "img": "https://c.fareportal.com/gcms/portals/2/images/destinations/MNL-rx.jpg",
-        "star": 5
-    },
- 
-    {
-        "id": 2,
-        "name": "Wonders Hostel Boat Quayland",
-        "distance": "5 min away from  Mumbai Airport",
-        "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
-        "cost": 893,
-        "discount": 20,
-        "img": "https://c.fareportal.com/gcms/portals/2/images/destinations/MLE-rx.jpg",
-        "star": 5
-    },
- 
-    {
-        "id": 3,
-        "name": "Wonders Hostel Boat Quayland",
-        "distance": "5 min away from  Mumbai Airport",
-        "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
-        "cost": 904,
-        "discount": 29,
-        "img": "https://c.fareportal.com/gcms/portals/2/images/destinations/DXB-rx.jpg",
-        "star": 5
-    }
- 
+  {
+    "name": "Royal Tulip Sea Pearl Beach Resort & Spa",
+    "distance": "5 min away from  the Beach",
+    "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
+    "cost": 685,
+    "discount": 35,
+    "img": "https://www.seapearlcoxsbazar.com/images/rt001.jpg",
+    "star": 5
+  },
+
+  {
+    "name": "Wonders Hostel Boat Cox's Bazar",
+    "distance": "5 min away from  Mumbai Airport",
+    "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
+    "cost": 893,
+    "discount": 20,
+    "img": "https://photos.book5star.com/photos/882/preview/9b203928_z.jpg",
+    "star": 7
+  },
+
+  {
+    "name": "Hotel Sea view Crown of Cox's Bazar",
+    "distance": "5 min away from  Mumbai Airport",
+    "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
+    "cost": 904,
+    "discount": 29,
+    "img": "https://photos.book5star.com/photos/882/preview/8c0bc9a0_z.jpg",
+    "star": 5
+  }
 ]
