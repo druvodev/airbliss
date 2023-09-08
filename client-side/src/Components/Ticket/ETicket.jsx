@@ -7,11 +7,12 @@ import airbliss from "../../assets/banner/airblibanner.png";
 import emailjs from "@emailjs/browser";
 import { generate } from "shortid";
 
-const ETicket = () => {
+const ETicket = ({ booking }) => {
   const [myBooking, setBooking] = useState({});
-  console.log(myBooking);
+
   const refID = useParams();
-  console.log(myBooking);
+
+  console.log(booking);
 
   useEffect(() => {
     useAxios
@@ -99,6 +100,18 @@ const ETicket = () => {
     }
   };
 
+  console.log(booking);
+
+  const { title, first_name, last_name, seatNo } = booking?.user || {};
+
+  const {
+    flightNumber,
+    departureCity,
+    arrivalCity,
+    departureDate,
+    departureTime,
+  } = booking?.flight || {};
+
   // GeneratePDF
   // const generatePDF = () => {
   //   const content = document.getElementById("downloadTicket");
@@ -113,23 +126,17 @@ const ETicket = () => {
   //   }
   // };
 
-  // name joining.........
-  const fullName =
-    myBooking.user?.title +
-    " " +
-    myBooking.user?.first_name +
-    " " +
-    myBooking.user?.last_name;
-  console.log(myBooking?.flight?.departureDate);
-
   // seat and group identify................
   const group = myBooking?.user?.seatNo?.charAt(0);
   const seat = myBooking?.user?.seatNo?.substring(1);
-  console.log(group, seat);
 
   return (
     <div>
-      <img src={airbliss} className="w-full h-52 object-cover" alt="" />
+      {booking ? (
+        ""
+      ) : (
+        <img src={airbliss} className="w-full h-52 object-cover" alt="" />
+      )}
       <h2 className="text-2xl font-bold mt-2 text-center md:text-3xl">
         E-Ticket
       </h2>
@@ -145,21 +152,25 @@ const ETicket = () => {
             {/* Booking reference date area */}
             <div className="md:flex md:w-8 items-center justify-center">
               <span className="-rotate-90  font-semibold px-2 whitespace-nowrap text-lg uppercase">
-                {myBooking?.bookingReference}
+                {myBooking?.bookingReference || booking?.bookingReference}
               </span>
             </div>
             {/* passenger details area */}
             <div className="text-cyan-900 p-2 md:border-r-4 pr-10 border-cyan-600 border-dotted">
               <div className="pb-2 border-b-2 border-cyan-600 border-dotted">
                 <p>Passenger</p>
-                <p className="font-semibold">{fullName}</p>
+                <p className="font-semibold">
+                  {myBooking.user?.title
+                    ? `${myBooking.user?.title} ${myBooking.user?.first_name} ${myBooking.user?.last_name}`
+                    : `${title} ${first_name} ${last_name}`}
+                </p>
               </div>
               <hr className="text-cyan-500 font-bold" />
               <div className="flex gap-5 pb-2 border-b-2 border-cyan-600 border-dotted ">
                 <div>
                   <p>Boarding Time</p>
                   <p className="font-semibold">
-                    {myBooking?.flight?.departureTime}
+                    {myBooking?.flight?.departureTime || departureTime}
                   </p>
                 </div>
                 <div>
@@ -169,7 +180,7 @@ const ETicket = () => {
                 <div>
                   <p>Flight</p>
                   <p className="font-semibold">
-                    {myBooking.flight?.flightNumber}
+                    {myBooking.flight?.flightNumber || flightNumber}
                   </p>
                 </div>
               </div>
@@ -177,30 +188,32 @@ const ETicket = () => {
                 <div>
                   <p>Date</p>
                   <p className="font-semibold">
-                    {myBooking?.flight?.departureDate}
+                    {myBooking?.flight?.departureDate || departureDate}
                   </p>
                 </div>
                 <div>
                   <p>From</p>
                   <p className="font-semibold">
-                    {myBooking?.flight?.departureCity} City
+                    {myBooking?.flight?.departureCity || departureCity} City
                   </p>
                 </div>
               </div>
               <div className="pb-2 border-b-2 border-cyan-600 border-dotted">
                 <p>To</p>
                 <p className="font-semibold">
-                  {myBooking?.flight?.arrivalCity} City
+                  {myBooking?.flight?.arrivalCity || arrivalCity} City
                 </p>
               </div>
               <div className="flex gap-[92px]">
                 <div>
                   <p>Seat</p>
-                  <p className="font-semibold">{seat}</p>
+                  <p className="font-semibold">
+                    {seat || seatNo?.substring(1)}
+                  </p>
                 </div>
                 <div>
                   <p>Group</p>
-                  <p className="font-semibold">{group}</p>
+                  <p className="font-semibold">{group || seatNo?.charAt(0)}</p>
                 </div>
               </div>
             </div>
@@ -221,14 +234,19 @@ const ETicket = () => {
                 <div className=" border-r-2 pr-5 border-cyan-600  border-dotted">
                   <div className=" pb-2 border-b-2 border-white border-dotted">
                     <p>Passenger</p>
-                    <p className="font-semibold">{fullName}</p>
+                    <p className="font-semibold">
+                      {" "}
+                      {myBooking.user?.title
+                        ? `${myBooking.user?.title} ${myBooking.user?.first_name} ${myBooking.user?.last_name}`
+                        : `${title} ${first_name} ${last_name}`}
+                    </p>
                   </div>
 
                   <div className="flex gap-5 pb-2 border-b-2 border-white border-dotted ">
                     <div>
                       <p>Boarding Time</p>
                       <p className="font-semibold">
-                        {myBooking?.flight?.departureTime}
+                        {myBooking?.flight?.departureTime || departureTime}
                       </p>
                     </div>
                     <div>
@@ -238,7 +256,7 @@ const ETicket = () => {
                     <div>
                       <p>Flight</p>
                       <p className="font-semibold">
-                        {myBooking.flight?.flightNumber}
+                        {myBooking.flight?.flightNumber || flightNumber}
                       </p>
                     </div>
                   </div>
@@ -247,13 +265,14 @@ const ETicket = () => {
                       <div>
                         <p>From</p>
                         <p className="font-semibold">
-                          {myBooking?.flight?.departureCity} City
+                          {myBooking?.flight?.departureCity || departureCity}{" "}
+                          City
                         </p>
                       </div>
                       <div>
                         <p>To</p>
                         <p className="font-semibold">
-                          {myBooking?.flight?.arrivalCity} City
+                          {myBooking?.flight?.arrivalCity || arrivalCity} City
                         </p>
                       </div>
                     </div>
@@ -262,7 +281,7 @@ const ETicket = () => {
                     <div>
                       <p>Date</p>
                       <p className="font-semibold">
-                        {myBooking?.flight?.departureDate}
+                        {myBooking?.flight?.departureDate || departureDate}
                       </p>
                     </div>
                   </div>
@@ -284,21 +303,26 @@ const ETicket = () => {
             {/* reference area */}
             <div className="md:flex md:w-[55px] items-center justify-center">
               <span className="-rotate-90  font-semibold whitespace-nowrap text-lg uppercase">
-                {myBooking?.bookingReference}
+                {myBooking?.bookingReference || booking?.bookingReference}
               </span>
             </div>
             {/* passenger details area */}
             <div className="text-white p-2 md:border-r-4 pr-10 border-white border-dotted">
               <div className=" pb-2 border-b-2 border-white border-dotted">
                 <p>Passenger</p>
-                <p className="font-semibold">{fullName}</p>
+                <p className="font-semibold">
+                  {" "}
+                  {myBooking.user?.title
+                    ? `${myBooking.user?.title} ${myBooking.user?.first_name} ${myBooking.user?.last_name}`
+                    : `${title} ${first_name} ${last_name}`}
+                </p>
               </div>
 
               <div className="flex gap-5 pb-2 border-b-2 border-white border-dotted ">
                 <div>
                   <p>Boarding Time</p>
                   <p className="font-semibold">
-                    {myBooking?.flight?.departureTime}
+                    {myBooking?.flight?.departureTime || departureTime}
                   </p>
                 </div>
                 <div>
@@ -308,7 +332,7 @@ const ETicket = () => {
                 <div>
                   <p>Flight</p>
                   <p className="font-semibold">
-                    {myBooking.flight?.flightNumber}
+                    {myBooking.flight?.flightNumber || flightNumber}
                   </p>
                 </div>
               </div>
@@ -316,30 +340,32 @@ const ETicket = () => {
                 <div>
                   <p>Date</p>
                   <p className="font-semibold">
-                    {myBooking?.flight?.departureDate}
+                    {myBooking?.flight?.departureDate || departureDate}
                   </p>
                 </div>
                 <div>
                   <p>From</p>
                   <p className="font-semibold">
-                    {myBooking?.flight?.departureCity} City
+                    {myBooking?.flight?.departureCity || departureCity} City
                   </p>
                 </div>
               </div>
               <div className="pb-2 border-b-2 border-white border-dotted">
                 <p>To</p>
                 <p className="font-semibold">
-                  {myBooking?.flight?.arrivalCity} City
+                  {myBooking?.flight?.arrivalCity || arrivalCity} City
                 </p>
               </div>
               <div className="flex gap-[92px]">
                 <div>
                   <p>Seat</p>
-                  <p className="font-semibold">{seat}</p>
+                  <p className="font-semibold">
+                    {seat || seatNo?.substring(1)}
+                  </p>
                 </div>
                 <div>
                   <p>Group</p>
-                  <p className="font-semibold">{group}</p>
+                  <p className="font-semibold">{group || seatNo?.charAt(0)}</p>
                 </div>
               </div>
             </div>

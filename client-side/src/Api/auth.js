@@ -6,6 +6,7 @@ export const saveUser = async (user) => {
         name: user?.displayName ? user.displayName : user.name,
         photo: user?.photoURL,
         role: 'user',
+        status: 'normal',
     };
 
     try {

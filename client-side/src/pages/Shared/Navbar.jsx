@@ -20,29 +20,29 @@ const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
-  const [users, setUsers] = useState([])
-  const [axiosSecure] = UseAxiosSecure()
+  const [users, setUsers] = useState([]);
+  const [axiosSecure] = UseAxiosSecure();
 
   useEffect(() => {
-    axiosSecure.get('/users')
-      .then(response => {
-        setUsers(response?.data)
+    axiosSecure
+      .get("/users")
+      .then((response) => {
+        setUsers(response?.data);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, [axiosSecure]);
 
-  const currentUser = users.find(userData => userData?.email === user?.email);
+  const currentUser = users.find((userData) => userData?.email === user?.email);
 
-  const isAdmin = currentUser?.role === 'admin'
+  const isAdmin = currentUser?.role === "admin";
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(setUserInfo(currentUser));
-    console.log("current user", currentUser);
-  }, [currentUser])
+  }, [currentUser]);
 
   const handleScroll = () => {
     const currentScrollPos = window.pageYOffset;
