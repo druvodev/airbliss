@@ -43,7 +43,7 @@ const Account = () => {
 
     console.log(usersData);
 
-    fetch(`http://localhost:5000/users/${currentUser._id}`, {
+    fetch(`https://server-side-tawny-sigma.vercel.app/users/${currentUser._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -87,9 +87,14 @@ const Account = () => {
           </div>
           <>
             {isEdit ? (
-              <Edit handleSubmit={handleSubmit} />
+              <Edit
+                handleSubmit={handleSubmit}
+                currentUser={currentUser}
+              />
             ) : (
-              <View currentUser={currentUser} />
+              <View
+                currentUser={currentUser}
+              />
             )}
           </>
         </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Edit = ({handleSubmit}) => {
+const Edit = ({ handleSubmit, currentUser }) => {
+    const { name, photo, role, email, about, dateOfBirth, gender, occupation, phone } = currentUser || {};
+    
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -15,6 +17,7 @@ const Edit = ({handleSubmit}) => {
                             id="name"
                             placeholder="Enter Your Name Here"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={name}
                         />
                     </div>
                     <div>
@@ -27,6 +30,7 @@ const Edit = ({handleSubmit}) => {
                             id="occupation"
                             placeholder="Enter Your Occupation Here"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={occupation}
                         />
                     </div>
                 </div>
@@ -41,6 +45,7 @@ const Edit = ({handleSubmit}) => {
                             id="dateOfBirth"
                             placeholder="Enter Your Name Here"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={dateOfBirth}
                         />
                     </div>
                     <div>
@@ -51,6 +56,7 @@ const Edit = ({handleSubmit}) => {
                             name="gender"
                             id="gender"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={gender}
                         >
                             <option value="">Select Gender</option>
                             <option value="male">Male</option>
@@ -71,6 +77,7 @@ const Edit = ({handleSubmit}) => {
                             placeholder="Enter Your Email Here"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
                             data-temp-mail-org="0"
+                            defaultValue={email}
                         />
                     </div>
                     <div className='mt-8'>
@@ -83,6 +90,7 @@ const Edit = ({handleSubmit}) => {
                             id="phone"
                             placeholder="Enter Your Phone Here"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={phone}
                         />
                     </div>
                     <div className='mt-8'>
@@ -96,6 +104,7 @@ const Edit = ({handleSubmit}) => {
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
                             cols="30"
                             rows="5"
+                            defaultValue={about}
                         ></textarea>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ const FlightStatus = () => {
 
 
     useEffect(() => {
-        fetch("http://localhost:5000/flights")
+        fetch("https://server-side-tawny-sigma.vercel.app/flights")
             .then(res => res.json())
             .then(data => setFlights(data))
     }, []);

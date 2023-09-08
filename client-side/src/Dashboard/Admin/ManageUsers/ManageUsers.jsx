@@ -60,7 +60,7 @@ const ManageUsers = () => {
     console.log(usersData);
 
     if (selectedUserId) {
-      fetch(`http://localhost:5000/users/${selectedUserId}`, {
+      fetch(`https://server-side-tawny-sigma.vercel.app/users/${selectedUserId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
