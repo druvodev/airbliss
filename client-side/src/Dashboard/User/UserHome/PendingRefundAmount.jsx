@@ -10,8 +10,8 @@ const PendingRefundAmount = () => {
                     <RiRefundFill className='text-white text-4xl font-bold' />
                 </div>
                 <div>
-                    <h1 className='lg:text-2xl font-light text-gray-600'>Pending Refund Amount</h1>
-                    <p className='text-[#96a3c4] lg:text-3xl text-xl font-semibold mt-4'>100$</p>
+                    <h1 className='lg:text-2xl font-light text-gray-900'>Pending Refund Amount</h1>
+                    <p className='text-gray-900 lg:text-3xl text-xl font-semibold mt-4'>100$</p>
                 </div>
             </div>
             <div>

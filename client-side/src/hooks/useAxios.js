@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const useAxios = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://server-side-tawny-sigma.vercel.app",
 
 });
 

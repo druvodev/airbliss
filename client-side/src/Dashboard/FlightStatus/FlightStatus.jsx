@@ -9,12 +9,13 @@ const FlightStatus = () => {
   const [page, setPage] = useState(1);
   const [edit, setEdit] = useState(false);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/flights")
-      .then((res) => res.json())
-      .then((data) => setFlights(data));
-  }, []);
 
+  useEffect(() => {
+    fetch("https://server-side-tawny-sigma.vercel.app/flights")
+      .then(res => res.json())
+      .then(data => setFlights(data))
+  }, []);
+  
   const selectedPageHandler = (selectedPage) => {
     if (
       selectedPage > 0 &&
@@ -117,9 +118,8 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${
-                      edit ? "block shadow-md rounded-md" : "hidden"
-                    }`}
+                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
+                      }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -173,9 +173,8 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${
-                      edit ? "block shadow-md rounded-md" : "hidden"
-                    }`}
+                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
+                      }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -229,9 +228,8 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${
-                      edit ? "block shadow-md rounded-md" : "hidden"
-                    }`}
+                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
+                      }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -285,9 +283,8 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${
-                      edit ? "block shadow-md rounded-md" : "hidden"
-                    }`}
+                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
+                      }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -341,9 +338,8 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${
-                      edit ? "block shadow-md rounded-md" : "hidden"
-                    }`}
+                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
+                      }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -397,9 +393,8 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${
-                      edit ? "block shadow-md rounded-md" : "hidden"
-                    }`}
+                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
+                      }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -453,9 +448,8 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${
-                      edit ? "block shadow-md rounded-md" : "hidden"
-                    }`}
+                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
+                      }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
