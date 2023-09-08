@@ -2,7 +2,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { Link } from "react-router-dom";
 
 const DiscountedHotelCard = ({ hotel }) => {
-  const { name, details, star, distance, cost, discount, img } = hotel;
+  const { name, details, star, distance, cost, discount, img, id } = hotel;
   return (
     <div className="shadow-2xl p-4 rounded-lg">
       <img src={img} alt="" />
@@ -15,7 +15,7 @@ const DiscountedHotelCard = ({ hotel }) => {
         <p>{star}</p>
         <div className="flex items-center gap-x-3">
           <p className="line-through font-semibold text-lg">${cost}</p>
-          <Link className="py-3 px-6 border border-cyan-300 rounded-lg font-medium bg-cyan-600 hover:bg-cyan-700 text-white duration-500">${(cost - (cost * discount / 100)).toFixed(0)} per night</Link>
+          <Link to={`/hotelDetails/${id}`} className="py-3 px-6 border border-cyan-300 rounded-lg font-medium bg-cyan-600 hover:bg-cyan-700 text-white duration-500">${(cost - (cost * discount / 100)).toFixed(0)} per night</Link>
         </div>
       </div>
     </div>
