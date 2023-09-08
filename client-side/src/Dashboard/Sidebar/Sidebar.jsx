@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
-import logo from "../../assets/icon/airblissBlack.png";
+import logo from "../../assets/icon/airblissWhite.png";
 import useAuth from "../../hooks/useAuth";
 import DashboardNav from "../DashboardNav/DashboardNav";
 import { FaHome } from "react-icons/fa";
@@ -45,7 +45,7 @@ const Sidebar = ({ isActive }) => {
             <div className="w-full  hidden md:flex py-2 justify-center items-center rounded-lg  mx-auto">
               <Link to="/">
                 <img
-                  className="hidden md:block w-[150px] h-[85px]"
+                  className="hidden md:block w-[150px] h-[60px]"
                   src={logo}
                   alt=""
                 />
