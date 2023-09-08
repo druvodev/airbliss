@@ -17,6 +17,7 @@ import FlightStatus from "../Dashboard/FlightStatus/FlightStatus";
 import UserHome from "../Dashboard/User/UserHome/UserHome";
 import PrivateRoute from "./PrivateRoute";
 import ManageBooking from "../Dashboard/User/ManageBooking/ManageBooking";
+import HotDealDetails from "../pages/Home/HotDeals/HotDealDetails";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
         path: "/booking-confirmed/:bookingId",
         element: <ETicket />,
       },
+      {
+        path: "hotDeals/:id",
+        element: <HotDealDetails></HotDealDetails>  
+      }
     ],
   },
   {

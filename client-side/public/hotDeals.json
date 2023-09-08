@@ -1,17 +1,26 @@
 [
   {
+    "id": 1,
     "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2T3Uo3KBgcL9GQPHqwYTbtSCg5FANxB4AacG359Tq-xTSM2OXc1cxM-WbWV23QS3U94g&usqp=CAU",
-    "offer": "9 % Discount for GP for GP User Purchasing any ticket for FIFA",
-    "destination": "Flight Discount for FIFA23"
+    "offer": "28 % Discount for GP for GP User Purchasing any ticket for FIFA",
+    "destination": "Flight Discount for FIFA23",
+    "discount": 28,
+    "airline": "Air India"
   },
   {
+    "id": 2,
     "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWobqGIlApBKdQtexd5dCfWRn9fSBhlmWfRDoVBPmiPPBrt-ndyPO3ESVeEiXhPqNMC_A&usqp=CAU",
-    "offer": "9 % Discount for GP for GP User Purchasing any ticket to Mumbai today",
-    "destination": "Flight Discount for Paypal"
+    "offer": "35 % Discount for GP for GP User Purchasing any ticket to Mumbai today",
+    "destination": "Flight Discount for Paypal",
+    "discount": 35,
+    "airline": "Bangladesh Airlines"
   },
   {
+    "id": 3,
     "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpFcj-zciWwXXAyUKoF90aEEz0ymphdLmVG6OEdqBDGrCVYlqPf4rRnKWjFWv44TBP9nk&usqp=CAU",
-    "offer": "9 % Discount for GP for GP User Purchasing any ticket to Mumbai today",
-    "destination": "Flight Discount for Cricket WorldCup"
+    "offer": "16 % Discount for GP for GP User Purchasing any ticket to Mumbai today",
+    "destination": "Flight Discount for Cricket WorldCup",
+    "discount": 16,
+    "airline": "Quatar Airlines"
   }
 ]
