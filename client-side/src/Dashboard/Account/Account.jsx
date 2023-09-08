@@ -39,11 +39,17 @@ const Account = () => {
       email: event.target.email.value,
       phone: event.target.phone.value,
       about: event.target.about.value,
+      nation: event.target.nation.value,
+      relationship: event.target.relationship.value,
+      from: event.target.from.value,
+      live: event.target.live.value,
+      nickname: event.target.nickname.value,
+      bio: event.target.bio.value,
     };
 
     console.log(usersData);
 
-    fetch(`https://server-side-tawny-sigma.vercel.app/users/${currentUser._id}`, {
+    fetch(`http://localhost:5000/users/${currentUser._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
