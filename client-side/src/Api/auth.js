@@ -10,7 +10,7 @@ export const saveUser = async (user) => {
     };
 
     try {
-        const response = await fetch("http://localhost:5000/users", {
+        const response = await fetch("https://server-side-tawny-sigma.vercel.app/users", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

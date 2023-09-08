@@ -16,7 +16,7 @@ const TicketHistory = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/userBooking/${user?.email}`)
+    fetch(`https://server-side-tawny-sigma.vercel.app/userBooking/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         const singleData = data?.find(

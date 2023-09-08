@@ -51,10 +51,10 @@ const ETicket = ({ booking }) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [myBooking]);
 
   // useEffect(() => {
-  //   fetch(`http://localhost:5000/bookings/${refID.bookingId}`)
+  //   fetch(`https://server-side-tawny-sigma.vercel.app/bookings/${refID.bookingId}`)
   //     .then((res) => res.json())
   //     .then((data) => setBooking(data))
   //     .catch((err) => {
