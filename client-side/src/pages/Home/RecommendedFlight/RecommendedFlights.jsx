@@ -23,7 +23,7 @@ const RecommendedFlights = () => {
             <div>
               <div className="flex gap-5 container ">
                 <img
-                  className="object-cover rounded-md shadow-md h-52 mb-14 w-full"
+                  className="object-cover rounded-md shadow-md h-52 mb-20 w-full"
                   src="https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
                 />
               </div>
@@ -58,7 +58,7 @@ const RecommendedFlights = () => {
             <div>
               <div className="flex gap-5 container ">
                 <img
-                  className="object-cover rounded-md shadow-md h-52 mb-14 w-full"
+                  className="object-cover rounded-md shadow-md h-52 mb-20 w-full"
                   src="https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg"
                 />
               </div>
@@ -70,7 +70,7 @@ const RecommendedFlights = () => {
                 </p>
               </div>
               <div>
-                <h3 className="card-title mr-16">Dhaka to Cox's Bazar</h3>
+                <h3 className="card-title mr-16">Dhaka to Cox's </h3>
                 <p className="text-semibold text-xs font-semibold">
                   ONE WAY FLIGHT
                 </p>
@@ -93,7 +93,7 @@ const RecommendedFlights = () => {
             <div>
               <div className="flex gap-5 container ">
                 <img
-                  className="object-cover rounded-md shadow-md h-52 mb-5 w-full "
+                  className="object-cover rounded-md shadow-md h-52 mb-20 w-full "
                   src="https://www.traveloffpath.com/wp-content/uploads/2021/11/New%E2%80%8B-Low-Cost-Airline-Set-To-Launch-In-Calgary-Next-Year.jpg"
                 />
               </div>
@@ -105,7 +105,7 @@ const RecommendedFlights = () => {
                 </p>
               </div>
               <div>
-                <h3 className="card-title lg:mr-16">Bengaluru to Paris</h3>
+                <h3 className="card-title lg:mr-16">Cox's to Dhaka</h3>
                 <p className="text-semibold text-xs font-semibold">
                   ONE WAY FLIGHT
                 </p>
