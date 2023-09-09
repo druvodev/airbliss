@@ -42,7 +42,7 @@ const RecommendedFlights = () => {
               </div>
               <div>
                 <p className="text-gray-400 text-xs">FROM</p>
-                <p className="text-sky-400 font-bold">2490 BDT</p>
+                <p className="text-sky-400 font-bold">2499 BDT</p>
               </div>
             </div>
             <div className="flex  items-center align-middle justify-between  mt-8">
@@ -78,7 +78,7 @@ const RecommendedFlights = () => {
               </div>
               <div>
                 <p className="text-gray-400 text-xs">FROM</p>
-                <p className="text-sky-400 font-bold">2780 BDT</p>
+                <p className="text-sky-400 font-bold">2799 BDT</p>
               </div>
             </div>
             <div className="flex items-center align-middle justify-between mt-8">
@@ -107,14 +107,14 @@ const RecommendedFlights = () => {
                 </p>
               </div>
               <div>
-                <h3 className="card-title lg:mr-16 text-lg">Cox's to Dhaka</h3>
+                <h3 className="card-title mr-16 text-lg">Dhaka to Cox's</h3>
                 <p className="text-semibold text-xs font-semibold">
-                  ONE WAY FLIGHT
+                  ONE WAY FLIGHTS
                 </p>
               </div>
               <div>
                 <p className="text-gray-400 text-xs">FROM</p>
-                <p className="text-sky-400 font-bold">2500 BDT</p>
+                <p className="text-sky-400 font-bold">2699 BDT</p>
               </div>
             </div>
             <div className="flex items-center align-middle justify-between  mt-8">

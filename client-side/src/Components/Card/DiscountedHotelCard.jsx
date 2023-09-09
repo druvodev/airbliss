@@ -57,13 +57,13 @@ const DiscountedHotelCard = ({ hotel }) => {
         </p>
         <p className="text-gray-400">{details}</p>
       </div>
-      <div className="flex justify-between items-center mt-3 px-3">
-        <div className="rating rating-xs">{stars}</div>
+      <div className="flex justify-between items-center mt-5 px-3">
+        <div className="rating rating-xs mr-2 md:mr-0">{stars}</div>
         <div className="flex items-center gap-x-3">
-          <p className="line-through font-semibold text-lg text-cyan-600">
+          <p className="line-through font-semibold text-sm md:text-lg text-cyan-600">
             BDT{cost}
           </p>
-          <Link className="py-3 px-6 border border-cyan-300 rounded-lg font-medium bg-cyan-600 hover:bg-cyan-700 text-white duration-500">
+          <Link className="py-3 px-2 md:px-4 text-sm md:text-lg border border-cyan-300 rounded-lg font-medium bg-cyan-600 hover:bg-cyan-700 text-white duration-500">
             {(cost - (cost * discount) / 100).toFixed(0)} BDT Night
           </Link>
         </div>
