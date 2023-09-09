@@ -50,7 +50,7 @@ const FlightStatus = () => {
           </div>
 
           <div className="p-2 shadow-md border-t w-full">
-            <h4 className="font-semibold text-lg pl-2">Arrial Flight</h4>
+            <h4 className="font-semibold text-lg pl-2">Arrival Flight</h4>
             <div className="flex justify-center items-center mb-2">
               <TbBrandFlightradar24 size={40} color="#32a9db" />
             </div>
