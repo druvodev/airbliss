@@ -12,9 +12,6 @@ const Flights = () => {
   const { setIsStart } = useCountdownContext();
   const [isShowSearch, setIsShowSearch] = useState(false);
 
-  useEffect(() => {
-    setIsStart(false);
-  }, []);
   return (
     <div className="relative">
       <img src={banner} className="w-full h-44 object-cover" alt="" />
