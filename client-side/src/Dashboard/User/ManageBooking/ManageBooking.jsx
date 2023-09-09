@@ -21,6 +21,7 @@ const ManageBooking = () => {
   };
 
   const bookings = useSelector((state) => state?.userInfo?.userBookings);
+  console.log(bookings);
 
   const [formData, setFormData] = useState({});
   // Initialize your form data state here
@@ -126,10 +127,10 @@ const ManageBooking = () => {
               <th>#</th>
               <th>Flight image</th>
               <th>Flight name</th>
+              <th>Booking Reference</th>
               <th>Flight booking date</th>
-              <th>Ticket Price</th>
               <th>Travel Path</th>
-              <th>Passport Number</th>
+              <th>Ticket Price</th>
               <th>Flight Status</th>
               <th>Action</th>
             </tr>
@@ -151,14 +152,17 @@ const ManageBooking = () => {
                   </div>
                 </td>
                 <td>{flight?.flight.airline}</td>
-                <td>{flight.bookingDateTime}</td>
-                <td>BDT {flight?.flight?.fareSummary?.total}</td>
+                <td>{flight?.bookingReference}</td>
+                <td>{flight?.bookingDateTime}</td>
+
                 <td>
                   {flight?.flight?.departureCity} To{" "}
                   {flight?.flight?.arrivalCity}
                 </td>
-                <td>{flight?.user?.passport_number}</td>
-                <td>Approved</td>
+                <td>BDT {flight?.flight?.fareSummary?.total}</td>
+                <td>
+                  {flight?.bookingStatus ? flight?.bookingStatus : "Pending"}
+                </td>
                 <td className="flex gap-2 mt-2">
                   <Link
                     to={{

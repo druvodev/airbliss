@@ -43,7 +43,7 @@ const Account = () => {
 
     console.log(usersData);
 
-    fetch(`http://localhost:5000users/${currentUser._id}`, {
+    fetch(`http://localhost:5000/users/${currentUser._id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

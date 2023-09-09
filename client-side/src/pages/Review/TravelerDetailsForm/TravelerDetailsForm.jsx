@@ -470,6 +470,7 @@ const TravelerDetailsForm = () => {
                       </label>
                       <input
                         type="email"
+                        readOnly
                         name=""
                         id=""
                         {...register("traveler_email", { required: true })}

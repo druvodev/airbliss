@@ -57,7 +57,7 @@ const ETicket = ({ booking }) => {
   }, [myBooking]);
 
   // useEffect(() => {
-  //   fetch(`http://localhost:5000bookings/${refID.bookingId}`)
+  //   fetch(`http://localhost:5000/bookings/${refID.bookingId}`)
   //     .then((res) => res.json())
   //     .then((data) => setBooking(data))
   //     .catch((err) => {

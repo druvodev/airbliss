@@ -10,7 +10,7 @@ const FlightStatus = () => {
   const [edit, setEdit] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000flights")
+    fetch("http://localhost:5000/flights")
       .then((res) => res.json())
       .then((data) => setFlights(data));
   }, []);
