@@ -60,7 +60,7 @@ const ManageUsers = () => {
     console.log(usersData);
 
     if (selectedUserId) {
-      fetch(`http://localhost:5000/users/${selectedUserId}`, {
+      fetch(`http://localhost:5000users/${selectedUserId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -135,8 +135,9 @@ const ManageUsers = () => {
             (_, index) => (
               <h3
                 key={index}
-                className={`px-3 py-[6px] border-[1px] cursor-pointer ${index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
-                  }`}
+                className={`px-3 py-[6px] border-[1px] cursor-pointer ${
+                  index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                }`}
                 onClick={() => setCurrentPage(index + 1)}
               >
                 {index + 1}

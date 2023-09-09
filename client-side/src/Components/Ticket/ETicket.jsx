@@ -6,8 +6,6 @@ import useAxios from "../../hooks/useAxios";
 import airbliss from "../../assets/banner/airblibanner.png";
 import emailjs from "@emailjs/browser";
 import { generate } from "shortid";
-import { useDispatch } from "react-redux";
-import { setLoading } from "../../redux/features/globalSlice";
 import { HashLoader } from "react-spinners";
 
 const ETicket = ({ booking }) => {
@@ -15,8 +13,6 @@ const ETicket = ({ booking }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const refID = useParams();
-
-  console.log(booking);
 
   useEffect(() => {
     setIsLoading(true);
@@ -58,10 +54,10 @@ const ETicket = ({ booking }) => {
         setIsLoading(false);
         console.log(err.message);
       });
-  }, []);
+  }, [myBooking]);
 
   // useEffect(() => {
-  //   fetch(`http://localhost:5000/bookings/${refID.bookingId}`)
+  //   fetch(`http://localhost:5000bookings/${refID.bookingId}`)
   //     .then((res) => res.json())
   //     .then((data) => setBooking(data))
   //     .catch((err) => {

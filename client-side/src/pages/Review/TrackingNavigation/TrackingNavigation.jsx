@@ -103,7 +103,7 @@ const TrackingNavigation = () => {
                 } transition-all ease-linear overflow-hidden`}
               >
                 <div className="p-5">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center gap-6">
                     <div className="flex items-center gap-2">
                       <img
                         className="h-12 w-12 rounded-full -ml-2"

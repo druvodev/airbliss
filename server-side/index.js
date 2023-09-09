@@ -104,11 +104,6 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/flights", async (req, res) => {
-      const result = await flightsCollection.find().toArray();
-      res.send(result);
-    });
-
     app.get("/single_flights/:id", async (req, res) => {
       const id = req.params.id;
       const formAirportCode = req.query.airportCode;
@@ -542,7 +537,7 @@ async function run() {
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
         res.redirect(
-          `http://localhost:5173/booking-confirmed/${req.params.bookingId}`
+          `http://localhost:5000booking-confirmed/${req.params.bookingId}`
         );
       });
     });

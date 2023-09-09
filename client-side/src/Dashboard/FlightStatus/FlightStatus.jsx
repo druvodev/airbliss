@@ -9,13 +9,12 @@ const FlightStatus = () => {
   const [page, setPage] = useState(1);
   const [edit, setEdit] = useState(false);
 
-
   useEffect(() => {
-    fetch("http://localhost:5000/flights")
-      .then(res => res.json())
-      .then(data => setFlights(data))
+    fetch("http://localhost:5000flights")
+      .then((res) => res.json())
+      .then((data) => setFlights(data));
   }, []);
-  
+
   const selectedPageHandler = (selectedPage) => {
     if (
       selectedPage > 0 &&
@@ -50,7 +49,7 @@ const FlightStatus = () => {
           </div>
 
           <div className="p-2 shadow-md border-t w-full">
-            <h4 className="font-semibold text-lg pl-2">Arrial Flight</h4>
+            <h4 className="font-semibold text-lg pl-2">Arrival Flight</h4>
             <div className="flex justify-center items-center mb-2">
               <TbBrandFlightradar24 size={40} color="#32a9db" />
             </div>
@@ -118,8 +117,9 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
-                      }`}
+                    className={` border  border-gray-300 p-2 ${
+                      edit ? "block shadow-md rounded-md" : "hidden"
+                    }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -173,8 +173,9 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
-                      }`}
+                    className={` border  border-gray-300 p-2 ${
+                      edit ? "block shadow-md rounded-md" : "hidden"
+                    }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -228,8 +229,9 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
-                      }`}
+                    className={` border  border-gray-300 p-2 ${
+                      edit ? "block shadow-md rounded-md" : "hidden"
+                    }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -283,8 +285,9 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
-                      }`}
+                    className={` border  border-gray-300 p-2 ${
+                      edit ? "block shadow-md rounded-md" : "hidden"
+                    }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -338,8 +341,9 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
-                      }`}
+                    className={` border  border-gray-300 p-2 ${
+                      edit ? "block shadow-md rounded-md" : "hidden"
+                    }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -393,8 +397,9 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
-                      }`}
+                    className={` border  border-gray-300 p-2 ${
+                      edit ? "block shadow-md rounded-md" : "hidden"
+                    }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit
@@ -448,8 +453,9 @@ const FlightStatus = () => {
                     ></VscKebabVertical>
                   </div>
                   <div
-                    className={` border  border-gray-300 p-2 ${edit ? "block shadow-md rounded-md" : "hidden"
-                      }`}
+                    className={` border  border-gray-300 p-2 ${
+                      edit ? "block shadow-md rounded-md" : "hidden"
+                    }`}
                   >
                     <Link to="" className="block border-b border-gray-300 pb-1">
                       Edit

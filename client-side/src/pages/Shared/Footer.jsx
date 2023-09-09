@@ -13,18 +13,16 @@ import {
   AiFillLinkedin,
   AiOutlineWhatsApp,
 } from "react-icons/ai";
-import { Link } from "react-router-dom";
 
 const Footer = () => {
   const svgStyle = {
     fill: "#414D5E",
   };
   // className = "px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden";
-
   return (
     <div>
       <section className="bg-[#414D5E]  relative mt-28  ">
-        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden -top-[79px] md:-top-[109px]   left-0 md:left-0">
+        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden  -top-[75px] md:-top-[90px] lg:-top-[105px]  left-0 md:left-0">
           <svg
             version="1.1"
             width="2000"
@@ -72,10 +70,10 @@ const Footer = () => {
           </svg>
         </div>
 
-        <div className="px-5  sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
+        <div className="px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
           <div>
             {/* Footer Item Design */}
-            <section className="  text-white p-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <section className="  text-white p-3 md:p-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
               {/* Airblees Text */}
               <div>
                 <img
@@ -160,23 +158,16 @@ const Footer = () => {
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
+                      <span>Destination</span>
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="inline-flex items-center gap-1 mt-3">
+                      <span>
+                        <AiOutlineArrowRight size={16} />
+                      </span>
                       <span>Booking Flight</span>
-                    </p>
-                  </div>
-                  <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
-                      <span>
-                        <AiOutlineArrowRight size={16} />
-                      </span>
-                      <Link to="/terms">Terms & Conditions</Link>
-                    </p>
-                  </div>
-                  <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
-                      <span>
-                        <AiOutlineArrowRight size={16} />
-                      </span>
-                      <Link to="/refund">Refund Policy</Link>
                     </p>
                   </div>
                 </div>
@@ -280,12 +271,12 @@ const Footer = () => {
 
             {/* Payment Partner */}
             <div>
-              <h1 className="ml-12 text-white text-xl font-bold mb-2">
+              <h1 className="md:ml-12 ml-3 text-white text-xl font-bold mb-2">
                 Payment Partner
               </h1>
-              <hr className="w-[170px] ml-12" />
+              <hr className="w-[170px] md:ml-12 ml-3" />
 
-              <div className="ml-10 flex lg:flex-row flex-col ">
+              <div className="md:ml-10 ml-2 flex lg:flex-row flex-col ">
                 <div className="flex justify-start items-center">
                   <img
                     className="h-16 "
