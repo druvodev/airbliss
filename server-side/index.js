@@ -261,7 +261,7 @@ async function run() {
         return res.json("Not found proper url!");
       }
       const flightsResult = [];
-
+      console.log("searching");
       try {
         const fromCityData = await flightsCollection.findOne({
           [fromCity]: { $exists: true },
@@ -367,6 +367,7 @@ async function run() {
         }
 
         // Respond with the flights data including fare summary
+        console.log("send");
         res.json({ flights: flightsResult });
       } catch (error) {
         console.error("Error in /flights/search:", error);
@@ -488,10 +489,10 @@ async function run() {
         total_amount: parseFloat(flight.fareSummary.total),
         currency: "BDT",
         tran_id: transitionId,
-        success_url: `https://server-side-tawny-sigma.vercel.app/booking-confirmed/${bookingInfo.bookingReference}`,
-        fail_url: "https://server-side-tawny-sigma.vercel.app/booking-failed",
-        cancel_url: "https://server-side-tawny-sigma.vercel.app/booking-cancel",
-        ipn_url: "https://server-side-tawny-sigma.vercel.app/ipn",
+        success_url: `http://localhost:5000/booking-confirmed/${bookingInfo.bookingReference}`,
+        fail_url: "http://localhost:5000/booking-failed",
+        cancel_url: "http://localhost:5000/booking-cancel",
+        ipn_url: "http://localhost:5000/ipn",
         shipping_method: "Air Flights",
         product_name: "Airline Ticket",
         product_category: "Flights Tickets",
@@ -758,7 +759,7 @@ async function run() {
       const existingUser = await usersCollection.findOne(query);
       console.log(existingUser, "existing user");
       if (existingUser) {
-        return;  //res.send({ message: "User already exists" });
+        return; //res.send({ message: "User already exists" });
       }
       const result = await usersCollection.insertOne(user);
       res.send(result);
