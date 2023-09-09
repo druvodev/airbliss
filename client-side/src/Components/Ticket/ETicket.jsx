@@ -49,7 +49,7 @@ const ETicket = ({ booking }) => {
       .catch((err) => {
         console.log(err.message);
       });
-  }, [myBooking]);
+  }, []);
 
   // useEffect(() => {
   //   fetch(`http://localhost:5000/bookings/${refID.bookingId}`)
