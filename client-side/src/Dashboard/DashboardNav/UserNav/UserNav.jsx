@@ -12,10 +12,11 @@ const UserNav = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    fetch(`http://localhost:5000userBooking/${user?.email}`)
+    fetch(`http://localhost:5000/userBooking/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         dispatch(setUserBookings(data));
+        console.log(data);
       });
   }, [user, refetch]);
 

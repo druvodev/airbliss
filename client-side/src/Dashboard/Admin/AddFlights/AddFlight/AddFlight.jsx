@@ -46,7 +46,7 @@ const AddFlight = () => {
   const [chekAirportSelect, setchekAirportSelect] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000flights")
+    fetch("http://localhost:5000/flights")
       .then((res) => res.json())
       .then((data) => setAllFlights(data));
   }, []);
@@ -205,13 +205,16 @@ const AddFlight = () => {
 
     const queryString = `airportId=${selectAirportId}&airportCode=${selectAirportCode}`;
 
-    fetch(`http://localhost:5000add_flight/${selectAirportId}?${queryString}`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(finalFormData),
-    })
+    fetch(
+      `http://localhost:5000/add_flight/${selectAirportId}?${queryString}`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(finalFormData),
+      }
+    )
       .then((res) => {
         res.json();
       })
