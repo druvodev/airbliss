@@ -87,9 +87,14 @@ const Account = () => {
           </div>
           <>
             {isEdit ? (
-              <Edit handleSubmit={handleSubmit} />
+              <Edit
+                handleSubmit={handleSubmit}
+                currentUser={currentUser}
+              />
             ) : (
-              <View currentUser={currentUser} />
+              <View
+                currentUser={currentUser}
+              />
             )}
           </>
         </div>

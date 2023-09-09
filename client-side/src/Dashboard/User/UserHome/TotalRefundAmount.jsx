@@ -10,8 +10,8 @@ const TotalRefundAmount = () => {
                     <RiRefund2Fill className='text-gray-50 text-4xl font-bold' />
                 </div>
                 <div>
-                    <h1 className='lg:text-2xl font-light text-gray-600'>Total Refund Amount</h1>
-                    <p className='text-[#96a3c4] lg:text-3xl text-xl font-semibold mt-4'>50$</p>
+                    <h1 className='lg:text-2xl font-light text-gray-900'>Total Refund Amount</h1>
+                    <p className='text-gray-900 lg:text-3xl text-xl font-semibold mt-4'>50$</p>
                 </div>
             </div>
             <div>

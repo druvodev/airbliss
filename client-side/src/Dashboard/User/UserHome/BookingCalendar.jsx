@@ -10,7 +10,7 @@ const BookingCalendar = () => {
     return (
         <div className='bg-white shadow-md lg:p-6 p-2 rounded-lg h-full'>
             <div className='flex justify-between mb-10'>
-                <h1 className='lg:text-2xl font-light text-gray-600'>Booking Calendar</h1>
+                <h1 className='lg:text-2xl font-light text-gray-900'>Booking Calendar</h1>
                 <button>
                     <SlOptionsVertical className='text-gray-400 text-xl font-bold mt-1' />
                 </button>

@@ -16,7 +16,6 @@ const TicketHistory = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Dispatch an action to set booking data in Redux store
     fetch(`http://localhost:5000/userBooking/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
