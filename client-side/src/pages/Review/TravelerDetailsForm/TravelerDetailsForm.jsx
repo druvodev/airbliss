@@ -287,7 +287,7 @@ const TravelerDetailsForm = () => {
             </div>
             <div
               className={`duration-500 ${
-                isCollapse ? "max-h-[1275px] md:max-h-[925px]" : "max-h-0"
+                isCollapse ? "max-h-[1375px] md:max-h-[925px]" : "max-h-0"
               } transition-all ease-linear overflow-hidden`}
             >
               <div className="p-5">
@@ -539,7 +539,7 @@ const TravelerDetailsForm = () => {
                     </div>
                   </div>
                   <button
-                    className=" my-10 block w-full bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide px-5 rounded h-[38px] text-white font-semibold"
+                    className=" my-10 block w-full bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide px-5 rounded h-[38px] text-white font-semibold "
                     type="submit"
                   >
                     Continue
