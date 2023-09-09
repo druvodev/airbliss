@@ -28,7 +28,7 @@ const PopUpOffer = () => {
     <>
       {!user && showPopup && (
         <div className="popup-container">
-          <div className="popup">
+          <div className="popup mx-8 ">
             <img
               src="https://i.ibb.co/mJszpX0/Add.jpg"
               alt="Special Offer"
@@ -37,7 +37,10 @@ const PopUpOffer = () => {
             <button onClick={closePopup} className="popup-close-btn">
               <FaTimesCircle />
             </button>
-            <button onClick={() => setOpenModal(true)} className="get-discount">
+            <button
+              onClick={() => setOpenModal(true)}
+              className="bg-white rounded-lg text-green-600 font-semibold cursor-pointer absolute -ml-6 btn btn-xs md:btn lg:-ml-0 bottom-0 md:mb-4"
+            >
               Get Discount
             </button>
           </div>
