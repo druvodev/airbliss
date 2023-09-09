@@ -6,13 +6,11 @@ import useAxios from "../../hooks/useAxios";
 import airbliss from "../../assets/banner/airblibanner.png";
 import emailjs from "@emailjs/browser";
 import { generate } from "shortid";
+import Loading from "../../Loading/Loading";
 
 const ETicket = ({ booking }) => {
   const [myBooking, setBooking] = useState({});
-
   const refID = useParams();
-
-  console.log(booking);
 
   useEffect(() => {
     useAxios
