@@ -3,6 +3,7 @@ import UseAxiosSecure from "../../../hooks/UseAxiosSecure";
 import { toast } from "react-hot-toast";
 import AllUsers from "./AllUsers";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import Loading from "../../../Loading/Loading";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -13,6 +14,7 @@ const ManageUsers = () => {
   const [selectedUserRole, setSelectedUserRole] = useState("");
   const [selectedUserStatus, setSelectedUserStatus] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
 
   const handlePaginationPrev = () => {
     if (currentPage > 1) {
@@ -31,13 +33,16 @@ const ManageUsers = () => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
   useEffect(() => {
+    setIsLoading(true); // Set loading to true when fetching data
     axiosSecure
       .get("/users")
       .then((response) => {
         setUsers(response?.data);
+        setIsLoading(false); // Set loading to false when data is fetched
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setIsLoading(false); // Handle error and set loading to false
       });
   }, [axiosSecure]);
 
@@ -53,6 +58,7 @@ const ManageUsers = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsLoading(true); // Set loading to true when submitting data
     const usersData = {
       role: event.target.role.value,
       status: event.target.status.value,
@@ -85,6 +91,9 @@ const ManageUsers = () => {
         })
         .catch((err) => {
           console.log(err);
+        })
+        .finally(() => {
+          setIsLoading(false); // Set loading to false when the action is complete
         });
       console.log(selectedUserId);
       console.log(usersData);
@@ -97,31 +106,35 @@ const ManageUsers = () => {
         Manage User's Information
       </h1>
       <div className="overflow-x-auto mx-1 lg:mx-7 mt-[50px] px-10 py-5 rounded-xl bg-white">
-        <table className="table">
-          {/* head */}
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Photo</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Occupation</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.slice(startIndex, endIndex).map((user, index) => (
-              <AllUsers
-                key={user._id}
-                user={user}
-                index={index}
-                handleModalOpen={handleModalOpen}
-              ></AllUsers>
-            ))}
-          </tbody>
-        </table>
+        {isLoading ? ( // Conditional rendering based on isLoading
+          <Loading /> // Display the loading component
+        ) : (
+          <table className="table">
+            {/* head */}
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Occupation</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.slice(startIndex, endIndex).map((user, index) => (
+                <AllUsers
+                  key={user._id}
+                  user={user}
+                  index={index}
+                  handleModalOpen={handleModalOpen}
+                ></AllUsers>
+              ))}
+            </tbody>
+          </table>
+        )}
         <section className="mt-12 flex justify-end items-center">
           <button
             className="border-[1px] p-2 rounded-l-md"
