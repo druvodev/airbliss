@@ -60,7 +60,7 @@ const ManageUsers = () => {
     console.log(usersData);
 
     if (selectedUserId) {
-      fetch(`http://localhost:5000users/${selectedUserId}`, {
+      fetch(`http://localhost:5000/users/${selectedUserId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
