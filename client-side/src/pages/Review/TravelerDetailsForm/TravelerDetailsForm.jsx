@@ -552,9 +552,9 @@ const TravelerDetailsForm = () => {
       )}
       {/* Seat selecting Modal */}
       {isModalOpen && (
-        <div className="fixed top-0 left-0 z-50 w-screen sm:w-full h-full overflow-y-auto">
-          <div className="w-screen sm:w-full bg-white/20 backdrop-blur-md backdrop-filter shadow-md sm:p-10">
-            <div className="text-center">
+        <div className="fixed top-0 left-0 z-50 md:w-screen  h-full overflow-y-auto">
+          <div className="md:w-screen  bg-white/20 backdrop-blur-md backdrop-filter shadow-md sm:p-10">
+            <div className="text-center ">
               <h3 className="mb-5 text-3xl sm:text-4xl font-bold bg-slate-500/30 backdrop-blur py-2 px-5 w-fit mx-auto rounded-xl shadow shadow-cyan-100">
                 Choose Your Seating Preference
               </h3>
