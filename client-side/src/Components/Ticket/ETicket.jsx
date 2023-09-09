@@ -26,39 +26,30 @@ const ETicket = ({ booking }) => {
           amount: info?.flight.fareSummary.total,
           departureDate: info?.flight.departureDate,
         };
-        emailjs
-          .send(
-            "service_y6ldylc",
-            "template_3zv6g6c",
-            templateParams,
-            "w9Pnw6KhtfQAcLD4k"
-          )
-          .then(
-            (response) => {
-              console.log(
-                "Invoice Send SUCCESS!",
-                response.status,
-                response.text
-              );
-            },
-            (err) => {
-              console.log("FAILED...", err);
-            }
-          );
+        // emailjs
+        //   .send(
+        //     "service_y6ldylc",
+        //     "template_3zv6g6c",
+        //     templateParams,
+        //     "w9Pnw6KhtfQAcLD4k"
+        //   )
+        //   .then(
+        //     (response) => {
+        //       console.log(
+        //         "Invoice Send SUCCESS!",
+        //         response.status,
+        //         response.text
+        //       );
+        //     },
+        //     (err) => {
+        //       console.log("FAILED...", err);
+        //     }
+        //   );
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, [myBooking]);
-
-  // useEffect(() => {
-  //   fetch(`http://localhost:5000/bookings/${refID.bookingId}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setBooking(data))
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // }, []);
+  }, []);
 
   const [img, setImg] = useState(null);
   const [isDownload, setDownload] = useState("download");
@@ -133,7 +124,13 @@ const ETicket = ({ booking }) => {
       {booking ? (
         ""
       ) : (
-        <img src={airbliss} className="w-full h-52 object-cover" alt="" />
+        <div className="bg-black pt-8  ">
+          <img
+            src={airbliss}
+            className="w-[100vw] h-36 md:w-full md:h-52 object-cover"
+            alt=""
+          />
+        </div>
       )}
       <h2 className="text-2xl font-bold mt-2 text-center md:text-3xl">
         E-Ticket

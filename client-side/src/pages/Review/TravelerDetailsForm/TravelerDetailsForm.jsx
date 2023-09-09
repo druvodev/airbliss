@@ -16,6 +16,7 @@ import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
 import { paymentLater, paymentProcessing } from "../../../utils/handlePayment";
 import SeatModel from "../../../Components/SeatModel/SeatModel";
 import useAuth from "../../../hooks/useAuth";
+import { errorToast } from "../../../utils/toast";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -66,11 +67,16 @@ const TravelerDetailsForm = () => {
   }, []);
 
   const handleContinue = (data) => {
-    dispatch(setUserInfo(data)); // stored user information in redux
-    reset();
-    setContinue(true);
-    // document.body.classList.add("modal-open");
-    openModal();
+    const chekTitel = data.title;
+
+    if (chekTitel != null) {
+      dispatch(setUserInfo(data)); // stored user information in redux
+      reset();
+      setContinue(true);
+      openModal();
+    } else {
+      return errorToast("Please select titel");
+    }
   };
 
   // Function to open the modal
@@ -539,18 +545,26 @@ const TravelerDetailsForm = () => {
                       />
                     </div>
                   </div>
-                  <button
-                    className=" my-10 block w-full bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide px-5 rounded h-[38px] text-white font-semibold "
-                    type="submit"
-                  >
-                    Continue
-                  </button>
+
+                  {user ? (
+                    <button
+                      className=" my-10 block w-full bg-cyan-700 cursor-pointer hover:bg-cyan-600 hover:tracking-wide px-5 rounded h-[38px] text-white font-semibold "
+                      type="submit"
+                    >
+                      Continue
+                    </button>
+                  ) : (
+                    <div className="my-10 pt-[6px] block w-full bg-cyan-600 cursor-pointer px-5 rounded h-[38px] text-white font-semibold text-center">
+                      <p>Please Login For Continue</p>
+                    </div>
+                  )}
                 </form>
               </div>
             </div>
           </div>
         </div>
       )}
+
       {/* Seat selecting Modal */}
       {isModalOpen && (
         <div className="fixed top-0 left-0 z-50 w-full md:w-screen  h-full overflow-y-auto">
