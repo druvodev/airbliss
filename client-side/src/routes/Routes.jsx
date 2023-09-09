@@ -19,6 +19,7 @@ import PrivateRoute from "./PrivateRoute";
 import TicketHistory from "../Dashboard/User/TicketHistory/TicketHistory";
 import ManageBooking from "../Dashboard/User/ManageBooking/ManageBooking";
 import HotDealDetails from "../pages/Home/HotDeals/HotDealDetails";
+import AdminRoute from "./AdminRoute";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -71,7 +72,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "adminHome",
-        element: <AdminHome />,
+        element: <AdminRoute><AdminHome /></AdminRoute>,
       },
 
       {
@@ -86,16 +87,16 @@ export const router = createBrowserRouter([
 
       {
         path: "ticketHistory/:bookingReference",
-        element: <TicketHistory />,
+        element: <AdminRoute><TicketHistory /></AdminRoute>,
       },
 
       {
         path: "addFlight",
-        element: <AddFlight />,
+        element: <AdminRoute><AddFlight /></AdminRoute>,
       },
       {
         path: "manageUsers",
-        element: <ManageUsers />,
+        element: <AdminRoute><ManageUsers /></AdminRoute>,
       },
       {
         path: "account",
@@ -103,7 +104,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "flightStatus",
-        element: <FlightStatus />,
+        element: <AdminRoute><FlightStatus /></AdminRoute>,
       },
     ],
   },
