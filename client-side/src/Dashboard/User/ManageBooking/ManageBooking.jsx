@@ -169,7 +169,7 @@ const ManageBooking = () => {
                     <div className="avatar">
                       <div className="mask mask-squircle rounded-full w-12 h-12">
                         <img
-                          src="https://i.ibb.co/LPcmyN0/O58a-F0wv2kgyx-Ag-TNwnj-Bvlw-C4-In4-Ny-HXH0-K2-Uq-S1ae-AOtdf186x-Xa7-Iq-Hz-Ej-Gx-EGA.png"
+                          src={flight?.airlineLogo}
                           alt="Avatar Tailwind CSS Component"
                         />
                       </div>
