@@ -16,6 +16,7 @@ const UserNav = () => {
       .then((res) => res.json())
       .then((data) => {
         dispatch(setUserBookings(data));
+        console.log(data);
       });
   }, [user, refetch]);
 

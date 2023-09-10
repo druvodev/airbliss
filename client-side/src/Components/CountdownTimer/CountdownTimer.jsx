@@ -6,8 +6,8 @@ const CountdownTimer = () => {
   const { remainingTime, setIsStart } = useCountdownContext();
   const location = useLocation();
   useEffect(() => {
-    setIsStart(true);
-    console.log(location);
+    // setIsStart(true);
+    // console.log(location);
   }, [location]);
   const minutes = Math.floor(remainingTime / 60);
   const seconds = remainingTime % 60;

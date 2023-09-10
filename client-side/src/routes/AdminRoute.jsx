@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import UseAxiosSecure from '../hooks/UseAxiosSecure';
 import useAuth from '../hooks/useAuth';
 import { Navigate, useLocation } from 'react-router';
-import Loading from '../Loading/Loading';
+import Loader from '../Components/Loader/Loader';
 
 const AdminRoute = ({ children }) => {
     const { user, loading } = useAuth()
@@ -30,7 +30,7 @@ const AdminRoute = ({ children }) => {
     const isAdmin = currentUser?.role === "admin";
 
     if (loading || isLoadingData) { // Display loading when loading or fetching data
-        return <Loading />
+        return <Loader />
     }
     if (user && isAdmin) {
         return children;

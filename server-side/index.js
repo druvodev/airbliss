@@ -256,7 +256,7 @@ async function run() {
         return res.json("Not found proper url!");
       }
       const flightsResult = [];
-
+      console.log("searching");
       try {
         const fromCityData = await flightsCollection.findOne({
           [fromCity]: { $exists: true },
@@ -362,6 +362,7 @@ async function run() {
         }
 
         // Respond with the flights data including fare summary
+        console.log("send");
         res.json({ flights: flightsResult });
       } catch (error) {
         console.error("Error in /flights/search:", error);
@@ -753,7 +754,7 @@ async function run() {
       const existingUser = await usersCollection.findOne(query);
       console.log(existingUser, "existing user");
       if (existingUser) {
-        return;  //res.send({ message: "User already exists" });
+        return; //res.send({ message: "User already exists" });
       }
       const result = await usersCollection.insertOne(user);
       res.send(result);

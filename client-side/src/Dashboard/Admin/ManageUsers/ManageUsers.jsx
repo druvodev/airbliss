@@ -3,7 +3,7 @@ import UseAxiosSecure from "../../../hooks/UseAxiosSecure";
 import { toast } from "react-hot-toast";
 import AllUsers from "./AllUsers";
 import { GrNext, GrPrevious } from "react-icons/gr";
-import Loading from "../../../Loading/Loading";
+import Loader from "../../../Components/Loader/Loader";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -84,6 +84,7 @@ const ManageUsers = () => {
                   : user
               )
             );
+            location.reload();
           } else {
             toast.error("Failed to update user data");
           }
@@ -107,7 +108,7 @@ const ManageUsers = () => {
       </h1>
       <div className="overflow-x-auto mx-1 lg:mx-7 mt-[50px] px-10 py-5 rounded-xl bg-white">
         {isLoading ? ( // Conditional rendering based on isLoading
-          <Loading /> // Display the loading component
+          <Loader /> // Display the loading component
         ) : (
           <table className="table">
             {/* head */}
@@ -148,8 +149,9 @@ const ManageUsers = () => {
             (_, index) => (
               <h3
                 key={index}
-                className={`px-3 py-[6px] border-[1px] cursor-pointer ${index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
-                  }`}
+                className={`px-3 py-[6px] border-[1px] cursor-pointer ${
+                  index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                }`}
                 onClick={() => setCurrentPage(index + 1)}
               >
                 {index + 1}

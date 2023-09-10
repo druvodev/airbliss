@@ -2,8 +2,8 @@ import { Outlet } from 'react-router-dom'
 import Sidebar from '../Dashboard/Sidebar/Sidebar';
 import TopNav from '../Dashboard/DashboardShared/TopNav/TopNav';
 import { useState } from 'react';
-import Loading from '../Loading/Loading';
 import useAuth from '../hooks/useAuth';
+import Loader from '../Components/Loader/Loader';
 
 const DashboardLayout = () => {
   const { loading } = useAuth()
@@ -19,7 +19,7 @@ const DashboardLayout = () => {
     <>
       {
         loading ? (
-          <Loading />
+          <Loader />
         ) : (
           <div className='relative min-h-screen md:flex'>
             <Sidebar

@@ -23,6 +23,7 @@ import {
   YAxis,
 } from "recharts";
 import CircularProgressBar from "../../../Components/CircularProgressBar/CircularProgressBar";
+import FlightProgressBar from "../../../Components/CircularProgressBar/FlightProgressBar";
 
 const AdminHome = () => {
   const data = [
@@ -97,10 +98,11 @@ const AdminHome = () => {
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
-                <p className="text-lg font-semibold">Running Flight</p>
+                <p className="text-lg font-semibold">Total Flight</p>
                 <h2 className="text-2xl font-bold">200</h2>
               </div>
-              <CircularProgressBar val={20} icon={planIcon} />
+              <FlightProgressBar val={200} icon={planIcon} />
+              {/* <CircularProgressBar val={20} icon={planIcon} /> */}
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
