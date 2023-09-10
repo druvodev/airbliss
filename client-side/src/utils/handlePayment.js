@@ -137,6 +137,7 @@ export const paymentProcessing = (flightInfo, userInfo) => {
   userBookingInfo.bookingDateTime = formatDateTime(new Date());
   userBookingInfo.totalSeat = flightInfo?.departure.seats;
   userBookingInfo.flightId = flightInfo?._id;
+  userBookingInfo.airlineLogo = flightInfo?.airlineLogo;
 
   // Make a POST request using Axios from useAxios hook
   useAxios
