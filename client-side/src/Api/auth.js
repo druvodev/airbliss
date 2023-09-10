@@ -28,6 +28,5 @@ export const saveUser = async (user) => {
     }
   } catch (error) {
     console.error("Error saving user:", error);
-    window.alert("An error occurred while saving user");
   }
 };

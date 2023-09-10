@@ -773,6 +773,7 @@ async function run() {
       const id = req.params.id;
       const usersData = req.body.usersData; // No need for req.body.usersData
 
+      console.log(id);
       console.log(usersData);
 
       const filter = { _id: new ObjectId(id) };
