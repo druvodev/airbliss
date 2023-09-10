@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { GoHistory } from "react-icons/go";
 import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
+import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -21,7 +22,15 @@ const ManageBooking = () => {
   };
 
   const bookings = useSelector((state) => state?.userInfo?.userBookings);
-  console.log(bookings);
+  const cancelBookings = bookings?.filter(
+    (booking) => booking?.bookingStatus === "cancel"
+  );
+
+  const confirmBookings = bookings?.filter(
+    (booking) => booking?.bookingStatus === "confirmed"
+  );
+  console.log("All bookings", bookings);
+  console.log("Cancel Bookings", cancelBookings);
 
   const [formData, setFormData] = useState({});
   // Initialize your form data state here
@@ -123,6 +132,16 @@ const ManageBooking = () => {
             All Flight
           </div>
           <div
+            onClick={() => handleTabClick("confirm")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "confirm"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
+            }`}
+          >
+            Confirm Flight
+          </div>
+          <div
             onClick={() => handleTabClick("cancel")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
               isActive === "cancel"
@@ -132,20 +151,37 @@ const ManageBooking = () => {
           >
             Cancel Flight
           </div>
-          <div
-            onClick={() => handleTabClick("arrive")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "arrive"
-                ? "border-t-2 bg-cyan-50 border-cyan-400"
-                : ""
-            }`}
-          >
-            Arrive Flight
-          </div>
         </div>
       </section>
 
-      <div className="overflow-x-auto shadow-md mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
+      {isActive === "allflight" && (
+        <BookingFlightTable
+          bookings={bookings}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="flight status"
+        />
+      )}
+
+      {isActive === "cancel" && (
+        <BookingFlightTable
+          bookings={cancelBookings}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="cancel status"
+        />
+      )}
+
+      {isActive === "confirm" && (
+        <BookingFlightTable
+          bookings={confirmBookings}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="confirm status"
+        />
+      )}
+
+      {/* <div className="overflow-x-auto shadow-md mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
         <table className="table">
           <thead>
             <tr>
@@ -224,7 +260,7 @@ const ManageBooking = () => {
             <GrPrevious size={20} />
           </button>
           {/* Render pagination buttons based on the total number of pages */}
-          {Array.from(
+      {/* {Array.from(
             { length: Math.ceil(bookings?.length / ITEMS_PER_PAGE) },
             (_, index) => (
               <h3
@@ -244,8 +280,8 @@ const ManageBooking = () => {
           >
             <GrNext size={20} />
           </button>
-        </section>
-      </div>
+        </section> */}
+      {/* </div> */}
 
       {isModalOpen && (
         <div
