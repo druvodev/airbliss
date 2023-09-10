@@ -39,6 +39,12 @@ const Account = () => {
       email: event.target.email.value,
       phone: event.target.phone.value,
       about: event.target.about.value,
+      nation: event.target.nation.value,
+      relationship: event.target.relationship.value,
+      from: event.target.from.value,
+      live: event.target.live.value,
+      nickname: event.target.nickname.value,
+      bio: event.target.bio.value,
     };
 
     console.log(usersData);
@@ -72,11 +78,11 @@ const Account = () => {
           AirBliss Account
         </h1>
       </div>
-      <div className="grid lg:grid-cols-3 grid-cols-1 gap-8 mt-8">
-        <div className="bg-white shadow lg:col-span-1 py-[50px] px-[30px] h-fit rounded-xl">
+      <div className="grid lg:grid-row-3 grid-row-1 gap-8 mt-8">
+        <div className="bg-white shadow lg:row-span-1 h-fit rounded-xl">
           <InforMation currentUser={currentUser} />
         </div>
-        <div className="bg-white shadow lg:col-span-2 py-[30px] px-[50px] rounded-xl">
+        <div className="bg-white shadow lg:row-span-2 py-[30px] px-[50px] rounded-xl">
           <div className="flex justify-between ">
             <h1 className="lg:text-[36px] text-xl mb-7 font-semibold text-gray-900 capitalize">
               Personal Information

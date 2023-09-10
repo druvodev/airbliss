@@ -22,19 +22,24 @@ const Navbar = () => {
   const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [axiosSecure] = UseAxiosSecure();
+  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    // setIsLoading(true);
     axiosSecure
       .get("/users")
       .then((response) => {
         setUsers(response?.data);
+        // setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        // setIsLoading(false);
       });
   }, [axiosSecure]);
 
   const currentUser = users.find((userData) => userData?.email === user?.email);
+  console.log(currentUser);
 
   const isAdmin = currentUser?.role === "admin";
 

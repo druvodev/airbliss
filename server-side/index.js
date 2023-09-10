@@ -86,8 +86,7 @@ async function run() {
     const bookingsCollection = database.collection("bookings");
     const seatsCollection = database.collection("seats");
     const usersCollection = database.collection("users");
-    const bookingsOperationCollection =
-      database.collection("bookingsOperation");
+    const bookingsManageCollection = database.collection("bookingsManage");
 
     app.post("/jwt", (req, res) => {
       const user = req.body;
@@ -541,13 +540,12 @@ async function run() {
         );
       });
     });
-    // ###################################### Booking Cancel Request ######################################
 
+    // ###################################### Booking Cancel Request ######################################
     const addBookingOperation = async (bookingInfo, feedback) => {
       const newBookingStatus = "cancel";
       const newRequestStatus = "pending";
       const currentDateTime = format(new Date(), "yyyy-MM-dd HH:mm:ss");
-
       const reqBookingInfo = {
         bookingId: bookingInfo.bookingReference,
         bookingStatus: newBookingStatus,
@@ -558,9 +556,7 @@ async function run() {
       };
 
       try {
-        const result = await bookingsOperationCollection.insertOne(
-          reqBookingInfo
-        );
+        const result = await bookingsManageCollection.insertOne(reqBookingInfo);
         if (result.insertedCount === 1) {
           return { message: "Booking operation added successfully" };
         } else {
@@ -626,6 +622,13 @@ async function run() {
         }
       }
     );
+
+    // ############################## Manage Bookings ##############################
+    // Get all request bookings
+    app.get("/bookings-manage", async (req, res) => {
+      const result = await bookingsManageCollection.find().toArray();
+      res.send(result);
+    });
 
     // #############################################################################
     // get user booking information
@@ -770,6 +773,7 @@ async function run() {
       const id = req.params.id;
       const usersData = req.body.usersData; // No need for req.body.usersData
 
+      console.log(id);
       console.log(usersData);
 
       const filter = { _id: new ObjectId(id) };
