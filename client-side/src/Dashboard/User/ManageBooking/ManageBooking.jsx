@@ -29,8 +29,8 @@ const ManageBooking = () => {
   const confirmBookings = bookings?.filter(
     (booking) => booking?.bookingStatus === "confirmed"
   );
-  console.log("All bookings", bookings);
-  console.log("Cancel Bookings", cancelBookings);
+  // console.log("All bookings", bookings);
+  // console.log("Cancel Bookings", cancelBookings);
 
   const [formData, setFormData] = useState({});
   // Initialize your form data state here
@@ -179,108 +179,6 @@ const ManageBooking = () => {
           status="confirm status"
         />
       )}
-
-      {/* <div className="overflow-x-auto shadow-md mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
-        <table className="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Flight image</th>
-              <th>Flight name</th>
-              <th>Booking Reference</th>
-              <th>Flight booking date</th>
-              <th>Travel Path</th>
-              <th>Ticket Price</th>
-              <th>Flight Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {bookings?.slice(startIndex, endIndex).map((flight, index) => (
-              <tr key={index}>
-                <th>{index + 1}</th>
-                <td>
-                  <div className="flex items-center space-x-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle rounded-full w-12 h-12">
-                        <img
-                          src={flight?.airlineLogo}
-                          alt="Avatar Tailwind CSS Component"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>{flight?.flight.airline}</td>
-                <td>{flight?.bookingReference}</td>
-                <td>{flight?.bookingDateTime}</td>
-
-                <td>
-                  {flight?.flight?.departureCity} To{" "}
-                  {flight?.flight?.arrivalCity}
-                </td>
-                <td>BDT {flight?.flight?.fareSummary?.total}</td>
-                <td>
-                  {flight?.bookingStatus ? flight?.bookingStatus : "Pending"}
-                </td>
-                <td className="flex gap-2 mt-2">
-                  <Link
-                    to={{
-                      pathname: `/dashboard/ticketHistory/${flight?.bookingReference}`,
-                    }}
-                  >
-                    <button
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-500
-                    }`}
-                    >
-                      <GoHistory />
-                    </button>
-                  </Link>
-
-                  <button
-                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400`}
-                    onClick={() => {
-                      openModal();
-                      setFlightRef(flight?.bookingReference);
-                    }}
-                  >
-                    <MdCancel />
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <section className="mt-12 flex justify-end items-center">
-          <button
-            className="border-[1px] p-2 rounded-l-md"
-            onClick={handlePaginationPrev}
-          >
-            <GrPrevious size={20} />
-          </button>
-          {/* Render pagination buttons based on the total number of pages */}
-      {/* {Array.from(
-            { length: Math.ceil(bookings?.length / ITEMS_PER_PAGE) },
-            (_, index) => (
-              <h3
-                key={index}
-                className={`px-3 py-[6px] border-[1px] cursor-pointer ${
-                  index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
-                }`}
-                onClick={() => setCurrentPage(index + 1)}
-              >
-                {index + 1}
-              </h3>
-            )
-          )}
-          <button
-            className="border-[1px] p-2 rounded-r-md"
-            onClick={handlePaginationNext}
-          >
-            <GrNext size={20} />
-          </button>
-        </section> */}
-      {/* </div> */}
 
       {isModalOpen && (
         <div
