@@ -42,10 +42,10 @@ const Sidebar = ({ isActive }) => {
         <div>
           {/* Branding & Profile Info */}
           <div>
-            <div className="w-full  hidden md:flex py-2 justify-center items-center rounded-lg  mx-auto">
+            <div className="w-full md:flex py-2 justify-center items-center rounded-lg  mx-auto">
               <Link to="/">
                 <img
-                  className="hidden md:block w-[150px] h-[60px]"
+                  className=" mx-auto md:block w-[150px] h-[60px]"
                   src={logo}
                   alt=""
                 />
