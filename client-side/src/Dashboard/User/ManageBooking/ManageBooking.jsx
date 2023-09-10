@@ -25,8 +25,7 @@ const ManageBooking = () => {
   const {
     register,
     handleSubmit,
-    setValue,
-    getValues,
+
     reset,
     formState: { errors },
   } = useForm();
