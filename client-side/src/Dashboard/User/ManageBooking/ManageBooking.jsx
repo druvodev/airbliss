@@ -22,9 +22,6 @@ const ManageBooking = () => {
 
   const bookings = useSelector((state) => state?.userInfo?.userBookings);
 
-  const [formData, setFormData] = useState({});
-  // Initialize your form data state here
-
   const {
     register,
     handleSubmit,
