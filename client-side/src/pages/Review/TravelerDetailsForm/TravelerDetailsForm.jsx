@@ -478,10 +478,10 @@ const TravelerDetailsForm = () => {
                         type="email"
                         readOnly
                         name=""
+                        defaultValue={user?.email}
                         id=""
                         {...register("traveler_email", { required: true })}
                         placeholder="Email"
-                        defaultValue={user?.email}
                         className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
