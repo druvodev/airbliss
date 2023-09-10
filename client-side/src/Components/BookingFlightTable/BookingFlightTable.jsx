@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { BsInfoCircle } from "react-icons/bs";
+import { FaInfo } from "react-icons/fa";
 import { GoHistory } from "react-icons/go";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
@@ -86,16 +88,18 @@ const BookingFlightTable = ({ bookings, openModal, setFlightRef, status }) => {
                   }}
                 >
                   <button
-                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-500
-                    }`}
+                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400 hover:bg-cyan-500
+                  }`}
                   >
-                    <GoHistory />
+                    {/* <BsInfoCircle className="text-xl" /> */}
+                    <FaInfo />
+                    {/* <GoHistory /> */}
                   </button>
                 </Link>
 
                 {flight?.requestStatus === "pending" ? (
                   <button
-                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400 opacity-30`}
+                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  opacity-30`}
                     onClick={() => {
                       openModal();
                       setFlightRef(flight?.bookingReference);
@@ -106,7 +110,7 @@ const BookingFlightTable = ({ bookings, openModal, setFlightRef, status }) => {
                   </button>
                 ) : (
                   <button
-                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400`}
+                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400 hover:bg-red-500`}
                     onClick={() => {
                       openModal();
                       setFlightRef(flight?.bookingReference);

@@ -3,6 +3,7 @@ import UseAxiosSecure from "../../../hooks/UseAxiosSecure";
 import { toast } from "react-hot-toast";
 import AllUsers from "./AllUsers";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import logo from "../../../assets/icon/airblissBlack.png";
 import Loader from "../../../Components/Loader/Loader";
 
 const ITEMS_PER_PAGE = 5;
@@ -54,7 +55,6 @@ const ManageUsers = () => {
   };
 
   const currentUser = users.map((userData) => userData?._id);
-  console.log(currentUser);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -88,7 +88,6 @@ const ManageUsers = () => {
           } else {
             toast.error("Failed to update user data");
           }
-          console.log(data);
         })
         .catch((err) => {
           console.log(err);
@@ -96,17 +95,19 @@ const ManageUsers = () => {
         .finally(() => {
           setIsLoading(false); // Set loading to false when the action is complete
         });
-      console.log(selectedUserId);
-      console.log(usersData);
     }
   };
 
   return (
     <div className="lg:mt-10">
-      <h1 className="lg:text-[36px] lg:ml-6 text-xl mb-7 font-semibold text-gray-900 capitalize">
-        Manage User's Information
-      </h1>
-      <div className="overflow-x-auto mx-1 lg:mx-7 mt-[50px] px-10 py-5 rounded-xl bg-white">
+      <div className="md:mx-7 p-4 shadow-md border  bg-white rounded-sm">
+        <img className=" hidden md:block w-24 mb-2" src={logo} alt="" />
+        <h1 className="text-center md:-mt-11 mb-2 font-semibold md:text-xl">
+          Manage User's Information
+        </h1>
+      </div>
+
+      <div className="overflow-x-auto mx-1 lg:mx-7 mt-[40px] px-10 py-5 shadow-md rounded-md bg-white">
         {isLoading ? ( // Conditional rendering based on isLoading
           <Loader /> // Display the loading component
         ) : (
@@ -136,35 +137,7 @@ const ManageUsers = () => {
             </tbody>
           </table>
         )}
-        <section className="mt-12 flex justify-end items-center">
-          <button
-            className="border-[1px] p-2 rounded-l-md"
-            onClick={handlePaginationPrev}
-          >
-            <GrPrevious size={20} />
-          </button>
-          {/* Render pagination buttons based on the total number of pages */}
-          {Array.from(
-            { length: Math.ceil(users?.length / ITEMS_PER_PAGE) },
-            (_, index) => (
-              <h3
-                key={index}
-                className={`px-3 py-[6px] border-[1px] cursor-pointer ${
-                  index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
-                }`}
-                onClick={() => setCurrentPage(index + 1)}
-              >
-                {index + 1}
-              </h3>
-            )
-          )}
-          <button
-            className="border-[1px] p-2 rounded-r-md"
-            onClick={handlePaginationNext}
-          >
-            <GrNext size={20} />
-          </button>
-        </section>
+
         <dialog id="my_modal_3" className="modal">
           <div className="modal-box">
             <form method="dialog">
@@ -225,6 +198,35 @@ const ManageUsers = () => {
           </div>
         </dialog>
       </div>
+      <section className="mt-12 flex justify-end items-center">
+        <button
+          className="border-[1px] p-2 rounded-l-md"
+          onClick={handlePaginationPrev}
+        >
+          <GrPrevious size={20} />
+        </button>
+        {/* Render pagination buttons based on the total number of pages */}
+        {Array.from(
+          { length: Math.ceil(users?.length / ITEMS_PER_PAGE) },
+          (_, index) => (
+            <h3
+              key={index}
+              className={`px-3 py-[6px] border-[1px] cursor-pointer ${
+                index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+              }`}
+              onClick={() => setCurrentPage(index + 1)}
+            >
+              {index + 1}
+            </h3>
+          )
+        )}
+        <button
+          className="border-[1px] p-2 rounded-r-md"
+          onClick={handlePaginationNext}
+        >
+          <GrNext size={20} />
+        </button>
+      </section>
     </div>
   );
 };

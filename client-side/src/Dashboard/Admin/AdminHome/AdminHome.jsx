@@ -138,14 +138,14 @@ const AdminHome = () => {
         <div className="mt-12 bg-white shadow-lg rounded-xl p-2 md:p-5">
           <div className="flex justify-between items-center my-5">
             <div>
-              <h2 className="text-2xl font-bold">Monthly Revenue</h2>
+              <h2 className="text-xl md:text-2xl font-bold">Monthly Revenue</h2>
               <p className="font-semibold text-gray-500 tracking-wider">
                 Total revenue this month
               </p>
             </div>
 
             <div className="text-right">
-              <h2 className="text-2xl font-bold">$450K</h2>
+              <h2 className="text-xl md:text-2xl font-bold">$450K</h2>
               <p className="font-semibold text-gray-500 ">
                 <span className="text-cyan-600">+1.5%</span> than last Month
               </p>
