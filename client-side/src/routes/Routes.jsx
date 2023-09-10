@@ -40,7 +40,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/review/:id",
-        element: <PrivateRoute><Review /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <Review />
+          </PrivateRoute>
+        ),
       },
 
       {
@@ -58,21 +62,33 @@ export const router = createBrowserRouter([
       },
       {
         path: "/booking-confirmed/:bookingId",
-        element: <PrivateRoute><ETicket /></PrivateRoute>,
+        element: (
+          <PrivateRoute>
+            <ETicket />
+          </PrivateRoute>
+        ),
       },
       {
         path: "hotDeals/:id",
-        element: <HotDealDetails />
-      }
+        element: <HotDealDetails />,
+      },
     ],
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "adminHome",
-        element: <AdminRoute><AdminHome /></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <AdminHome />
+          </AdminRoute>
+        ),
       },
 
       {
@@ -87,16 +103,28 @@ export const router = createBrowserRouter([
 
       {
         path: "ticketHistory/:bookingReference",
-        element: <AdminRoute><TicketHistory /></AdminRoute>,
+        element: (
+          <PrivateRoute>
+            <TicketHistory />
+          </PrivateRoute>
+        ),
       },
 
       {
         path: "addFlight",
-        element: <AdminRoute><AddFlight /></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <AddFlight />
+          </AdminRoute>
+        ),
       },
       {
         path: "manageUsers",
-        element: <AdminRoute><ManageUsers /></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "account",
@@ -104,7 +132,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "flightStatus",
-        element: <AdminRoute><FlightStatus /></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <FlightStatus />
+          </AdminRoute>
+        ),
       },
     ],
   },

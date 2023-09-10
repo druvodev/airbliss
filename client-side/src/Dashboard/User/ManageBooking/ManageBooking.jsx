@@ -21,7 +21,6 @@ const ManageBooking = () => {
   };
 
   const bookings = useSelector((state) => state?.userInfo?.userBookings);
-  console.log(bookings);
 
   const [formData, setFormData] = useState({});
   // Initialize your form data state here
@@ -70,7 +69,7 @@ const ManageBooking = () => {
       bookingReference: myFlight?.bookingReference,
       refundAmount,
     };
-    console.log(cancelFlightInfo);
+
     reset();
     closeModal();
   };
@@ -86,11 +85,11 @@ const ManageBooking = () => {
   return (
     <div>
       {/* Tab */}
-      <section className="bg-white p-4 shadow-md mt-5 flex items-center mx-7 space-x-4">
-        <div>
-          <h1 className="font-semibold">Filter Ticket: </h1>
+      <section className="bg-white p-4 shadow-md mt-5 flex md:flex-row flex-col  md:items-center md:mx-7 md:space-x-4">
+        <div className="mb-2 md:mb-0">
+          <h1 className="font-semibold ">Filter Ticket: </h1>
         </div>
-        <div className="flex gap-1  rounded font-medium text-gray-600 text-sm">
+        <div className="flex gap-1 rounded font-medium text-gray-600 text-sm">
           <div
             onClick={() => handleTabClick("allflight")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
@@ -120,7 +119,7 @@ const ManageBooking = () => {
         </div>
       </section>
 
-      <div className="overflow-x-auto shadow-md mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
+      <div className="overflow-x-auto shadow-md md:mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
         <table className="table">
           <thead>
             <tr>
@@ -231,9 +230,9 @@ const ManageBooking = () => {
           <div className=" bg-black/20 min-h-screen w-full flex justify-center items-center">
             {/* Modal content */}
             <div className="bg-white w-10/12 max-w-2xl max-h-[95vh] md:max-h-[100vh] overflow-y-scroll md:overflow-auto rounded-lg shadow-lg p-6">
-              <div className="flex gap-2 md:gap-5 lg:gap-10 items-center mb-5">
+              <div className="flex lg:flex-row flex-col gap-2 md:gap-5 lg:gap-10 items-center mb-5">
                 <img className="w-24" src={logo} alt="Website Logo" />
-                <h2 className="text-lg md:text-xl font-semibold">
+                <h2 className="text-lg text-center md:text-left md:text-xl font-semibold">
                   Flight Cancelation and Refund Requisition
                 </h2>
               </div>
@@ -252,29 +251,30 @@ const ManageBooking = () => {
                 </div>
               </div>
               <hr />
+
               <div className="mb-2 mt-5">
                 <h2 className="text-lg font-semibold">Flight Details</h2>
                 <hr />
-                <div className="flex gap-5 items-center">
-                  <div>
+                <div className="md:flex gap-5 items-center">
+                  <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
                     <h2 className="font-semibold">Airline</h2>
                     <p>{myFlight?.flight?.airline}</p>
                   </div>
-                  <div>
+                  <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
                     <h2 className="font-semibold">Route</h2>
                     <p>
                       {myFlight?.flight?.departureCity} to{" "}
                       {myFlight?.flight?.arrivalCity}
                     </p>
                   </div>
-                  <div>
+                  <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
                     <h2 className="font-semibold">Departure Date</h2>
                     <p>
                       {myFlight?.flight?.departureDate}{" "}
                       {myFlight?.flight?.departureTime}
                     </p>
                   </div>
-                  <div>
+                  <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
                     <h2 className=" font-semibold">Arrival Date</h2>
                     <p>
                       {myFlight?.flight?.arrivalDate}{" "}
@@ -293,14 +293,14 @@ const ManageBooking = () => {
                   <p>Your paid amount for this flight</p>
                   <p>= {paidAmount} BDT</p>
                 </div>
-                <div className="grid grid-cols-2">
+                <div className="grid grid-cols-2 mt-2 md:mt-0">
                   <p>Deducted 30% cancelation fee</p>
                   <p>= {deductedAmount} BDT</p>
                 </div>
                 <div className="w-3/4">
                   <hr />
                 </div>
-                <div className="grid grid-cols-2 ">
+                <div className="grid grid-cols-2 mt-2 md:mt-0">
                   <p>Total refund amount</p>
                   <p>= {refundAmount} BDT</p>
                 </div>
