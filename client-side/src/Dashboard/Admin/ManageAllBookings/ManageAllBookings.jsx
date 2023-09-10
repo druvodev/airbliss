@@ -136,16 +136,6 @@ const ManageAllBooking = () => {
             Confirm Bookings
           </div>
           <div
-            onClick={() => handleTabClick("cancel")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "cancel"
-                ? "border-t-2 bg-cyan-50 border-cyan-400"
-                : ""
-            }`}
-          >
-            Cancel Flight
-          </div>
-          <div
             onClick={() => handleTabClick("cancel-request")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
               isActive === "cancel-request"
@@ -156,14 +146,25 @@ const ManageAllBooking = () => {
             Cancel Requests
           </div>
           <div
-            onClick={() => handleTabClick("refund-denied")}
+            onClick={() => handleTabClick("cancel")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "refund-denied"
+              isActive === "cancel"
                 ? "border-t-2 bg-cyan-50 border-cyan-400"
                 : ""
             }`}
           >
-            Refund Denied
+            Cancel Bookings
+          </div>
+
+          <div
+            onClick={() => handleTabClick("cancel-denied")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "cancel-denied"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
+            }`}
+          >
+            Cancel Denied
           </div>
         </div>
       </section>
@@ -174,6 +175,7 @@ const ManageAllBooking = () => {
           openModal={openModal}
           setFlightRef={setFlightRef}
           status="flight status"
+          action={true}
         />
       )}
 
@@ -183,6 +185,7 @@ const ManageAllBooking = () => {
           openModal={openModal}
           setFlightRef={setFlightRef}
           status="cancel status"
+          action={true}
         />
       )}
 
@@ -192,6 +195,7 @@ const ManageAllBooking = () => {
           openModal={openModal}
           setFlightRef={setFlightRef}
           status="confirm status"
+          action={true}
         />
       )}
 

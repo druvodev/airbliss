@@ -8,7 +8,13 @@ import { Link } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 5;
 
-const BookingFlightTable = ({ bookings, openModal, setFlightRef, status }) => {
+const BookingFlightTable = ({
+  bookings,
+  openModal,
+  setFlightRef,
+  status,
+  action,
+}) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const handlePaginationPrev = () => {
@@ -41,7 +47,7 @@ const BookingFlightTable = ({ bookings, openModal, setFlightRef, status }) => {
             <th>Travel Path</th>
             <th>Ticket Price</th>
             <th className="capitalize">{status}</th>
-            <th>Action</th>
+            {!action && <th>Action</th>}
           </tr>
         </thead>
         <tbody>
@@ -81,45 +87,47 @@ const BookingFlightTable = ({ bookings, openModal, setFlightRef, status }) => {
                   <span>{flight?.requestStatus}</span>
                 )}
               </td>
-              <td className="flex gap-2 mt-2">
-                <Link
-                  to={{
-                    pathname: `/dashboard/ticketHistory/${flight?.bookingReference}`,
-                  }}
-                >
-                  <button
-                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400 hover:bg-cyan-500
+              {!action && (
+                <td className="flex gap-2 mt-2">
+                  <Link
+                    to={{
+                      pathname: `/dashboard/ticketHistory/${flight?.bookingReference}`,
+                    }}
+                  >
+                    <button
+                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400 hover:bg-cyan-500
                   }`}
-                  >
-                    {/* <BsInfoCircle className="text-xl" /> */}
-                    <FaInfo />
-                    {/* <GoHistory /> */}
-                  </button>
-                </Link>
+                    >
+                      {/* <BsInfoCircle className="text-xl" /> */}
+                      <FaInfo />
+                      {/* <GoHistory /> */}
+                    </button>
+                  </Link>
 
-                {flight?.requestStatus === "pending" ? (
-                  <button
-                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  opacity-30`}
-                    onClick={() => {
-                      openModal();
-                      setFlightRef(flight?.bookingReference);
-                    }}
-                    disabled
-                  >
-                    <MdCancel />
-                  </button>
-                ) : (
-                  <button
-                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400 hover:bg-red-500`}
-                    onClick={() => {
-                      openModal();
-                      setFlightRef(flight?.bookingReference);
-                    }}
-                  >
-                    <MdCancel />
-                  </button>
-                )}
-              </td>
+                  {flight?.requestStatus === "pending" ? (
+                    <button
+                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  opacity-30`}
+                      onClick={() => {
+                        openModal();
+                        setFlightRef(flight?.bookingReference);
+                      }}
+                      disabled
+                    >
+                      <MdCancel />
+                    </button>
+                  ) : (
+                    <button
+                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400 hover:bg-red-500`}
+                      onClick={() => {
+                        openModal();
+                        setFlightRef(flight?.bookingReference);
+                      }}
+                    >
+                      <MdCancel />
+                    </button>
+                  )}
+                </td>
+              )}
             </tr>
           ))}
         </tbody>
