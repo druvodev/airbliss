@@ -86,6 +86,8 @@ async function run() {
     const bookingsCollection = database.collection("bookings");
     const seatsCollection = database.collection("seats");
     const usersCollection = database.collection("users");
+    const bookingsOperationCollection =
+      database.collection("bookingsOperation");
 
     app.post("/jwt", (req, res) => {
       const user = req.body;
@@ -97,11 +99,6 @@ async function run() {
     });
 
     // Flights Get
-    app.get("/flights", async (req, res) => {
-      const result = await flightsCollection.find().toArray();
-      res.send(result);
-    });
-
     app.get("/flights", async (req, res) => {
       const result = await flightsCollection.find().toArray();
       res.send(result);
@@ -259,7 +256,7 @@ async function run() {
         return res.json("Not found proper url!");
       }
       const flightsResult = [];
-
+      console.log("searching");
       try {
         const fromCityData = await flightsCollection.findOne({
           [fromCity]: { $exists: true },
@@ -365,6 +362,7 @@ async function run() {
         }
 
         // Respond with the flights data including fare summary
+        console.log("send");
         res.json({ flights: flightsResult });
       } catch (error) {
         console.error("Error in /flights/search:", error);
@@ -524,6 +522,8 @@ async function run() {
           const { totalSeat, flightId, flight } = bookingInfo;
           bookingInfo.transitionId = transitionId;
           bookingInfo.paymentStatus = "paid";
+          bookingInfo.bookingStatus = "confirmed";
+          bookingInfo.requestStatus = "success";
           // Generate seat plan before store booking information
           // await generateSeatData(totalSeat, flightId, flight?.departureDate);
           const seatNo = await selectAvailableSeat(
@@ -537,10 +537,95 @@ async function run() {
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
         res.redirect(
-          `https://airbliss-flight-booking.web.app/booking-confirmed/${req.params.bookingId}`
+          `http://localhost:5173/booking-confirmed/${req.params.bookingId}`
         );
       });
     });
+    // ###################################### Booking Cancel Request ######################################
+
+    const addBookingOperation = async (bookingInfo, feedback) => {
+      const newBookingStatus = "cancel";
+      const newRequestStatus = "pending";
+      const currentDateTime = format(new Date(), "yyyy-MM-dd HH:mm:ss");
+
+      const reqBookingInfo = {
+        bookingId: bookingInfo.bookingReference,
+        bookingStatus: newBookingStatus,
+        requestStatus: newRequestStatus,
+        reqTime: currentDateTime,
+        feedback: feedback,
+        bookingInfo: bookingInfo,
+      };
+
+      try {
+        const result = await bookingsOperationCollection.insertOne(
+          reqBookingInfo
+        );
+        if (result.insertedCount === 1) {
+          return { message: "Booking operation added successfully" };
+        } else {
+          return { error: "Failed to add booking operation" };
+        }
+      } catch (err) {
+        console.error("Error adding booking operation:", err);
+        return { error: "An error occurred" };
+      }
+    };
+
+    app.patch(
+      "/bookings/cancel/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const date = req.params.date;
+        const airportCode = req.params.airportCode;
+        const bookingReference = req.params.bookingReference;
+        const newBookingStatus = "cancel";
+        const newRequestStatus = "pending";
+        console.log(bookingReference);
+
+        try {
+          const path = `${date}.${airportCode}`;
+
+          const result = await bookingsCollection.updateOne(
+            {
+              [path]: {
+                $elemMatch: { bookingReference: bookingReference },
+              },
+            },
+            {
+              $set: {
+                [path + ".$.bookingStatus"]: newBookingStatus,
+                [path + ".$.requestStatus"]: newRequestStatus,
+              },
+            }
+          );
+
+          if (result.modifiedCount === 1) {
+            // Call the addBookingOperation function here
+            const { message, error } = await addBookingOperation(
+              req.body.bookingInfo,
+              req.body.feedback
+            );
+
+            if (error) {
+              res.status(500).json({
+                error: "An error occurred while adding booking operation",
+              });
+            } else {
+              res.json({
+                message: "Booking status updated successfully",
+                bookingOperationMessage: message,
+              });
+            }
+          } else {
+            // If the document with the specified bookingReference was not found
+            res.status(404).json({ message: "Booking not found" });
+          }
+        } catch (err) {
+          console.error("Error updating booking status:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
 
     // #############################################################################
     // get user booking information
@@ -669,7 +754,7 @@ async function run() {
       const existingUser = await usersCollection.findOne(query);
       console.log(existingUser, "existing user");
       if (existingUser) {
-        return res.send({ message: "User already exists" });
+        return; //res.send({ message: "User already exists" });
       }
       const result = await usersCollection.insertOne(user);
       res.send(result);

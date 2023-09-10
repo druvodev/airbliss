@@ -4,6 +4,7 @@ const initialState = {
   userInfo: {},
   userBookings: [],
   flightRef: "",
+  refetch: false,
 };
 
 export const usersSlice = createSlice({
@@ -19,9 +20,12 @@ export const usersSlice = createSlice({
     setFlightRef: (state, action) => {
       state.userBookings = action.payload;
     },
+    setRefetch: (state, action) => {
+      state.refetch = action.payload;
+    },
   },
 });
 
-export const { setUserInfo, setUserBookings, setFlightRef } =
+export const { setUserInfo, setUserBookings, setFlightRef, setRefetch } =
   usersSlice.actions;
 export default usersSlice.reducer;

@@ -1,25 +1,17 @@
 import { useContext, useRef, useState } from "react";
 import LogInSlider from "./LogInSlider";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaFacebook, FaGoogle } from "react-icons/fa";
+import { FaEye, FaEyeSlash, FaFacebook, FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../providers/AuthProvider";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { toast } from "react-hot-toast";
 import { saveUser } from "../Api/auth";
 
 const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
-  const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext)
+  const [show, setShow] = useState(false)
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const {
-    resetPassword,
-    signInWithGoogle,
-    signIn,
-    setLoading,
-    loading,
-    createUser,
-    updateUserProfile,
-    signInWithFacebook,
-  } = useContext(AuthContext);
+  const { resetPassword, signInWithGoogle, signIn, setLoading, loading, createUser, updateUserProfile, signInWithFacebook } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -29,57 +21,65 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     setIsLoginMode((prevMode) => !prevMode);
   };
 
-  const handleSubmitSignUp = (event) => {
-    event.preventDefault();
-    const name = event.target.name.value;
-    const email = event.target.email.value;
-    const password = event.target.password.value;
-    const image = event.target.image.files[0];
+  const handleReset = () => {
+    const email = emailRef.current.value
+    resetPassword(email)
+      .then(() => {
+        toast.success("Please check your email for rest link")
+      })
+      .catch(err => {
+        setLoading(false)
+        toast.error(err.message);
+      })
+  }
 
-    const formData = new FormData();
-    formData.append("image", image);
+  const handleSubmitSignUp = event => {
+    event.preventDefault()
+    const name = event.target.name.value
+    const email = event.target.email.value
+    const password = event.target.password.value
+    const image = event.target.image.files[0]
 
-    const url = `https://api.imgbb.com/1/upload?key=${
-      import.meta.env.VITE_IMGBB_KEY
-    }`;
+    const formData = new FormData()
+    formData.append('image', image)
+
+    const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`
 
     fetch(url, {
-      method: "POST",
+      method: 'POST',
       body: formData,
+    }).then(res => res.json()).then(imageData => {
+      const imageUrl = imageData.data.display_url
+      createUser(email, password)
+        .then(result => {
+          console.log(result.user);
+          updateUserProfile(name, imageUrl)
+            .then(() => {
+              toast.success("User Created Successfully")
+              saveUser(result.user)
+              navigate(from, { replace: true })
+            })
+            .catch(err => {
+              setLoading(false)
+              toast.error(err.message);
+            })
+          navigate(from, { replace: true })
+          setIsLoginSignupModalOpen(false)
+        })
+        .catch(err => {
+          setLoading(false)
+          toast.error(err.message);
+        })
     })
-      .then((res) => res.json())
-      .then((imageData) => {
-        const imageUrl = imageData.data.display_url;
-        createUser(email, password)
-          .then((result) => {
-            console.log(result.user);
-            updateUserProfile(name, imageUrl)
-              .then(() => {
-                toast.success("User Created Successfully");
-                saveUser(result.user);
-                navigate(from, { replace: true });
-              })
-              .catch((err) => {
-                setLoading(false);
-                toast.error(err.message);
-              });
-            navigate(from, { replace: true });
-            setIsLoginSignupModalOpen(false);
-          })
-          .catch((err) => {
-            setLoading(false);
-            toast.error(err.message);
-          });
-      })
-      .catch((err) => {
-        setLoading(false);
+      .catch(err => {
+        setLoading(false)
         console.log(err.message);
-        toast.error(err.message);
-      });
+        toast.error(err.message)
+      })
 
     console.log(name, email, password, formData);
-    return;
-  };
+    return
+  }
 
   const handleSubmitLogIn = (event) => {
     event.preventDefault();
@@ -89,9 +89,9 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signIn(email, password)
       .then((result) => {
         console.log(result.user);
-        saveUser(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
-        setIsLoginSignupModalOpen(false);
+        setIsLoginSignupModalOpen(false)
       })
       .catch((err) => {
         setLoading(false);
@@ -103,9 +103,10 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
-        saveUser(result.user);
+        console.log(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
-        setIsLoginSignupModalOpen(false);
+        setIsLoginSignupModalOpen(false)
       })
       .catch((err) => {
         setLoading(false);
@@ -118,16 +119,16 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     signInWithFacebook()
       .then((result) => {
         console.log(result.user);
-        saveUser(result.user);
+        saveUser(result.user)
         navigate(from, { replace: true });
-        setIsLoginSignupModalOpen(false);
+        setIsLoginSignupModalOpen(false)
       })
       .catch((err) => {
         setLoading(false);
         toast.error(err.message);
         console.log(err);
       });
-  };
+  }
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-opacity-75 bg-gray-900">
@@ -193,19 +194,26 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
                     />
                   </div>
                   <div>
-                    <div className="flex justify-between">
+                    <div className="flex relative justify-between">
                       <label htmlFor="password" className="text-sm mb-2">
                         Password
                       </label>
                     </div>
                     <input
-                      type="password"
+                      type={show ? "text" : "password"}
                       name="password"
                       id="password"
                       required
                       placeholder="Enter Your Password Here"
                       className="w-full px-3 py-2 border rounded-md border-gray-300 focus:outline-cyan-500 bg-gray-50 text-gray-900"
                     />
+                    <span className='text-[20px] inline-block absolute lg:right-[472px] top-[320px] right-[40px] lg:top-[321px] cursor-pointer text-gray-900' onClick={() => setShow(!show)}>
+                      <span>
+                        {
+                          show ? <FaEye></FaEye> : <FaEyeSlash></FaEyeSlash>
+                        }
+                      </span>
+                    </span>
                   </div>
                 </div>
                 <div className="flex justify-between mt-10 items-center mb-4">
@@ -215,17 +223,23 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
                       className="bg-cyan-500 w-full rounded-md px-5 py-2 text-white"
                     >
                       {loading ? (
-                        <TbFidgetSpinner
-                          size={24}
-                          className="m-auto animate-spin"
-                        />
+                        <div className="flex items-center gap-3">
+                          <TbFidgetSpinner
+                            size={24}
+                            className="m-auto animate-spin"
+                          />
+                          Loading...
+                        </div>
                       ) : (
                         "SignIn"
                       )}
                     </button>
                   </div>
                   <div className="space-y-1">
-                    <button className="text-xs hover:underline hover:text-cyan-500 text-gray-400">
+                    <button
+                      onClick={handleReset}
+                      className="text-xs hover:underline hover:text-cyan-500 text-gray-400"
+                    >
                       Forgot password?
                     </button>
                   </div>
@@ -302,10 +316,13 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
                     className="bg-cyan-500 w-full rounded-md px-5 py-2 text-white"
                   >
                     {loading ? (
-                      <TbFidgetSpinner
-                        size={24}
-                        className="m-auto animate-spin"
-                      />
+                      <div className="flex items-center gap-3">
+                        <TbFidgetSpinner
+                          size={24}
+                          className="m-auto animate-spin"
+                        />
+                        Loading...
+                      </div>
                     ) : (
                       "Continue"
                     )}

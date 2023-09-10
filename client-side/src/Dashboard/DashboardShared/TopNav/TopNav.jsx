@@ -5,24 +5,38 @@ import { BiSearch } from 'react-icons/bi';
 
 const TopNav = ({ handleToggle }) => {
   const { user, logOut } = useAuth()
+
+  // Function to slice a string to a maximum of 10 words
+  const sliceToMaxWords = (str, maxWords) => {
+    const words = str.split('');
+    if (words.length > maxWords) {
+      return words.slice(0, maxWords).join('') + '...';
+    }
+    return str;
+  };
+
+  // Slice and sort the name and email
+  const slicedAndSortedName = sliceToMaxWords(user?.displayName || '', 11);
+  const slicedAndSortedEmail = sliceToMaxWords(user?.email || '', 11);
+
   return (
     <>
       <div
-        className="navbar lg:gap-10 gap-0 lg:flex-row flex-row-reverse justify-between w-[100%] mx-auto py-0 rounded shadow-md px-10 bg-white"
+        className="navbar lg:gap-10 gap-0 lg:flex-row flex-row-reverse justify-between w-[100%] mx-auto py-0 rounded shadow-md lg:px-10 bg-white"
       // style={{
       //   backgroundImage: 'linear-gradient(to right, #70cfc9 , #5daad6 )',
       // }}
       >
         <div className="navbar-start">
-          <div className='border-[1px] hidden lg:flex bg-[#e5eaf5] w-full md:w-auto py-2 rounded shadow-sm hover:shadow-md transition cursor-pointer'>
+          <div className=' hidden lg:flex bg-[rgba(112,207,201,0.10)] w-full md:w-auto py-2 rounded shadow-sm hover:shadow-md transition cursor-pointer'>
             <div className='flex flex-row items-center justify-between'>
-              <div className='text-sm font-semibold text-[#4d61cd] px-6'>Anywhere</div>
-              <div className='hidden text-[#4d61cd] sm:block text-sm font-semibold px-6 border-x-[1px] flex-1 text-center'>
+              <div className='text-sm font-semibold text-gray-700 px-6'>Anywhere</div>
+              <div className='hidden text- sm:block text-sm font-semibold px-6 border-x-[1px] flex-1 text-center'>
                 Any Week
               </div>
-              <div className='text-sm pl-6 pr-2 text-[#4d61cd] flex flex-row items-center gap-3'>
+              <div className='text-sm pl-6 pr-2 text-gray-700 flex flex-row items-center gap-3'>
                 <div className='hidden sm:block'>Any Day's</div>
-                <div className='p-1 bg-[#2f45c8] ml-10 rounded-full text-white'>
+                <div className='p-1 bg-cyan-500 ml-10 rounded-full text-white'>
                   <BiSearch size={18} />
                 </div>
               </div>
@@ -66,11 +80,11 @@ const TopNav = ({ handleToggle }) => {
             </ul>
           </div>
           <div className=''>
-            <h4 className='mx-2 font-medium text-[8px] lg:text-[18px] text-[#37517e]  hover:underline'>
-              {user?.displayName}
+            <h4 className='mx-2 font-medium text-[10px] lg:text-[18px] text-[#37517e]  hover:underline'>
+              {slicedAndSortedName}
             </h4>
-            <p className='mx-2 text-[8px] lg:text-[14px] font-medium -mt-1 text-[#37517e] hover:underline'>
-              {user?.email}
+            <p className='mx-2 text-[10px] lg:text-[14px] font-medium -mt-1 text-[#37517e] hover:underline'>
+              {slicedAndSortedEmail}
             </p>
           </div>
         </div>

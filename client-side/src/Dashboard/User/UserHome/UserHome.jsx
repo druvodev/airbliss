@@ -7,49 +7,31 @@ import TotalRefundAmount from "./TotalRefundAmount";
 import TotalAmount from "./TotalAmount";
 import BookingChart from "./BookingChart";
 import BookingCalendar from "./BookingCalendar";
-import BookingRefundChart from "./BookingRefundChart";
 
 const UserHome = () => {
   return (
-    <div className="grid gap-7 mt-10">
+    <div className="grid gap-7 mt-10 max-w-full">
       <div className="grid grid-rows-2 gap-7">
-        <div className="grid grid-cols-3 gap-7">
+        <div className="grid lg:grid-cols-3 grid-cols-1 gap-7">
           <TotalBooking />
           <TotalCancel />
           <PendingRefundAmount />
         </div>
-        <div className="grid grid-cols-3 gap-7">
+        <div className="grid lg:grid-cols-3 grid-cols-1 gap-7">
           <TotalRefundAmount />
           <TotalRefund />
           <TotalAmount />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-7">
-        <BookingChart />
-        <BookingRefundChart />
+      <div className="grid lg:grid-cols-3 grid-cols-1 gap-7">
+        <div className="col-span-1">
+          <BookingCalendar />
+        </div>
+        <div className="col-span-2">
+          <BookingChart />
+        </div>
       </div>
     </div>
-    // <div className='grid grid-cols-4'>
-    //   <div className='grid col-span-3 grid-rows-6 gap-5'>
-    //     <div className='grid grid-cols-2 row-span-1 gap-5'>
-    //       <TotalBooking />
-    //       <TotalCancel />
-    //     </div>
-    //     <div className='grid grid-cols-2 row-span-1 gap-5'>
-    //       <PendingRefundAmount />
-    //       <TotalRefundAmount />
-    //     </div>
-    //     <div className='grid grid-cols-2 row-span-1 gap-5'>
-    //       <TotalRefund />
-    //       <TotalAmount />
-    //     </div>
-    //     <div className='grid grid-cols-2 gap-5 row-span-3'>
-    //       <BookingChart />
-    //       <BookingCalendar />
-    //     </div>
-    //   </div>
-    //   <div className="col-span-1">hello</div>
-    // </div>
   );
 };
 

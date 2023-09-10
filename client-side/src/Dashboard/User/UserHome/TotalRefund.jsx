@@ -10,8 +10,8 @@ const TotalRefund = () => {
                     <HiReceiptRefund className='text-white text-4xl font-bold' />
                 </div>
                 <div>
-                    <h1 className='text-2xl font-light text-gray-600'>Total Refund Ticket</h1>
-                    <p className='text-[#96a3c4] text-3xl font-semibold mt-4'>10 times</p>
+                    <h1 className='lg:text-2xl font-light text-gray-900text-gray-900'>Total Refund Ticket</h1>
+                    <p className='text-gray-900 lg:text-3xl text-xl font-semibold mt-4'>10 times</p>
                 </div>
             </div>
             <div>

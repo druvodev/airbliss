@@ -50,9 +50,9 @@ const data = [
 
 const BookingChart = () => {
     return (
-        <div className='bg-white shadow-md p-6 rounded-lg'>
+        <div className='bg-white shadow-md lg:p-6 p-2 rounded-lg'>
             <div className='flex justify-between mb-10'>
-                <h1 className='text-2xl font-light text-gray-600'>Booking Chart</h1>
+                <h1 className='lg:text-2xl font-light text-gray-900'>Booking Chart</h1>
                 <button>
                     <SlOptionsVertical className='text-gray-400 text-xl font-bold mt-1' />
                 </button>
@@ -74,8 +74,8 @@ const BookingChart = () => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Bar dataKey="pv" fill="#37517e" />
-                    <Bar dataKey="uv" fill="#fd7279" />
+                    <Bar dataKey="pv" fill="#70cfc9" />
+                    <Bar dataKey="uv" fill="#5daad6" />
                 </BarChart>
             </ResponsiveContainer>
         </div>

@@ -3,6 +3,7 @@ import { setLoading } from "../../../../redux/features/globalSlice";
 import { toast } from "react-hot-toast";
 import shortid from "shortid";
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { errorToast, successToast } from "../../../../utils/toast";
 
 const initialFormData = {
   airportName: "",
@@ -184,7 +185,7 @@ const AddFlight = () => {
     event.preventDefault();
 
     if (chekAirportSelect) {
-      return toast.error("Please Select Airport From Top");
+      return errorToast("Please Select Airport From Top");
     }
 
     const generatedId = shortid.generate();
@@ -217,7 +218,7 @@ const AddFlight = () => {
         res.json();
       })
       .then((insertResult) => {
-        toast.success("Flight Added Successfully");
+        successToast("Flight Added Successfully");
       });
   };
 
@@ -229,13 +230,13 @@ const AddFlight = () => {
           <p className="text-[10px]">Airbliss Ltd.</p>
         </div>
 
-        <div className="flex items-center bg-cyan-100 p-4 rounded-md mr-6">
+        <div className="flex items-center bg-white shadow-md  hover:border-2 border-t-2 border-black p-4 rounded-md mr-6">
           <select
             required
-            className="bg-cyan-100 cursor-pointer "
+            className=" cursor-pointer "
             onChange={handleAirportSelect}
           >
-            <option className="border-0 " value="">
+            <option className="border-0 bg-white" value="">
               Select Airport
             </option>
             {allFlights.map((airportData) => {
@@ -286,16 +287,6 @@ const AddFlight = () => {
               </div>
 
               <div>
-                {/* <input
-                  className="p-2 border-b-[0.5px] border-black"
-                  type="text"
-                  name="airlineLogo"
-                  value={formData.airlineLogo}
-                  onChange={handleChange}
-                  placeholder="Airline Logo"
-                  required
-                /> */}
-
                 <label className=" relative border-b-[1px] border-black w-[195px] py-2 px-4 cursor-pointer flex items-center">
                   <span className="absolute inset-0 z-10"></span>
                   <MdOutlineCloudUpload className="mr-2" />
@@ -317,7 +308,7 @@ const AddFlight = () => {
                   name="amountPerKm"
                   value={formData.amountPerKm}
                   onChange={handleChange}
-                  placeholder="Amount Per Km"
+                  placeholder="Amount Per Km Ex:(0.2)"
                   required
                 />
               </div>
@@ -329,7 +320,7 @@ const AddFlight = () => {
                   name="taxesAndFees"
                   value={formData.taxesAndFees}
                   onChange={handleChange}
-                  placeholder="Taxes and Fees"
+                  placeholder="Taxes and Fees Ex:(200)"
                   required
                 />
               </div>
@@ -341,7 +332,7 @@ const AddFlight = () => {
                   name="totalSeats"
                   value={formData.totalSeats}
                   onChange={handleChange}
-                  placeholder="Total Seats"
+                  placeholder="Total Seats Ex:(50)"
                   required
                 />
               </div>
@@ -389,7 +380,7 @@ const AddFlight = () => {
                   name="durationPerKm"
                   value={formData.durationPerKm}
                   onChange={handleChange}
-                  placeholder="Duration Per Km"
+                  placeholder="Duration Per Km Ex:(0.2)"
                   required
                 />
               </div>
@@ -433,7 +424,7 @@ const AddFlight = () => {
                   name="flightInfo.flightNumber"
                   value={formData.flightInfo.flightNumber}
                   onChange={handleChange}
-                  placeholder="Flight Number"
+                  placeholder="Flight Number "
                   required
                 />
               </div>
@@ -457,7 +448,7 @@ const AddFlight = () => {
                   name="flightInfo.baggage"
                   value={formData.flightInfo.baggage}
                   onChange={handleChange}
-                  placeholder="Baggage"
+                  placeholder="Baggage Kg Ex:(12)"
                   required
                 />
               </div>
@@ -468,7 +459,7 @@ const AddFlight = () => {
                   name="flightInfo.checkIn"
                   value={formData.flightInfo.checkIn}
                   onChange={handleChange}
-                  placeholder="Check-in"
+                  placeholder="Check-in Kg Ex:(6)"
                   required
                 />
               </div>
@@ -480,7 +471,7 @@ const AddFlight = () => {
                   name="flightInfo.cabin"
                   value={formData.flightInfo.cabin}
                   onChange={handleChange}
-                  placeholder="Cabin"
+                  placeholder="Cabin Kg Ex:(4)"
                   required
                 />
               </div>
@@ -500,14 +491,14 @@ const AddFlight = () => {
                   name="details.code"
                   value={formData.details.code}
                   onChange={handleChange}
-                  placeholder="Details Code"
+                  placeholder="Details Code Ex:(DAC)"
                   required
                 />
               </div>
               <div>
                 <input
                   className="p-2 border-b-[0.5px] border-black"
-                  type="text"
+                  type="time"
                   name="details.time"
                   value={formData.details.time}
                   onChange={handleChange}
@@ -585,7 +576,7 @@ const AddFlight = () => {
                   type="number"
                   name="dateChangeRules[0].amountPerKm"
                   onChange={handleChange}
-                  placeholder="Date Change Prise"
+                  placeholder="Date Change Prise Ex(50)"
                   required
                 />
               </div>
@@ -606,7 +597,7 @@ const AddFlight = () => {
                   type="number"
                   name="cancellationRules[0].amountPerKm"
                   onChange={handleChange}
-                  placeholder="Cancellation Prise"
+                  placeholder="Cancellation Prise Ex(300)"
                   required
                 />
               </div>
@@ -639,7 +630,7 @@ const AddFlight = () => {
                   }}
                 />
                 <button
-                  className="btn btn-sm mt-2 bg-cyan-400 text-white"
+                  className="btn text-white mt-8 bg-cyan-500 hover:border-2 hover:border-black hover:bg-white hover:text-cyan-500"
                   onClick={() => handleRemoveNote(index)}
                 >
                   Remove
@@ -648,7 +639,10 @@ const AddFlight = () => {
             ))}
           </div>
 
-          <button className="btn text-white mt-8 bg-cyan-500" type="submit">
+          <button
+            className="btn text-white mt-8 bg-cyan-500 hover:border-2 hover:border-black hover:bg-white hover:text-cyan-500"
+            type="submit"
+          >
             Add Flights
           </button>
         </form>

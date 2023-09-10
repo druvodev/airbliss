@@ -16,6 +16,7 @@ import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
 import { paymentLater, paymentProcessing } from "../../../utils/handlePayment";
 import SeatModel from "../../../Components/SeatModel/SeatModel";
 import useAuth from "../../../hooks/useAuth";
+import { errorToast } from "../../../utils/toast";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -66,11 +67,16 @@ const TravelerDetailsForm = () => {
   }, []);
 
   const handleContinue = (data) => {
-    dispatch(setUserInfo(data)); // stored user information in redux
-    reset();
-    setContinue(true);
-    // document.body.classList.add("modal-open");
-    openModal();
+    const chekTitel = data.title;
+
+    if (chekTitel != null) {
+      dispatch(setUserInfo(data)); // stored user information in redux
+      reset();
+      setContinue(true);
+      openModal();
+    } else {
+      return errorToast("Please select titel");
+    }
   };
 
   // Function to open the modal
@@ -178,13 +184,19 @@ const TravelerDetailsForm = () => {
                       <small className="flex gap-1">
                         I have read, understand and agree to the terms and
                         conditions of the
-                        <span className="text-accent font-semibold flex items-center gap-[1px]">
+                        <Link
+                          to="/insurance-policy"
+                          className="text-accent font-semibold flex items-center gap-[1px]"
+                        >
                           Policy of Insurance <HiOutlineExternalLink />
-                        </span>
+                        </Link>
                         and
-                        <span className="text-accent font-semibold flex items-center gap-[1px]">
+                        <Link
+                          to="/insurance-policy"
+                          className="text-accent font-semibold flex items-center gap-[1px]"
+                        >
                           Important Disclosures <HiOutlineExternalLink />
-                        </span>
+                        </Link>
                       </small>
                     </div>
                   </label>
@@ -223,7 +235,7 @@ const TravelerDetailsForm = () => {
                     Privacy Policy
                   </Link>{" "}
                   and{" "}
-                  <Link to="/terms" className="text-cyan-800 font-semibold">
+                  <Link to="" className="text-cyan-800 font-semibold">
                     Terms & Conditions
                   </Link>
                 </span>
@@ -281,7 +293,7 @@ const TravelerDetailsForm = () => {
             </div>
             <div
               className={`duration-500 ${
-                isCollapse ? "max-h-[1275px] md:max-h-[925px]" : "max-h-0"
+                isCollapse ? "max-h-[1375px] md:max-h-[925px]" : "max-h-0"
               } transition-all ease-linear overflow-hidden`}
             >
               <div className="p-5">
@@ -464,6 +476,7 @@ const TravelerDetailsForm = () => {
                       </label>
                       <input
                         type="email"
+                        readOnly
                         name=""
                         defaultValue={user?.email}
                         readOnly
@@ -533,23 +546,31 @@ const TravelerDetailsForm = () => {
                       />
                     </div>
                   </div>
-                  <button
-                    className=" my-10 block w-full bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide px-5 rounded h-[38px] text-white font-semibold"
-                    type="submit"
-                  >
-                    Continue
-                  </button>
+
+                  {user ? (
+                    <button
+                      className=" my-10 block w-full bg-cyan-700 cursor-pointer hover:bg-cyan-600 hover:tracking-wide px-5 rounded h-[38px] text-white font-semibold "
+                      type="submit"
+                    >
+                      Continue
+                    </button>
+                  ) : (
+                    <div className="my-10 pt-[6px] block w-full bg-cyan-600 cursor-pointer px-5 rounded h-[38px] text-white font-semibold text-center">
+                      <p>Please Login For Continue</p>
+                    </div>
+                  )}
                 </form>
               </div>
             </div>
           </div>
         </div>
       )}
+
       {/* Seat selecting Modal */}
       {isModalOpen && (
-        <div className="fixed top-0 left-0 z-50 w-screen sm:w-full h-full overflow-y-auto">
-          <div className="w-screen sm:w-full bg-white/20 backdrop-blur-md backdrop-filter shadow-md sm:p-10">
-            <div className="text-center">
+        <div className="fixed top-0 left-0 z-50 w-full md:w-screen  h-full overflow-y-auto">
+          <div className="md:w-screen w-full  bg-white/20 backdrop-blur-md backdrop-filter shadow-md sm:p-10">
+            <div className="text-center ">
               <h3 className="mb-5 text-3xl sm:text-4xl font-bold bg-slate-500/30 backdrop-blur py-2 px-5 w-fit mx-auto rounded-xl shadow shadow-cyan-100">
                 Choose Your Seating Preference
               </h3>
@@ -559,7 +580,7 @@ const TravelerDetailsForm = () => {
         </div>
       )}
       {isContinue && isInsuranceModal && (
-        <div className="fixed top-0 left-0 z-50 w-full min-h-screen bg-black/20 overflow-y-auto flex items-center justify-center">
+        <div className="fixed p-4 top-0 left-0 z-50 w-full min-h-screen bg-black/20 overflow-y-auto flex items-center justify-center">
           <div className="bg-white rounded-xl border p-5 w-fit relative">
             <h2 className="text-3xl font-semibold mb-4 text-center">
               Travel Insurance Preference
@@ -587,20 +608,20 @@ const TravelerDetailsForm = () => {
               <p className="mt-4">
                 By accepting the insurance, you agree to the terms and
                 conditions of the{" "}
-                <a
-                  href="#"
+                <Link
+                  to="/insurance-policy"
                   className="text-accent font-semibold hover:underline"
                 >
                   Policy of Insurance
-                </a>{" "}
+                </Link>{" "}
                 and
-                <a
-                  href="#"
+                <Link
+                  to="/insurance-policy"
                   className="text-accent font-semibold hover:underline"
                 >
                   {" "}
                   Important Disclosures
-                </a>
+                </Link>
                 .
               </p>
               <p className="mt-4">
