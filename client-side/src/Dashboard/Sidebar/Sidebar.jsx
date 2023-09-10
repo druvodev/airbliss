@@ -17,7 +17,7 @@ const Sidebar = ({ isActive }) => {
   return (
     <>
       {/* Small Screen Navbar */}
-      <div className="bg-gray-100 text-gray-800 flex justify-between md:hidden">
+      <div className="bg-gray-100 text-gray-800 justify-between hidden">
         <div>
           <div className="block cursor-pointer p-4 font-bold">
             <img

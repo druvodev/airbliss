@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/review/:id",
-        element: <Review />,
+        element: <PrivateRoute><Review /></PrivateRoute>,
       },
 
       {
@@ -58,17 +58,17 @@ export const router = createBrowserRouter([
       },
       {
         path: "/booking-confirmed/:bookingId",
-        element: <ETicket />,
+        element: <PrivateRoute><ETicket /></PrivateRoute>,
       },
       {
         path: "hotDeals/:id",
-        element: <HotDealDetails></HotDealDetails>  
+        element: <HotDealDetails />
       }
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     children: [
       {
         path: "adminHome",

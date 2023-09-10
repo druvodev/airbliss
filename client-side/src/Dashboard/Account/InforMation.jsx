@@ -6,84 +6,63 @@ import { MdEmail, MdOutlineDateRange } from 'react-icons/md';
 import { HiHome, HiHomeModern } from 'react-icons/hi2';
 import { BiWorld } from 'react-icons/bi';
 import { IoInformationCircle } from 'react-icons/io5';
+import toast from 'react-hot-toast';
 
 const InforMation = ({ currentUser }) => {
     const { user } = useAuth()
     const { name, _id, photo, role, backgroundImg, email, about, dateOfBirth, gender, occupation, phone, bio, nickname, live, from, relationship, nation } = currentUser || {};
 
-    // State to store the selected image file
-    const [selectedImage, setSelectedImage] = useState(null);
-    const formRef = useRef();
+    console.log(name, _id);
 
-    // Function to handle image selection
-    const handleImageChange = (event) => {
-        const selectedFile = event.target.files[0];
-        setSelectedImage(selectedFile);
-    };
+    const handleSubmit = event => {
+        event.preventDefault()
+        const image = event.target.image.files[0]
 
-    useEffect(() => {
-        if (selectedImage) {
-            // Trigger form submission
-            formRef.current.submit();
-        }
-    }, [selectedImage]);
+        const formData = new FormData()
+        formData.append('image', image)
 
+        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`
 
-    // Function to handle form submission (including image upload to ImgBB)
-    const handleSubmit = async (event) => {
-        event.preventDefault();
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+        }).then(res => res.json()).then(imageData => {
+            const imageUrl = imageData.data.display_url
+            console.log(imageUrl);
 
-        if (!selectedImage) {
-            // Handle case where no image is selected
-            return;
-        }
+            const usersData = {
+                backgroundImg: imageUrl,
+            };
+            console.log(usersData);
 
-        try {
-            // Upload the selected image to ImgBB
-            const formData = new FormData();
-            formData.append('image', selectedImage);
-            const imgbbResponse = await fetch(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`, {
-                method: 'POST',
-                body: formData,
-            });
-            const imgbbData = await imgbbResponse.json();
-
-            if (imgbbData.data) {
-                // Use imgbbData.data.display_url as the image URL
-                const imageUrl = imgbbData.data.display_url;
-
-                fetch(`http://localhost:5000/users/${_id}`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ imageUrl }),
+            fetch(`http://localhost:5000/users/${currentUser._id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ usersData }),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.acknowledged === true) {
+                        toast.success("User Data submitted successfully");
+                    } else {
+                        toast.error("Failed to update user data");
+                    }
+                    console.log(data);
+                    location.reload();
                 })
-                    .then((res) => res.json())
-                    .then((data) => {
-                        if (data.acknowledged === true) {
-                            toast.success("User Data submitted successfully");
-                        } else {
-                            toast.error("Failed to update user data");
-                        }
-                        console.log(data);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-                // Proceed with your user creation and profile update logic
+                .catch((err) => {
+                    console.log(err);
+                });
+        })
+            .catch(err => {
+                console.log(err.message);
+                toast.error(err.message)
+            })
+        return
+    }
 
-                // Print the image URL (for testing)
-                console.log('Image URL:', imageUrl);
-            } else {
-                // Handle ImgBB API error
-                console.error('ImgBB API error:', imgbbData);
-            }
-        } catch (error) {
-            // Handle other errors (e.g., network error)
-            console.error('Error:', error);
-        }
-    };
 
     return (
         <div>
@@ -93,22 +72,30 @@ const InforMation = ({ currentUser }) => {
                     src={
                         backgroundImg
                             ? backgroundImg
-                            : "https://i.ibb.co/Y2QBhjS/programming-background-collage-1.jpg"
+                            : "https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png"
                     }
                     alt="backgroundImg"
                 />
                 <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[rgba(255,255,255,0.11)] to-[rgba(34,34,34,0.51)]">
                     <form
-                        ref={formRef}
                         onSubmit={handleSubmit}
+                        className='absolute border right-10 flex gap-3 p-2 rounded-lg bg-[rgba(255,255,255,0.31)] bottom-5'
                     >
                         <input
+                            required
                             type="file"
+                            id="image"
+                            name="image"
                             accept="image/*"
-                            className="absolute right-0 bottom-5 bg-transparent"
-                            onChange={handleImageChange}
+                            className="file-input file-input-bordered file-input-xs w-[100px] max-w-xs"
+                        />
+                        <input
+                            type="submit"
+                            value="upload"
+                            className='btn bg-cyan-400 border-none btn-xs'
                         />
                     </form>
+
                 </div>
                 <div className='flex absolute -bottom-28 gap-5 right-[40%]'>
                     <img
