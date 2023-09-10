@@ -479,7 +479,6 @@ const TravelerDetailsForm = () => {
                         readOnly
                         name=""
                         defaultValue={user?.email}
-                        readOnly
                         id=""
                         {...register("traveler_email", { required: true })}
                         placeholder="Email"

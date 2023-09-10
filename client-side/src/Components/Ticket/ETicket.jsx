@@ -4,8 +4,7 @@ import DomToImage from "dom-to-image";
 import { useParams } from "react-router";
 import useAxios from "../../hooks/useAxios";
 import airbliss from "../../assets/banner/airblibanner.png";
-import emailjs from "@emailjs/browser";
-import { generate } from "shortid";
+
 import { HashLoader } from "react-spinners";
 
 const ETicket = ({ booking }) => {

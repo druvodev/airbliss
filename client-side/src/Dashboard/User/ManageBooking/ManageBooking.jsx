@@ -39,7 +39,7 @@ const ManageBooking = () => {
     (flight) => flight.bookingReference === flightRef
   );
 
-  // console.log(myFlight);
+  console.log(myFlight);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -66,11 +66,32 @@ const ManageBooking = () => {
   const handleCancelFlight = (data) => {
     // console.log(data);
     const cancelFlightInfo = {
-      cancelReason: data?.cancelReason,
-      bookingReference: myFlight?.bookingReference,
-      refundAmount,
+      feedback: data?.cancelReason,
+      bookingInfo: myFlight,
     };
-    console.log(cancelFlightInfo);
+    // console.log(cancelFlightInfo);
+    fetch(
+      `http://localhost:5000/bookings/cancel/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cancelFlightInfo),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Success:", data.message);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
     reset();
     closeModal();
   };
@@ -95,7 +116,7 @@ const ManageBooking = () => {
             onClick={() => handleTabClick("allflight")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
               isActive === "allflight"
-                ? "border-t-2 bg-gray-100 border-black"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
                 : ""
             }`}
           >
@@ -104,7 +125,9 @@ const ManageBooking = () => {
           <div
             onClick={() => handleTabClick("cancel")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "cancel" ? "border-t-2 bg-gray-100 border-black" : ""
+              isActive === "cancel"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
             }`}
           >
             Cancel Flight
@@ -112,7 +135,9 @@ const ManageBooking = () => {
           <div
             onClick={() => handleTabClick("arrive")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "arrive" ? "border-t-2 bg-gray-100 border-black" : ""
+              isActive === "arrive"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
             }`}
           >
             Arrive Flight

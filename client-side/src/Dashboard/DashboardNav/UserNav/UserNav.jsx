@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaHome, FaHouseUser } from "react-icons/fa";
-import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
