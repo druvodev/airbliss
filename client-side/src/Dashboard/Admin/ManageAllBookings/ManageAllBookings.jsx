@@ -6,7 +6,7 @@ import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFl
 
 const ITEMS_PER_PAGE = 5;
 
-const ManageBooking = () => {
+const ManageAllBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
@@ -112,7 +112,7 @@ const ManageBooking = () => {
       {/* Tab */}
       <section className="bg-white p-4 shadow-md mt-5 flex md:flex-row flex-col  md:items-center md:mx-7 md:space-x-4">
         <div className="mb-2 md:mb-0">
-          <h1 className="font-semibold ">Filter Ticket: </h1>
+          <h1 className="font-semibold ">Filter Bookings: </h1>
         </div>
         <div className="flex gap-1 rounded font-medium text-gray-600 text-sm">
           <div
@@ -123,7 +123,7 @@ const ManageBooking = () => {
                 : ""
             }`}
           >
-            All Flight
+            All Bookings
           </div>
           <div
             onClick={() => handleTabClick("confirm")}
@@ -133,7 +133,7 @@ const ManageBooking = () => {
                 : ""
             }`}
           >
-            Confirm Flight
+            Confirm Bookings
           </div>
           <div
             onClick={() => handleTabClick("cancel")}
@@ -144,6 +144,26 @@ const ManageBooking = () => {
             }`}
           >
             Cancel Flight
+          </div>
+          <div
+            onClick={() => handleTabClick("cancel-request")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "cancel-request"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
+            }`}
+          >
+            Cancel Requests
+          </div>
+          <div
+            onClick={() => handleTabClick("refund-denied")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "refund-denied"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
+            }`}
+          >
+            Refund Denied
           </div>
         </div>
       </section>
@@ -303,4 +323,4 @@ const ManageBooking = () => {
   );
 };
 
-export default ManageBooking;
+export default ManageAllBooking;
