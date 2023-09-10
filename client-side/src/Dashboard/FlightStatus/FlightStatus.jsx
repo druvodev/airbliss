@@ -1,31 +1,12 @@
 import { useEffect, useState } from "react";
 import { MdOutlineFlightTakeoff, MdOutlineFlight } from "react-icons/md";
 import { TbBrandFlightradar24 } from "react-icons/tb";
+import { BsAirplaneEngines } from "react-icons/bs";
 import { VscKebabVertical } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 
 const FlightStatus = () => {
-  const [flights, setFlights] = useState([]);
-  const [page, setPage] = useState(1);
   const [edit, setEdit] = useState(false);
-
-  useEffect(() => {
-    fetch("http://localhost:5000/flights")
-      .then((res) => res.json())
-      .then((data) => setFlights(data));
-  }, []);
-
-  const selectedPageHandler = (selectedPage) => {
-    if (
-      selectedPage > 0 &&
-      selectedPage <= flights.length / 7 &&
-      selectedPage !== page
-    ) {
-      setPage(selectedPage);
-    }
-  };
-
-  console.log(flights);
 
   return (
     <section>
@@ -34,22 +15,28 @@ const FlightStatus = () => {
         <h1 className="font-semibold text-2xl">Flights</h1>
 
         <div className="mt-3 flex justify-start items-center gap-6">
-          <div className="p-2 shadow-md border-t w-full">
-            <h4 className="font-semibold text-lg pl-2">All Flights</h4>
+          <div className="p-2 shadow-md h-[120px] md:h-auto border-t w-full">
+            <h4 className="font-semibold text-sm mt-5 md:mt-0 mb-2 md:mb-0 md:text-lg pl-2">
+              All Flights
+            </h4>
             <div className="flex justify-center items-center mb-2">
-              <MdOutlineFlight size={40} color="#32a9db" />
+              <BsAirplaneEngines size={35} color="#32a9db" />
             </div>
           </div>
 
-          <div className="p-2 shadow-md border-t w-full">
-            <h4 className="font-semibold text-lg pl-2">Running Flights</h4>
+          <div className="p-2 h-[120px] md:h-auto shadow-md border-t w-full">
+            <h4 className="font-semiboldtext-sm mb-2 md:mb-0 md:text-lg pl-2">
+              Running Flights
+            </h4>
             <div className="flex justify-center items-center mb-2">
               <MdOutlineFlightTakeoff size={40} color="#32a9db" />
             </div>
           </div>
 
-          <div className="p-2 shadow-md border-t w-full">
-            <h4 className="font-semibold text-lg pl-2">Arrival Flight</h4>
+          <div className="p-2 h-[120px] md:h-auto shadow-md border-t w-full">
+            <h4 className="font-semibold text-sm mb-2 md:mb-0 md:text-lg pl-2">
+              Arrival Flight
+            </h4>
             <div className="flex justify-center items-center mb-2">
               <TbBrandFlightradar24 size={40} color="#32a9db" />
             </div>
