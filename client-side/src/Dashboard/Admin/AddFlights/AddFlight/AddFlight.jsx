@@ -3,6 +3,7 @@ import { setLoading } from "../../../../redux/features/globalSlice";
 import { toast } from "react-hot-toast";
 import shortid from "shortid";
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { errorToast, successToast } from "../../../../utils/toast";
 
 const initialFormData = {
   airportName: "",
@@ -184,7 +185,7 @@ const AddFlight = () => {
     event.preventDefault();
 
     if (chekAirportSelect) {
-      return toast.error("Please Select Airport From Top");
+      return errorToast("Please Select Airport From Top");
     }
 
     const generatedId = shortid.generate();
@@ -200,8 +201,6 @@ const AddFlight = () => {
       _id: generatedId,
       airportName: selectAirportCode,
     };
-
-    console.log(finalFormData);
 
     const queryString = `airportId=${selectAirportId}&airportCode=${selectAirportCode}`;
 
@@ -219,7 +218,7 @@ const AddFlight = () => {
         res.json();
       })
       .then((insertResult) => {
-        toast.success("Flight Added Successfully");
+        successToast("Flight Added Successfully");
       });
   };
 
