@@ -86,7 +86,7 @@ const InforMation = ({ currentUser }) => {
     <div>
       <div className="relative w-full h-[190px] lg:h-[400px]">
         <img
-          className="w-full h-[200px] lg:h-[400px] object-cover rounded-t-xl"
+          className="w-full h-fit lg:h-[400px] object-cover rounded-t-xl"
           src={
             backgroundImg
               ? backgroundImg
@@ -94,7 +94,7 @@ const InforMation = ({ currentUser }) => {
           }
           alt="backgroundImg"
         />
-        <div className="absolute top-12 lg:top-0 left-0 w-full h-full bg-gradient-to-b from-[rgba(255,255,255,0.11)] to-[rgba(34,34,34,0.51)]">
+        <div className="absolute top-0 lg:top-0 left-0 w-full h-full bg-gradient-to-b from-[rgba(255,255,255,0.11)] to-[rgba(34,34,34,0.51)]">
           <form
             onSubmit={handleSubmit}
             className="absolute border lg:right-10 right-2 flex gap-3 p-2 rounded-lg bg-[rgba(255,255,255,0.31)] bottom-5"
@@ -114,10 +114,9 @@ const InforMation = ({ currentUser }) => {
             />
           </form>
         </div>
-        <div className="flex absolute left-0 lg:left-12 ml-2 lg:-bottom-28 gap-5 right-[40%]">
+        <div className="flex absolute left-0 lg:left-12 ml-2 lg:-bottom-28 -bottom-20 gap-5 right-[40%]">
           <img
             src={photo ? photo : "https://i.ibb.co/Ws1r9fp/images.png"}
-            // src='https://i.ibb.co/Ws1r9fp/images.png'
             alt={user?.displayName}
             className=" w-[100px] h-[100px]   lg:w-[200px] lg:h-[200px] rounded-full"
           />
