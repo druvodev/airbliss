@@ -83,7 +83,7 @@ const InforMation = ({ currentUser }) => {
   };
 
   return (
-    <div>
+    <div className="pb-1 rounded-lg bg-white shadow">
       <div className="relative w-full h-[190px] lg:h-[400px]">
         <img
           className="w-full h-fit lg:h-[400px] object-cover rounded-t-xl"
