@@ -54,12 +54,12 @@ const TrackingNavigation = () => {
       ) : (
         <section>
           <div className=" mb-8 flex lg:justify-between lg:items-center lg:flex-row flex-col">
-            <h1 className="font-bold text-3xl text-cyan-600">
+            <h1 className="font-bold text-lg md:text-3xl text-cyan-600">
               Review Your Booking
             </h1>
 
             <div className="text-cyan-600  mt-4 lg:mt-0">
-              <h1 className="inline-flex items-center gap-3">
+              <h1 className="inline-flex items-center gap-3 text-sm md:text-[18px]">
                 Flight Section <FaAngleRight /> <strong>Booking</strong>{" "}
                 <FaAngleRight /> Payment
               </h1>
@@ -69,8 +69,8 @@ const TrackingNavigation = () => {
           {/* Traking Card */}
           <div className="shadow-lg block rounded-xl overflow-hidden">
             <div className="px-5">
-              <div className="flex items-center gap-1 mb-2 mt-4">
-                <h5 className="font-semibold text-gray-600">
+              <div className="flex items-center gap-1 mb-4 md:mb-2 mt-4">
+                <h5 className="font-semibold text-gray-600 text-sm md:text-[16px]">
                   {code}-{arrive?.code}
                 </h5>
               </div>
@@ -81,7 +81,7 @@ const TrackingNavigation = () => {
                   <div>
                     <button
                       onClick={() => window.my_modal_1.showModal()}
-                      className="pt-1 pl-2 pr-2 pb-2 mr-12  bg-cyan-600 text-white rounded-md hover:bg-white hover:border-2 hover:border-cyan-600 hover:text-gray-500"
+                      className="pt-[5px] md:pt-2 pl-2 pr-2 pb-2 mr-12 btn btn-xs md:btn-sm  bg-cyan-600 text-white rounded-md hover:bg-white hover:border-2 hover:border-cyan-600 hover:text-gray-500"
                     >
                       View Baggage
                     </button>
@@ -102,46 +102,44 @@ const TrackingNavigation = () => {
                   isCollapse ? "max-h-[350px]" : "max-h-3"
                 } transition-all ease-linear overflow-hidden`}
               >
-                <div className="p-5">
+                <div className="p-2 md:p-5 pb-5">
                   <div className="flex justify-between items-center gap-6">
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-start md:items-center gap-2">
                       <img
-                        className="h-12 w-12 rounded-full -ml-2"
+                        className="h-12 w-12 mt-4 md:mt-0 rounded-full -ml-2"
                         src={airlineLogo}
                         alt=""
                       />
-                      <div>
-                        <p className="text-gray-400">
-                          <small>{airlineName}</small>
-                        </p>
-                        <h1 className="text-[14px] font-semibold">
+                      <div className="mt-3 md:mt-0">
+                        <p className="text-gray-400 text-xs ">{airlineName}</p>
+                        <h1 className="text-xs  font-semibold">
                           {flightNumber}
                         </h1>
-                        <h3 className="text-[13px] font-semibold">
+                        <h3 className="text-xs  font-semibold">
                           Aircraft : {aircraft}
                         </h3>
                       </div>
                     </div>
 
                     <div>
-                      <h1 className="text-[16px]">{data?.flightInfo?.class}</h1>
+                      <h1 className="text-xs md:text-sm">
+                        {data?.flightInfo?.class}
+                      </h1>
                     </div>
                   </div>
 
                   <hr className="mb-3 mt-3" />
                   <div className=" grid grid-cols-3 items-center gap-5 ">
                     <div>
-                      <h4 className="text-gray-400 text-[13px]">Depart</h4>
-                      <h2 className="mt-2 text-[15px] font-semibold">{time}</h2>
-                      <p className="-mt-1 pr-2">
-                        <small>{formatDate(date)}</small>
-                      </p>
-                      <p className="mt-1 -ml-[1px]">({code})</p>
-                      <h3 className=" text-[13px]">{city}</h3>
+                      <h4 className="text-gray-400 text-xs ">Depart</h4>
+                      <h2 className="mt-2 text-xs  font-semibold">{time}</h2>
+                      <p className=" pr-2 text-xs ">{formatDate(date)}</p>
+                      <p className="mt-1 -ml-[1px] text-xs ">({code})</p>
+                      <h3 className=" text-xs ">{city}</h3>
                     </div>
 
                     <div align="center" className="space-y-1 pl-2 pr-2">
-                      <p className="text-gray-400 text-[14px]">
+                      <p className="text-gray-400 text-xs ">
                         {duration < 60
                           ? `${duration} min`
                           : `${Math.floor(duration / 60)} hr ${
@@ -156,24 +154,22 @@ const TrackingNavigation = () => {
                         src="https://flightexpert.com/assets/img/non-stop-shape.png"
                         alt=""
                       />
-                      <p>
-                        <small>{stopType}</small>
-                      </p>
+                      <p className="text-xs ">{stopType}</p>
                     </div>
 
                     <div className="flex justify-center">
                       <div>
-                        <h4 className="text-gray-400 text-[13px]">Arrive</h4>
-                        <h2 className="mt-2 text-[15px] font-semibold">
+                        <h4 className="text-gray-400 text-xs">Arrive</h4>
+                        <h2 className="mt-2 text-xs  font-semibold">
                           {arrive?.time}
                         </h2>
-                        <p className="-mt-1 pr-2">
-                          <small>
-                            {calculateArrivalDate(date, time, arrive?.time)}
-                          </small>
+                        <p className=" pr-2 text-xs ">
+                          {calculateArrivalDate(date, time, arrive?.time)}
                         </p>
-                        <p className="mt-1 -ml-[1px]">({arrive?.code})</p>
-                        <h3 className=" text-[13px]">{arrive?.city}</h3>
+                        <p className="mt-1 -ml-[1px] text-xs ">
+                          ({arrive?.code})
+                        </p>
+                        <h3 className=" text-xs">{arrive?.city}</h3>
                       </div>
                     </div>
                   </div>
@@ -181,8 +177,6 @@ const TrackingNavigation = () => {
               </div>
             </div>
           </div>
-
-          {/* Modal */}
 
           {/* Open the modal using ID.showModal() method */}
 
