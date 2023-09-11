@@ -18,8 +18,11 @@ const RecommendedFlights = () => {
             regulations
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
-          <div className="border overflow-hidden rounded-md shadow-lg p-5">
+        <div
+          data-testid="cards-container"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7"
+        >
+          <div className="border card overflow-hidden rounded-md shadow-lg p-5">
             <div>
               <div className="flex gap-5 container ">
                 <img
@@ -55,7 +58,7 @@ const RecommendedFlights = () => {
             </div>
           </div>
 
-          <div className="border overflow-hidden rounded-md shadow-lg p-5">
+          <div className="border card overflow-hidden rounded-md shadow-lg p-5">
             <div>
               <div className="flex gap-5 container ">
                 <img
@@ -91,7 +94,7 @@ const RecommendedFlights = () => {
             </div>
           </div>
 
-          <div className="border overflow-hidden rounded-md shadow-lg p-5 ">
+          <div className="border card overflow-hidden rounded-md shadow-lg p-5 ">
             <div>
               <div className="flex gap-5 container ">
                 <img
