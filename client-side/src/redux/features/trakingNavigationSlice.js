@@ -15,7 +15,7 @@ const trackingNavigationSlice = createSlice({
       state.isLoading = action.payload;
     },
     setIsCollapse: (state, action) => {
-      state.isCollapse = action.payload;
+      state.isCollapse = !state.isCollapse;
     },
     setData: (state, action) => {
       state.data = action.payload;

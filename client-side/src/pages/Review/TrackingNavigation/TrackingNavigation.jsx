@@ -94,7 +94,7 @@ const TrackingNavigation = () => {
                     </button>
                   </div>
                   <div>
-                    <button onClick={() => setIsCollapse(!isCollapse)}>
+                    <button onClick={() => dispatch(setIsCollapse())}>
                       {isCollapse ? (
                         <MdKeyboardArrowUp className="text-2xl rounded-full bg-gray-300" />
                       ) : (
