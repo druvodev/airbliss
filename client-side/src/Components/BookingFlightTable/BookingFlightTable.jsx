@@ -102,7 +102,7 @@ const BookingFlightTable = ({
                     </button>
                   </Link>
 
-                  {flight?.requestStatus === "pending" ? (
+                  {flight?.requestStatus !== "success" ? (
                     <button
                       className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  opacity-30`}
                       onClick={() => {

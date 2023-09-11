@@ -12,6 +12,7 @@ const CancelBookingTable = ({
   setFlightRef,
   status,
   action,
+  handleCancelApproved,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -93,13 +94,30 @@ const CancelBookingTable = ({
                     </button>
                   </Link>
 
-                  <button
-                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 hover:bg-blue-500
+                  {flight?.requestStatus === "pending" ? (
+                    <button
+                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 hover:bg-blue-500
                   }`}
-                    onClick={() => setFlightRef(flight?.bookingReference)}
-                  >
-                    <FaCheck />
-                  </button>
+                      onClick={() => {
+                        setFlightRef(flight?.bookingReference);
+                        handleCancelApproved();
+                      }}
+                    >
+                      <FaCheck />
+                    </button>
+                  ) : (
+                    <button
+                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 opacity-30
+                  }`}
+                      onClick={() => {
+                        setFlightRef(flight?.bookingReference);
+                        handleCancelApproved();
+                      }}
+                      disabled
+                    >
+                      <FaCheck />
+                    </button>
+                  )}
 
                   {flight?.requestStatus === "pending" ? (
                     <button

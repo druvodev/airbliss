@@ -12,7 +12,6 @@ const ManageAllBooking = () => {
   const [flightRef, setFlightRef] = useState("");
   const [isActive, setIsActive] = useState("allbookings");
   const [allBookings, setAllBookings] = useState([]);
-  const [status, setStatus] = useState("");
 
   const handleTabClick = (tab) => {
     setIsActive(tab);
@@ -27,7 +26,11 @@ const ManageAllBooking = () => {
   // const bookings = useSelector((state) => state?.userInfo?.userBookings);
 
   const cancelBookings = allBookings?.filter(
-    (booking) => booking?.bookingStatus === "cancel"
+    (booking) => booking?.requestStatus === "approved"
+  );
+
+  const cancelDeniedBookings = allBookings?.filter(
+    (booking) => booking?.requestStatus === "denied"
   );
 
   const confirmBookings = allBookings?.filter(
@@ -38,10 +41,8 @@ const ManageAllBooking = () => {
     (booking) => booking?.requestStatus === "pending"
   );
 
-  // console.log("All bookings", allBookings);
+  console.log("All bookings", allBookings);
   // console.log("Cancel Bookings", cancelRequests);
-
-  const [formData, setFormData] = useState({});
 
   console.log("bookings reference", flightRef);
   // Initialize your form data state here
@@ -82,16 +83,42 @@ const ManageAllBooking = () => {
     }
   };
 
+  const handleCancelApproved = () => {
+    const cancelApprovedInfo = {
+      bookingInfo: selectedFlight,
+    };
+    fetch(
+      `http://localhost:5000/refund/approved/${selectedFlight?.flight?.departureDate}/${selectedFlight?.flight?.departureAirport}/${selectedFlight?.bookingReference}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cancelApprovedInfo),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Success:", data.message);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
   const handleCancelDeny = (data) => {
-    setStatus("denied");
-    // console.log(data);
     const cancelDenyInfo = {
       feedback: data?.feedback,
       bookingInfo: selectedFlight,
     };
     // console.log(cancelDenyInfo);
     fetch(
-      `http://localhost:5000/refund/${status}/${selectedFlight?.flight?.departureDate}/${selectedFlight?.flight?.departureAirport}/${selectedFlight?.bookingReference}`,
+      `http://localhost:5000/refund/denied/${selectedFlight?.flight?.departureDate}/${selectedFlight?.flight?.departureAirport}/${selectedFlight?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
@@ -207,6 +234,17 @@ const ManageAllBooking = () => {
         />
       )}
 
+      {isActive === "cancel-request" && (
+        <CancelBookingTable
+          bookings={cancelRequests}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="cancel status"
+          action={false}
+          handleCancelApproved={handleCancelApproved}
+        />
+      )}
+
       {isActive === "cancel" && (
         <BookingFlightTable
           bookings={cancelBookings}
@@ -217,13 +255,14 @@ const ManageAllBooking = () => {
         />
       )}
 
-      {isActive === "cancel-request" && (
+      {isActive === "cancel-denied" && (
         <CancelBookingTable
-          bookings={cancelBookings}
+          bookings={cancelDeniedBookings}
           openModal={openModal}
           setFlightRef={setFlightRef}
           status="cancel status"
-          action={false}
+          action={true}
+          handleCancelApproved={handleCancelApproved}
         />
       )}
 
