@@ -1,4 +1,6 @@
 import React from "react";
+import { formatDate } from "../../../../utils/formatDate";
+import { calculateArrivalDate } from "../../../../utils/calculateArrivalDate";
 
 const FlightDetails = ({ flightFullDetails }) => {
   const { airlineName, airlineLogo } = flightFullDetails || {};
@@ -15,7 +17,7 @@ const FlightDetails = ({ flightFullDetails }) => {
   return (
     <section className="mt-3 border-[1px] rounded-sm ">
       <h1 className=" p-3 border-b-[1px] font-semibold">
-        {city} to {arrive?.city}, {date}
+        {city} to {arrive?.city}, {formatDate(date)}
       </h1>
 
       {/* Details Body */}
@@ -46,17 +48,15 @@ const FlightDetails = ({ flightFullDetails }) => {
         <section className="grid grid-cols-3 ml-4 lg:grid-cols-6 mt-4 gap-6 lg:mb-1 mb-8">
           <div>
             <h2 className="mt-2 text-[15px] font-semibold">{time}</h2>
-            <p className="text-gray-400 mt-2">
-              <small>{date}</small>
-            </p>
+            <p className="text-gray-400 mt-2 text-xs">{formatDate(date)}</p>
             <h2 className="text-[13px] font-semibold">{code}</h2>
-            <p className="text-gray-400 text-[13px]">Tarminal: {terminal}</p>
-            <p className="text-gray-400 text-[13px]">{airportName}</p>
-            <p className="text-gray-400 text-[13px]"> {city}</p>
+            <p className="text-gray-400 text-xs">Tarminal: {terminal}</p>
+            <p className="text-gray-400 text-xs">{airportName}</p>
+            <p className="text-gray-400 text-xs"> {city}</p>
           </div>
 
           <div align="center" className="space-y-1 pr-2">
-            <p className="text-gray-400 text-[14px]">
+            <p className="text-gray-400 text-xs">
               {duration < 60
                 ? `${duration} min`
                 : `${Math.floor(duration / 60)} hr ${duration % 60} min`}
@@ -69,26 +69,24 @@ const FlightDetails = ({ flightFullDetails }) => {
               src="https://flightexpert.com/assets/img/non-stop-shape.png"
               alt=""
             />
-            <p>
-              <small>{stopType}</small>
-            </p>
+            <p className="text-xs">{stopType}</p>
           </div>
 
           <div>
             <h2 className="mt-2 text-[15px] font-semibold">{arrive?.time}</h2>
-            <p className="text-gray-400 mt-2">
-              <small>{date}</small>
+            <p className="text-gray-400 mt-2 text-xs">
+              {calculateArrivalDate(date, time, arrive?.time)}
             </p>
-            <h2 className="text-[13px] font-semibold">{arrive?.code}</h2>
-            <p className="text-gray-400 text-[13px]">
+            <h2 className="text-xs font-semibold">{arrive?.code}</h2>
+            <p className="text-gray-400 text-xs">
               Tarminal: {arrive?.terminal}
             </p>
-            <p className="text-gray-400 text-[13px]">{arrive?.airportName}</p>
-            <p className="text-gray-400 text-[13px]">{arrive?.city}</p>
+            <p className="text-gray-400 text-xs">{arrive?.airportName}</p>
+            <p className="text-gray-400 text-xs">{arrive?.city}</p>
           </div>
 
           <div>
-            <h2 className="mt-2 text-[15px] font-semibold">Baggage</h2>
+            <h2 className="mt-2 text-[14px] font-semibold">Baggage</h2>
             <p className="text-gray-400 mt-1">
               <small>{passengerType}</small>
             </p>
