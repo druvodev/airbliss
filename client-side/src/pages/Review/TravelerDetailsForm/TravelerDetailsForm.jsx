@@ -122,7 +122,7 @@ const TravelerDetailsForm = () => {
       {isContinue ? (
         <div>
           <h2 className="text-xl font-bold mb-4">Traveler Details</h2>
-          <div className="w-full bg-white shadow-lg rounded-lg pb-10">
+          <div className="w-full bg-white shadow-lg  rounded-lg pb-10 ">
             <div className="bg-cyan-700 rounded p-2 text-white mb-5">
               <h2 className="text-xl font-semibold">Traveler 1 (Adult)</h2>
             </div>
@@ -130,7 +130,7 @@ const TravelerDetailsForm = () => {
               <div className="flex justify-start items-start gap-4">
                 <div>
                   <p className="mb-3 font-semibold">Name: </p>
-                  <p className="mb-3 font-semibold">Email: </p>
+                  <p className="mb-3 font-semibold hidden md:block">Email: </p>
                   <p className="mb-3 font-semibold">Gender: </p>
                   <p className="mb-3 font-semibold">Date of Birth: </p>
                   <p className="mb-3 font-semibold">City: </p>
@@ -139,7 +139,9 @@ const TravelerDetailsForm = () => {
                   <p className="mb-3">
                     {userInfo.title} {userInfo.first_name} {userInfo.last_name}
                   </p>
-                  <p className="mb-3">{userInfo.traveler_email}</p>
+                  <p className="mb-3 hidden md:block">
+                    {userInfo.traveler_email}
+                  </p>
                   <p className="mb-3">
                     {userInfo.title === "Mr." ? "Male" : "Female"}
                   </p>
@@ -164,7 +166,7 @@ const TravelerDetailsForm = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-5 mx-5 md:mx-10">
+            <div className="mt-5 mx-1 md:mx-10">
               <div className="border-2 border-accent py-5 px-2 rounded-xl relative">
                 <p className="absolute -top-4 left-10 px-2 font-semibold bg-white text-accent">
                   Select Travel Insurance Option
@@ -221,7 +223,7 @@ const TravelerDetailsForm = () => {
                 </div>
               </div>
             </div>
-            <div className="form-control mt-5 mx-5 md:mx-10">
+            <div className="form-control mt-5 mx-5 md:mx-10 text-xs md:text-[15px]">
               <label className="cursor-pointer flex items-center gap-3">
                 <input
                   type="checkbox"
@@ -241,7 +243,8 @@ const TravelerDetailsForm = () => {
                 </span>
               </label>
             </div>
-            <div className="mx-5 md:mx-10 flex gap-3 mt-5">
+
+            <div className="mx-5  md:mx-10 flex items-center flex-col md:flex-row  gap-3 mt-5">
               <button
                 onClick={handlePayLater}
                 className={`${
@@ -293,7 +296,7 @@ const TravelerDetailsForm = () => {
             </div>
             <div
               className={`duration-500 ${
-                isCollapse ? "max-h-[1375px] md:max-h-[925px]" : "max-h-0"
+                isCollapse ? "max-h-[1475px] md:max-h-[925px]" : "max-h-0"
               } transition-all ease-linear overflow-hidden`}
             >
               <div className="p-5">
@@ -478,10 +481,10 @@ const TravelerDetailsForm = () => {
                         type="email"
                         readOnly
                         name=""
+                        defaultValue={user?.email}
                         id=""
                         {...register("traveler_email", { required: true })}
                         placeholder="Email"
-                        defaultValue={user?.email}
                         className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
@@ -579,7 +582,7 @@ const TravelerDetailsForm = () => {
         </div>
       )}
       {isContinue && isInsuranceModal && (
-        <div className="fixed p-4 top-0 left-0 z-50 w-full min-h-screen bg-black/20 overflow-y-auto flex items-center justify-center">
+        <div className="fixed p-4 top-0 left-0  z-50 w-full  bg-black/20 overflow-y-auto flex items-center justify-center">
           <div className="bg-white rounded-xl border p-5 w-fit relative">
             <h2 className="text-3xl font-semibold mb-4 text-center">
               Travel Insurance Preference
@@ -629,7 +632,7 @@ const TravelerDetailsForm = () => {
                 expenses.
               </p>
             </div>
-            <div className="flex justify-center mt-6">
+            <div className="flex justify-center mt-6 pb-8">
               <button
                 onClick={() => setIsInsuranceModal(false)}
                 className="bg-cyan-600 text-white font-semibold py-2 px-6 rounded-full hover:bg-cyan-700"

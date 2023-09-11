@@ -39,7 +39,6 @@ const Navbar = () => {
   }, [axiosSecure]);
 
   const currentUser = users.find((userData) => userData?.email === user?.email);
-  console.log(currentUser);
 
   const isAdmin = currentUser?.role === "admin";
 
