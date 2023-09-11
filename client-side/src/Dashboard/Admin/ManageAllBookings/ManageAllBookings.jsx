@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../../assets/icon/airblissBlack.png";
-import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
+import CancelBookingTable from "../../../Components/CancelBookingTable/CancelBookingTable";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -10,24 +10,40 @@ const ManageAllBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
-  const [isActive, setIsActive] = useState("allflight");
+  const [isActive, setIsActive] = useState("allbookings");
+  const [allBookings, setAllBookings] = useState([]);
+  const [status, setStatus] = useState("");
 
   const handleTabClick = (tab) => {
     setIsActive(tab);
   };
 
-  const bookings = useSelector((state) => state?.userInfo?.userBookings);
-  const cancelBookings = bookings?.filter(
+  useEffect(() => {
+    fetch("http://localhost:5000/allBookings")
+      .then((res) => res.json())
+      .then((data) => setAllBookings(data));
+  }, []);
+
+  // const bookings = useSelector((state) => state?.userInfo?.userBookings);
+
+  const cancelBookings = allBookings?.filter(
     (booking) => booking?.bookingStatus === "cancel"
   );
 
-  const confirmBookings = bookings?.filter(
+  const confirmBookings = allBookings?.filter(
     (booking) => booking?.bookingStatus === "confirmed"
   );
-  // console.log("All bookings", bookings);
-  // console.log("Cancel Bookings", cancelBookings);
+
+  const cancelRequests = allBookings?.filter(
+    (booking) => booking?.requestStatus === "pending"
+  );
+
+  // console.log("All bookings", allBookings);
+  // console.log("Cancel Bookings", cancelRequests);
 
   const [formData, setFormData] = useState({});
+
+  console.log("bookings reference", flightRef);
   // Initialize your form data state here
 
   const {
@@ -38,11 +54,11 @@ const ManageAllBooking = () => {
     formState: { errors },
   } = useForm();
 
-  const myFlight = bookings?.find(
+  const selectedFlight = allBookings?.find(
     (flight) => flight.bookingReference === flightRef
   );
 
-  console.log(myFlight);
+  // console.log("My Flight", selectedFlight);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -66,21 +82,22 @@ const ManageAllBooking = () => {
     }
   };
 
-  const handleCancelFlight = (data) => {
+  const handleCancelDeny = (data) => {
+    setStatus("denied");
     // console.log(data);
-    const cancelFlightInfo = {
-      feedback: data?.cancelReason,
-      bookingInfo: myFlight,
+    const cancelDenyInfo = {
+      feedback: data?.feedback,
+      bookingInfo: selectedFlight,
     };
-    // console.log(cancelFlightInfo);
+    // console.log(cancelDenyInfo);
     fetch(
-      `http://localhost:5000/bookings/cancel/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
+      `http://localhost:5000/refund/${status}/${selectedFlight?.flight?.departureDate}/${selectedFlight?.flight?.departureAirport}/${selectedFlight?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(cancelFlightInfo),
+        body: JSON.stringify(cancelDenyInfo),
       }
     )
       .then((response) => {
@@ -102,11 +119,12 @@ const ManageAllBooking = () => {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
-  const paidAmount = myFlight?.flight?.fareSummary?.total;
-  const deductedAmount = Math.round(myFlight?.flight?.fareSummary?.total * 0.3);
+  const paidAmount = selectedFlight?.flight?.fareSummary?.total;
+  const deductedAmount = Math.round(
+    selectedFlight?.flight?.fareSummary?.total * 0.3
+  );
   const refundAmount = paidAmount - deductedAmount;
 
-  //   console.log(booking);
   return (
     <div>
       {/* Tab */}
@@ -116,9 +134,9 @@ const ManageAllBooking = () => {
         </div>
         <div className="flex gap-1 rounded font-medium text-gray-600 text-sm">
           <div
-            onClick={() => handleTabClick("allflight")}
+            onClick={() => handleTabClick("allbookings")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "allflight"
+              isActive === "allbookings"
                 ? "border-t-2 bg-cyan-50 border-cyan-400"
                 : ""
             }`}
@@ -169,12 +187,22 @@ const ManageAllBooking = () => {
         </div>
       </section>
 
-      {isActive === "allflight" && (
+      {isActive === "allbookings" && (
         <BookingFlightTable
-          bookings={bookings}
+          bookings={allBookings}
           openModal={openModal}
           setFlightRef={setFlightRef}
           status="flight status"
+          action={true}
+        />
+      )}
+
+      {isActive === "confirm" && (
+        <BookingFlightTable
+          bookings={confirmBookings}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="confirm status"
           action={true}
         />
       )}
@@ -189,13 +217,13 @@ const ManageAllBooking = () => {
         />
       )}
 
-      {isActive === "confirm" && (
-        <BookingFlightTable
-          bookings={confirmBookings}
+      {isActive === "cancel-request" && (
+        <CancelBookingTable
+          bookings={cancelBookings}
           openModal={openModal}
           setFlightRef={setFlightRef}
-          status="confirm status"
-          action={true}
+          status="cancel status"
+          action={false}
         />
       )}
 
@@ -218,13 +246,14 @@ const ManageAllBooking = () => {
               <div className="flex gap-5 md:gap-10 items-center my-2">
                 <div>
                   <h2 className="text-lg font-semibold">Booking Date:</h2>
-                  <p className="">{myFlight?.bookingDateTime}</p>
+                  <p className="">{selectedFlight?.bookingDateTime}</p>
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold">Traveler:</h2>
                   <p className="">
-                    {myFlight?.user?.title} {myFlight?.user?.first_name}{" "}
-                    {myFlight?.user?.last_name}
+                    {selectedFlight?.user?.title}{" "}
+                    {selectedFlight?.user?.first_name}{" "}
+                    {selectedFlight?.user?.last_name}
                   </p>
                 </div>
               </div>
@@ -236,27 +265,27 @@ const ManageAllBooking = () => {
                 <div className="md:flex gap-5 items-center">
                   <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
                     <h2 className="font-semibold">Airline</h2>
-                    <p>{myFlight?.flight?.airline}</p>
+                    <p>{selectedFlight?.flight?.airline}</p>
                   </div>
                   <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
                     <h2 className="font-semibold">Route</h2>
                     <p>
-                      {myFlight?.flight?.departureCity} to{" "}
-                      {myFlight?.flight?.arrivalCity}
+                      {selectedFlight?.flight?.departureCity} to{" "}
+                      {selectedFlight?.flight?.arrivalCity}
                     </p>
                   </div>
                   <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
                     <h2 className="font-semibold">Departure Date</h2>
                     <p>
-                      {myFlight?.flight?.departureDate}{" "}
-                      {myFlight?.flight?.departureTime}
+                      {selectedFlight?.flight?.departureDate}{" "}
+                      {selectedFlight?.flight?.departureTime}
                     </p>
                   </div>
                   <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
                     <h2 className=" font-semibold">Arrival Date</h2>
                     <p>
-                      {myFlight?.flight?.arrivalDate}{" "}
-                      {myFlight?.flight?.arrivalTime}
+                      {selectedFlight?.flight?.arrivalDate}{" "}
+                      {selectedFlight?.flight?.arrivalTime}
                     </p>
                   </div>
                 </div>
@@ -268,7 +297,7 @@ const ManageAllBooking = () => {
                 </h2>
                 <hr />
                 <div className="grid grid-cols-2 mt-2">
-                  <p>Your paid amount for this flight</p>
+                  <p>Paid amount for this flight</p>
                   <p>= {paidAmount} BDT</p>
                 </div>
                 <div className="grid grid-cols-2 mt-2 md:mt-0">
@@ -283,21 +312,21 @@ const ManageAllBooking = () => {
                   <p>= {refundAmount} BDT</p>
                 </div>
               </div>
-              <form onSubmit={handleSubmit(handleCancelFlight)}>
+              <form onSubmit={handleSubmit(handleCancelDeny)}>
                 <div className="mt-4">
                   <label
                     htmlFor="exampleField"
                     className="block font-bold mb-2"
                   >
-                    Why you want to cancel the flight?
+                    Write your feedback here
                     <span className="text-red-600">*</span>
                   </label>
                   <textarea
                     type="text"
                     id="exampleField"
-                    {...register("cancelReason", { required: true })}
+                    {...register("feedback", { required: true })}
                     className={`block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
-                      errors.cancelReason &&
+                      errors.feedback &&
                       "focus:border-red-500 focus:ring-red-500 "
                     }`}
                     placeholder="Enter something"

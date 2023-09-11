@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import { BsInfoCircle } from "react-icons/bs";
-import { FaInfo } from "react-icons/fa";
-import { GoHistory } from "react-icons/go";
+import { FaCheck, FaInfo } from "react-icons/fa";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 5;
 
-const BookingFlightTable = ({
+const CancelBookingTable = ({
   bookings,
   openModal,
   setFlightRef,
@@ -29,6 +27,7 @@ const BookingFlightTable = ({
       setCurrentPage(currentPage + 1);
     }
   };
+
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
@@ -40,12 +39,11 @@ const BookingFlightTable = ({
         <thead>
           <tr>
             <th>#</th>
-            <th>Flight image</th>
-            <th>Flight name</th>
             <th>Booking Reference</th>
-            <th>Flight booking date</th>
+            <th>Flight Name</th>
+            <th>Flight Date</th>
             <th>Travel Path</th>
-            <th>Ticket Price</th>
+            <th>Cancel Reason</th>
             <th className="capitalize">{status}</th>
             {!action && <th>Action</th>}
           </tr>
@@ -54,26 +52,19 @@ const BookingFlightTable = ({
           {bookings?.slice(startIndex, endIndex).map((flight, index) => (
             <tr key={index}>
               <th>{index + 1}</th>
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle rounded-full w-12 h-12">
-                      <img
-                        src={flight?.airlineLogo}
-                        alt="Avatar Tailwind CSS Component"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td>{flight?.flight.airline}</td>
               <td>{flight?.bookingReference}</td>
-              <td>{flight?.bookingDateTime}</td>
 
+              <td>{flight?.flight.airline}</td>
+
+              <td>{flight?.flight?.arrivalDate}</td>
               <td>
                 {flight?.flight?.departureCity} To {flight?.flight?.arrivalCity}
               </td>
-              <td>BDT {flight?.flight?.fareSummary?.total}</td>
+              <td>
+                {flight?.cancel_reason
+                  ? flight?.cancel_reason
+                  : "No Reason found"}
+              </td>
               <td className="capitalize">
                 {status === "flight status" && (
                   <span>
@@ -102,7 +93,25 @@ const BookingFlightTable = ({
                     </button>
                   </Link>
 
+                  <button
+                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 hover:bg-blue-500
+                  }`}
+                    onClick={() => setFlightRef(flight?.bookingReference)}
+                  >
+                    <FaCheck />
+                  </button>
+
                   {flight?.requestStatus === "pending" ? (
+                    <button
+                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  hover:bg-red-500`}
+                      onClick={() => {
+                        openModal();
+                        setFlightRef(flight?.bookingReference);
+                      }}
+                    >
+                      <MdCancel />
+                    </button>
+                  ) : (
                     <button
                       className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  opacity-30`}
                       onClick={() => {
@@ -110,16 +119,6 @@ const BookingFlightTable = ({
                         setFlightRef(flight?.bookingReference);
                       }}
                       disabled
-                    >
-                      <MdCancel />
-                    </button>
-                  ) : (
-                    <button
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400 hover:bg-red-500`}
-                      onClick={() => {
-                        openModal();
-                        setFlightRef(flight?.bookingReference);
-                      }}
                     >
                       <MdCancel />
                     </button>
@@ -163,4 +162,4 @@ const BookingFlightTable = ({
   );
 };
 
-export default BookingFlightTable;
+export default CancelBookingTable;
