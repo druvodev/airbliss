@@ -158,7 +158,7 @@ async function run() {
       }
     });
 
-    // ###################################### Flights Search Methods #########################################
+    // ######################## Flights Search Methods #########################
 
     // Generate seat data model for specific flight
     async function generateSeatData(totalSeats, flightId, bookingDate) {
@@ -784,7 +784,45 @@ async function run() {
       }
     });
 
-    // get all bookings
+    // Get all bookings
+    app.get("/allBookings", async (req, res) => {
+      try {
+        const bookings = await bookingsCollection.find().toArray();
+
+        // Initialize an array to store all bookings
+        let allBookings = [];
+
+        // Loop through the bookings
+        for (let booking of bookings) {
+          for (let dateKey in booking) {
+            const airportCodes = booking[dateKey];
+            for (let airportCodeKey in airportCodes) {
+              const bookingsForAirport = airportCodes[airportCodeKey];
+
+              // Check if bookingsForAirport is an array and not empty
+              if (
+                Array.isArray(bookingsForAirport) &&
+                bookingsForAirport.length > 0
+              ) {
+                // Concatenate the found booking objects to allBookings
+                allBookings = allBookings.concat(bookingsForAirport);
+              }
+            }
+          }
+        }
+
+        // Check if any bookings were found
+        if (allBookings.length > 0) {
+          res.json(allBookings);
+        } else {
+          res.status(404).json({ message: "No bookings found" });
+        }
+      } catch (err) {
+        console.error("Error fetching booking:", err);
+        res.status(500).json({ error: "An error occurred" });
+      }
+    });
+
     app.get("/bookings", async (req, res) => {
       const result = await bookingsCollection.find().toArray();
       res.send(result);
