@@ -541,15 +541,15 @@ async function run() {
       });
     });
 
-    // ###################################### Booking Cancel Request ######################################
+    // ################### Booking Cancel/Refund Request ####################
     const addBookingOperation = async (bookingInfo, feedback) => {
       const newBookingStatus = "cancel";
       const newRequestStatus = "pending";
       const currentDateTime = format(new Date(), "yyyy-MM-dd HH:mm:ss");
+      bookingInfo.bookingStatus = newBookingStatus;
+      bookingInfo.requestStatus = newRequestStatus;
+
       const reqBookingInfo = {
-        bookingId: bookingInfo.bookingReference,
-        bookingStatus: newBookingStatus,
-        requestStatus: newRequestStatus,
         reqTime: currentDateTime,
         feedback: feedback,
         bookingInfo: bookingInfo,
@@ -568,6 +568,7 @@ async function run() {
       }
     };
 
+    // Booking refund/cancel request (USER)
     app.patch(
       "/bookings/cancel/:date/:airportCode/:bookingReference",
       async (req, res) => {
@@ -576,7 +577,6 @@ async function run() {
         const bookingReference = req.params.bookingReference;
         const newBookingStatus = "cancel";
         const newRequestStatus = "pending";
-        console.log(bookingReference);
 
         try {
           const path = `${date}.${airportCode}`;
@@ -612,6 +612,82 @@ async function run() {
                 bookingOperationMessage: message,
               });
             }
+          } else {
+            // If the document with the specified bookingReference was not found
+            res.status(404).json({ message: "Booking not found" });
+          }
+        } catch (err) {
+          console.error("Error updating booking status:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
+
+    // Manage refund flight request (ADMIN)
+    app.patch(
+      "/refund/:status/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const status = req.params.status;
+        const date = req.params.date;
+        const airportCode = req.params.airportCode;
+        const bookingReference = req.params.bookingReference;
+        const newBookingStatus = "cancel";
+        let newRequestStatus;
+        if (status === "approved") {
+          newRequestStatus = "approved";
+        } else {
+          newRequestStatus = "denied";
+        }
+        console.log(bookingReference);
+
+        try {
+          const path = `${date}.${airportCode}`;
+
+          // Define the updateObject for $set operation
+          const updateObject = {
+            $set: {
+              [path + ".$.bookingStatus"]: newBookingStatus,
+              [path + ".$.requestStatus"]: newRequestStatus,
+            },
+          };
+
+          // If the status is "denied," add the "deniedFeedback" field
+          if (status === "denied") {
+            updateObject.$set[path + ".$.deniedFeedback"] = req.body.feedback;
+          }
+
+          // Update the booking document in bookingsCollection
+          const result = await bookingsCollection.updateOne(
+            {
+              [path]: {
+                $elemMatch: { bookingReference: bookingReference },
+              },
+            },
+            updateObject
+          );
+
+          if (result.modifiedCount === 1) {
+            // Update the booking status and request status in bookingsManageCollection
+            const updateBookingManageObject = {
+              $set: {
+                bookingStatus: newBookingStatus,
+                requestStatus: newRequestStatus,
+              },
+            };
+
+            // If the status is "denied," add the "deniedFeedback" field to bookingsManageCollection
+            if (status === "denied") {
+              updateBookingManageObject.$set.deniedFeedback = req.body.feedback;
+            }
+
+            await bookingsManageCollection.updateOne(
+              { bookingId: bookingReference },
+              updateBookingManageObject
+            );
+
+            res.json({
+              message: "Booking status updated successfully",
+            });
           } else {
             // If the document with the specified bookingReference was not found
             res.status(404).json({ message: "Booking not found" });
