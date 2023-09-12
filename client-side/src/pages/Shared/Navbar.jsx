@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useDispatch } from "react-redux";
-import { setUserInfo } from "../../redux/features/usersSlice";
+import { setAllUserInfo, setUserInfo } from "../../redux/features/usersSlice";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -43,6 +43,10 @@ const Navbar = () => {
   const isAdmin = currentUser?.role === "admin";
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setAllUserInfo(users))
+  }, [ users]);
 
   useEffect(() => {
     dispatch(setUserInfo(currentUser));

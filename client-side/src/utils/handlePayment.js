@@ -125,8 +125,9 @@ export const paymentLater = (flightInfo, userInfo) => {
 };
 
 // -----------------------------------Handle Processing Payment
-export const paymentProcessing = (flightInfo, userInfo) => {
+export const paymentProcessing = (flightInfo, userInfo, insurance) => {
   userBookingInfo.bookingReference = generateBookingId();
+  userBookingInfo.insurance = insurance;
   userBookingInfo.user = {
     ...userInfo,
     PNR: generatePNR(),
