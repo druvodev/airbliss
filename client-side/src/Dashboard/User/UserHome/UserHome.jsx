@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TotalBooking from "./TotalBooking";
 import TotalCancel from "./TotalCancel";
 import TotalRefund from "./TotalRefund";
@@ -7,8 +7,18 @@ import TotalRefundAmount from "./TotalRefundAmount";
 import TotalAmount from "./TotalAmount";
 import BookingChart from "./BookingChart";
 import BookingCalendar from "./BookingCalendar";
+import { useSelector } from "react-redux";
 
 const UserHome = () => {
+  const userData = useSelector((state) => state?.userInfo.userInfo);
+  if (Object.keys(userData).length > 3) {
+    sessionStorage.setItem('userInfo', JSON.stringify(userData));
+  }
+  console.log(userData);
+  
+  const data = JSON.parse(sessionStorage.getItem('userInfo'));
+  console.log('sessionStorage', data);  
+
   return (
     <div className="grid gap-7 mt-10 max-w-full">
       <div className="grid grid-rows-2 gap-7">
