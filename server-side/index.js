@@ -409,7 +409,6 @@ async function run() {
 
           await bookingsCollection.insertOne(newEntry);
         }
-        console.log("Booking info saved to database.");
       } catch (error) {
         console.error("Error saving booking info to database:", error);
       } finally {
