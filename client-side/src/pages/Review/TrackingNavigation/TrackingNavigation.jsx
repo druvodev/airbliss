@@ -1,16 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaAngleRight } from "react-icons/fa";
 import { formatDate } from "../../../utils/formatDate";
+import {
+  setIsLoading,
+  setIsCollapse,
+  setData,
+} from "../../../redux/features/trakingNavigationSlice";
 
 const TrackingNavigation = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isCollapse, setIsCollapse] = useState(true);
-  const [data, setData] = useState();
   const { id } = useParams();
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.trackingNavigation.isLoading);
+  const isCollapse = useSelector(
+    (state) => state.trackingNavigation.isCollapse
+  );
+  const data = useSelector((state) => state.trackingNavigation.data);
   const flight = useSelector((state) => state.flights.flights);
 
   const { airlineLogo, airlineName, passengerType, stopType, duration } =
@@ -25,10 +32,10 @@ const TrackingNavigation = () => {
       const singleData = flight?.flights?.find(
         (singleFlight) => singleFlight?._id === id
       );
-      setData(singleData);
-      setIsLoading(false);
+      dispatch(setData(singleData));
+      dispatch(setIsLoading(false));
     }
-  }, [flight, id]);
+  }, [dispatch, flight, id]);
 
   function calculateArrivalDate(departureDate, departureTime, arrivalTime) {
     const [depHour, depMinute] = departureTime.split(":").map(Number);
@@ -87,7 +94,7 @@ const TrackingNavigation = () => {
                     </button>
                   </div>
                   <div>
-                    <button onClick={() => setIsCollapse(!isCollapse)}>
+                    <button onClick={() => dispatch(setIsCollapse())}>
                       {isCollapse ? (
                         <MdKeyboardArrowUp className="text-2xl rounded-full bg-gray-300" />
                       ) : (
