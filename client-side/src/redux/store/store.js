@@ -6,6 +6,7 @@ import bookingInfoReducer from "../features/bookingInfoSlice";
 import usersReducer from "../features/usersSlice";
 import ticketHistorySlice from "../features/ticketHistorySlice";
 import trackingNavigationReducer from "../features/trakingNavigationSlice";
+import bookTicketReducer from "../features/bookTicketSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     userInfo: usersReducer,
     booking: ticketHistorySlice,
     trackingNavigation: trackingNavigationReducer,
+    bookTicket: bookTicketReducer,
   },
 });
