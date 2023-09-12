@@ -87,6 +87,7 @@ async function run() {
     const seatsCollection = database.collection("seats");
     const usersCollection = database.collection("users");
     const bookingsManageCollection = database.collection("bookingsManage");
+    const insuranceCollection = database.collection("insurance");
 
     app.post("/jwt", (req, res) => {
       const user = req.body;
@@ -408,7 +409,6 @@ async function run() {
 
           await bookingsCollection.insertOne(newEntry);
         }
-        console.log("Booking info saved to database.");
       } catch (error) {
         console.error("Error saving booking info to database:", error);
       } finally {
@@ -477,10 +477,54 @@ async function run() {
     // payment processing API
     app.post("/process-payment", async (req, res) => {
       const bookingInfo = req.body;
-      const { user, flight } = bookingInfo;
+      const { user, flight, insurance } = bookingInfo;
       const transitionId = `tr${new ObjectId()}`;
+      // generate insurance information
+      function generatePolicyNumber() {
+        const prefix = "policy";
+        const timestamp = Date.now().toString();
+        const randomPart = Math.random().toString(36).substring(2, 8);
+        const policyNumber = `${prefix}${timestamp}${randomPart}`;
+        return policyNumber;
+      }
+      let insurancePolicy;
+      if (insurance) {
+        insurancePolicy = {
+          policyNumber: generatePolicyNumber(),
+          policyType: "Travel",
+          startDate: flight.departureDate,
+          endDate: flight.arrivalDate,
+          policyPremium: (
+            0.05 * parseFloat(flight.fareSummary.total)
+          ).toFixed(),
+          coverageDetails: {
+            tripCancellation: true,
+            delayedFlight: true,
+            lostLuggage: true,
+            medicalCoverage: true,
+          },
+          claimedInsurance: {
+            tripCancellation: { isClaimed: false, claimedPrice: 0 },
+            delayedFlight: { isClaimed: false, claimedPrice: 0 },
+            lostLuggage: { isClaimed: false, claimedPrice: 0 },
+            medicalCoverage: { isClaimed: false, claimedPrice: 0 },
+          },
+        };
+      } else {
+        insurancePolicy = "Without Insurance";
+      }
+      // generate total amount value
+      let totalAmount;
+      if (insurance) {
+        const baseFare = parseFloat(flight.fareSummary.total);
+        const policyPremium = 0.05 * baseFare;
+        totalAmount = (baseFare + policyPremium).toFixed();
+      } else {
+        totalAmount = parseFloat(flight.fareSummary.total);
+      }
+
       const data = {
-        total_amount: parseFloat(flight.fareSummary.total),
+        total_amount: totalAmount,
         currency: "BDT",
         tran_id: transitionId,
         success_url: `http://localhost:5000/booking-confirmed/${bookingInfo.bookingReference}`,
@@ -518,21 +562,25 @@ async function run() {
           res.send({ paymentUrl: GatewayPageURL });
         })
         .then(async () => {
-          const { totalSeat, flightId, flight } = bookingInfo;
           bookingInfo.transitionId = transitionId;
           bookingInfo.paymentStatus = "paid";
           bookingInfo.bookingStatus = "confirmed";
           bookingInfo.requestStatus = "success";
-          // Generate seat plan before store booking information
-          // await generateSeatData(totalSeat, flightId, flight?.departureDate);
-          const seatNo = await selectAvailableSeat(
-            flightId,
-            flight?.departureDate,
-            user?.seatNo
-          );
-          // bookingInfo.seat = seatNo;
-          console.log(seatNo);
+          bookingInfo.insurancePolicy = insurancePolicy;
+
+          // save booking information bookings database
           await saveBookingInfoToDatabase(bookingInfo);
+
+          // save insurance information in insurance database
+          if (insurance) {
+            delete bookingInfo.insurance; // Delete insurance checking field
+            const insuranceInfo = {
+              ...insurancePolicy,
+              isClaimed: false,
+              bookingInfo,
+            };
+            await insuranceCollection.insertOne(insuranceInfo);
+          }
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
         res.redirect(
