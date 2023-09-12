@@ -582,7 +582,7 @@ const TravelerDetailsForm = () => {
         </div>
       )}
       {isContinue && isInsuranceModal && (
-        <div className="fixed p-4 top-0 left-0  z-50 w-full  bg-black/20 overflow-y-auto flex items-center justify-center">
+        <div className="fixed p-4 top-0 left-0  z-50 w-full h-screen  bg-black/20 overflow-y-auto flex items-center justify-center">
           <div className="bg-white rounded-xl border p-5 w-fit relative">
             <h2 className="text-3xl font-semibold mb-4 text-center">
               Travel Insurance Preference
