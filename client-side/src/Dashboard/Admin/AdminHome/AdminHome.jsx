@@ -24,7 +24,7 @@ import {
 } from "recharts";
 import CircularProgressBar from "../../../Components/CircularProgressBar/CircularProgressBar";
 import FlightProgressBar from "../../../Components/CircularProgressBar/FlightProgressBar";
-import { useSelector } from "react-redux";
+import { format } from "date-fns";
 
 const AdminHome = () => {
   const data = [
@@ -78,6 +78,18 @@ const AdminHome = () => {
     },
   ];
 
+  const newDate = new Date();
+  const todayDate = format(newDate, 'dd/MM/yyyy')
+
+  const allUserData = JSON.parse(sessionStorage.getItem('userData'));
+  const allBookingData = JSON.parse(sessionStorage.getItem('userBookings'))
+
+  const todayBookingData = allBookingData.filter(bookingData => bookingData?.bookingDateTime.split(" ")[0] == todayDate)
+
+  const totalRevenue = todayBookingData.filter(revenue => revenue?.bookingStatus == 'confirmed')
+  const totalCancel = todayBookingData.filter(cancel => cancel?.bookingStatus == "cancel")
+  const totalRefund = todayBookingData.filter(refund => refund?.requestStatus == "pending")
+
   return (
     <section>
       <div>
@@ -86,7 +98,7 @@ const AdminHome = () => {
             <div className="flex justify-between items-center bg-white shadow-md rounded-xl p-10">
               <div>
                 <p className="text-lg font-semibold">Total User</p>
-                <h2 className="text-2xl font-bold">536</h2>
+                <h2 className="text-2xl font-bold">{allUserData?.length || 0}</h2>
               </div>
               <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
                 <FaUserAlt className="text-white text-3xl font-bold" />
@@ -95,7 +107,7 @@ const AdminHome = () => {
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
                 <p className="text-lg font-semibold">Total Flight</p>
-                <h2 className="text-2xl font-bold">200</h2>
+                <h2 className="text-2xl font-bold">{allBookingData?.length || 0}</h2>
               </div>
               <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
                 <FaPlaneDeparture className="text-white text-3xl font-bold" />
@@ -112,8 +124,8 @@ const AdminHome = () => {
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
-                <p className="text-lg font-semibold">Total booking ticket</p>
-                <h2 className="text-2xl font-bold">350M</h2>
+                <p className="text-lg font-semibold">Today booking ticket</p>
+                <h2 className="text-2xl font-bold">{todayBookingData?.length || 0}</h2>
               </div>
               <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
                 <MdAirplaneTicket className="text-white text-3xl font-bold" />
@@ -121,8 +133,8 @@ const AdminHome = () => {
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
-                <p className="text-lg font-semibold">Cancel Flight</p>
-                <h2 className="text-2xl font-bold">175</h2>
+                <p className="text-lg font-semibold">Today Cancel Flight</p>
+                <h2 className="text-2xl font-bold">{totalCancel?.length || 0}</h2>
               </div>
               <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
                 <TiCancelOutline className="text-white text-3xl font-bold" />
@@ -130,8 +142,8 @@ const AdminHome = () => {
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
-                <p className="text-lg font-semibold">Refund request</p>
-                <h2 className="text-2xl font-bold">85</h2>
+                <p className="text-lg font-semibold">Today Refund request</p>
+                <h2 className="text-2xl font-bold">{totalRefund?.length || 0}</h2>
               </div>
               <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
                 <GiReturnArrow className="text-white text-3xl font-bold" />
