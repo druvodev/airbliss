@@ -41,12 +41,6 @@ const ManageAllBooking = () => {
     (booking) => booking?.requestStatus === "pending"
   );
 
-  console.log("All bookings", allBookings);
-  // console.log("Cancel Bookings", cancelRequests);
-
-  console.log("bookings reference", flightRef);
-  // Initialize your form data state here
-
   const {
     register,
     handleSubmit,
@@ -159,7 +153,7 @@ const ManageAllBooking = () => {
         <div className="mb-2 md:mb-0">
           <h1 className="font-semibold ">Filter Bookings: </h1>
         </div>
-        <div className="flex gap-1 rounded font-medium text-gray-600 text-sm">
+        <div className="flex md:flex-row flex-col gap-1 rounded font-medium text-gray-600 text-sm">
           <div
             onClick={() => handleTabClick("allbookings")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
