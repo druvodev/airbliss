@@ -158,7 +158,7 @@ async function run() {
       }
     });
 
-    // ###################################### Flights Search Methods #########################################
+    // ######################## Flights Search Methods #########################
 
     // Generate seat data model for specific flight
     async function generateSeatData(totalSeats, flightId, bookingDate) {
@@ -541,15 +541,15 @@ async function run() {
       });
     });
 
-    // ###################################### Booking Cancel Request ######################################
+    // ################### Booking Cancel/Refund Request ####################
     const addBookingOperation = async (bookingInfo, feedback) => {
       const newBookingStatus = "cancel";
       const newRequestStatus = "pending";
       const currentDateTime = format(new Date(), "yyyy-MM-dd HH:mm:ss");
+      bookingInfo.bookingStatus = newBookingStatus;
+      bookingInfo.requestStatus = newRequestStatus;
+
       const reqBookingInfo = {
-        bookingId: bookingInfo.bookingReference,
-        bookingStatus: newBookingStatus,
-        requestStatus: newRequestStatus,
         reqTime: currentDateTime,
         feedback: feedback,
         bookingInfo: bookingInfo,
@@ -568,6 +568,7 @@ async function run() {
       }
     };
 
+    // Booking refund/cancel request (USER)
     app.patch(
       "/bookings/cancel/:date/:airportCode/:bookingReference",
       async (req, res) => {
@@ -576,7 +577,6 @@ async function run() {
         const bookingReference = req.params.bookingReference;
         const newBookingStatus = "cancel";
         const newRequestStatus = "pending";
-        console.log(bookingReference);
 
         try {
           const path = `${date}.${airportCode}`;
@@ -612,6 +612,82 @@ async function run() {
                 bookingOperationMessage: message,
               });
             }
+          } else {
+            // If the document with the specified bookingReference was not found
+            res.status(404).json({ message: "Booking not found" });
+          }
+        } catch (err) {
+          console.error("Error updating booking status:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
+
+    // Manage refund flight request (ADMIN)
+    app.patch(
+      "/refund/:status/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const status = req.params.status;
+        const date = req.params.date;
+        const airportCode = req.params.airportCode;
+        const bookingReference = req.params.bookingReference;
+        const newBookingStatus = "cancel";
+        let newRequestStatus;
+        if (status === "approved") {
+          newRequestStatus = "approved";
+        } else {
+          newRequestStatus = "denied";
+        }
+        console.log(bookingReference);
+
+        try {
+          const path = `${date}.${airportCode}`;
+
+          // Define the updateObject for $set operation
+          const updateObject = {
+            $set: {
+              [path + ".$.bookingStatus"]: newBookingStatus,
+              [path + ".$.requestStatus"]: newRequestStatus,
+            },
+          };
+
+          // If the status is "denied," add the "deniedFeedback" field
+          if (status === "denied") {
+            updateObject.$set[path + ".$.deniedFeedback"] = req.body.feedback;
+          }
+
+          // Update the booking document in bookingsCollection
+          const result = await bookingsCollection.updateOne(
+            {
+              [path]: {
+                $elemMatch: { bookingReference: bookingReference },
+              },
+            },
+            updateObject
+          );
+
+          if (result.modifiedCount === 1) {
+            // Update the booking status and request status in bookingsManageCollection
+            const updateBookingManageObject = {
+              $set: {
+                bookingStatus: newBookingStatus,
+                requestStatus: newRequestStatus,
+              },
+            };
+
+            // If the status is "denied," add the "deniedFeedback" field to bookingsManageCollection
+            if (status === "denied") {
+              updateBookingManageObject.$set.deniedFeedback = req.body.feedback;
+            }
+
+            await bookingsManageCollection.updateOne(
+              { bookingId: bookingReference },
+              updateBookingManageObject
+            );
+
+            res.json({
+              message: "Booking status updated successfully",
+            });
           } else {
             // If the document with the specified bookingReference was not found
             res.status(404).json({ message: "Booking not found" });
@@ -708,7 +784,45 @@ async function run() {
       }
     });
 
-    // get all bookings
+    // Get all bookings
+    app.get("/allBookings", async (req, res) => {
+      try {
+        const bookings = await bookingsCollection.find().toArray();
+
+        // Initialize an array to store all bookings
+        let allBookings = [];
+
+        // Loop through the bookings
+        for (let booking of bookings) {
+          for (let dateKey in booking) {
+            const airportCodes = booking[dateKey];
+            for (let airportCodeKey in airportCodes) {
+              const bookingsForAirport = airportCodes[airportCodeKey];
+
+              // Check if bookingsForAirport is an array and not empty
+              if (
+                Array.isArray(bookingsForAirport) &&
+                bookingsForAirport.length > 0
+              ) {
+                // Concatenate the found booking objects to allBookings
+                allBookings = allBookings.concat(bookingsForAirport);
+              }
+            }
+          }
+        }
+
+        // Check if any bookings were found
+        if (allBookings.length > 0) {
+          res.json(allBookings);
+        } else {
+          res.status(404).json({ message: "No bookings found" });
+        }
+      } catch (err) {
+        console.error("Error fetching booking:", err);
+        res.status(500).json({ error: "An error occurred" });
+      }
+    });
+
     app.get("/bookings", async (req, res) => {
       const result = await bookingsCollection.find().toArray();
       res.send(result);

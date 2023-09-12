@@ -4,7 +4,10 @@ import { FaHome, FaHouseUser } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserBookings } from "../../../redux/features/usersSlice";
+import {
+  setRefetch,
+  setUserBookings,
+} from "../../../redux/features/usersSlice";
 
 const UserNav = () => {
   const { user } = useAuth();
@@ -16,7 +19,8 @@ const UserNav = () => {
       .then((res) => res.json())
       .then((data) => {
         dispatch(setUserBookings(data));
-        console.log(data);
+        dispatch(setRefetch(true));
+        // console.log(data);
       });
   }, [user, refetch]);
 

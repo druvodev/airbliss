@@ -1,33 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../../assets/icon/airblissBlack.png";
-import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
+import CancelBookingTable from "../../../Components/CancelBookingTable/CancelBookingTable";
 
 const ITEMS_PER_PAGE = 5;
 
-const ManageBooking = () => {
+const ManageAllBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
-  const [isActive, setIsActive] = useState("allflight");
+  const [isActive, setIsActive] = useState("allbookings");
+  const [allBookings, setAllBookings] = useState([]);
 
   const handleTabClick = (tab) => {
     setIsActive(tab);
   };
 
-  const bookings = useSelector((state) => state?.userInfo?.userBookings);
-  const cancelBookings = bookings?.filter(
-    (booking) => booking?.bookingStatus === "cancel"
+  useEffect(() => {
+    fetch("http://localhost:5000/allBookings")
+      .then((res) => res.json())
+      .then((data) => setAllBookings(data));
+  }, []);
+
+  // const bookings = useSelector((state) => state?.userInfo?.userBookings);
+
+  const cancelBookings = allBookings?.filter(
+    (booking) => booking?.requestStatus === "approved"
   );
 
-  const confirmBookings = bookings?.filter(
+  const cancelDeniedBookings = allBookings?.filter(
+    (booking) => booking?.requestStatus === "denied"
+  );
+
+  const confirmBookings = allBookings?.filter(
     (booking) => booking?.bookingStatus === "confirmed"
   );
-  // console.log("All bookings", bookings);
-  // console.log("Cancel Bookings", cancelBookings);
 
-  const [formData, setFormData] = useState({});
+  const cancelRequests = allBookings?.filter(
+    (booking) => booking?.requestStatus === "pending"
+  );
+
+  console.log("All bookings", allBookings);
+  // console.log("Cancel Bookings", cancelRequests);
+
+  console.log("bookings reference", flightRef);
   // Initialize your form data state here
 
   const {
@@ -38,11 +55,11 @@ const ManageBooking = () => {
     formState: { errors },
   } = useForm();
 
-  const myFlight = bookings?.find(
+  const selectedFlight = allBookings?.find(
     (flight) => flight.bookingReference === flightRef
   );
 
-  console.log(myFlight);
+  // console.log("My Flight", selectedFlight);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -66,21 +83,48 @@ const ManageBooking = () => {
     }
   };
 
-  const handleCancelFlight = (data) => {
-    // console.log(data);
-    const cancelFlightInfo = {
-      feedback: data?.cancelReason,
-      bookingInfo: myFlight,
+  const handleCancelApproved = () => {
+    const cancelApprovedInfo = {
+      bookingInfo: selectedFlight,
     };
-    // console.log(cancelFlightInfo);
     fetch(
-      `http://localhost:5000/bookings/cancel/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`,
+      `http://localhost:5000/refund/approved/${selectedFlight?.flight?.departureDate}/${selectedFlight?.flight?.departureAirport}/${selectedFlight?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(cancelFlightInfo),
+        body: JSON.stringify(cancelApprovedInfo),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Success:", data.message);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  const handleCancelDeny = (data) => {
+    const cancelDenyInfo = {
+      feedback: data?.feedback,
+      bookingInfo: selectedFlight,
+    };
+    // console.log(cancelDenyInfo);
+    fetch(
+      `http://localhost:5000/refund/denied/${selectedFlight?.flight?.departureDate}/${selectedFlight?.flight?.departureAirport}/${selectedFlight?.bookingReference}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cancelDenyInfo),
       }
     )
       .then((response) => {
@@ -102,28 +146,29 @@ const ManageBooking = () => {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
-  const paidAmount = myFlight?.flight?.fareSummary?.total;
-  const deductedAmount = Math.round(myFlight?.flight?.fareSummary?.total * 0.3);
+  const paidAmount = selectedFlight?.flight?.fareSummary?.total;
+  const deductedAmount = Math.round(
+    selectedFlight?.flight?.fareSummary?.total * 0.3
+  );
   const refundAmount = paidAmount - deductedAmount;
 
-  //   console.log(booking);
   return (
     <div>
       {/* Tab */}
       <section className="bg-white p-4 shadow-md mt-5 flex md:flex-row flex-col  md:items-center md:mx-7 md:space-x-4">
         <div className="mb-2 md:mb-0">
-          <h1 className="font-semibold ">Filter Ticket: </h1>
+          <h1 className="font-semibold ">Filter Bookings: </h1>
         </div>
         <div className="flex gap-1 rounded font-medium text-gray-600 text-sm">
           <div
-            onClick={() => handleTabClick("allflight")}
+            onClick={() => handleTabClick("allbookings")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "allflight"
+              isActive === "allbookings"
                 ? "border-t-2 bg-cyan-50 border-cyan-400"
                 : ""
             }`}
           >
-            All Flight
+            All Bookings
           </div>
           <div
             onClick={() => handleTabClick("confirm")}
@@ -133,7 +178,17 @@ const ManageBooking = () => {
                 : ""
             }`}
           >
-            Confirm Flight
+            Confirm Bookings
+          </div>
+          <div
+            onClick={() => handleTabClick("cancel-request")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "cancel-request"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
+            }`}
+          >
+            Cancel Requests
           </div>
           <div
             onClick={() => handleTabClick("cancel")}
@@ -143,26 +198,29 @@ const ManageBooking = () => {
                 : ""
             }`}
           >
-            Cancel Flight
+            Cancel Bookings
+          </div>
+
+          <div
+            onClick={() => handleTabClick("cancel-denied")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "cancel-denied"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
+            }`}
+          >
+            Cancel Denied
           </div>
         </div>
       </section>
 
-      {isActive === "allflight" && (
+      {isActive === "allbookings" && (
         <BookingFlightTable
-          bookings={bookings}
+          bookings={allBookings}
           openModal={openModal}
           setFlightRef={setFlightRef}
           status="flight status"
-        />
-      )}
-
-      {isActive === "cancel" && (
-        <BookingFlightTable
-          bookings={cancelBookings}
-          openModal={openModal}
-          setFlightRef={setFlightRef}
-          status="cancel status"
+          action={true}
         />
       )}
 
@@ -172,6 +230,39 @@ const ManageBooking = () => {
           openModal={openModal}
           setFlightRef={setFlightRef}
           status="confirm status"
+          action={true}
+        />
+      )}
+
+      {isActive === "cancel-request" && (
+        <CancelBookingTable
+          bookings={cancelRequests}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="cancel status"
+          action={false}
+          handleCancelApproved={handleCancelApproved}
+        />
+      )}
+
+      {isActive === "cancel" && (
+        <BookingFlightTable
+          bookings={cancelBookings}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="cancel status"
+          action={true}
+        />
+      )}
+
+      {isActive === "cancel-denied" && (
+        <CancelBookingTable
+          bookings={cancelDeniedBookings}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="cancel status"
+          action={true}
+          handleCancelApproved={handleCancelApproved}
         />
       )}
 
@@ -194,13 +285,14 @@ const ManageBooking = () => {
               <div className="flex gap-5 md:gap-10 items-center my-2">
                 <div>
                   <h2 className="text-lg font-semibold">Booking Date:</h2>
-                  <p className="">{myFlight?.bookingDateTime}</p>
+                  <p className="">{selectedFlight?.bookingDateTime}</p>
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold">Traveler:</h2>
                   <p className="">
-                    {myFlight?.user?.title} {myFlight?.user?.first_name}{" "}
-                    {myFlight?.user?.last_name}
+                    {selectedFlight?.user?.title}{" "}
+                    {selectedFlight?.user?.first_name}{" "}
+                    {selectedFlight?.user?.last_name}
                   </p>
                 </div>
               </div>
@@ -212,27 +304,27 @@ const ManageBooking = () => {
                 <div className="md:flex gap-5 items-center">
                   <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
                     <h2 className="font-semibold">Airline</h2>
-                    <p>{myFlight?.flight?.airline}</p>
+                    <p>{selectedFlight?.flight?.airline}</p>
                   </div>
                   <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
                     <h2 className="font-semibold">Route</h2>
                     <p>
-                      {myFlight?.flight?.departureCity} to{" "}
-                      {myFlight?.flight?.arrivalCity}
+                      {selectedFlight?.flight?.departureCity} to{" "}
+                      {selectedFlight?.flight?.arrivalCity}
                     </p>
                   </div>
                   <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
                     <h2 className="font-semibold">Departure Date</h2>
                     <p>
-                      {myFlight?.flight?.departureDate}{" "}
-                      {myFlight?.flight?.departureTime}
+                      {selectedFlight?.flight?.departureDate}{" "}
+                      {selectedFlight?.flight?.departureTime}
                     </p>
                   </div>
                   <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
                     <h2 className=" font-semibold">Arrival Date</h2>
                     <p>
-                      {myFlight?.flight?.arrivalDate}{" "}
-                      {myFlight?.flight?.arrivalTime}
+                      {selectedFlight?.flight?.arrivalDate}{" "}
+                      {selectedFlight?.flight?.arrivalTime}
                     </p>
                   </div>
                 </div>
@@ -244,7 +336,7 @@ const ManageBooking = () => {
                 </h2>
                 <hr />
                 <div className="grid grid-cols-2 mt-2">
-                  <p>Your paid amount for this flight</p>
+                  <p>Paid amount for this flight</p>
                   <p>= {paidAmount} BDT</p>
                 </div>
                 <div className="grid grid-cols-2 mt-2 md:mt-0">
@@ -259,21 +351,21 @@ const ManageBooking = () => {
                   <p>= {refundAmount} BDT</p>
                 </div>
               </div>
-              <form onSubmit={handleSubmit(handleCancelFlight)}>
+              <form onSubmit={handleSubmit(handleCancelDeny)}>
                 <div className="mt-4">
                   <label
                     htmlFor="exampleField"
                     className="block font-bold mb-2"
                   >
-                    Why you want to cancel the flight?
+                    Write your feedback here
                     <span className="text-red-600">*</span>
                   </label>
                   <textarea
                     type="text"
                     id="exampleField"
-                    {...register("cancelReason", { required: true })}
+                    {...register("feedback", { required: true })}
                     className={`block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
-                      errors.cancelReason &&
+                      errors.feedback &&
                       "focus:border-red-500 focus:ring-red-500 "
                     }`}
                     placeholder="Enter something"
@@ -303,4 +395,4 @@ const ManageBooking = () => {
   );
 };
 
-export default ManageBooking;
+export default ManageAllBooking;
