@@ -416,64 +416,6 @@ async function run() {
       }
     }
 
-    // Select available seat form seat collection
-    async function selectAvailableSeat(flightId, bookingDate, seatNo) {
-      try {
-        const query = {};
-        query[bookingDate] = { $exists: true };
-        const flightsData = await seatsCollection.findOne(query);
-
-        if (!flightsData) {
-          throw new Error("Flights not found for the specified date.");
-        }
-
-        const flightsOnDate = flightsData[bookingDate];
-        const flightIndex = flightsOnDate.findIndex(
-          (f) => f.flightId === flightId
-        );
-
-        if (flightIndex === -1) {
-          throw new Error("Flight not found for the specified flightId.");
-        }
-
-        const flight = flightsOnDate[flightIndex];
-        const seatIndex = flight.seats.findIndex(
-          (seat) => seat.seatNo === seatNo
-        );
-
-        if (seatIndex === -1 || !flight.seats[seatIndex].available) {
-          throw new Error("Seat not found or already booked.");
-        }
-
-        // Decrease available seat count for the flight
-        flight.available--;
-
-        // Mark the seat as unavailable
-        flight.seats[seatIndex].available = false;
-
-        // Update the seat availability and available seat count in the database
-        await seatsCollection.updateOne(
-          {
-            _id: flightsData._id,
-            [bookingDate]: { $elemMatch: { flightId: flightId } },
-          },
-          {
-            $set: {
-              [`${bookingDate}.$[flight].seats.${seatIndex}.available`]: false,
-              [`${bookingDate}.$[flight].available`]: flight.available,
-            },
-          },
-          {
-            arrayFilters: [{ "flight.flightId": flightId }],
-          }
-        );
-
-        return seatNo;
-      } catch (error) {
-        throw error;
-      }
-    }
-
     // payment processing API
     app.post("/process-payment", async (req, res) => {
       const bookingInfo = req.body;
@@ -574,6 +516,7 @@ async function run() {
           // save insurance information in insurance database
           if (insurance) {
             delete bookingInfo.insurance; // Delete insurance checking field
+            delete bookingInfo?.insurancePolicy; // Delete insurance checking field
             const insuranceInfo = {
               ...insurancePolicy,
               isClaimed: false,
