@@ -114,7 +114,6 @@ const ManageAllBooking = () => {
   const handleCancelDeny = (data) => {
     const cancelDenyInfo = {
       feedback: data?.feedback,
-      bookingInfo: selectedFlight,
     };
     // console.log(cancelDenyInfo);
     fetch(
