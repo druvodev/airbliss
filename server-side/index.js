@@ -420,6 +420,7 @@ async function run() {
     app.post("/process-payment", async (req, res) => {
       const bookingInfo = req.body;
       const { user, flight, insurance } = bookingInfo;
+
       const transitionId = `tr${new ObjectId()}`;
       // generate insurance information
       function generatePolicyNumber() {
@@ -436,6 +437,7 @@ async function run() {
           policyType: "Travel",
           startDate: flight.departureDate,
           endDate: flight.arrivalDate,
+          claimedStatus: null,
           policyPremium: (
             0.05 * parseFloat(flight.fareSummary.total)
           ).toFixed(),
@@ -531,6 +533,60 @@ async function run() {
         );
       });
     });
+
+    // ################### Insurance System ####################
+    app.patch(
+      "/insuranceClaim/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const date = req.params.date;
+        const airportCode = req.params.airportCode;
+        const bookingReference = req.params.bookingReference;
+        const claimDoc = req.body;
+        const claimInfo = {
+          media: "http://",
+          summary: "This is summary",
+          requirePremium: 100,
+        };
+
+        try {
+          const path = `${date}.${airportCode}`;
+
+          const result = await bookingsCollection.updateOne(
+            {
+              [path]: {
+                $elemMatch: { bookingReference: bookingReference },
+              },
+            },
+            {
+              $set: {
+                [path + ".$.insurancePolicy.claimedStatus"]: "pending",
+              },
+            }
+          );
+
+          // update insurance database
+          if (result) {
+            await insuranceCollection.updateOne(
+              { "bookingInfo.bookingReference": bookingReference },
+              {
+                $set: {
+                  claimInfo: claimInfo,
+                  isClaimed: "pending",
+                },
+              }
+            );
+          } else if (result.matchedCount === 1) {
+            res.status(404).json({ error: "You have already requested" });
+          } else {
+            // If the document with the specified bookingReference was not found
+            res.status(404).json({ message: "Insurance policy not found" });
+          }
+        } catch (err) {
+          console.error("Error updatin g booking status:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
 
     // ################### Booking Cancel/Refund Request ####################
     const addBookingOperation = async (bookingInfo, feedback) => {
