@@ -21,6 +21,7 @@ import ManageBooking from "../Dashboard/User/ManageBooking/ManageBooking";
 import HotDealDetails from "../pages/Home/HotDeals/HotDealDetails";
 import AdminRoute from "./AdminRoute";
 import ManageAllBookings from "../Dashboard/Admin/ManageAllBookings/ManageAllBookings";
+import UserInsurance from "../Dashboard/User/UserInsurance/UserInsurance";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -145,6 +146,10 @@ export const router = createBrowserRouter([
             <FlightStatus />
           </AdminRoute>
         ),
+      },
+      {
+        path: "insurance",
+        element: <UserInsurance />,
       },
     ],
   },

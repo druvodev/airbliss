@@ -84,11 +84,11 @@ const AdminHome = () => {
   const allUserData = JSON.parse(sessionStorage.getItem('userData'));
   const allBookingData = JSON.parse(sessionStorage.getItem('userBookings'))
 
-  const todayBookingData = allBookingData.filter(bookingData => bookingData?.bookingDateTime.split(" ")[0] == todayDate)
+  const todayBookingData = allBookingData?.filter(bookingData => bookingData?.bookingDateTime.split(" ")[0] == todayDate)
 
-  const totalRevenue = todayBookingData.filter(revenue => revenue?.bookingStatus == 'confirmed')
-  const totalCancel = todayBookingData.filter(cancel => cancel?.bookingStatus == "cancel")
-  const totalRefund = todayBookingData.filter(refund => refund?.requestStatus == "pending")
+  const totalRevenue = todayBookingData?.filter(revenue => revenue?.bookingStatus == 'confirmed')
+  const totalCancel = todayBookingData?.filter(cancel => cancel?.bookingStatus == "cancel")
+  const totalRefund = todayBookingData?.filter(refund => refund?.requestStatus == "pending")
 
   return (
     <section>
