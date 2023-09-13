@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "../../../assets/icon/airblissBlack.png";
 import { useForm } from "react-hook-form";
 import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
 import CancelBookingTable from "../../../Components/CancelBookingTable/CancelBookingTable";
+import { useSelector } from "react-redux";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -11,26 +12,19 @@ const ManageAllBooking = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
   const [isActive, setIsActive] = useState("allbookings");
-  const [allBookings, setAllBookings] = useState([]);
+  const [details, setDetails] = useState(false);
+  // const [allBookings, setAllBookings] = useState([]);
 
   const handleTabClick = (tab) => {
     setIsActive(tab);
   };
 
-  useEffect(() => {
-    fetch("http://localhost:5000/allBookings")
-      .then((res) => res.json())
-      .then((data) => setAllBookings(data));
-  }, []);
+  console.log("flightRef", flightRef);
 
-  // const bookings = useSelector((state) => state?.userInfo?.userBookings);
+  const allBookings = useSelector((state) => state.userBookingInfo.allBookings);
 
   const cancelBookings = allBookings?.filter(
     (booking) => booking?.requestStatus === "approved"
-  );
-
-  const cancelDeniedBookings = allBookings?.filter(
-    (booking) => booking?.requestStatus === "denied"
   );
 
   const confirmBookings = allBookings?.filter(
@@ -41,6 +35,10 @@ const ManageAllBooking = () => {
     (booking) => booking?.requestStatus === "pending"
   );
 
+  const cancelDeniedBookings = allBookings?.filter(
+    (booking) => booking?.requestStatus === "denied"
+  );
+
   const {
     register,
     handleSubmit,
@@ -49,11 +47,11 @@ const ManageAllBooking = () => {
     formState: { errors },
   } = useForm();
 
-  const selectedFlight = allBookings?.find(
-    (flight) => flight.bookingReference === flightRef
+  const selectedFlight = allBookings.find(
+    (flight) => flight?.bookingReference === flightRef
   );
 
-  // console.log("My Flight", selectedFlight);
+  console.log("My Flight", allBookings);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -140,9 +138,7 @@ const ManageAllBooking = () => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
   const paidAmount = selectedFlight?.flight?.fareSummary?.total;
-  const deductedAmount = Math.round(
-    selectedFlight?.flight?.fareSummary?.total * 0.3
-  );
+  const deductedAmount = Math.round(paidAmount * 0.3);
   const refundAmount = paidAmount - deductedAmount;
 
   return (
@@ -256,6 +252,7 @@ const ManageAllBooking = () => {
           status="cancel status"
           action={true}
           handleCancelApproved={handleCancelApproved}
+          setDetails={setDetails}
         />
       )}
 
@@ -346,32 +343,60 @@ const ManageAllBooking = () => {
               </div>
               <form onSubmit={handleSubmit(handleCancelDeny)}>
                 <div className="mt-4">
-                  <label
-                    htmlFor="exampleField"
-                    className="block font-bold mb-2"
-                  >
-                    Write your feedback here
-                    <span className="text-red-600">*</span>
-                  </label>
-                  <textarea
-                    type="text"
-                    id="exampleField"
-                    {...register("feedback", { required: true })}
-                    className={`block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
-                      errors.feedback &&
-                      "focus:border-red-500 focus:ring-red-500 "
-                    }`}
-                    placeholder="Enter something"
-                  />
+                  {selectedFlight?.requestStatus === "denied" ? (
+                    <div>
+                      <label
+                        htmlFor="exampleField"
+                        className="block font-bold mb-2"
+                      >
+                        Airbliss Feedback
+                      </label>
+                      <p>{selectedFlight?.deniedFeedback}</p>
+                    </div>
+                  ) : selectedFlight?.requestStatus === "pending" ? (
+                    <div>
+                      <label
+                        htmlFor="exampleField"
+                        className="block font-bold mb-2"
+                      >
+                        Cancel Reason
+                      </label>
+                      <p>I want to cancel this flight for my personal Reason</p>
+                    </div>
+                  ) : (
+                    <div>
+                      <label
+                        htmlFor="exampleField"
+                        className="block font-bold mb-2"
+                      >
+                        Write your feedback here
+                        <span className="text-red-600">*</span>
+                      </label>
+                      <textarea
+                        type="text"
+                        id="exampleField"
+                        {...register("feedback", { required: true })}
+                        className={`block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                          errors.feedback &&
+                          "focus:border-red-500 focus:ring-red-500 "
+                        }`}
+                        placeholder="Enter something"
+                      />
+                    </div>
+                  )}
                 </div>
                 {/* End of form fields */}
                 <div className="flex justify-end mt-2">
-                  <button
-                    type="submit"
-                    className="bg-cyan-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-150"
-                  >
-                    Submit
-                  </button>
+                  {details ? (
+                    ""
+                  ) : (
+                    <button
+                      type="submit"
+                      className="bg-cyan-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-150"
+                    >
+                      Submit
+                    </button>
+                  )}
                   <div
                     onClick={closeModal}
                     className="btn ml-2 btn-warning border-none bg-red-400 hover:bg-red-500 text-white"

@@ -13,6 +13,8 @@ const CancelBookingTable = ({
   status,
   action,
   handleCancelApproved,
+  setDetails,
+  setCancelReason,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -44,8 +46,8 @@ const CancelBookingTable = ({
             <th>Flight Name</th>
             <th>Flight Date</th>
             <th>Travel Path</th>
-            <th>Cancel Reason</th>
             <th className="capitalize">{status}</th>
+            <th>View Details</th>
             {!action && <th>Action</th>}
           </tr>
         </thead>
@@ -61,11 +63,6 @@ const CancelBookingTable = ({
               <td>
                 {flight?.flight?.departureCity} To {flight?.flight?.arrivalCity}
               </td>
-              <td>
-                {flight?.cancel_reason
-                  ? flight?.cancel_reason
-                  : "No Reason found"}
-              </td>
               <td className="capitalize">
                 {status === "flight status" && (
                   <span>
@@ -79,21 +76,20 @@ const CancelBookingTable = ({
                   <span>{flight?.requestStatus}</span>
                 )}
               </td>
+              <td>
+                <button
+                  className={`text-center w-full underline text-cyan-600`}
+                  onClick={() => {
+                    openModal();
+                    setDetails(true);
+                    setFlightRef(flight?.bookingReference);
+                  }}
+                >
+                  Details
+                </button>
+              </td>
               {!action && (
                 <td className="flex gap-2 mt-2">
-                  <Link
-                    to={{
-                      pathname: `/dashboard/ticketHistory/${flight?.bookingReference}`,
-                    }}
-                  >
-                    <button
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400 hover:bg-cyan-500
-                  }`}
-                    >
-                      <FaInfo />
-                    </button>
-                  </Link>
-
                   {flight?.requestStatus === "pending" ? (
                     <button
                       className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 hover:bg-blue-500
