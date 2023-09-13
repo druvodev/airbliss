@@ -55,7 +55,7 @@ const UserNav = () => {
         <span className="mx-4 font-medium">Manage Book</span>
       </NavLink>
       <NavLink
-        to="insurance"
+        to="userInsurance"
         className={({ isActive }) =>
           `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
             isActive

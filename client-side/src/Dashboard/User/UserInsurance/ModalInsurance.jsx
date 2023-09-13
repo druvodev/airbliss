@@ -1,31 +1,68 @@
-import React, { useState } from 'react';
 import logo from "../../../assets/icon/airblissBlack.png";
 
 const ModalInsurance = ({ insurance, onClose }) => {
-    const [isTripCancellationClaimed, setIsTripCancellationClaimed] = useState(false);
-    const [isMedicalCoverageClaimed, setIsMedicalCoverageClaimed] = useState(false);
-    const [isLostLuggageClaimed, setIsLostLuggageClaimed] = useState(false);
-    const [isDelayedFlightClaimed, setIsDelayedFlightClaimed] = useState(false);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const relationship = event.target.relationship.value
+        const requireAmount = event.target.requireAmount.value
+        const summary = event.target.summary.value
+        const image = event.target.image.files[0];
 
-        // You can use the state of each checkbox to determine which claims were selected
-        console.log('Trip Cancellation Claimed:', isTripCancellationClaimed);
-        console.log('Medical Coverage Claimed:', isMedicalCoverageClaimed);
-        console.log('Lost Luggage Claimed:', isLostLuggageClaimed);
-        console.log('Delayed Flight Claimed:', isDelayedFlightClaimed);
+        const formData = new FormData();
+        formData.append("image", image);
+
+        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`;
+
+        fetch(url, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((imageData) => {
+                const imageUrl = imageData.data.display_url;
+                console.log(imageUrl);
+
+                // const body = {
+                //     media: "http://",
+                //     summary: "This is summary",
+                //     requireAmount: 100,
+                //     premiumType: " "
+                // };
+
+                // fetch(`/insuranceClaim/:date/:airportCode/:bookingReference`, {
+                //     method: "PATCH",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //     },
+                //     body: JSON.stringify({ usersData }),
+                // })
+                //     .then((res) => res.json())
+                //     .then((data) => {
+                //         if (data.acknowledged === true) {
+                //             toast.success("User Data submitted successfully");
+                //         } else {
+                //             toast.error("Failed to update user data");
+                //         }
+
+                //         location.reload();
+                //     })
+                //     .catch((err) => {
+                //         console.log(err);
+                //     });
+            })
+            .catch((err) => {
+                console.log(err.message);
+                toast.error(err.message);
+            });
+        return;
+
+        console.log(relationship, summary, requireAmount);
 
         onClose();
     };
 
     //* /insuranceClaim/:date/:airportCode/:bookingReference
-
-    // const claimInfo = {
-    //     media: "http://",
-    //     summary: "This is summary",
-    //     requirePremium: 100,
-    // };
 
     // const premiumType = premiumAcceptInfo?.premiumType;
 
@@ -120,7 +157,7 @@ const ModalInsurance = ({ insurance, onClose }) => {
                         <div className="mb-2 mt-5">
                             <h2 className="text-md font-semibold">Claimed Insurance</h2>
                             <hr />
-                            <form action="">
+                            <form onSubmit={handleSubmit}>
                                 <div>
                                     <label
                                         htmlFor="gender"
@@ -201,13 +238,10 @@ const ModalInsurance = ({ insurance, onClose }) => {
                                     >
                                         Close
                                     </button>
-                                    <button
+                                    <input
                                         className="bg-cyan-500 text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="button"
-                                        onClick={handleSubmit}
-                                    >
-                                        Submit
-                                    </button>
+                                        type="submit"
+                                        value="Submit" />
                                 </div>
                             </form>
                         </div>
