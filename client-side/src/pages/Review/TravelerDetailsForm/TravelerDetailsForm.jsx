@@ -34,7 +34,7 @@ const TravelerDetailsForm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInsuranceModal, setIsInsuranceModal] = useState(false);
   const [hasInsuranceModalShown, setHasInsuranceModalShown] = useState(false);
-  const [isNoInsuranceSelected, setIsNoInsuranceSelected] = useState(false);
+  const [isNoInsuranceSelected, setIsNoInsuranceSelected] = useState(true);
   const { user } = useAuth();
 
   const {
@@ -121,8 +121,9 @@ const TravelerDetailsForm = () => {
     document.body.style.overflow = "auto";
     if (status) {
       dispatch(setInsurance(true));
+      setIsNoInsuranceSelected(status);
     } else {
-      setIsNoInsuranceSelected(true);
+      setIsNoInsuranceSelected(status);
       dispatch(setInsurance(false));
     }
   };
@@ -190,7 +191,7 @@ const TravelerDetailsForm = () => {
                       type="radio"
                       name="radio-10"
                       className="radio radio-accent"
-                      checked
+                      checked={isNoInsuranceSelected}
                     />
                     <div className="label-text">
                       <p className="font-semibold">
@@ -229,7 +230,7 @@ const TravelerDetailsForm = () => {
                       type="radio"
                       name="radio-10"
                       className="radio radio-accent"
-                      checked={isNoInsuranceSelected}
+                      checked={!isNoInsuranceSelected}
                     />
                     <div className="label-text">
                       <p className="font-semibold">
