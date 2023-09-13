@@ -1,8 +1,15 @@
 import React from "react";
 import { SlOptionsVertical } from "react-icons/sl";
 import { TbCalendarCancel } from "react-icons/tb";
+import { useSelector } from "react-redux";
 
 const TotalCancel = () => {
+  const bookings = useSelector((state) => state?.userInfo?.userBookings);
+
+  const cancelBookings = bookings?.filter(
+    (booking) => booking?.bookingStatus === "cancel"
+  );
+
   return (
     <div className="bg-white shadow-md p-7 rounded-lg flex justify-between items-center">
       <div className="flex items-center gap-6">
@@ -14,7 +21,7 @@ const TotalCancel = () => {
             Total Canceling Ticket
           </h1>
           <p className="text-gray-900 lg:text-2xl text-xl font-semibold mt-2">
-            4 times
+            {cancelBookings.length} times
           </p>
         </div>
       </div>
