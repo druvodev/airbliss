@@ -1,8 +1,18 @@
 import React from "react";
 import { HiReceiptRefund } from "react-icons/hi";
 import { SlOptionsVertical } from "react-icons/sl";
+import { useSelector } from "react-redux";
 
 const TotalRefund = () => {
+  const bookings = useSelector((state) => state?.userInfo?.userBookings);
+
+  const cancelBookings = bookings?.filter(
+    (booking) => booking?.bookingStatus === "cancel"
+  );
+  const approveCount = cancelBookings?.filter(
+    (pending) => pending.requestStatus === "approved"
+  );
+
   return (
     <div className="bg-white shadow-md p-7 rounded-lg flex justify-between items-center">
       <div className="flex items-center gap-6">
@@ -14,7 +24,7 @@ const TotalRefund = () => {
             Total Refund Ticket
           </h1>
           <p className="text-gray-900 lg:text-2xl text-xl font-semibold mt-2">
-            10 times
+            {approveCount.length} times
           </p>
         </div>
       </div>
