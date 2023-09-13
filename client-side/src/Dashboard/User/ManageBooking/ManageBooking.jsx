@@ -17,6 +17,7 @@ const ManageBooking = () => {
   };
 
   const bookings = useSelector((state) => state?.userInfo?.userBookings);
+
   const cancelBookings = bookings?.filter(
     (booking) => booking?.bookingStatus === "cancel"
   );
@@ -27,7 +28,7 @@ const ManageBooking = () => {
   // console.log("All bookings", bookings);
   // console.log("Cancel Bookings", cancelBookings);
 
-  const [formData, setFormData] = useState({});
+  // const [formData, setFormData] = useState({});
   // Initialize your form data state here
 
   const {

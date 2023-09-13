@@ -211,10 +211,7 @@ async function run() {
       };
 
       await seatsCollection.updateOne({}, updateQuery, { upsert: true });
-      console.log(seatData);
-      console.log(
-        `New seat data generated for flight ${flightId} on ${bookingDate}.`
-      );
+
       // get available seat from this function
       return await availableSeats(flightId, bookingDate);
     }

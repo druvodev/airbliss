@@ -1,8 +1,20 @@
 import React from "react";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { SlOptionsVertical } from "react-icons/sl";
+import { useSelector } from "react-redux";
 
 const TotalAmount = () => {
+  const bookings = useSelector((state) => state?.userInfo?.userBookings);
+
+  let totalSum = 0;
+
+  for (const item of bookings) {
+    const total = parseInt(item.flight.fareSummary.total);
+    if (!isNaN(total)) {
+      totalSum += total;
+    }
+  }
+
   return (
     <div className="bg-white shadow-md p-7 rounded-lg flex justify-between items-center">
       <div className="flex items-center gap-6">
@@ -11,10 +23,10 @@ const TotalAmount = () => {
         </div>
         <div>
           <h1 className="lg:text-xl font-light text-gray-900">
-            Total Ticket Booking
+            Total Amount Booking
           </h1>
           <p className="text-gray-900 lg:text-2xl text-xl font-semibold mt-2">
-            30 times
+            {totalSum} BDT
           </p>
         </div>
       </div>
