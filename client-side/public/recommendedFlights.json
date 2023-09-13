@@ -1,0 +1,20 @@
+[
+  {
+    "imageSrc": "https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "title": "Dhaka to Khulna",
+    "description": "ONE WAY FLIGHTS",
+    "price": "2499 BDT"
+  },
+  {
+    "imageSrc": "https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg",
+    "title": "Dhaka to Barisal",
+    "description": "ONE WAY FLIGHT",
+    "price": "2799 BDT"
+  },
+  {
+    "imageSrc": "https://www.traveloffpath.com/wp-content/uploads/2021/11/New%E2%80%8B-Low-Cost-Airline-Set-To-Launch-In-Calgary-Next-Year.jpg",
+    "title": "Dhaka to Cox's",
+    "description": "ONE WAY FLIGHTS",
+    "price": "2699 BDT"
+  }
+]

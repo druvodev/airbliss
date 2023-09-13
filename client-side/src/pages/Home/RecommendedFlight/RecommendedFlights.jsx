@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import SectionTitle from "../../../Components/SectionTitle";
 
 const RecommendedFlights = () => {
+  const [flights, setFlights] = useState([]);
+  useEffect(() => {
+    fetch("recommendedFlights.json")
+      .then((res) => res.json())
+      .then((data) => setFlights(data));
+  });
+  console.log(flights, "12");
+
   return (
     <div>
       <div>
@@ -18,117 +26,48 @@ const RecommendedFlights = () => {
             regulations
           </p>
         </div>
+
         <div
           data-testid="cards-container"
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7"
         >
-          <div className="border card overflow-hidden rounded-md shadow-lg p-5">
-            <div>
-              <div className="flex gap-5 container ">
-                <img
-                  className="object-cover rounded-md shadow-md h-52 mb-20 w-full"
-                  src="https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                />
+          {flights.map((flight) => (
+            <div className="border card overflow-hidden rounded-md shadow-lg p-5">
+              <div>
+                <div className="flex gap-5 container ">
+                  <img
+                    className="object-cover rounded-md shadow-md h-52 mb-20 w-full"
+                    src={flight?.imageSrc}
+                  />
+                </div>
+              </div>
+              <div className="flex mt-2 gap-x-2 justify-between items-center">
+                <div>
+                  <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
+                    <GiAirplaneDeparture />
+                  </p>
+                </div>
+                <div>
+                  <h3 className="card-title mr-16 text-lg">{flight?.title}</h3>
+                  <p className="text-semibold text-xs font-semibold">
+                    {flight?.description}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs">FROM</p>
+                  <p className="text-sky-400 font-bold">{flight?.price}</p>
+                </div>
+              </div>
+              <div className="flex  items-center align-middle justify-between  mt-8">
+                <button className="rounded-full  pb-[2px] bg-cyan-700 hover:bg-cyan-600 font-bold px-3 text-white">
+                  View
+                </button>
+                <button className="rounded-full border text-sky-500 px-3 font-bold hover:bg-cyan-700 hover:text-white border-sky-500 ">
+                  Book
+                </button>
               </div>
             </div>
-            <div className="flex mt-2 gap-x-2 justify-between items-center">
-              <div>
-                <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
-                  <GiAirplaneDeparture />
-                </p>
-              </div>
-              <div>
-                <h3 className="card-title mr-16 text-lg">Dhaka to Khulna</h3>
-                <p className="text-semibold text-xs font-semibold">
-                  ONE WAY FLIGHTS
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-xs">FROM</p>
-                <p className="text-sky-400 font-bold">2499 BDT</p>
-              </div>
-            </div>
-            <div className="flex  items-center align-middle justify-between  mt-8">
-              <button className="rounded-full  pb-[2px] bg-cyan-700 hover:bg-cyan-600 font-bold px-3 text-white">
-                View
-              </button>
-              <button className="rounded-full border text-sky-500 px-3 font-bold hover:bg-cyan-700 hover:text-white border-sky-500 ">
-                Book
-              </button>
-            </div>
-          </div>
-
-          <div className="border card overflow-hidden rounded-md shadow-lg p-5">
-            <div>
-              <div className="flex gap-5 container ">
-                <img
-                  className="object-cover rounded-md shadow-md h-52 mb-20 w-full"
-                  src="https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg"
-                />
-              </div>
-            </div>
-            <div className="flex mt-2 gap-x-2  justify-between items-center">
-              <div>
-                <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
-                  <GiAirplaneDeparture />
-                </p>
-              </div>
-              <div>
-                <h3 className="card-title mr-16 text-lg">Dhaka to Barisal </h3>
-                <p className="text-semibold text-xs font-semibold">
-                  ONE WAY FLIGHT
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-xs">FROM</p>
-                <p className="text-sky-400 font-bold">2799 BDT</p>
-              </div>
-            </div>
-            <div className="flex items-center align-middle justify-between mt-8">
-              <button className="rounded-full  pb-[2px] bg-cyan-700 hover:bg-cyan-600 font-bold px-3 text-white">
-                View
-              </button>
-              <button className="rounded-full border text-sky-500 px-3 font-bold hover:bg-cyan-700 hover:text-white border-sky-500 ">
-                Book
-              </button>
-            </div>
-          </div>
-
-          <div className="border card overflow-hidden rounded-md shadow-lg p-5 ">
-            <div>
-              <div className="flex gap-5 container ">
-                <img
-                  className="object-cover rounded-md shadow-md h-52 mb-20 w-full "
-                  src="https://www.traveloffpath.com/wp-content/uploads/2021/11/New%E2%80%8B-Low-Cost-Airline-Set-To-Launch-In-Calgary-Next-Year.jpg"
-                />
-              </div>
-            </div>
-            <div className="flex mt-2 gap-x-2 justify-between items-center">
-              <div>
-                <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
-                  <GiAirplaneDeparture />
-                </p>
-              </div>
-              <div>
-                <h3 className="card-title mr-16 text-lg">Dhaka to Cox's</h3>
-                <p className="text-semibold text-xs font-semibold">
-                  ONE WAY FLIGHTS
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-xs">FROM</p>
-                <p className="text-sky-400 font-bold">2699 BDT</p>
-              </div>
-            </div>
-            <div className="flex items-center align-middle justify-between  mt-8">
-              <button className="rounded-full bg-cyan-700 pb-[2px] hover:bg-cyan-600 font-bold px-3 text-white">
-                View
-              </button>
-              <button className="rounded-full border text-sky-500 px-3 font-bold hover:bg-cyan-700 hover:text-white border-sky-500 ">
-                Book
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
