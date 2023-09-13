@@ -17,6 +17,7 @@ import { paymentLater, paymentProcessing } from "../../../utils/handlePayment";
 import SeatModel from "../../../Components/SeatModel/SeatModel";
 import useAuth from "../../../hooks/useAuth";
 import { errorToast } from "../../../utils/toast";
+import { setInsurance } from "../../../redux/features/insuranceSlice";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -28,6 +29,7 @@ const TravelerDetailsForm = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userBookingInfo.userInfo); // get user information from redux
   const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo); // get flight information from redux
+  const insuranceStatus = useSelector((state) => state.insurance.insurance);
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); //for Check box checked State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInsuranceModal, setIsInsuranceModal] = useState(false);
@@ -96,7 +98,7 @@ const TravelerDetailsForm = () => {
 
   // Handle Processing Payment
   const handleProcessingPayment = () => {
-    paymentProcessing(flightInfo, userInfo); // This function from utils
+    paymentProcessing(flightInfo, userInfo, insuranceStatus); // This function from utils
   };
 
   // Check box Handler
@@ -107,14 +109,22 @@ const TravelerDetailsForm = () => {
   // Insurance Modal Showing After 2sec
   if (isContinue && !isModalOpen && !hasInsuranceModalShown) {
     setTimeout(() => {
+      document.body.style.overflow = "hidden";
       setIsInsuranceModal(true);
       !setHasInsuranceModalShown(true);
     }, 2000);
   }
 
-  const handleNoInsuranceButtonClick = () => {
+  // Handel Insurance System
+  const handleInsuranceButtonClick = (status) => {
     setIsInsuranceModal(false);
-    setIsNoInsuranceSelected(true);
+    document.body.style.overflow = "auto";
+    if (status) {
+      dispatch(setInsurance(true));
+    } else {
+      setIsNoInsuranceSelected(true);
+      dispatch(setInsurance(false));
+    }
   };
 
   return (
@@ -172,7 +182,10 @@ const TravelerDetailsForm = () => {
                   Select Travel Insurance Option
                 </p>
                 <div className="form-control">
-                  <label className="flex gap-2 cursor-pointer">
+                  <label
+                    className="flex gap-2 cursor-pointer"
+                    onClick={() => handleInsuranceButtonClick(true)}
+                  >
                     <input
                       type="radio"
                       name="radio-10"
@@ -181,7 +194,11 @@ const TravelerDetailsForm = () => {
                     />
                     <div className="label-text">
                       <p className="font-semibold">
-                        Yes, insure my trip for only 120 Taka.
+                        Yes, insure my trip for only{" "}
+                        <span className="font-bold">
+                          {(0.05 * flightInfo?.fareSummary.total).toFixed()}
+                        </span>{" "}
+                        BDT.
                       </p>
                       <small className="flex gap-1">
                         I have read, understand and agree to the terms and
@@ -204,7 +221,10 @@ const TravelerDetailsForm = () => {
                   </label>
                 </div>
                 <div className="form-control">
-                  <label className="flex gap-2 mt-4 cursor-pointer">
+                  <label
+                    className="flex gap-2 mt-4 cursor-pointer"
+                    onClick={() => handleInsuranceButtonClick(false)}
+                  >
                     <input
                       type="radio"
                       name="radio-10"
@@ -213,8 +233,11 @@ const TravelerDetailsForm = () => {
                     />
                     <div className="label-text">
                       <p className="font-semibold">
-                        No, I will travel without this insurance for my 2010
-                        Taka trip. I understand that by declining coverage I may
+                        No, I will travel without this insurance for my{" "}
+                        <span className="font-bold">
+                          {flightInfo?.fareSummary.total}
+                        </span>{" "}
+                        BDT trip. I understand that by declining coverage I may
                         be responsible for substantial cancellation fees and
                         delay expenses.
                       </p>
@@ -582,7 +605,7 @@ const TravelerDetailsForm = () => {
         </div>
       )}
       {isContinue && isInsuranceModal && (
-        <div className="fixed p-4 top-0 left-0  z-50 w-full  bg-black/20 overflow-y-auto flex items-center justify-center">
+        <div className="fixed p-4 top-0 left-0  z-50 w-full h-full bg-black/20 overflow-y-auto flex items-center justify-center">
           <div className="bg-white rounded-xl border p-5 w-fit relative">
             <h2 className="text-3xl font-semibold mb-4 text-center">
               Travel Insurance Preference
@@ -590,8 +613,14 @@ const TravelerDetailsForm = () => {
             <div className="">
               <p className="mb-4">
                 Protect your trip with our travel insurance for only
-                <span className="font-semibold"> 120 Taka</span>. Here's what it
-                covers:
+                <span className="font-semibold">
+                  {" "}
+                  <span className="font-bold">
+                    {(0.05 * flightInfo?.fareSummary.total).toFixed()}
+                  </span>{" "}
+                  BDT
+                </span>
+                . Here's what it covers:
               </p>
               <ul className="font-semibold">
                 <li className="flex gap-1 items-center">
@@ -634,13 +663,13 @@ const TravelerDetailsForm = () => {
             </div>
             <div className="flex justify-center mt-6 pb-8">
               <button
-                onClick={() => setIsInsuranceModal(false)}
+                onClick={() => handleInsuranceButtonClick(true)}
                 className="bg-cyan-600 text-white font-semibold py-2 px-6 rounded-full hover:bg-cyan-700"
               >
                 Yes, insure my trip
               </button>
               <button
-                onClick={handleNoInsuranceButtonClick}
+                onClick={() => handleInsuranceButtonClick(false)}
                 className="text-cyan-600 font-semibold py-2 px-6 ml-4 border border-cyan-600 rounded-full hover:bg-cyan-100 hover:border-cyan-700"
               >
                 No, I will travel without insurance
