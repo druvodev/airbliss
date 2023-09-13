@@ -521,7 +521,7 @@ async function run() {
             delete bookingInfo?.insurancePolicy; // Delete insurance checking field
             const insuranceInfo = {
               ...insurancePolicy,
-              isClaimed: false,
+              claimedStatus: null,
               bookingInfo,
             };
             await insuranceCollection.insertOne(insuranceInfo);
@@ -534,7 +534,8 @@ async function run() {
       });
     });
 
-    // ################### Insurance System ####################
+    //^ ################### Insurance System ####################
+    // request to insurance premium //*(USER)
     app.patch(
       "/insuranceClaim/:date/:airportCode/:bookingReference",
       async (req, res) => {
@@ -542,11 +543,6 @@ async function run() {
         const airportCode = req.params.airportCode;
         const bookingReference = req.params.bookingReference;
         const claimDoc = req.body;
-        const claimInfo = {
-          media: "http://",
-          summary: "This is summary",
-          requirePremium: 100,
-        };
 
         try {
           const path = `${date}.${airportCode}`;
@@ -560,18 +556,19 @@ async function run() {
             {
               $set: {
                 [path + ".$.insurancePolicy.claimedStatus"]: "pending",
+                [path + ".$.insurancePolicy.requestedClaimInfo"]: claimDoc,
               },
             }
           );
 
           // update insurance database
-          if (result) {
+          if (result.modifiedCount === 1) {
             await insuranceCollection.updateOne(
               { "bookingInfo.bookingReference": bookingReference },
               {
                 $set: {
-                  claimInfo: claimInfo,
-                  isClaimed: "pending",
+                  requestedClaimInfo: claimDoc,
+                  claimedStatus: "pending",
                 },
               }
             );
@@ -582,7 +579,94 @@ async function run() {
             res.status(404).json({ message: "Insurance policy not found" });
           }
         } catch (err) {
-          console.error("Error updatin g booking status:", err);
+          console.error("Error updating booking status:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
+
+    // manage insurance claim request //* (ADMIN)
+    app.patch(
+      "/insuranceClaimRequest/:status/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const status = req.params.status;
+        const date = req.params.date;
+        const airportCode = req.params.airportCode;
+        const bookingReference = req.params.bookingReference;
+        const premiumUpdateInfo = req.body;
+        const premiumType = premiumUpdateInfo?.premiumType;
+
+        let newStatus = "denied";
+        let isPremiumStatus = false;
+        let claimedAmount = 0;
+        let feedback = premiumUpdateInfo?.deniedFeedback;
+        if (status === "approved") {
+          newStatus = status;
+          isPremiumStatus = true;
+          claimedAmount = premiumUpdateInfo?.claimedAmount;
+        }
+
+        try {
+          const path = `${date}.${airportCode}`;
+
+          const updateQuery = {
+            [path]: {
+              $elemMatch: { bookingReference: bookingReference },
+            },
+          };
+
+          const updateFields = {
+            $set: {
+              [path + ".$.insurancePolicy.claimedStatus"]: newStatus,
+              [path +
+              `.$.insurancePolicy.claimedInsurance.${premiumType}.claimedPrice`]:
+                claimedAmount,
+              [path +
+              `.$.insurancePolicy.claimedInsurance.${premiumType}.isClaimed`]:
+                isPremiumStatus,
+            },
+          };
+
+          // Check if status is "denied" and add feedback field if needed
+          if (status === "denied") {
+            updateFields.$set[path + `.$.insurancePolicy.deniedFeedback`] =
+              feedback;
+          }
+
+          const result = await bookingsCollection.updateOne(
+            updateQuery,
+            updateFields
+          );
+          // Construct the update object for the insuranceCollection
+          const insuranceUpdate = {
+            claimedStatus: newStatus,
+          };
+
+          if (premiumType) {
+            insuranceUpdate[`claimedInsurance.${premiumType}.claimedPrice`] =
+              claimedAmount;
+            insuranceUpdate[`claimedInsurance.${premiumType}.isClaimed`] =
+              isPremiumStatus;
+          }
+
+          if (feedback !== null) {
+            insuranceUpdate.deniedFeedback = feedback;
+          }
+
+          if (result.modifiedCount === 1) {
+            await insuranceCollection.updateOne(
+              { "bookingInfo.bookingReference": bookingReference },
+              { $set: insuranceUpdate }
+            );
+            res.status(200).json({ message: "Insurance policy updated" });
+          } else if (result.matchedCount === 1) {
+            res.status(404).json({ error: "You have already requested" });
+          } else {
+            // If the document with the specified bookingReference was not found
+            res.status(404).json({ message: "Insurance policy not found" });
+          }
+        } catch (err) {
+          console.error("Error updating booking status:", err);
           res.status(500).json({ error: "An error occurred" });
         }
       }
