@@ -12,12 +12,10 @@ import { useSelector } from "react-redux";
 const UserHome = () => {
   const userData = useSelector((state) => state?.userInfo.userInfo);
   if (Object.keys(userData).length > 3) {
-    sessionStorage.setItem('userInfo', JSON.stringify(userData));
+    sessionStorage.setItem("userInfo", JSON.stringify(userData));
   }
-  console.log(userData);
-  
-  const data = JSON.parse(sessionStorage.getItem('userInfo'));
-  console.log('sessionStorage', data);  
+
+  const data = JSON.parse(sessionStorage.getItem("userInfo"));
 
   return (
     <div className="grid gap-7 mt-10 max-w-full">
