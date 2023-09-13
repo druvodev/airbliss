@@ -1,8 +1,28 @@
 import React from "react";
 import { RiRefundFill } from "react-icons/ri";
 import { SlOptionsVertical } from "react-icons/sl";
+import { useSelector } from "react-redux";
 
 const PendingRefundAmount = () => {
+  const bookings = useSelector((state) => state?.userInfo?.userBookings);
+
+  const cancelBookings = bookings?.filter(
+    (booking) => booking?.bookingStatus === "cancel"
+  );
+  const pendingReq = cancelBookings?.filter(
+    (pending) => pending.requestStatus === "pending"
+  );
+
+  let totalSum = 0;
+
+  // Iterate through the JSON data and sum the "total" values
+  for (const item of pendingReq) {
+    const total = parseInt(item.flight.fareSummary.total);
+    if (!isNaN(total)) {
+      totalSum += total;
+    }
+  }
+
   return (
     <div className="bg-white shadow-md p-7 rounded-lg flex justify-between items-center">
       <div className="flex items-center gap-6">
@@ -14,7 +34,7 @@ const PendingRefundAmount = () => {
             Pending Refund Amount
           </h1>
           <p className="text-gray-900 lg:text-2xl text-xl font-semibold mt-2">
-            100$
+            {totalSum} BDT
           </p>
         </div>
       </div>
