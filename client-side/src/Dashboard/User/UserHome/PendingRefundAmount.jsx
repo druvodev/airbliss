@@ -1,8 +1,17 @@
 import React from "react";
 import { RiRefundFill } from "react-icons/ri";
 import { SlOptionsVertical } from "react-icons/sl";
+import { useSelector } from "react-redux";
 
 const PendingRefundAmount = () => {
+  const bookings = useSelector((state) => state?.userInfo?.userBookings);
+
+  const cancelBookings = bookings?.filter(
+    (booking) => booking?.bookingStatus === "cancel"
+  );
+
+  console.log(cancelBookings);
+
   return (
     <div className="bg-white shadow-md p-7 rounded-lg flex justify-between items-center">
       <div className="flex items-center gap-6">
