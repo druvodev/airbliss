@@ -9,7 +9,6 @@ const RecommendedFlights = () => {
       .then((res) => res.json())
       .then((data) => setFlights(data));
   });
-  console.log(flights, "12");
 
   return (
     <div>

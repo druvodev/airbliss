@@ -91,10 +91,12 @@ const AdminHome = () => {
   const totalRevenue = todayBookingData?.filter(
     (revenue) => revenue?.bookingStatus == "confirmed"
   );
-  const allRevenue = totalRevenue.map(revenue => revenue?.flight?.fareSummary?.total)
+  const allRevenue = totalRevenue?.map(
+    (revenue) => revenue?.flight?.fareSummary?.total
+  );
   let totalSum = 0;
 
-  for (let i = 0; i < allRevenue.length; i++) {
+  for (let i = 0; i < allRevenue?.length; i++) {
     const revenue = parseFloat(allRevenue[i]);
     if (!isNaN(revenue)) {
       totalSum += revenue;
@@ -102,7 +104,6 @@ const AdminHome = () => {
   }
 
   console.log(totalSum);
-
 
   const totalCancel = todayBookingData?.filter(
     (cancel) => cancel?.bookingStatus == "cancel"
