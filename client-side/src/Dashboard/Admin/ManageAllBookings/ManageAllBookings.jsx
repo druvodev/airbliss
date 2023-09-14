@@ -169,16 +169,7 @@ const ManageAllBooking = () => {
           >
             Confirm Bookings
           </div>
-          <div
-            onClick={() => handleTabClick("cancel-request")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "cancel-request"
-                ? "border-t-2 bg-cyan-50 border-cyan-400"
-                : ""
-            }`}
-          >
-            Cancel Requests
-          </div>
+
           <div
             onClick={() => handleTabClick("cancel")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
@@ -191,6 +182,17 @@ const ManageAllBooking = () => {
           </div>
 
           <div
+            onClick={() => handleTabClick("cancel-request")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "cancel-request"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
+            }`}
+          >
+            Refund Requests
+          </div>
+
+          <div
             onClick={() => handleTabClick("cancel-denied")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
               isActive === "cancel-denied"
@@ -198,7 +200,7 @@ const ManageAllBooking = () => {
                 : ""
             }`}
           >
-            Cancel Denied
+            Refund Denied
           </div>
         </div>
       </section>
@@ -223,18 +225,6 @@ const ManageAllBooking = () => {
         />
       )}
 
-      {isActive === "cancel-request" && (
-        <CancelBookingTable
-          bookings={cancelRequests}
-          openModal={openModal}
-          setFlightRef={setFlightRef}
-          status="cancel status"
-          action={false}
-          feedbackTitle={"cancel reason"}
-          handleCancelApproved={handleCancelApproved}
-        />
-      )}
-
       {isActive === "cancel" && (
         <BookingFlightTable
           bookings={cancelBookings}
@@ -242,6 +232,18 @@ const ManageAllBooking = () => {
           setFlightRef={setFlightRef}
           status="cancel status"
           action={true}
+        />
+      )}
+
+      {isActive === "cancel-request" && (
+        <CancelBookingTable
+          bookings={cancelRequests}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="cancel status"
+          action={false}
+          feedbackTitle={"refund reason"}
+          handleCancelApproved={handleCancelApproved}
         />
       )}
 

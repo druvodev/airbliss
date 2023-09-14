@@ -40,7 +40,7 @@ const CancelBookingTable = ({
     <div className="overflow-x-auto shadow-md mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
       {bookings.length < 1 ? (
         <div className="w-full flex items-center justify-center mt-20">
-          <p className="sm:text-sm md:text-base lg:text-lg"> No data found</p>
+          <p className="sm:text-sm md:text-base lg:text-xl"> No data found</p>
         </div>
       ) : (
         <table className="table">
