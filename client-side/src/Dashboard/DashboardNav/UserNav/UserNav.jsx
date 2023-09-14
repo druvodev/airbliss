@@ -11,8 +11,10 @@ import {
 
 const UserNav = () => {
   const { user } = useAuth();
-  const refetch = useSelector((state) => state.userInfo.refetch);
+  const refetch = useSelector((state) => state.userInfo?.refetch);
   const dispatch = useDispatch();
+
+  // console.log(refetch);
 
   useEffect(() => {
     fetch(`http://localhost:5000/userBooking/${user?.email}`)
@@ -20,7 +22,6 @@ const UserNav = () => {
       .then((data) => {
         dispatch(setUserBookings(data));
         dispatch(setRefetch(true));
-        // console.log(data);
       });
   }, [user, refetch]);
 

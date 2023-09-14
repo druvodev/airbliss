@@ -25,11 +25,6 @@ const ManageBooking = () => {
   const confirmBookings = bookings?.filter(
     (booking) => booking?.bookingStatus === "confirmed"
   );
-  // console.log("All bookings", bookings);
-  // console.log("Cancel Bookings", cancelBookings);
-
-  // const [formData, setFormData] = useState({});
-  // Initialize your form data state here
 
   const {
     register,
@@ -40,7 +35,7 @@ const ManageBooking = () => {
   } = useForm();
 
   const myFlight = bookings?.find(
-    (flight) => flight.bookingReference === flightRef
+    (flight) => flight?.bookingReference === flightRef
   );
 
   console.log(myFlight);
@@ -85,13 +80,15 @@ const ManageBooking = () => {
       }
     )
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
+        console.log("cancel Response", response);
+        // if (!response.ok) {
+        //   throw new Error("Network response was not ok");
+        // }
+        // return response.json();
       })
       .then((data) => {
-        console.log("Success:", data.message);
+        location.reload();
+        console.log("Success:", data?.message);
       })
       .catch((error) => {
         console.error("Error:", error);

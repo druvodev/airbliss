@@ -97,6 +97,7 @@ const ManageAllBooking = () => {
       })
       .then((data) => {
         console.log("Success:", data.message);
+        location.reload();
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -126,6 +127,7 @@ const ManageAllBooking = () => {
       })
       .then((data) => {
         console.log("Success:", data.message);
+        location.reload();
       })
       .catch((error) => {
         console.error("Error:", error);
