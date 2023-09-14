@@ -91,6 +91,19 @@ const AdminHome = () => {
   const totalRevenue = todayBookingData?.filter(
     (revenue) => revenue?.bookingStatus == "confirmed"
   );
+  const allRevenue = totalRevenue.map(revenue => revenue?.flight?.fareSummary?.total)
+  let totalSum = 0;
+
+  for (let i = 0; i < allRevenue.length; i++) {
+    const revenue = parseFloat(allRevenue[i]);
+    if (!isNaN(revenue)) {
+      totalSum += revenue;
+    }
+  }
+
+  console.log(totalSum);
+
+
   const totalCancel = todayBookingData?.filter(
     (cancel) => cancel?.bookingStatus == "cancel"
   );
@@ -128,7 +141,7 @@ const AdminHome = () => {
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
                 <p className="text-lg font-semibold">Revenue</p>
-                <h2 className="text-2xl font-bold">$200M</h2>
+                <h2 className="text-2xl font-bold">{totalSum} BDT</h2>
               </div>
               <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
                 <FaWallet className="text-white text-3xl font-bold" />

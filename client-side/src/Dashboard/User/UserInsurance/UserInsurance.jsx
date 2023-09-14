@@ -11,6 +11,66 @@ const UserInsurance = () => {
 
     const [selectedInsurance, setSelectedInsurance] = useState(null);
 
+    const handleFormSubmit = (insurance, premiumType, requireAmount, summary, image) => {
+        // Handle the form submission here with the provided data
+        // You can access insurance, premiumType, requireAmount, summary, and image here
+        console.log('Insurance:', insurance);
+        console.log('Premium Type:', premiumType);
+        console.log('Require Amount:', requireAmount);
+        console.log('Summary:', summary);
+        console.log('Image:', image);
+
+        const formData = new FormData();
+        formData.append("image", image);
+
+        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`;
+
+        fetch(url, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((imageData) => {
+                const imageUrl = imageData.data.display_url;
+                console.log(imageUrl);
+
+                const insuranceData = {
+                    media: imageUrl,
+                    summary: summary,
+                    requireAmount: requireAmount,
+                    premiumType: premiumType,
+                };
+
+                fetch(`http://localhost:5000/insuranceClaim/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ insuranceData }),
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        // if (data.mo === true) {
+                        //     toast.success("User Data submitted successfully");
+                        // } else {
+                        //     toast.error("Failed to update user data");
+                        // }
+                        console.log(data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            })
+            .catch((err) => {
+                console.log(err.message);
+                toast.error(err.message);
+            });
+
+        return
+
+        // Perform any necessary actions, such as making API requests
+    };
+
     const openModal = (insurance) => {
         setSelectedInsurance(insurance);
         document.getElementById('my_modal_1').showModal()
@@ -91,6 +151,7 @@ const UserInsurance = () => {
                     <ModalInsurance
                         insurance={selectedInsurance}
                         onClose={closeModal}
+                        onSubmit={handleFormSubmit}
                     />
                 )}
             </div>

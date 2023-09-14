@@ -1,64 +1,14 @@
 import logo from "../../../assets/icon/airblissBlack.png";
 
-const ModalInsurance = ({ insurance, onClose }) => {
+const ModalInsurance = ({ insurance, onClose, onSubmit }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const relationship = event.target.relationship.value
+        const premiumType = event.target.premiumType.value
         const requireAmount = event.target.requireAmount.value
         const summary = event.target.summary.value
         const image = event.target.image.files[0];
-
-        const formData = new FormData();
-        formData.append("image", image);
-
-        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`;
-
-        fetch(url, {
-            method: "POST",
-            body: formData,
-        })
-            .then((res) => res.json())
-            .then((imageData) => {
-                const imageUrl = imageData.data.display_url;
-                console.log(imageUrl);
-
-                // const body = {
-                //     media: "http://",
-                //     summary: "This is summary",
-                //     requireAmount: 100,
-                //     premiumType: " "
-                // };
-
-                // fetch(`/insuranceClaim/:date/:airportCode/:bookingReference`, {
-                //     method: "PATCH",
-                //     headers: {
-                //         "Content-Type": "application/json",
-                //     },
-                //     body: JSON.stringify({ usersData }),
-                // })
-                //     .then((res) => res.json())
-                //     .then((data) => {
-                //         if (data.acknowledged === true) {
-                //             toast.success("User Data submitted successfully");
-                //         } else {
-                //             toast.error("Failed to update user data");
-                //         }
-
-                //         location.reload();
-                //     })
-                //     .catch((err) => {
-                //         console.log(err);
-                //     });
-            })
-            .catch((err) => {
-                console.log(err.message);
-                toast.error(err.message);
-            });
-        return;
-
-        console.log(relationship, summary, requireAmount);
-
+        onSubmit(insurance, premiumType, requireAmount, summary, image);
         onClose();
     };
 
@@ -166,8 +116,8 @@ const ModalInsurance = ({ insurance, onClose }) => {
                                         <span className="text-red-600">*</span>
                                     </label>
                                     <select
-                                        name="relationship"
-                                        id="relationship"
+                                        name="premiumType"
+                                        id="premiumType"
                                         className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
                                         required
                                     >
@@ -238,10 +188,12 @@ const ModalInsurance = ({ insurance, onClose }) => {
                                     >
                                         Close
                                     </button>
-                                    <input
+                                    <button
+                                        type="submit" // Use type="submit" here
                                         className="bg-cyan-500 text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                        type="submit"
-                                        value="Submit" />
+                                    >
+                                        Submit
+                                    </button>
                                 </div>
                             </form>
                         </div>
