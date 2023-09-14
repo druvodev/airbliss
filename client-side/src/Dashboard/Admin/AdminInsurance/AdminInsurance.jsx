@@ -4,22 +4,59 @@ import ModalApprove from './ModalApprove';
 import { RxCross2 } from 'react-icons/rx';
 import { toast } from "react-hot-toast";
 import { MdDone } from 'react-icons/md';
+import ModalDenied from './ModalDenied';
 
 const AdminInsurance = () => {
     const [selectedInsurance, setSelectedInsurance] = useState(null);
+    const [isModalApprovedOpen, setIsModalApprovedOpen] = useState(false); // New state variable
     const allBookingData = JSON.parse(sessionStorage.getItem("userBookings"));
     const insuranceBookings = allBookingData.filter(booking => booking?.insurancePolicy?.claimedStatus != null)
+    const [isModalDeniedOpen, setIsModalDeniedOpen] = useState(false);
 
-    const handleFormSubmit = (insurance, premiumType, payableAmount) => {
+    console.log(insuranceBookings);
+
+    const handleDenialSubmit = (insurance, premiumType, deniedFeedback) => {
         console.log('Insurance:', insurance);
         console.log('Premium Type:', premiumType);
-        console.log('Require Amount:', payableAmount);
+        console.log('Require Amount:', deniedFeedback);
 
         const insuranceData = {
-            premiumType: premiumType, 
+            premiumType: premiumType,
+            deniedFeedback: deniedFeedback,
+        };
+
+        fetch(`http://localhost:5000/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ insuranceData }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data?.message == "Insurance policy updated") {
+                    toast.success(data.message);
+                } else {
+                    toast.error(data.message);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        setIsModalDeniedOpen(false);
+    };
+
+    const closeDeniedModal = () => {
+        setIsModalDeniedOpen(false);
+    };
+
+    const handleFormSubmit = (insurance, premiumType, payableAmount) => {
+        const insuranceData = {
+            premiumType: premiumType,
             claimedAmount: payableAmount,
         };
-fetch(`http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
+        fetch(`http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -42,11 +79,13 @@ fetch(`http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?
 
     const openModal = (insurance) => {
         setSelectedInsurance(insurance);
-        document.getElementById('my_modal_1').showModal()
+        setIsModalApprovedOpen(true); // Open the "approved" modal by default
     };
 
     const closeModal = () => {
         setSelectedInsurance(null);
+        setIsModalApprovedOpen(false);
+        setIsModalDeniedOpen(false);
     };
 
     return (
@@ -108,14 +147,20 @@ fetch(`http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?
                                     <th className='flex gap-3 mt-2'>
                                         <button
                                             onClick={() => openModal(insurance)}
-                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "approved" ? "bg-green-400" : "bg-cyan-400"}`}
+                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "denied" ? "bg-gray-400" : "bg-cyan-400"}`}
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "denied"}
                                         >
                                             <MdDone className='text-xl' />
                                         </button>
                                         <button
-                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-red-400`}
+                                            onClick={() => {
+                                                setSelectedInsurance(insurance);
+                                                setIsModalDeniedOpen(true);
+                                            }}
+                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "approved" ? "bg-gray-400" : "bg-red-400"}`}
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "approved"}
                                         >
-                                            <RxCross2 className='text-xl' />
+                                            <RxCross2 className="text-xl" />
                                         </button>
                                     </th>
                                 </tr>
@@ -123,11 +168,18 @@ fetch(`http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?
                         }
                     </tbody>
                 </table>
-                {selectedInsurance && (
+                {selectedInsurance && isModalApprovedOpen && (
                     <ModalApprove
                         insurance={selectedInsurance}
                         onClose={closeModal}
                         onSubmit={handleFormSubmit}
+                    />
+                )}
+                {selectedInsurance && isModalDeniedOpen && (
+                    <ModalDenied
+                        insurance={selectedInsurance}
+                        onClose={closeDeniedModal}
+                        onSubmit={handleDenialSubmit}
                     />
                 )}
             </div>
