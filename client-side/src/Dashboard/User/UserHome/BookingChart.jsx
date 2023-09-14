@@ -21,15 +21,20 @@ const BookingChart = () => {
     (booking) => booking?.bookingStatus === "confirmed"
   );
 
-  const data = confirmBookings.map((booking) => {
-    const bookingDateTime = booking?.bookingDateTime.split(" at ")[0];
-
+  const data = confirmBookings?.map((booking) => {
+    const bookingDateTime = booking?.bookingDateTime?.split(" at ")[0];
     const total = booking?.flight?.fareSummary?.total;
 
-    return {
-      name: bookingDateTime,
-      amount: total,
-    };
+    if (total && total.length > 0) {
+      return {
+        name: bookingDateTime,
+        amount: total,
+      };
+    } else {
+      return {
+        name: "No Booking Found",
+      };
+    }
   });
 
   return (
