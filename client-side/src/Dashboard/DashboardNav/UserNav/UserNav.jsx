@@ -8,6 +8,7 @@ import {
   setRefetch,
   setUserBookings,
 } from "../../../redux/features/usersSlice";
+import { MdManageSearch } from "react-icons/md";
 
 const UserNav = () => {
   const { user } = useAuth();
@@ -39,7 +40,7 @@ const UserNav = () => {
       >
         <FaHouseUser className="w-5 h-5" />
 
-        <span className="mx-4 font-medium">User Home</span>
+        <span className="mx-4 font-medium">My Dashboard</span>
       </NavLink>
       <NavLink
         to="booking"
@@ -51,9 +52,9 @@ const UserNav = () => {
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <MdManageSearch className="w-5 h-5" />
 
-        <span className="mx-4 font-medium">Manage Book</span>
+        <span className="mx-4 font-medium">My Bookings</span>
       </NavLink>
       <NavLink
         to="account"
