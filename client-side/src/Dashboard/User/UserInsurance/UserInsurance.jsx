@@ -2,16 +2,13 @@ import React, { useState } from 'react';
 import { FaHandsHolding, FaHandsHoldingCircle } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
 import ModalInsurance from './ModalInsurance';
+import { toast } from "react-hot-toast";
 
 const UserInsurance = () => {
     const bookings = useSelector((state) => state?.userInfo?.userBookings);
     const insuranceBookings = bookings.filter(booking => booking.insurancePolicy != "Without Insurance")
 
     console.log(insuranceBookings);
-
-    // claimedAmount: 110,
-    // premiumType: "delayedFlight",
-    // deniedFeedback: "Your Times Up",
 
     const [selectedInsurance, setSelectedInsurance] = useState(null);
 
@@ -54,10 +51,10 @@ const UserInsurance = () => {
                 })
                     .then((res) => res.json())
                     .then((data) => {
-                        if (data.modifiedCount === 1) {
-                            toast.success("User Data submitted successfully");
+                        if (data?.message == "Insurance policy updated") {
+                            toast.success(data.message);
                         } else {
-                            toast.error("Failed to update user data");
+                            toast.error(data.message);
                         }
                     })
                     .catch((err) => {

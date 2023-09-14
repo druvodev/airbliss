@@ -5,15 +5,13 @@ const ModalApprove = ({ insurance, onClose, onSubmit }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const premiumType = event.target.premiumType.value
-        const requireAmount = event.target.requireAmount.value
-        const summary = event.target.summary.value
-        const image = event.target.image.files[0];
-        onSubmit(insurance, premiumType, requireAmount, summary, image);
+        const payableAmount = event.target.payableAmount.value
+        onSubmit(insurance, premiumType, payableAmount);
         onClose();
     };
 
     return (
-        <dialog id="my_modal_1" className="modal" >
+        <dialog id="my_modal_1" open={true} className="modal" >
             <div className="modal-box w-10/12 max-w-2xl max-h-[95vh] md:max-h-[100vh] overflow-y-scroll md:overflow-auto">
                 <div className="bg-white w-full h-full rounded-lg p-6">
                     <div className="flex lg:flex-row flex-col gap-2 md:gap-5 lg:gap-10 items-center mb-5">
@@ -110,7 +108,7 @@ const ModalApprove = ({ insurance, onClose, onSubmit }) => {
                                 </div>
                                 <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
                                     <h2 className="font-semibold">Require Amount</h2>
-                                    <p>{insurance?.insurancePolicy?.requestedClaimInfo?.requireAmount}</p>
+                                    <p>{insurance?.insurancePolicy?.requestedClaimInfo?.requireAmount}BDT</p>
                                 </div>
                                 <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
                                     <h2 className="font-semibold">Explain Reason</h2>
@@ -120,7 +118,10 @@ const ModalApprove = ({ insurance, onClose, onSubmit }) => {
                             <div className="text-sm">
                                 <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
                                     <h2 className="font-semibold">Reference Image</h2>
-                                    <Link to={insurance?.insurancePolicy?.requestedClaimInfo?.media}>
+                                    <Link
+                                        to={insurance?.insurancePolicy?.requestedClaimInfo?.media}
+                                        target="_blank"
+                                    >
                                         <img className="w-[100px] h-[100px]" src={insurance?.insurancePolicy?.requestedClaimInfo?.media} alt="" />
                                     </Link>
                                 </div>
@@ -141,6 +142,7 @@ const ModalApprove = ({ insurance, onClose, onSubmit }) => {
                                         id="premiumType"
                                         className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
                                         required
+                                        value={insurance?.insurancePolicy?.requestedClaimInfo?.premiumType}
                                     >
                                         <option value="">Select a Claim Type</option>
                                         <option value="tripCancellation">Trip Cancellation</option>
@@ -166,24 +168,6 @@ const ModalApprove = ({ insurance, onClose, onSubmit }) => {
                                     />
                                 </div>
                             </div>
-                            <div className="mt-4">
-                                <label
-                                    htmlFor="exampleField"
-                                    className="block font-bold mb-2 text-md"
-                                >
-                                    Write Your Feedback
-                                    <span className="text-red-600">*</span>
-                                </label>
-                                <textarea
-                                    name="feedback"
-                                    id="feedback"
-                                    placeholder="Enter Your reason Here"
-                                    className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                    cols="5"
-                                    rows="2"
-                                    required
-                                ></textarea>
-                            </div>
                             <div className="flex modal-action justify-end mt-2 sm:mt-5 tracking-wide">
                                 <button
                                     className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -196,7 +180,7 @@ const ModalApprove = ({ insurance, onClose, onSubmit }) => {
                                     type="submit" // Use type="submit" here
                                     className="bg-cyan-500 text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 >
-                                    Submit
+                                    Approved
                                 </button>
                             </div>
                         </form>
