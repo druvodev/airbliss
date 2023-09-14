@@ -587,7 +587,6 @@ async function run() {
             delete bookingInfo?.insurancePolicy; // Delete insurance checking field
             const insuranceInfo = {
               ...insurancePolicy,
-              isClaimed: false,
               bookingInfo,
             };
             await insuranceCollection.insertOne(insuranceInfo);
@@ -767,7 +766,7 @@ async function run() {
         const date = req.params.date;
         const airportCode = req.params.airportCode;
         const bookingReference = req.params.bookingReference;
-        const claimDoc = req.body;
+        const claimDoc = req.body.insuranceData;
 
         try {
           const path = `${date}.${airportCode}`;
@@ -818,7 +817,7 @@ async function run() {
         const date = req.params.date;
         const airportCode = req.params.airportCode;
         const bookingReference = req.params.bookingReference;
-        const premiumUpdateInfo = req.body;
+        const premiumUpdateInfo = req.body.insuranceData;
         const premiumType = premiumUpdateInfo?.premiumType;
 
         let newStatus = "denied";
@@ -896,6 +895,12 @@ async function run() {
         }
       }
     );
+
+    // Get all insurance bookings
+    app.get("/allInsurance", async (req, res) => {
+      const result = await insuranceCollection.find().toArray();
+      res.send(result);
+    });
 
     // ############################## Manage Bookings ##############################
     // Get all request bookings

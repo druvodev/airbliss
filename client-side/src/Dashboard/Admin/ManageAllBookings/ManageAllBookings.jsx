@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import logo from "../../../assets/icon/airblissBlack.png";
 import { useForm } from "react-hook-form";
 import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
 import CancelBookingTable from "../../../Components/CancelBookingTable/CancelBookingTable";
+import { useSelector } from "react-redux";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -11,26 +12,19 @@ const ManageAllBooking = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
   const [isActive, setIsActive] = useState("allbookings");
-  const [allBookings, setAllBookings] = useState([]);
+  const [details, setDetails] = useState(false);
+  // const [allBookings, setAllBookings] = useState([]);
 
   const handleTabClick = (tab) => {
     setIsActive(tab);
   };
 
-  useEffect(() => {
-    fetch("http://localhost:5000/allBookings")
-      .then((res) => res.json())
-      .then((data) => setAllBookings(data));
-  }, []);
+  console.log("flightRef", flightRef);
 
-  // const bookings = useSelector((state) => state?.userInfo?.userBookings);
+  const allBookings = useSelector((state) => state.userBookingInfo.allBookings);
 
   const cancelBookings = allBookings?.filter(
     (booking) => booking?.requestStatus === "approved"
-  );
-
-  const cancelDeniedBookings = allBookings?.filter(
-    (booking) => booking?.requestStatus === "denied"
   );
 
   const confirmBookings = allBookings?.filter(
@@ -41,6 +35,10 @@ const ManageAllBooking = () => {
     (booking) => booking?.requestStatus === "pending"
   );
 
+  const cancelDeniedBookings = allBookings?.filter(
+    (booking) => booking?.requestStatus === "denied"
+  );
+
   const {
     register,
     handleSubmit,
@@ -49,11 +47,11 @@ const ManageAllBooking = () => {
     formState: { errors },
   } = useForm();
 
-  const selectedFlight = allBookings?.find(
-    (flight) => flight.bookingReference === flightRef
+  const selectedFlight = allBookings.find(
+    (flight) => flight?.bookingReference === flightRef
   );
 
-  // console.log("My Flight", selectedFlight);
+  console.log("My Flight", allBookings);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -109,7 +107,6 @@ const ManageAllBooking = () => {
   const handleCancelDeny = (data) => {
     const cancelDenyInfo = {
       feedback: data?.feedback,
-      bookingInfo: selectedFlight,
     };
     // console.log(cancelDenyInfo);
     fetch(
@@ -142,9 +139,7 @@ const ManageAllBooking = () => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
   const paidAmount = selectedFlight?.flight?.fareSummary?.total;
-  const deductedAmount = Math.round(
-    selectedFlight?.flight?.fareSummary?.total * 0.3
-  );
+  const deductedAmount = Math.round(paidAmount * 0.3);
   const refundAmount = paidAmount - deductedAmount;
 
   return (
@@ -175,16 +170,7 @@ const ManageAllBooking = () => {
           >
             Confirm Bookings
           </div>
-          <div
-            onClick={() => handleTabClick("cancel-request")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "cancel-request"
-                ? "border-t-2 bg-cyan-50 border-cyan-400"
-                : ""
-            }`}
-          >
-            Cancel Requests
-          </div>
+
           <div
             onClick={() => handleTabClick("cancel")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
@@ -197,6 +183,17 @@ const ManageAllBooking = () => {
           </div>
 
           <div
+            onClick={() => handleTabClick("cancel-request")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "cancel-request"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
+            }`}
+          >
+            Refund Requests
+          </div>
+
+          <div
             onClick={() => handleTabClick("cancel-denied")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
               isActive === "cancel-denied"
@@ -204,7 +201,7 @@ const ManageAllBooking = () => {
                 : ""
             }`}
           >
-            Cancel Denied
+            Refund Denied
           </div>
         </div>
       </section>
@@ -229,17 +226,6 @@ const ManageAllBooking = () => {
         />
       )}
 
-      {isActive === "cancel-request" && (
-        <CancelBookingTable
-          bookings={cancelRequests}
-          openModal={openModal}
-          setFlightRef={setFlightRef}
-          status="cancel status"
-          action={false}
-          handleCancelApproved={handleCancelApproved}
-        />
-      )}
-
       {isActive === "cancel" && (
         <BookingFlightTable
           bookings={cancelBookings}
@@ -247,6 +233,18 @@ const ManageAllBooking = () => {
           setFlightRef={setFlightRef}
           status="cancel status"
           action={true}
+        />
+      )}
+
+      {isActive === "cancel-request" && (
+        <CancelBookingTable
+          bookings={cancelRequests}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="cancel status"
+          action={false}
+          feedbackTitle={"refund reason"}
+          handleCancelApproved={handleCancelApproved}
         />
       )}
 
@@ -258,6 +256,8 @@ const ManageAllBooking = () => {
           status="cancel status"
           action={true}
           handleCancelApproved={handleCancelApproved}
+          feedbackTitle={"admin feedback"}
+          setDetails={setDetails}
         />
       )}
 
@@ -374,6 +374,7 @@ const ManageAllBooking = () => {
                   >
                     Submit
                   </button>
+
                   <div
                     onClick={closeModal}
                     className="btn ml-2 btn-warning border-none bg-red-400 hover:bg-red-500 text-white"
