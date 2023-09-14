@@ -98,23 +98,53 @@ const AdminHome = () => {
     }
   }
 
-  const data = lifetimeConfirmBooking?.map((booking) => {
-    const bookingDateTime = booking?.bookingDateTime?.split(" at ")[0];
-    const total = booking?.flight?.fareSummary?.total;
+  // const data = lifetimeConfirmBooking?.map((booking) => {
+  //   const bookingDateTime = booking?.bookingDateTime?.split(" at ")[0];
+  //   const total = booking?.flight?.fareSummary?.total;
 
-    if (total && total.length > 0) {
-      return {
-        month: bookingDateTime,
-        uv: total,
-        pv: 80,
-        amt: 70,
-      };
-    } else {
-      return {
-        name: "No Booking Found",
-      };
+  //   const sameDate = bookingDateTime.find(
+  //     (booking) => booking.bookingDateTime?.split(" at ")[0] == bookingDateTime
+  //   );
+
+  //   console.log(sameDate);
+
+  //   if (total && total.length > 0) {
+  //     return {
+  //       month: bookingDateTime,
+  //       uv: total,
+  //       pv: 80,
+  //       amt: 70,
+  //     };
+  //   } else {
+  //     return {
+  //       name: "No Booking Found",
+  //     };
+  //   }
+  // });
+
+  const sumByBookingDate = {};
+
+  lifetimeConfirmBooking?.forEach((item) => {
+    const bookingDate = item?.bookingDateTime?.split(" ")[0];
+
+    if (!sumByBookingDate[bookingDate]) {
+      sumByBookingDate[bookingDate] = 0;
     }
+    sumByBookingDate[bookingDate] += parseInt(item?.flight?.fareSummary?.total);
   });
+
+  let data = [];
+
+  for (const bookingDate in sumByBookingDate) {
+    const chart = {
+      month: bookingDate,
+      uv: sumByBookingDate[bookingDate],
+      pv: 200,
+      amt: 70,
+    };
+
+    data.push(chart);
+  }
 
   const totalCancel = todayBookingData?.filter(
     (cancel) => cancel?.bookingStatus == "cancel"

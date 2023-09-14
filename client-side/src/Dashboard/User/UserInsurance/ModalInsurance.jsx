@@ -104,7 +104,6 @@ const ModalInsurance = ({ insurance, onClose, onSubmit }) => {
 
             <hr />
 
-<<<<<<< HEAD
             <div className="mb-2 mt-5">
               <h2 className="text-md font-semibold">Claimed Insurance</h2>
               <hr />
@@ -139,150 +138,195 @@ const ModalInsurance = ({ insurance, onClose, onSubmit }) => {
                           }
                         </p>
                       </div>
-=======
-                        <hr />
+                      <hr />
 
-                        <div className="mb-2 mt-5">
-                            <h2 className="text-md font-semibold">Claimed Insurance</h2>
-                            <hr />
-                            {
-                                insurance?.insurancePolicy?.claimedStatus === "pending" ? (
-                                    <>
-                                        <div className="grid grid-cols-2 gap-5 mt-2">
-                                            <div className="text-sm">
-                                                <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
-                                                    <h2 className="font-semibold">Premium Type</h2>
-                                                    <p>{insurance?.insurancePolicy?.requestedClaimInfo?.premiumType}</p>
-                                                </div>
-                                                <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
-                                                    <h2 className="font-semibold">Require Amount</h2>
-                                                    <p>{insurance?.insurancePolicy?.requestedClaimInfo?.requireAmount}</p>
-                                                </div>
-                                                <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
-                                                    <h2 className="font-semibold">Explain Reason</h2>
-                                                    <p>{insurance?.insurancePolicy?.requestedClaimInfo?.summary}</p>
-                                                </div>
-                                            </div>
-                                            <div className="text-sm">
-                                                <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
-                                                    <h2 className="font-semibold">Reference Image</h2>
-                                                    <Link to={insurance?.insurancePolicy?.requestedClaimInfo?.media}>
-                                                        <img className="w-[100px] h-[100px]" src={insurance?.insurancePolicy?.requestedClaimInfo?.media} alt="" />
-                                                    </Link>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="flex modal-action justify-end mt-2 sm:mt-5 tracking-wide">
-                                            <button
-                                                className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                type="button"
-                                                onClick={onClose}
-                                            >
-                                                Close
-                                            </button>
-                                            <button
-                                                type="submit" // Use type="submit" here
-                                                className="bg-cyan-500 btn text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                disabled
-                                            >
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <form onSubmit={handleSubmit}>
-                                        <div>
-                                            <label
-                                                htmlFor="gender"
-                                                className="block font-bold mb-2 text-md">
-                                                Insurance:
-                                                <span className="text-red-600">*</span>
-                                            </label>
-                                            <select
-                                                name="premiumType"
-                                                id="premiumType"
-                                                className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                                required
-                                            >
-                                                <option value="">Select a Claim Type</option>
-                                                <option value="tripCancellation">Trip Cancellation</option>
-                                                <option value="medicalCoverage">Medical Coverage</option>
-                                                <option value="lostLuggage">Lost Luggage</option>
-                                                <option value="delayedFlight">Delayed Flight</option>
-                                            </select>
-                                        </div>
-                                        <div className='grid grid-cols-2 gap-5 pt-2'>
-                                            <div>
-                                                <label
-                                                    htmlFor="DateOfBirth"
-                                                    className="block font-bold mb-2 text-md">
-                                                    Require Amount:
-                                                    <span className="text-red-600">*</span>
-                                                </label>
-                                                <input
-                                                    type="number"
-                                                    name="requireAmount"
-                                                    id="requireAmount"
-                                                    placeholder="Enter Your From address Here"
-                                                    className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                                    required
-                                                />
-                                            </div>
-                                            <div>
-                                                <label
-                                                    htmlFor="image"
-                                                    className="block font-bold mb-2 text-md">
-                                                    Select Image:
-                                                    <span className="text-red-600">*</span>
-                                                </label>
-                                                <input
-                                                    required
-                                                    type="file"
-                                                    id="image"
-                                                    name="image"
-                                                    accept="image/*"
-                                                    className="file-input file-input-bordered file-input-sm w-full max-w-xs"
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="mt-4">
-                                            <label
-                                                htmlFor="exampleField"
-                                                className="block font-bold mb-2 text-md"
-                                            >
-                                                Write Your Reason
-                                                <span className="text-red-600">*</span>
-                                            </label>
-                                            <textarea
-                                                name="summary"
-                                                id="summary"
-                                                placeholder="Enter Your reason Here"
-                                                className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                                cols="5"
-                                                rows="2"
-                                                required
-                                            ></textarea>
-                                        </div>
-                                        <div className="flex modal-action justify-end mt-2 sm:mt-5 tracking-wide">
-                                            <button
-                                                className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                                type="button"
-                                                onClick={onClose}
-                                            >
-                                                Close
-                                            </button>
-                                            <button
-                                                type="submit" // Use type="submit" here
-                                                    className="bg-cyan-500 btn text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                            >
-                                                Submit
-                                            </button>
-                                        </div>
-                                    </form>
-                                )
-                            }
-                        </div>
->>>>>>> b520d0d6506b3460faf96eeeb90a509891ec5f0f
+                      <div className="mb-2 mt-5">
+                        <h2 className="text-md font-semibold">
+                          Claimed Insurance
+                        </h2>
+                        <hr />
+                        {insurance?.insurancePolicy?.claimedStatus ===
+                        "pending" ? (
+                          <>
+                            <div className="grid grid-cols-2 gap-5 mt-2">
+                              <div className="text-sm">
+                                <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
+                                  <h2 className="font-semibold">
+                                    Premium Type
+                                  </h2>
+                                  <p>
+                                    {
+                                      insurance?.insurancePolicy
+                                        ?.requestedClaimInfo?.premiumType
+                                    }
+                                  </p>
+                                </div>
+                                <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
+                                  <h2 className="font-semibold">
+                                    Require Amount
+                                  </h2>
+                                  <p>
+                                    {
+                                      insurance?.insurancePolicy
+                                        ?.requestedClaimInfo?.requireAmount
+                                    }
+                                  </p>
+                                </div>
+                                <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
+                                  <h2 className="font-semibold">
+                                    Explain Reason
+                                  </h2>
+                                  <p>
+                                    {
+                                      insurance?.insurancePolicy
+                                        ?.requestedClaimInfo?.summary
+                                    }
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="text-sm">
+                                <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
+                                  <h2 className="font-semibold">
+                                    Reference Image
+                                  </h2>
+                                  <Link
+                                    to={
+                                      insurance?.insurancePolicy
+                                        ?.requestedClaimInfo?.media
+                                    }
+                                  >
+                                    <img
+                                      className="w-[100px] h-[100px]"
+                                      src={
+                                        insurance?.insurancePolicy
+                                          ?.requestedClaimInfo?.media
+                                      }
+                                      alt=""
+                                    />
+                                  </Link>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex modal-action justify-end mt-2 sm:mt-5 tracking-wide">
+                              <button
+                                className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={onClose}
+                              >
+                                Close
+                              </button>
+                              <button
+                                type="submit" // Use type="submit" here
+                                className="bg-cyan-500 btn text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                disabled
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          </>
+                        ) : (
+                          <form onSubmit={handleSubmit}>
+                            <div>
+                              <label
+                                htmlFor="gender"
+                                className="block font-bold mb-2 text-md"
+                              >
+                                Insurance:
+                                <span className="text-red-600">*</span>
+                              </label>
+                              <select
+                                name="premiumType"
+                                id="premiumType"
+                                className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                required
+                              >
+                                <option value="">Select a Claim Type</option>
+                                <option value="tripCancellation">
+                                  Trip Cancellation
+                                </option>
+                                <option value="medicalCoverage">
+                                  Medical Coverage
+                                </option>
+                                <option value="lostLuggage">
+                                  Lost Luggage
+                                </option>
+                                <option value="delayedFlight">
+                                  Delayed Flight
+                                </option>
+                              </select>
+                            </div>
+                            <div className="grid grid-cols-2 gap-5 pt-2">
+                              <div>
+                                <label
+                                  htmlFor="DateOfBirth"
+                                  className="block font-bold mb-2 text-md"
+                                >
+                                  Require Amount:
+                                  <span className="text-red-600">*</span>
+                                </label>
+                                <input
+                                  type="number"
+                                  name="requireAmount"
+                                  id="requireAmount"
+                                  placeholder="Enter Your From address Here"
+                                  className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                  required
+                                />
+                              </div>
+                              <div>
+                                <label
+                                  htmlFor="image"
+                                  className="block font-bold mb-2 text-md"
+                                >
+                                  Select Image:
+                                  <span className="text-red-600">*</span>
+                                </label>
+                                <input
+                                  required
+                                  type="file"
+                                  id="image"
+                                  name="image"
+                                  accept="image/*"
+                                  className="file-input file-input-bordered file-input-sm w-full max-w-xs"
+                                />
+                              </div>
+                            </div>
+                            <div className="mt-4">
+                              <label
+                                htmlFor="exampleField"
+                                className="block font-bold mb-2 text-md"
+                              >
+                                Write Your Reason
+                                <span className="text-red-600">*</span>
+                              </label>
+                              <textarea
+                                name="summary"
+                                id="summary"
+                                placeholder="Enter Your reason Here"
+                                className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                cols="5"
+                                rows="2"
+                                required
+                              ></textarea>
+                            </div>
+                            <div className="flex modal-action justify-end mt-2 sm:mt-5 tracking-wide">
+                              <button
+                                className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                type="button"
+                                onClick={onClose}
+                              >
+                                Close
+                              </button>
+                              <button
+                                type="submit" // Use type="submit" here
+                                className="bg-cyan-500 btn text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                              >
+                                Submit
+                              </button>
+                            </div>
+                          </form>
+                        )}
+                      </div>
                     </div>
                     <div className="text-sm">
                       <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">

@@ -8,6 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
   const [airlines, setAirlines] = useState([]);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
     const uniqueAirlines = {};
@@ -23,6 +24,10 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
 
     setAirlines(uniqueAirlinesArray);
   }, [destenation]);
+
+  const handleCardCompanyFilter = (airlineName) => {
+    setSelectedCard(airlineName);
+  };
 
   // console.log(airlines);
 
@@ -74,9 +79,13 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
             <SwiperSlide key={singleAirline?.airlineName}>
               <div
                 onClick={() =>
-                  handelCardComapnyFilter(singleAirline?.airlineName)
+                  handleCardCompanyFilter(singleAirline?.airlineName)
                 }
-                className="md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer"
+                className={`md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer ${
+                  selectedCard === singleAirline?.airlineName
+                    ? "bg-cyan-50" // Set the background color to cyan-500 when selected
+                    : "" // Use an empty string for the default background color
+                }`}
               >
                 <img
                   className="w-auto rounded-md object-cover h-[40px]"
