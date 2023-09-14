@@ -6,30 +6,28 @@ import { MdManageSearch } from "react-icons/md";
 import { BsFillPersonFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setRefetch } from "../../../redux/features/usersSlice";
+
 import { setAllBookings } from "../../../redux/features/bookingInfoSlice";
 
 const AdminNav = () => {
   const dispatch = useDispatch();
-
+  const allBooking = useSelector((state) => state.userBookingInfo.allBookings);
+  const bookingsRefetch = useSelector(
+    (state) => state.userBookingInfo.bookingsRefetch
+  );
+  const userData = useSelector((state) => state?.userInfo.allUserInfo);
   useEffect(() => {
     fetch(`http://localhost:5000/allBookings`)
       .then((res) => res.json())
       .then((data) => {
         dispatch(setAllBookings(data));
-        dispatch(setRefetch(true));
-        // console.log(data);
       });
-  }, []);
-
-  const allBooking = useSelector((state) => state.userBookingInfo.allBookings);
-  const userData = useSelector((state) => state?.userInfo.allUserInfo);
+  }, [bookingsRefetch]);
 
   if (allBooking.length > 1) {
     sessionStorage.setItem("userBookings", JSON.stringify(allBooking));
   }
 
-  
   if (userData.length > 1) {
     sessionStorage.setItem("userData", JSON.stringify(userData));
   }
@@ -94,9 +92,10 @@ const AdminNav = () => {
       <NavLink
         to="insurance"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
-            ? "bg-white text-cyan-500 active:border rounded-full"
-            : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
