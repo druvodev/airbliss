@@ -587,7 +587,6 @@ async function run() {
             delete bookingInfo?.insurancePolicy; // Delete insurance checking field
             const insuranceInfo = {
               ...insurancePolicy,
-              isClaimed: false,
               bookingInfo,
             };
             await insuranceCollection.insertOne(insuranceInfo);
