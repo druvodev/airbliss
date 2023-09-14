@@ -896,6 +896,12 @@ async function run() {
       }
     );
 
+    // Get all insurance bookings
+    app.get("/allInsurance", async (req, res) => {
+      const result = await insuranceCollection.find().toArray();
+      res.send(result);
+    });
+
     // ############################## Manage Bookings ##############################
     // Get all request bookings
     app.get("/bookings-manage", async (req, res) => {
