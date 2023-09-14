@@ -159,7 +159,7 @@ const BookFlight = () => {
               <button
                 className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
                   selectedButton === "cheapest"
-                    ? "bg-gray-100 text-white"
+                    ? "bg-cyan-50 text-white"
                     : "text-white"
                 }`}
                 onClick={() => handleButtonClick("cheapest")}
@@ -175,7 +175,7 @@ const BookFlight = () => {
               <button
                 className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
                   selectedButton === "shortest"
-                    ? "bg-gray-100 text-white"
+                    ? "bg-cyan-50 text-white"
                     : "text-white"
                 }`}
                 onClick={() => handleButtonClick("shortest")}
@@ -284,12 +284,12 @@ const BookFlight = () => {
 
                 {/* View Details Section */}
                 <div className="flex justify-between items-center mt-8 lg:mt-1">
-                  <p>
+                  <p className="text-cyan-500">
                     <small>{singleFlight?.refundableStatus}</small>
                   </p>
                   <p
                     onClick={() => handelVisible(singleFlight)}
-                    className="hover:cursor-pointer link-hover"
+                    className="hover:cursor-pointer link-hover text-cyan-500"
                   >
                     <small>
                       {visibleDetails
