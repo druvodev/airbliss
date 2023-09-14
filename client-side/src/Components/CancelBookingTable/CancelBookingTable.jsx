@@ -72,11 +72,24 @@ const CancelBookingTable = ({
                 <td className="capitalize">
                   {status === "flight status" && (
                     <span>
-                      {flight?.bookingStatus} ({flight?.requestStatus})
+                      {flight?.bookingStatus}{" "}
+                      <span
+                        className={`${
+                          flight?.requestStatus === "denied" && "text-red-500"
+                        }`}
+                      >
+                        ({flight?.requestStatus})
+                      </span>
                     </span>
                   )}
                   {status === "cancel status" && (
-                    <span>{flight?.requestStatus}</span>
+                    <span
+                      className={`${
+                        flight?.requestStatus === "denied" && "text-red-500"
+                      }`}
+                    >
+                      {flight?.requestStatus}
+                    </span>
                   )}
                   {status === "confirm status" && (
                     <span>{flight?.requestStatus}</span>
@@ -95,7 +108,7 @@ const CancelBookingTable = ({
                   }`}
                         onClick={() => {
                           setFlightRef(flight?.bookingReference);
-                          handleCancelApproved();
+                          handleCancelApproved(flight);
                         }}
                       >
                         <FaCheck />
