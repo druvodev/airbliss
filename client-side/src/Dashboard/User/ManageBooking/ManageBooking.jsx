@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import logo from "../../../assets/icon/airblissBlack.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
+import { setRefetch } from "../../../redux/features/usersSlice";
+import { successToast } from "../../../utils/toast";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -11,6 +13,8 @@ const ManageBooking = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
   const [isActive, setIsActive] = useState("allflight");
+
+  const dispatch = useDispatch();
 
   const handleTabClick = (tab) => {
     setIsActive(tab);
@@ -25,11 +29,6 @@ const ManageBooking = () => {
   const confirmBookings = bookings?.filter(
     (booking) => booking?.bookingStatus === "confirmed"
   );
-  // console.log("All bookings", bookings);
-  // console.log("Cancel Bookings", cancelBookings);
-
-  // const [formData, setFormData] = useState({});
-  // Initialize your form data state here
 
   const {
     register,
@@ -40,7 +39,7 @@ const ManageBooking = () => {
   } = useForm();
 
   const myFlight = bookings?.find(
-    (flight) => flight.bookingReference === flightRef
+    (flight) => flight?.bookingReference === flightRef
   );
 
   console.log(myFlight);
@@ -85,14 +84,16 @@ const ManageBooking = () => {
       }
     )
       .then((response) => {
-        // if (!response?.ok) {
+        console.log("cancel Response", response);
+        // if (!response.ok) {
         //   throw new Error("Network response was not ok");
         // }
         // return response.json();
-        console.log(response);
       })
       .then((data) => {
-        console.log("Success:", data.message);
+        dispatch(setRefetch(new Date().toString()));
+        successToast("Cancel request submit successful");
+        console.log("Success:", data?.message);
       })
       .catch((error) => {
         console.error("Error:", error);
