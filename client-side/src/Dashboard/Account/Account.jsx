@@ -25,7 +25,7 @@ const Account = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [axiosSecure]);
+  }, [axiosSecure, users]);
 
   const currentUser = users.find((userData) => userData?.email === user?.email);
 
