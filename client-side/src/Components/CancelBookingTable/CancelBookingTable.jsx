@@ -95,7 +95,7 @@ const CancelBookingTable = ({
                   }`}
                         onClick={() => {
                           setFlightRef(flight?.bookingReference);
-                          handleCancelApproved();
+                          handleCancelApproved(flight);
                         }}
                       >
                         <FaCheck />

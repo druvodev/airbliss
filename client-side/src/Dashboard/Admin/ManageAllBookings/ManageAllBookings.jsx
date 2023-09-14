@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../../assets/icon/airblissBlack.png";
 import { useForm } from "react-hook-form";
 import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
@@ -12,7 +12,11 @@ const ManageAllBooking = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
   const [isActive, setIsActive] = useState("allbookings");
+  const [date, setDate] = useState("");
+  const [airportCode, setAirportCode] = useState("");
   const [details, setDetails] = useState(false);
+
+  const [cancelDetails, setCancelDetails] = useState(false);
   // const [allBookings, setAllBookings] = useState([]);
 
   const handleTabClick = (tab) => {
@@ -47,11 +51,17 @@ const ManageAllBooking = () => {
     formState: { errors },
   } = useForm();
 
-  const selectedFlight = allBookings.find(
+  const selectedFlight = allBookings?.find(
     (flight) => flight?.bookingReference === flightRef
   );
+  useEffect(() => {
+    if (selectedFlight) {
+      setDate(selectedFlight?.flight?.departureDate);
+      setAirportCode(selectedFlight?.flight?.departureAirport);
+    }
+  }, [selectedFlight]);
 
-  console.log("My Flight", allBookings);
+  console.log("My Flight", selectedFlight);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -75,12 +85,13 @@ const ManageAllBooking = () => {
     }
   };
 
-  const handleCancelApproved = () => {
+  const handleCancelApproved = (flight) => {
     const cancelApprovedInfo = {
-      bookingInfo: selectedFlight,
+      bookingInfo: flight,
     };
+
     fetch(
-      `http://localhost:5000/refund/approved/${selectedFlight?.flight?.departureDate}/${selectedFlight?.flight?.departureAirport}/${selectedFlight?.bookingReference}`,
+      `http://localhost:5000/refund/approved/${flight?.flight?.departureDate}/${flight?.flight?.departureAirport}/${flight?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
@@ -110,7 +121,7 @@ const ManageAllBooking = () => {
     };
     // console.log(cancelDenyInfo);
     fetch(
-      `http://localhost:5000/refund/denied/${selectedFlight?.flight?.departureDate}/${selectedFlight?.flight?.departureAirport}/${selectedFlight?.bookingReference}`,
+      `http://localhost:5000/refund/denied/${date}/${airportCode}/${flightRef}`,
       {
         method: "PATCH",
         headers: {

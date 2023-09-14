@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
-import { FaHome, FaHouseUser } from "react-icons/fa";
+import { FaHandHoldingMedical, FaHome, FaHouseUser } from "react-icons/fa";
 import { TiGroup } from "react-icons/ti";
 import { BiSolidAddToQueue } from "react-icons/bi";
 import { MdManageSearch } from "react-icons/md";
 import { BsFillPersonFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setRefetch } from "../../../redux/features/usersSlice";
+
 import { setAllBookings } from "../../../redux/features/bookingInfoSlice";
 
 const AdminNav = () => {
@@ -17,7 +17,7 @@ const AdminNav = () => {
       .then((res) => res.json())
       .then((data) => {
         dispatch(setAllBookings(data));
-        dispatch(setRefetch(true));
+
         // console.log(data);
       });
   }, []);
@@ -89,6 +89,20 @@ const AdminNav = () => {
         <MdManageSearch className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Manage Flight</span>
+      </NavLink>
+      <NavLink
+        to="insurance"
+        className={({ isActive }) =>
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
+          }`
+        }
+      >
+        <FaHandHoldingMedical className="w-5 h-5" />
+
+        <span className="mx-4 font-medium">Insurance</span>
       </NavLink>
       <NavLink
         to="managebookings"
