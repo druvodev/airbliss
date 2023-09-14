@@ -4,6 +4,7 @@ const initialState = {
   flightInfo: {},
   userInfo: {},
   allBookings: [],
+  cancelRequests: [],
 };
 
 export const bookingInfoSlice = createSlice({
@@ -19,9 +20,12 @@ export const bookingInfoSlice = createSlice({
     setAllBookings: (state, action) => {
       state.allBookings = action.payload;
     },
+    setCancelRequests: (state, action) => {
+      state.cancelRequests = action.payload;
+    },
   },
 });
 
-export const { setFlightInfo, setUserInfo, setAllBookings } =
+export const { setFlightInfo, setUserInfo, setAllBookings, setCancelRequests } =
   bookingInfoSlice.actions;
 export default bookingInfoSlice.reducer;
