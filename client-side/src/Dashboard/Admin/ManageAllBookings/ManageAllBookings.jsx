@@ -230,6 +230,7 @@ const ManageAllBooking = () => {
           setFlightRef={setFlightRef}
           status="cancel status"
           action={false}
+          feedbackTitle={"cancel reason"}
           handleCancelApproved={handleCancelApproved}
         />
       )}
@@ -252,6 +253,7 @@ const ManageAllBooking = () => {
           status="cancel status"
           action={true}
           handleCancelApproved={handleCancelApproved}
+          feedbackTitle={"admin feedback"}
           setDetails={setDetails}
         />
       )}
@@ -343,60 +345,33 @@ const ManageAllBooking = () => {
               </div>
               <form onSubmit={handleSubmit(handleCancelDeny)}>
                 <div className="mt-4">
-                  {selectedFlight?.requestStatus === "denied" ? (
-                    <div>
-                      <label
-                        htmlFor="exampleField"
-                        className="block font-bold mb-2"
-                      >
-                        Airbliss Feedback
-                      </label>
-                      <p>{selectedFlight?.deniedFeedback}</p>
-                    </div>
-                  ) : selectedFlight?.requestStatus === "pending" ? (
-                    <div>
-                      <label
-                        htmlFor="exampleField"
-                        className="block font-bold mb-2"
-                      >
-                        Cancel Reason
-                      </label>
-                      <p>I want to cancel this flight for my personal Reason</p>
-                    </div>
-                  ) : (
-                    <div>
-                      <label
-                        htmlFor="exampleField"
-                        className="block font-bold mb-2"
-                      >
-                        Write your feedback here
-                        <span className="text-red-600">*</span>
-                      </label>
-                      <textarea
-                        type="text"
-                        id="exampleField"
-                        {...register("feedback", { required: true })}
-                        className={`block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
-                          errors.feedback &&
-                          "focus:border-red-500 focus:ring-red-500 "
-                        }`}
-                        placeholder="Enter something"
-                      />
-                    </div>
-                  )}
+                  <label
+                    htmlFor="exampleField"
+                    className="block font-bold mb-2"
+                  >
+                    Write your feedback here
+                    <span className="text-red-600">*</span>
+                  </label>
+                  <textarea
+                    type="text"
+                    id="exampleField"
+                    {...register("feedback", { required: true })}
+                    className={`block w-full px-2 py-2 mt-1  bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40 ${
+                      errors.feedback &&
+                      "focus:border-red-500 focus:ring-red-500 "
+                    }`}
+                    placeholder="Enter something"
+                  />
                 </div>
                 {/* End of form fields */}
                 <div className="flex justify-end mt-2">
-                  {details ? (
-                    ""
-                  ) : (
-                    <button
-                      type="submit"
-                      className="bg-cyan-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-150"
-                    >
-                      Submit
-                    </button>
-                  )}
+                  <button
+                    type="submit"
+                    className="bg-cyan-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-150"
+                  >
+                    Submit
+                  </button>
+
                   <div
                     onClick={closeModal}
                     className="btn ml-2 btn-warning border-none bg-red-400 hover:bg-red-500 text-white"
