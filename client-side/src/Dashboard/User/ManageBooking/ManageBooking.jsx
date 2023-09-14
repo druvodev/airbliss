@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import logo from "../../../assets/icon/airblissBlack.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
+import { setRefetch } from "../../../redux/features/usersSlice";
+import { successToast } from "../../../utils/toast";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -11,6 +13,8 @@ const ManageBooking = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
   const [isActive, setIsActive] = useState("allflight");
+
+  const dispatch = useDispatch();
 
   const handleTabClick = (tab) => {
     setIsActive(tab);
@@ -87,7 +91,8 @@ const ManageBooking = () => {
         // return response.json();
       })
       .then((data) => {
-        location.reload();
+        dispatch(setRefetch(new Date().toString()));
+        successToast("Cancel request submit successful");
         console.log("Success:", data?.message);
       })
       .catch((error) => {

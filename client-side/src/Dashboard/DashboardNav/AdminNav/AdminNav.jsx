@@ -11,19 +11,18 @@ import { setAllBookings } from "../../../redux/features/bookingInfoSlice";
 
 const AdminNav = () => {
   const dispatch = useDispatch();
-
+  const allBooking = useSelector((state) => state.userBookingInfo.allBookings);
+  const bookingsRefetch = useSelector(
+    (state) => state.userBookingInfo.bookingsRefetch
+  );
+  const userData = useSelector((state) => state?.userInfo.allUserInfo);
   useEffect(() => {
     fetch(`http://localhost:5000/allBookings`)
       .then((res) => res.json())
       .then((data) => {
         dispatch(setAllBookings(data));
-
-        // console.log(data);
       });
-  }, []);
-
-  const allBooking = useSelector((state) => state.userBookingInfo.allBookings);
-  const userData = useSelector((state) => state?.userInfo.allUserInfo);
+  }, [bookingsRefetch]);
 
   if (allBooking.length > 1) {
     sessionStorage.setItem("userBookings", JSON.stringify(allBooking));

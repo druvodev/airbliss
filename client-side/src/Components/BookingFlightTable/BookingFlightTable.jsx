@@ -82,7 +82,14 @@ const BookingFlightTable = ({
                   <td className="capitalize">
                     {status === "flight status" && (
                       <span>
-                        {flight?.bookingStatus} ({flight?.requestStatus})
+                        {flight?.bookingStatus}{" "}
+                        <span
+                          className={`${
+                            flight?.requestStatus === "denied" && "text-red-500"
+                          }`}
+                        >
+                          ({flight?.requestStatus})
+                        </span>
                       </span>
                     )}
                     {status === "cancel status" && (

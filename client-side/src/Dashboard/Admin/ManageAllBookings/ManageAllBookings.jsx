@@ -3,7 +3,9 @@ import logo from "../../../assets/icon/airblissBlack.png";
 import { useForm } from "react-hook-form";
 import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
 import CancelBookingTable from "../../../Components/CancelBookingTable/CancelBookingTable";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setBookingsRefetch } from "../../../redux/features/bookingInfoSlice";
+import { successToast } from "../../../utils/toast";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -17,6 +19,8 @@ const ManageAllBooking = () => {
   const [details, setDetails] = useState(false);
 
   const [cancelDetails, setCancelDetails] = useState(false);
+
+  const dispatch = useDispatch();
   // const [allBookings, setAllBookings] = useState([]);
 
   const handleTabClick = (tab) => {
@@ -108,7 +112,8 @@ const ManageAllBooking = () => {
       })
       .then((data) => {
         console.log("Success:", data.message);
-        location.reload();
+        dispatch(setBookingsRefetch(new Date().toString()));
+        successToast("Refund request accepted");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -119,7 +124,7 @@ const ManageAllBooking = () => {
     const cancelDenyInfo = {
       feedback: data?.feedback,
     };
-    // console.log(cancelDenyInfo);
+
     fetch(
       `http://localhost:5000/refund/denied/${date}/${airportCode}/${flightRef}`,
       {
@@ -138,7 +143,8 @@ const ManageAllBooking = () => {
       })
       .then((data) => {
         console.log("Success:", data.message);
-        location.reload();
+        dispatch(setBookingsRefetch(new Date().toString()));
+        successToast("Refund request denied");
       })
       .catch((error) => {
         console.error("Error:", error);

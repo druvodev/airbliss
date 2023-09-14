@@ -5,10 +5,7 @@ import { MdDashboardCustomize, MdOutlineDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setRefetch,
-  setUserBookings,
-} from "../../../redux/features/usersSlice";
+import { setUserBookings } from "../../../redux/features/usersSlice";
 import { MdManageSearch } from "react-icons/md";
 
 const UserNav = () => {
@@ -16,14 +13,13 @@ const UserNav = () => {
   const refetch = useSelector((state) => state.userInfo?.refetch);
   const dispatch = useDispatch();
 
-  // console.log(refetch);
+  console.log("refetch from userNav", refetch);
 
   useEffect(() => {
     fetch(`http://localhost:5000/userBooking/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         dispatch(setUserBookings(data));
-        dispatch(setRefetch(true));
       });
   }, [user, refetch]);
 
