@@ -69,7 +69,7 @@ const InforMation = ({ currentUser }) => {
               toast.error("Failed to update user data");
             }
 
-            location.reload();
+            // location.reload();
           })
           .catch((err) => {
             console.log(err);

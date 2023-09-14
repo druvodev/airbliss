@@ -211,7 +211,10 @@ async function run() {
       };
 
       await seatsCollection.updateOne({}, updateQuery, { upsert: true });
-
+      console.log(seatData);
+      console.log(
+        `New seat data generated for flight ${flightId} on ${bookingDate}.`
+      );
       // get available seat from this function
       return await availableSeats(flightId, bookingDate);
     }
@@ -406,6 +409,7 @@ async function run() {
 
           await bookingsCollection.insertOne(newEntry);
         }
+        console.log("Booking info saved to database.");
       } catch (error) {
         console.error("Error saving booking info to database:", error);
       } finally {
@@ -413,10 +417,69 @@ async function run() {
       }
     }
 
+    // Select available seat form seat collection
+    async function selectAvailableSeat(flightId, bookingDate, seatNo) {
+      try {
+        const query = {};
+        query[bookingDate] = { $exists: true };
+        const flightsData = await seatsCollection.findOne(query);
+
+        if (!flightsData) {
+          throw new Error("Flights not found for the specified date.");
+        }
+
+        const flightsOnDate = flightsData[bookingDate];
+        const flightIndex = flightsOnDate.findIndex(
+          (f) => f.flightId === flightId
+        );
+
+        if (flightIndex === -1) {
+          throw new Error("Flight not found for the specified flightId.");
+        }
+
+        const flight = flightsOnDate[flightIndex];
+        const seatIndex = flight.seats.findIndex(
+          (seat) => seat.seatNo === seatNo
+        );
+
+        if (seatIndex === -1 || !flight.seats[seatIndex].available) {
+          throw new Error("Seat not found or already booked.");
+        }
+
+        // Decrease available seat count for the flight
+        flight.available--;
+
+        // Mark the seat as unavailable
+        flight.seats[seatIndex].available = false;
+
+        // Update the seat availability and available seat count in the database
+        await seatsCollection.updateOne(
+          {
+            _id: flightsData._id,
+            [bookingDate]: { $elemMatch: { flightId: flightId } },
+          },
+          {
+            $set: {
+              [`${bookingDate}.$[flight].seats.${seatIndex}.available`]: false,
+              [`${bookingDate}.$[flight].available`]: flight.available,
+            },
+          },
+          {
+            arrayFilters: [{ "flight.flightId": flightId }],
+          }
+        );
+
+        return seatNo;
+      } catch (error) {
+        throw error;
+      }
+    }
+
     // payment processing API
     app.post("/process-payment", async (req, res) => {
       const bookingInfo = req.body;
       const { user, flight, insurance } = bookingInfo;
+
       const transitionId = `tr${new ObjectId()}`;
       // generate insurance information
       function generatePolicyNumber() {
@@ -433,6 +496,7 @@ async function run() {
           policyType: "Travel",
           startDate: flight.departureDate,
           endDate: flight.arrivalDate,
+          claimedStatus: null,
           policyPremium: (
             0.05 * parseFloat(flight.fareSummary.total)
           ).toFixed(),
@@ -501,11 +565,18 @@ async function run() {
           res.send({ paymentUrl: GatewayPageURL });
         })
         .then(async () => {
+          const { totalSeat, flightId, flight } = bookingInfo;
           bookingInfo.transitionId = transitionId;
           bookingInfo.paymentStatus = "paid";
           bookingInfo.bookingStatus = "confirmed";
           bookingInfo.requestStatus = "success";
           bookingInfo.insurancePolicy = insurancePolicy;
+
+          await selectAvailableSeat(
+            flightId,
+            flight?.departureDate,
+            user?.seatNo
+          );
 
           // save booking information bookings database
           await saveBookingInfoToDatabase(bookingInfo);
@@ -516,10 +587,10 @@ async function run() {
             delete bookingInfo?.insurancePolicy; // Delete insurance checking field
             const insuranceInfo = {
               ...insurancePolicy,
-              isClaimed: false,
               bookingInfo,
             };
             await insuranceCollection.insertOne(insuranceInfo);
+            console.log("add insurance");
           }
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
@@ -686,6 +757,150 @@ async function run() {
         }
       }
     );
+
+    //^ ################### Insurance System ####################
+    // request to insurance premium //*(USER)
+    app.patch(
+      "/insuranceClaim/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const date = req.params.date;
+        const airportCode = req.params.airportCode;
+        const bookingReference = req.params.bookingReference;
+        const claimDoc = req.body.insuranceData;
+
+        try {
+          const path = `${date}.${airportCode}`;
+
+          const result = await bookingsCollection.updateOne(
+            {
+              [path]: {
+                $elemMatch: { bookingReference: bookingReference },
+              },
+            },
+            {
+              $set: {
+                [path + ".$.insurancePolicy.claimedStatus"]: "pending",
+                [path + ".$.insurancePolicy.requestedClaimInfo"]: claimDoc,
+              },
+            }
+          );
+
+          // update insurance database
+          if (result.modifiedCount === 1) {
+            await insuranceCollection.updateOne(
+              { "bookingInfo.bookingReference": bookingReference },
+              {
+                $set: {
+                  requestedClaimInfo: claimDoc,
+                  claimedStatus: "pending",
+                },
+              }
+            );
+          } else if (result.matchedCount === 1) {
+            res.status(404).json({ error: "You have already requested" });
+          } else {
+            // If the document with the specified bookingReference was not found
+            res.status(404).json({ message: "Insurance policy not found" });
+          }
+        } catch (err) {
+          console.error("Error updating booking status:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
+
+    // manage insurance claim request //* (ADMIN)
+    app.patch(
+      "/insuranceClaimRequest/:status/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const status = req.params.status;
+        const date = req.params.date;
+        const airportCode = req.params.airportCode;
+        const bookingReference = req.params.bookingReference;
+        const premiumUpdateInfo = req.body.insuranceData;
+        const premiumType = premiumUpdateInfo?.premiumType;
+
+        let newStatus = "denied";
+        let isPremiumStatus = false;
+        let claimedAmount = 0;
+        let feedback = premiumUpdateInfo?.deniedFeedback;
+        if (status === "approved") {
+          newStatus = status;
+          isPremiumStatus = true;
+          claimedAmount = premiumUpdateInfo?.claimedAmount;
+        }
+
+        try {
+          const path = `${date}.${airportCode}`;
+
+          const updateQuery = {
+            [path]: {
+              $elemMatch: { bookingReference: bookingReference },
+            },
+          };
+
+          const updateFields = {
+            $set: {
+              [path + ".$.insurancePolicy.claimedStatus"]: newStatus,
+              [path +
+              `.$.insurancePolicy.claimedInsurance.${premiumType}.claimedPrice`]:
+                claimedAmount,
+              [path +
+              `.$.insurancePolicy.claimedInsurance.${premiumType}.isClaimed`]:
+                isPremiumStatus,
+            },
+          };
+
+          // Check if status is "denied" and add feedback field if needed
+          if (status === "denied") {
+            updateFields.$set[path + `.$.insurancePolicy.deniedFeedback`] =
+              feedback;
+          }
+
+          const result = await bookingsCollection.updateOne(
+            updateQuery,
+            updateFields
+          );
+          // Construct the update object for the insuranceCollection
+          const insuranceUpdate = {
+            claimedStatus: newStatus,
+          };
+
+          if (premiumType) {
+            insuranceUpdate[`claimedInsurance.${premiumType}.claimedPrice`] =
+              claimedAmount;
+            insuranceUpdate[`claimedInsurance.${premiumType}.isClaimed`] =
+              isPremiumStatus;
+          }
+
+          if (feedback !== null) {
+            insuranceUpdate.deniedFeedback = feedback;
+          }
+
+          if (result.modifiedCount === 1) {
+            await insuranceCollection.updateOne(
+              { "bookingInfo.bookingReference": bookingReference },
+              { $set: insuranceUpdate }
+            );
+            res.status(200).json({ message: "Insurance policy updated" });
+          } else if (result.matchedCount === 1) {
+            res.status(404).json({ error: "You have already requested" });
+          } else {
+            // If the document with the specified bookingReference was not found
+            res.status(404).json({ message: "Insurance policy not found" });
+          }
+        } catch (err) {
+          console.error("Error updating booking status:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
+
+    // Get all insurance bookings
+    app.get("/allInsurance", async (req, res) => {
+      const result = await insuranceCollection.find().toArray();
+      res.send(result);
+    });
 
     // ############################## Manage Bookings ##############################
     // Get all request bookings
@@ -888,7 +1103,7 @@ async function run() {
       res.send(result);
     });
 
-    // // Send a ping to confirm a successful connection
+    // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 0 });
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!"

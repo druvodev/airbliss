@@ -95,7 +95,13 @@ const FareSummary = React.memo(() => {
                 {"(for 1 traveler)"}
               </span>
             </p>
-            <p className="font-semibold">BDT {fareSummary?.total}</p>
+            <p className="font-semibold">
+              BDT{" "}
+              {(
+                parseInt(fareSummary?.total) +
+                parseInt(0.05 * fareSummary.total)
+              ).toFixed()}
+            </p>
           </div>
         </div>
       </div>
