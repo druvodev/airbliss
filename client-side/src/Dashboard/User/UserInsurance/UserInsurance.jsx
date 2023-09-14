@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaHandsHolding } from 'react-icons/fa6';
+import { FaHandsHolding, FaHandsHoldingCircle } from 'react-icons/fa6';
 import { useSelector } from 'react-redux';
 import ModalInsurance from './ModalInsurance';
 
@@ -54,12 +54,11 @@ const UserInsurance = () => {
                 })
                     .then((res) => res.json())
                     .then((data) => {
-                        // if (data.mo === true) {
-                        //     toast.success("User Data submitted successfully");
-                        // } else {
-                        //     toast.error("Failed to update user data");
-                        // }
-                        console.log(data);
+                        if (data.modifiedCount === 1) {
+                            toast.success("User Data submitted successfully");
+                        } else {
+                            toast.error("Failed to update user data");
+                        }
                     })
                     .catch((err) => {
                         console.log(err);
@@ -105,7 +104,7 @@ const UserInsurance = () => {
                             <th>Policy Number</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Details</th>
+                            <th>Acton</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -139,12 +138,23 @@ const UserInsurance = () => {
                                     <td>{insurance?.insurancePolicy?.startDate}</td>
                                     <td>{insurance?.insurancePolicy?.endDate}</td>
                                     <th>
-                                        <button
-                                            onClick={() => openModal(insurance)}
-                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400`}
-                                        >
-                                            <FaHandsHolding className='text-xl' />
-                                        </button>
+                                        {
+                                            insurance?.insurancePolicy?.claimedStatus === "pending" ? (
+                                                <button
+                                                    onClick={() => openModal(insurance)}
+                                                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-green-400`}
+                                                >
+                                                    <FaHandsHoldingCircle className='text-xl' />
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={() => openModal(insurance)}
+                                                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400`}
+                                                >
+                                                    <FaHandsHolding className='text-xl' />
+                                                </button>
+                                            )
+                                        }
                                     </th>
                                 </tr>
                             )
