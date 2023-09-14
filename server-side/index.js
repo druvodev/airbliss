@@ -818,7 +818,7 @@ async function run() {
         const date = req.params.date;
         const airportCode = req.params.airportCode;
         const bookingReference = req.params.bookingReference;
-        const premiumUpdateInfo = req.body;
+        const premiumUpdateInfo = req.body.insuranceData;
         const premiumType = premiumUpdateInfo?.premiumType;
 
         let newStatus = "denied";
