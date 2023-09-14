@@ -9,6 +9,10 @@ const UserInsurance = () => {
 
     console.log(insuranceBookings);
 
+    // claimedAmount: 110,
+    // premiumType: "delayedFlight",
+    // deniedFeedback: "Your Times Up",
+
     const [selectedInsurance, setSelectedInsurance] = useState(null);
 
     const handleFormSubmit = (insurance, premiumType, requireAmount, summary, image) => {
