@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
 import { FaHome, FaHouseUser } from "react-icons/fa";
+import { MdDashboardCustomize, MdOutlineDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,7 +39,7 @@ const UserNav = () => {
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <MdDashboardCustomize className="w-5 h-5" />
 
         <span className="mx-4 font-medium">My Dashboard</span>
       </NavLink>
