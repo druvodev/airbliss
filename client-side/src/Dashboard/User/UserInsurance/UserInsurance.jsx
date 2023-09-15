@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FaHandsHolding, FaHandsHoldingCircle } from "react-icons/fa6";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalInsurance from "./ModalInsurance";
 import { toast } from "react-hot-toast";
+import { setRefetch } from "../../../redux/features/usersSlice";
 
 const UserInsurance = () => {
   const bookings = useSelector((state) => state?.userInfo?.userBookings);
@@ -10,8 +11,7 @@ const UserInsurance = () => {
     (booking) => booking.insurancePolicy != "Without Insurance"
   );
 
-  console.log(insuranceBookings);
-
+  const dispatch = useDispatch();
   const [selectedInsurance, setSelectedInsurance] = useState(null);
 
   const handleFormSubmit = (
@@ -21,14 +21,6 @@ const UserInsurance = () => {
     summary,
     image
   ) => {
-    // Handle the form submission here with the provided data
-    // You can access insurance, premiumType, requireAmount, summary, and image here
-    console.log("Insurance:", insurance);
-    console.log("Premium Type:", premiumType);
-    console.log("Require Amount:", requireAmount);
-    console.log("Summary:", summary);
-    console.log("Image:", image);
-
     const formData = new FormData();
     formData.append("image", image);
 
@@ -51,7 +43,6 @@ const UserInsurance = () => {
           requireAmount: requireAmount,
           premiumType: premiumType,
         };
-
         fetch(
           `http://localhost:5000/insuranceClaim/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
           {
@@ -64,11 +55,14 @@ const UserInsurance = () => {
         )
           .then((res) => res.json())
           .then((data) => {
-            if (data?.message == "Insurance policy updated") {
-              toast.success(data.message);
-            } else {
-              toast.error(data.message);
-            }
+            // if (data.error) {
+            //     console.error("Server Error:", data.error);
+            // } else {
+            //     dispatch(setRefetch(new Date().toString()));
+            //     console.log(data);
+            // }
+            dispatch(setRefetch(new Date().toString()));
+            console.log(data);
           })
           .catch((err) => {
             console.log(err);
@@ -78,10 +72,6 @@ const UserInsurance = () => {
         console.log(err.message);
         toast.error(err.message);
       });
-
-    return;
-
-    // Perform any necessary actions, such as making API requests
   };
 
   const openModal = (insurance) => {
@@ -115,6 +105,7 @@ const UserInsurance = () => {
               <th>Policy Number</th>
               <th>Start Date</th>
               <th>End Date</th>
+              <th>Status</th>
               <th>Acton</th>
             </tr>
           </thead>
@@ -148,6 +139,7 @@ const UserInsurance = () => {
                 <td>{insurance?.insurancePolicy?.policyNumber}</td>
                 <td>{insurance?.insurancePolicy?.startDate}</td>
                 <td>{insurance?.insurancePolicy?.endDate}</td>
+                <td>{insurance?.insurancePolicy?.claimedStatus}</td>
                 <th>
                   {insurance?.insurancePolicy?.claimedStatus === "pending" ? (
                     <button

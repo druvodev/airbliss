@@ -130,43 +130,79 @@ const ModalApprove = ({ insurance, onClose, onSubmit }) => {
                         <hr />
                         <form onSubmit={handleSubmit}>
                             <div className="grid grid-cols-2 gap-5">
-                                <div>
-                                    <label
-                                        htmlFor="gender"
-                                        className="block font-bold mb-2 text-md">
-                                        Insurance:
-                                        <span className="text-red-600">*</span>
-                                    </label>
-                                    <select
-                                        name="premiumType"
-                                        id="premiumType"
-                                        className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                        required
-                                        value={insurance?.insurancePolicy?.requestedClaimInfo?.premiumType}
-                                    >
-                                        <option value="">Select a Claim Type</option>
-                                        <option value="tripCancellation">Trip Cancellation</option>
-                                        <option value="medicalCoverage">Medical Coverage</option>
-                                        <option value="lostLuggage">Lost Luggage</option>
-                                        <option value="delayedFlight">Delayed Flight</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label
-                                        htmlFor="DateOfBirth"
-                                        className="block font-bold mb-2 text-md">
-                                        Payable Amount:
-                                        <span className="text-red-600">*</span>
-                                    </label>
-                                    <input
-                                        type="number"
-                                        name="payableAmount"
-                                        id="payableAmount"
-                                        placeholder="Enter Your Payable Amount Here"
-                                        className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
-                                        required
-                                    />
-                                </div>
+                                {
+                                    insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied" ? <>
+                                        {
+                                            insurance?.insurancePolicy?.claimedStatus === "approved" ?
+                                                <div>
+                                                    <div>
+                                                        {/* {
+                                                            insurance?.insurancePolicy?.claimedInsurance 
+                                                        } */}
+                                                    </div>
+                                                    <div></div>
+                                                </div>
+                                                :
+                                                <div className="">
+                                                    <label
+                                                        htmlFor="exampleField"
+                                                        className="block font-bold mb-2 text-md"
+                                                    >
+                                                        Write Denied Feedback
+                                                        <span className="text-red-600">*</span>
+                                                    </label>
+                                                    <textarea
+                                                        name="deniedFeedback"
+                                                        id="deniedFeedback"
+                                                        placeholder="Enter Your reason Here"
+                                                        className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                                        cols="5"
+                                                        rows="1"
+                                                        value={insurance?.insurancePolicy?.deniedFeedback}
+                                                        required
+                                                    ></textarea>
+                                                </div>
+                                        }
+                                    </> : <>
+                                        <div>
+                                            <label
+                                                htmlFor="gender"
+                                                className="block font-bold mb-2 text-md">
+                                                Insurance:
+                                                <span className="text-red-600">*</span>
+                                            </label>
+                                            <select
+                                                name="premiumType"
+                                                id="premiumType"
+                                                className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                                required
+                                                value={insurance?.insurancePolicy?.requestedClaimInfo?.premiumType}
+                                            >
+                                                <option value="">Select a Claim Type</option>
+                                                <option value="tripCancellation">Trip Cancellation</option>
+                                                <option value="medicalCoverage">Medical Coverage</option>
+                                                <option value="lostLuggage">Lost Luggage</option>
+                                                <option value="delayedFlight">Delayed Flight</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label
+                                                htmlFor="DateOfBirth"
+                                                className="block font-bold mb-2 text-md">
+                                                Payable Amount:
+                                                <span className="text-red-600">*</span>
+                                            </label>
+                                            <input
+                                                type="number"
+                                                name="payableAmount"
+                                                id="payableAmount"
+                                                placeholder="Enter Your Payable Amount Here"
+                                                className="w-full px-[24px] py-[5px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                                                required
+                                            />
+                                        </div>
+                                    </>
+                                }
                             </div>
                             <div className="flex modal-action justify-end mt-2 sm:mt-5 tracking-wide">
                                 <button
@@ -176,13 +212,17 @@ const ModalApprove = ({ insurance, onClose, onSubmit }) => {
                                 >
                                     Close
                                 </button>
-                                <button
-                                    type="submit" // Use type="submit" here
-                                    disabled={insurance?.insurancePolicy?.claimedStatus === "approved"}
-                                    className="bg-cyan-500 btn text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                                >
-                                    Approved
-                                </button>
+                                {
+                                    insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied" ? <></> : <>
+                                        <button
+                                            type="submit" // Use type="submit" here
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "approved"}
+                                            className="bg-cyan-500 btn text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        >
+                                            Approved
+                                        </button>
+                                    </>
+                                }
                             </div>
                         </form>
                     </div>

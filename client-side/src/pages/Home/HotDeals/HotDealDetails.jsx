@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
-import DiscountedHotelCard from "../../../Components/Card/DiscountedHotelCard";
+import HotelAdd from "../../../Components/Card/HotelAdd";
 import useScrollTop from "../../../hooks/useScrollTop";
-import detailsBanner from "../../../assets/banner/aiblissdetailsbanner.jpg";
 
 const HotDealDetails = () => {
-  const { path } = useLocation();
-  useScrollTop(path);
   const { id } = useParams();
   const [deal, setDeal] = useState([]);
   const [discountedHotels, setDiscountedHotels] = useState([]);
@@ -15,11 +12,16 @@ const HotDealDetails = () => {
       .then((res) => res.json())
       .then((data) => {
         const hotDeal = data.filter((d) => d.id === parseInt(id));
-
         setDeal(hotDeal);
       });
   }, []);
-
+  useEffect(() => {
+    fetch("/hotels.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setDiscountedHotels(data);
+      });
+  }, []);
   useEffect(() => {
     fetch("/hotels.json")
       .then((res) => res.json())

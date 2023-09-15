@@ -25,7 +25,7 @@ export const fetchFlights = (searchQuery) => async (dispatch) => {
     dispatch(setLoading(true));
     const response = await useAxios.get(`/flights/search?${searchQuery}`);
     const data = response.data;
-    console.log("flightSlice", response);
+
     dispatch(storeFlights(data));
     dispatch(setError(""));
     dispatch(setLoading(false));

@@ -21,21 +21,28 @@ const BookingChart = () => {
     (booking) => booking?.bookingStatus === "confirmed"
   );
 
-  const data = confirmBookings.map((booking) => {
-    const bookingDateTime = booking?.bookingDateTime.split(" at ")[0];
-
+  const data = confirmBookings?.map((booking) => {
+    const bookingDateTime = booking?.bookingDateTime?.split(" at ")[0];
     const total = booking?.flight?.fareSummary?.total;
 
-    return {
-      name: bookingDateTime,
-      amount: total,
-    };
+    if (total && total.length > 0) {
+      return {
+        name: bookingDateTime,
+        amount: total,
+      };
+    } else {
+      return {
+        name: "No Booking Found",
+      };
+    }
   });
 
   return (
     <div className="bg-white shadow-md lg:p-6 p-2 rounded-lg">
       <div className="flex justify-between mb-10">
-        <h1 className="lg:text-2xl font-light text-gray-900">Prise Summery</h1>
+        <h1 className="lg:text-2xl font-light text-gray-900">
+          Today's Ticket Summary
+        </h1>
         <button>
           <SlOptionsVertical className="text-gray-400 text-xl font-bold mt-1" />
         </button>
