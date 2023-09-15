@@ -3,7 +3,7 @@ import { FaEye, FaHandsHolding, FaHandsHoldingCircle } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalInsurance from './ModalInsurance';
 import { toast } from "react-hot-toast";
-import { setRefetch } from '../../../redux/features/usersSlice';
+import { setRefetch } from "../../../redux/features/usersSlice";
 
 const UserInsurance = () => {
     const bookings = useSelector((state) => state?.userInfo?.userBookings);
@@ -12,62 +12,74 @@ const UserInsurance = () => {
     const dispatch = useDispatch()
     const [selectedInsurance, setSelectedInsurance] = useState(null);
 
-    const handleFormSubmit = (insurance, premiumType, requireAmount, summary, image) => {
-        const formData = new FormData();
-        formData.append("image", image);
+  const handleFormSubmit = (
+    insurance,
+    premiumType,
+    requireAmount,
+    summary,
+    image
+  ) => {
+    const formData = new FormData();
+    formData.append("image", image);
 
-        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY}`;
+    const url = `https://api.imgbb.com/1/upload?key=${
+      import.meta.env.VITE_IMGBB_KEY
+    }`;
 
-        fetch(url, {
-            method: "POST",
-            body: formData,
-        })
-            .then((res) => res.json())
-            .then((imageData) => {
-                const imageUrl = imageData.data.display_url;
-                console.log(imageUrl);
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imageData) => {
+        const imageUrl = imageData.data.display_url;
+        console.log(imageUrl);
 
-                const insuranceData = {
-                    media: imageUrl,
-                    summary: summary,
-                    requireAmount: requireAmount,
-                    premiumType: premiumType,
-                }; fetch(`http://localhost:5000/insuranceClaim/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ insuranceData }),
-                })
-                    .then((res) => res.json())
-                    .then((data) => {
-                        // if (data.error) {
-                        //     console.error("Server Error:", data.error);
-                        // } else {
-                        //     dispatch(setRefetch(new Date().toString()));
-                        //     console.log(data);
-                        // }
-                        dispatch(setRefetch(new Date().toString()));
-                        console.log(data);
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
-            })
-            .catch((err) => {
-                console.log(err.message);
-                toast.error(err.message);
-            });
-    };
+        const insuranceData = {
+          media: imageUrl,
+          summary: summary,
+          requireAmount: requireAmount,
+          premiumType: premiumType,
+        };
+        fetch(
+          `http://localhost:5000/insuranceClaim/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ insuranceData }),
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            // if (data.error) {
+            //     console.error("Server Error:", data.error);
+            // } else {
+            //     dispatch(setRefetch(new Date().toString()));
+            //     console.log(data);
+            // }
+            dispatch(setRefetch(new Date().toString()));
+            console.log(data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        toast.error(err.message);
+      });
+  };
 
-    const openModal = (insurance) => {
-        setSelectedInsurance(insurance);
-        document.getElementById('my_modal_1').showModal()
-    };
+  const openModal = (insurance) => {
+    setSelectedInsurance(insurance);
+    document.getElementById("my_modal_1")?.showModal();
+  };
 
-    const closeModal = () => {
-        setSelectedInsurance(null);
-    };
+  const closeModal = () => {
+    setSelectedInsurance(null);
+  };
 
     return (
         <div>

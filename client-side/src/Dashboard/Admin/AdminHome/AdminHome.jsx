@@ -28,32 +28,13 @@ import { format } from "date-fns";
 import { useSelector } from "react-redux";
 
 const AdminHome = () => {
-  // const data = [
-  //   {
-  //     month: "April",
-  //     uv: 100,
-  //     pv: 80,
-  //     amt: 70,
-  //   },
-  //   {
-  //     month: "May",
-  //     uv: 150,
-  //     pv: 90,
-  //     amt: 100,
-  //   },
-  //   {
-  //     month: "Jun",
-  //     uv: 120,
-  //     pv: 110,
-  //     amt: 120,
-  //   },
-  // ];
-
   const newDate = new Date();
   const todayDate = format(newDate, "dd/MM/yyyy");
 
   const allUserData = useSelector((state) => state?.userInfo?.allUserInfo);
-  const allBookingData = useSelector((state) => state?.userBookingInfo?.allBookings);
+  const allBookingData = useSelector(
+    (state) => state?.userBookingInfo?.allBookings
+  );
 
   const todayBookingData = allBookingData?.filter(
     (bookingData) => bookingData?.bookingDateTime.split(" ")[0] == todayDate
@@ -65,9 +46,6 @@ const AdminHome = () => {
   const allRevenue = totalRevenue?.map(
     (revenue) => revenue?.flight?.fareSummary?.total
   );
-
-  console.log(allRevenue);
-
   let totalSum = 0;
 
   for (let i = 0; i < allRevenue?.length; i++) {
@@ -82,6 +60,8 @@ const AdminHome = () => {
   const lifetimeConfirmBooking = allBookingData?.filter(
     (bookingData) => bookingData?.bookingStatus == "confirmed"
   );
+
+  console.log(lifetimeConfirmBooking, allBookingData);
 
   for (const item of lifetimeConfirmBooking) {
     const total = parseInt(item?.flight?.fareSummary?.total);

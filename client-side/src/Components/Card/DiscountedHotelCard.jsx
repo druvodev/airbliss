@@ -63,7 +63,7 @@ const DiscountedHotelCard = ({ hotel }) => {
           <p className="line-through font-semibold text-sm md:text-lg text-cyan-600">
             BDT{cost}
           </p>
-          <Link className="py-3 px-2 md:px-4 text-sm md:text-lg border border-cyan-300 rounded-lg font-medium bg-cyan-600 hover:bg-cyan-700 text-white duration-500">
+          <Link to={`/HotelDetails/${id}`} className="py-3 px-2 md:px-4 text-sm md:text-lg border border-cyan-300 rounded-lg font-medium bg-cyan-600 hover:bg-cyan-700 text-white duration-500">
             {(cost - (cost * discount) / 100).toFixed(0)} BDT Night
           </Link>
         </div>
