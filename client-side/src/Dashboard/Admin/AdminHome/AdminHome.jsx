@@ -58,20 +58,20 @@ const AdminHome = () => {
 
   let thisMonthReveniew = 0;
 
-  const lifetimeConfirmBooking = allBookingData?.filter(
+  const TodayConfirmBooking = allBookingData?.filter(
     (bookingData) => bookingData?.bookingStatus == "confirmed"
   );
 
-  console.log(lifetimeConfirmBooking, allBookingData);
+  console.log(TodayConfirmBooking);
 
-  for (const item of lifetimeConfirmBooking) {
+  for (const item of TodayConfirmBooking) {
     const total = parseInt(item?.flight?.fareSummary?.total);
     if (!isNaN(total)) {
       thisMonthReveniew += total;
     }
   }
 
-  const data = lifetimeConfirmBooking?.map((booking) => {
+  const data = TodayConfirmBooking?.map((booking) => {
     const bookingDateTime = booking?.bookingDateTime?.split(" at ")[0];
     const total = booking?.flight?.fareSummary?.total;
 
@@ -170,7 +170,9 @@ const AdminHome = () => {
         <div className="mt-12 bg-white shadow-lg rounded-xl p-2 md:p-5">
           <div className="flex justify-between items-center my-5">
             <div>
-              <h2 className="text-xl md:text-2xl font-bold">Today Revenue</h2>
+              <h2 className="text-xl md:text-2xl font-bold">
+                Pev vs Today Revenue
+              </h2>
               <p className="font-semibold text-gray-500 tracking-wider">
                 Revenue Without Vat
               </p>
