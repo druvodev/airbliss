@@ -8,14 +8,28 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setAllBookings } from "../../../redux/features/bookingInfoSlice";
+import UseAxiosSecure from "../../../hooks/UseAxiosSecure";
+import { setAllUserInfo } from "../../../redux/features/usersSlice";
 
 const AdminNav = () => {
+  const [axiosSecure] = UseAxiosSecure();
   const dispatch = useDispatch();
   const allBooking = useSelector((state) => state.userBookingInfo.allBookings);
   const bookingsRefetch = useSelector(
     (state) => state.userBookingInfo.bookingsRefetch
   );
-  const userData = useSelector((state) => state?.userInfo.allUserInfo);
+  useEffect(() => {
+    axiosSecure
+      .get("/users")
+      .then((response) => {
+        dispatch(setAllUserInfo(response?.data))
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [axiosSecure]);
+
+
   useEffect(() => {
     fetch(`http://localhost:5000/allBookings`)
       .then((res) => res.json())

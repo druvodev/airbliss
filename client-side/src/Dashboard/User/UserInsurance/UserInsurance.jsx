@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaHandsHolding, FaHandsHoldingCircle } from 'react-icons/fa6';
+import { FaEye, FaHandsHolding, FaHandsHoldingCircle } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalInsurance from './ModalInsurance';
 import { toast } from "react-hot-toast";
@@ -8,7 +8,7 @@ import { setRefetch } from '../../../redux/features/usersSlice';
 const UserInsurance = () => {
     const bookings = useSelector((state) => state?.userInfo?.userBookings);
     const insuranceBookings = bookings.filter(booking => booking.insurancePolicy != "Without Insurance")
-
+    console.log(insuranceBookings);
     const dispatch = useDispatch()
     const [selectedInsurance, setSelectedInsurance] = useState(null);
 
@@ -92,6 +92,7 @@ const UserInsurance = () => {
                             <th>End Date</th>
                             <th>Status</th>
                             <th>Acton</th>
+                            <th>Details</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -126,23 +127,22 @@ const UserInsurance = () => {
                                     <td>{insurance?.insurancePolicy?.endDate}</td>
                                     <td>{insurance?.insurancePolicy?.claimedStatus}</td>
                                     <th>
-                                        {
-                                            insurance?.insurancePolicy?.claimedStatus === "pending" ? (
-                                                <button
-                                                    onClick={() => openModal(insurance)}
-                                                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-green-400`}
-                                                >
-                                                    <FaHandsHoldingCircle className='text-xl' />
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    onClick={() => openModal(insurance)}
-                                                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400`}
-                                                >
-                                                    <FaHandsHolding className='text-xl' />
-                                                </button>
-                                            )
-                                        }
+                                        <button
+                                            onClick={() => openModal(insurance)}
+                                            className='btn btn-xs bg-green-400 text-white hover:btn-outline'
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "pending" || insurance?.insurancePolicy?.claimedStatus === "denied" || insurance?.insurancePolicy?.claimedStatus === "approved"}
+                                        >
+                                            Claim
+                                        </button>
+                                    </th>
+                                    <th>
+                                        <button
+                                            onClick={() => openModal(insurance)}
+                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === null ? "bg-gray-400" : "bg-cyan-400"}`}
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === null}
+                                        >
+                                            <FaEye className='text-xl' />
+                                        </button>
                                     </th>
                                 </tr>
                             )
