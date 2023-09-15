@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaHandsHolding } from 'react-icons/fa6';
+import { FaEye, FaHandsHolding } from 'react-icons/fa6';
 import ModalApprove from './ModalApprove';
 import { RxCross2 } from 'react-icons/rx';
 import { toast } from "react-hot-toast";
@@ -111,6 +111,7 @@ const AdminInsurance = () => {
                             <th>End Date</th>
                             <th>Status</th>
                             <th>Acton</th>
+                            <th>Details</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -147,8 +148,8 @@ const AdminInsurance = () => {
                                     <th className='flex gap-3 mt-2'>
                                         <button
                                             onClick={() => openModal(insurance)}
-                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "denied" ? "bg-gray-400" : "bg-cyan-400"}`}
-                                            disabled={insurance?.insurancePolicy?.claimedStatus === "denied"}
+                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied" ? "bg-gray-400" : "bg-green-400"}`}
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied"}
                                         >
                                             <MdDone className='text-xl' />
                                         </button>
@@ -157,10 +158,19 @@ const AdminInsurance = () => {
                                                 setSelectedInsurance(insurance);
                                                 setIsModalDeniedOpen(true);
                                             }}
-                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "approved" ? "bg-gray-400" : "bg-red-400"}`}
-                                            disabled={insurance?.insurancePolicy?.claimedStatus === "approved"}
+                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied" ? "bg-gray-400" : "bg-red-400"}`}
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied"}
                                         >
                                             <RxCross2 className="text-xl" />
+                                        </button>
+                                    </th>
+                                    <th className='mt-2'>
+                                        <button
+                                            onClick={() => openModal(insurance)}
+                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "pending" ? "bg-gray-400" : "bg-cyan-400"}`}
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "pending"}
+                                        >
+                                            <FaEye className='text-xl' />
                                         </button>
                                     </th>
                                 </tr>
