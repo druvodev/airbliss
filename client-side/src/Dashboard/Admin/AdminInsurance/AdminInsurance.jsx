@@ -1,30 +1,28 @@
 import React, { useState } from 'react';
-import { FaHandsHolding } from 'react-icons/fa6';
+import { FaEye, FaHandsHolding } from 'react-icons/fa6';
 import ModalApprove from './ModalApprove';
 import { RxCross2 } from 'react-icons/rx';
 import { toast } from "react-hot-toast";
 import { MdDone } from 'react-icons/md';
 import ModalDenied from './ModalDenied';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBookingsRefetch } from '../../../redux/features/bookingInfoSlice';
 
 const AdminInsurance = () => {
     const [selectedInsurance, setSelectedInsurance] = useState(null);
     const [isModalApprovedOpen, setIsModalApprovedOpen] = useState(false); // New state variable
-    const allBookingData = JSON.parse(sessionStorage.getItem("userBookings"));
+    const allBookingData = useSelector((state) => state.userBookingInfo.allBookings);
     const insuranceBookings = allBookingData.filter(booking => booking?.insurancePolicy?.claimedStatus != null)
+    const dispatch = useDispatch()
     const [isModalDeniedOpen, setIsModalDeniedOpen] = useState(false);
 
     console.log(insuranceBookings);
 
     const handleDenialSubmit = (insurance, premiumType, deniedFeedback) => {
-        console.log('Insurance:', insurance);
-        console.log('Premium Type:', premiumType);
-        console.log('Require Amount:', deniedFeedback);
-
         const insuranceData = {
             premiumType: premiumType,
             deniedFeedback: deniedFeedback,
         };
-
         fetch(`http://localhost:5000/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
             method: "PATCH",
             headers: {
@@ -36,6 +34,7 @@ const AdminInsurance = () => {
             .then((data) => {
                 if (data?.message == "Insurance policy updated") {
                     toast.success(data.message);
+                    dispatch(setBookingsRefetch(new Date().toString()))
                 } else {
                     toast.error(data.message);
                 }
@@ -67,6 +66,7 @@ const AdminInsurance = () => {
             .then((data) => {
                 if (data?.message == "Insurance policy updated") {
                     toast.success(data.message);
+                    dispatch(setBookingsRefetch(new Date().toString()))
                 } else {
                     toast.error(data.message);
                 }
@@ -111,6 +111,7 @@ const AdminInsurance = () => {
                             <th>End Date</th>
                             <th>Status</th>
                             <th>Acton</th>
+                            <th>Details</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -147,8 +148,8 @@ const AdminInsurance = () => {
                                     <th className='flex gap-3 mt-2'>
                                         <button
                                             onClick={() => openModal(insurance)}
-                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "denied" ? "bg-gray-400" : "bg-cyan-400"}`}
-                                            disabled={insurance?.insurancePolicy?.claimedStatus === "denied"}
+                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied" ? "bg-gray-400" : "bg-green-400"}`}
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied"}
                                         >
                                             <MdDone className='text-xl' />
                                         </button>
@@ -157,10 +158,19 @@ const AdminInsurance = () => {
                                                 setSelectedInsurance(insurance);
                                                 setIsModalDeniedOpen(true);
                                             }}
-                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "approved" ? "bg-gray-400" : "bg-red-400"}`}
-                                            disabled={insurance?.insurancePolicy?.claimedStatus === "approved"}
+                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied" ? "bg-gray-400" : "bg-red-400"}`}
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied"}
                                         >
                                             <RxCross2 className="text-xl" />
+                                        </button>
+                                    </th>
+                                    <th className='mt-2'>
+                                        <button
+                                            onClick={() => openModal(insurance)}
+                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "pending" ? "bg-gray-400" : "bg-cyan-400"}`}
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "pending"}
+                                        >
+                                            <FaEye className='text-xl' />
                                         </button>
                                     </th>
                                 </tr>
