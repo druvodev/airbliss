@@ -16,6 +16,8 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .login_form {
