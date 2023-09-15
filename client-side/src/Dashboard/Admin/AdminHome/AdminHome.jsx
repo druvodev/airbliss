@@ -25,6 +25,7 @@ import {
 import CircularProgressBar from "../../../Components/CircularProgressBar/CircularProgressBar";
 import FlightProgressBar from "../../../Components/CircularProgressBar/FlightProgressBar";
 import { format } from "date-fns";
+import { useSelector } from "react-redux";
 
 const AdminHome = () => {
   // const data = [
@@ -51,8 +52,8 @@ const AdminHome = () => {
   const newDate = new Date();
   const todayDate = format(newDate, "dd/MM/yyyy");
 
-  const allUserData = JSON.parse(sessionStorage.getItem("userData"));
-  const allBookingData = JSON.parse(sessionStorage.getItem("userBookings"));
+  const allUserData = useSelector((state) => state?.userInfo?.allUserInfo);
+  const allBookingData = useSelector((state) => state?.userBookingInfo?.allBookings);
 
   const todayBookingData = allBookingData?.filter(
     (bookingData) => bookingData?.bookingDateTime.split(" ")[0] == todayDate

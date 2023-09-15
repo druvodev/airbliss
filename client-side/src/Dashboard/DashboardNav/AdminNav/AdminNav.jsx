@@ -24,14 +24,6 @@ const AdminNav = () => {
       });
   }, [bookingsRefetch]);
 
-  if (allBooking.length > 1) {
-    sessionStorage.setItem("userBookings", JSON.stringify(allBooking));
-  }
-
-  if (userData.length > 1) {
-    sessionStorage.setItem("userData", JSON.stringify(userData));
-  }
-
   return (
     <>
       <NavLink
