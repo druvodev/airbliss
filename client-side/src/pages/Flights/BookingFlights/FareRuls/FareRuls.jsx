@@ -7,7 +7,11 @@ const FareRuls = ({ flightFullDetails }) => {
   return (
     <section className="mt-3 border-[1px] rounded-sm">
       <div className=" p-2 border-b-[1px] bg-gray-100 flex gap-3 items-center">
-        <img className="h-6 w-6" src={flightFullDetails?.airlineLogo} alt="" />
+        <img
+          className="h-6 w-6 rounded-full"
+          src={flightFullDetails?.airlineLogo}
+          alt=""
+        />
         <h1 className="font-semibold">
           {city} to {arrive?.city}
         </h1>

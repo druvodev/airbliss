@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import FlightDetails from "../FlightDetails/FlightDetails";
 import FlightSummery from "../FlightSummery/FlightSummery";
 import FareRuls from "../FareRuls/FareRuls";
@@ -7,23 +7,47 @@ import { GrPrevious, GrNext } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFlightInfo } from "../../../../redux/features/bookingInfoSlice";
+import { calculateArrivalDate } from "../../../../utils/calculateArrivalDate";
+import { formatDate } from "../../../../utils/formatDate";
 
-const ITEMS_PER_PAGE = 4;
+import {
+  setIsLoading,
+  setVisibleDetails,
+  setShowFlightDetails,
+  setShowFlightSummary,
+  setShowFareRules,
+  setSelectedButton,
+  setFlightData,
+  setsingleFlightDetails,
+  setCurrentPage,
+  setFlightDetailsVisibility,
+} from "../../../../redux/features/bookTicketSlice.js";
+
+const ITEMS_PER_PAGE = 3;
 
 const BookFlight = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [activeCard, setActiveCard] = useState(true);
-  const [visibleDetails, setVisibleDetails] = useState(false);
-  const [showFlightDetails, setShowFlightDetails] = useState(false);
-  const [showFlightSummary, setShowFlightSummary] = useState(false);
-  const [showFareRules, setShowFareRules] = useState(false);
-  const [selectedButton, setSelectedButton] = useState("cheapest");
-  const [flightData, setFlightData] = useState([]);
-
-  const [singleFlightDetails, setsingleFlightDetails] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
-  const [flightDetailsVisibility, setFlightDetailsVisibility] = useState({});
+  const isLoading = useSelector((state) => state.bookTicket.isLoading);
+  const visibleDetails = useSelector(
+    (state) => state.bookTicket.visibleDetails
+  );
+  const showFlightDetails = useSelector(
+    (state) => state.bookTicket.showFlightDetails
+  );
+  const showFlightSummary = useSelector(
+    (state) => state.bookTicket.showFlightSummary
+  );
+  const showFareRules = useSelector((state) => state.bookTicket.showFareRules);
+  const selectedButton = useSelector(
+    (state) => state.bookTicket.selectedButton
+  );
+  const flightData = useSelector((state) => state.bookTicket.flightData);
+  const singleFlightDetails = useSelector(
+    (state) => state.bookTicket.singleFlightDetails
+  );
+  const currentPage = useSelector((state) => state.bookTicket.currentPage);
+  const flightDetailsVisibility = useSelector(
+    (state) => state.bookTicket.flightDetailsVisibility
+  );
 
   const dispatch = useDispatch();
   const flight = useSelector(
@@ -35,10 +59,10 @@ const BookFlight = () => {
     if (flight) {
       const sortedData = flight?.slice();
       sortedData.sort((a, b) => b.fareSummary.total - a.fareSummary.total);
-      setFlightData(sortedData);
-      setIsLoading(false);
+      dispatch(setFlightData(sortedData));
+      dispatch(setIsLoading(false));
     }
-  }, [flight]);
+  }, [flight, dispatch]);
 
   const sortByTicketPrice = (sortOrder) => {
     const sortedData = [...flightData];
@@ -49,11 +73,12 @@ const BookFlight = () => {
         return b.fareSummary.total - a.fareSummary.total;
       }
     });
-    setFlightData(sortedData);
+
+    dispatch(setFlightData(sortedData));
   };
 
   const handleButtonClick = (buttonType) => {
-    setSelectedButton(buttonType);
+    dispatch(setSelectedButton(buttonType));
 
     if (buttonType === "cheapest") {
       sortByTicketPrice("desc");
@@ -63,44 +88,46 @@ const BookFlight = () => {
   };
 
   const handelVisible = (singleDataFlight) => {
-    setVisibleDetails(!visibleDetails);
     const flightId = singleDataFlight._id;
-    setFlightDetailsVisibility((prevVisibility) => ({
-      ...prevVisibility,
-      [flightId]: !prevVisibility[flightId],
-    }));
-    setsingleFlightDetails(singleDataFlight);
+    const newVisibility = !flightDetailsVisibility[flightId];
+    dispatch(
+      setFlightDetailsVisibility({
+        ...flightDetailsVisibility,
+        [flightId]: newVisibility,
+      })
+    );
+    dispatch(setsingleFlightDetails(singleDataFlight));
     handleFlightDetailsClick();
   };
 
   const handleFlightDetailsClick = () => {
-    setShowFlightDetails(true);
-    setShowFlightSummary(false);
-    setShowFareRules(false);
+    dispatch(setShowFlightDetails(true));
+    dispatch(setShowFlightSummary(false));
+    dispatch(setShowFareRules(false));
   };
 
   const handleFlightSummaryClick = () => {
-    setShowFlightDetails(false);
-    setShowFlightSummary(true);
-    setShowFareRules(false);
+    dispatch(setShowFlightDetails(false));
+    dispatch(setShowFlightSummary(true));
+    dispatch(setShowFareRules(false));
   };
 
   const handleFareRulesClick = () => {
-    setShowFlightDetails(false);
-    setShowFlightSummary(false);
-    setShowFareRules(true);
+    dispatch(setShowFlightDetails(false));
+    dispatch(setShowFlightSummary(false));
+    dispatch(setShowFareRules(true));
   };
 
   const handlePaginationPrev = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      dispatch(setCurrentPage(currentPage - 1));
     }
   };
 
   const handlePaginationNext = () => {
     const totalPages = Math.ceil(flightData.length / ITEMS_PER_PAGE);
     if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
+      dispatch(setCurrentPage(currentPage + 1));
     }
   };
 
@@ -108,51 +135,9 @@ const BookFlight = () => {
     const filteredData = flight.filter(
       (item) => item.airlineName === airlineName
     );
-    setFlightData(filteredData);
+
+    dispatch(setFlightData(filteredData));
   };
-
-  function formatDate(dateString) {
-    const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const monthsOfYear = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-
-    const date = new Date(dateString);
-    const dayOfWeek = daysOfWeek[date.getDay()];
-    const dayOfMonth = date.getDate();
-    const month = monthsOfYear[date.getMonth()];
-    const year = date.getFullYear();
-
-    return `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
-  }
-
-  function calculateArrivalDate(departureDate, departureTime, arrivalTime) {
-    const [depHour, depMinute] = departureTime.split(":").map(Number);
-    const [arrHour, arrMinute] = arrivalTime.split(":").map(Number);
-
-    const departureDateTime = new Date(departureDate);
-    departureDateTime.setHours(depHour, depMinute, 0, 0);
-
-    if (arrHour < depHour || (arrHour === depHour && arrMinute < depMinute)) {
-      departureDateTime.setDate(departureDateTime.getDate() + 1);
-    }
-
-    const arrivalDate = departureDateTime.toISOString().slice(0, 10);
-    const formattedArrivalDate = formatDate(arrivalDate);
-
-    return formattedArrivalDate;
-  }
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -174,7 +159,7 @@ const BookFlight = () => {
               <button
                 className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
                   selectedButton === "cheapest"
-                    ? "bg-gray-100 text-white"
+                    ? "bg-cyan-50 text-white"
                     : "text-white"
                 }`}
                 onClick={() => handleButtonClick("cheapest")}
@@ -182,7 +167,7 @@ const BookFlight = () => {
                 <h1 className="text-[18px] font-semibold mb-2 text-gray-900">
                   Cheapest
                 </h1>
-                <p className="text-[14px] text-[#7c8db0]">
+                <p className="text-xs md:text-sm text-[#7c8db0]">
                   To get the cheapest available flights
                 </p>
               </button>
@@ -190,7 +175,7 @@ const BookFlight = () => {
               <button
                 className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
                   selectedButton === "shortest"
-                    ? "bg-gray-100 text-white"
+                    ? "bg-cyan-50 text-white"
                     : "text-white"
                 }`}
                 onClick={() => handleButtonClick("shortest")}
@@ -198,7 +183,7 @@ const BookFlight = () => {
                 <h1 className="text-[18px] font-semibold mb-2 text-gray-900">
                   Shortest
                 </h1>
-                <p className="text-[14px] text-[#7c8db0]">
+                <p className="text-xs md:text-sm text-[#7c8db0]">
                   To get the shortest available flights
                 </p>
               </button>
@@ -221,27 +206,27 @@ const BookFlight = () => {
                       alt=""
                     />
                     <div>
-                      <p className="text-gray-400">
-                        <small>{singleFlight?.airlineName}</small>
+                      <p className="text-gray-400 text-xs md:text-sm mt-2 md:mt-1">
+                        {singleFlight?.airlineName}
                       </p>
                     </div>
                   </div>
 
                   <div>
-                    <h4 className="text-gray-400 text-[13px]">Depart</h4>
-                    <h2 className="mt-2 text-[15px] font-semibold">
+                    <h4 className="text-gray-400 text-[12px]">Depart</h4>
+                    <h2 className=" text-xs md:text-sm mt-2 font-semibold">
                       {singleFlight?.departure?.time}
                     </h2>
-                    <p className="-mt-1 pr-2">
-                      <small>{formatDate(singleFlight?.departure?.date)}</small>
+                    <p className=" pr-2 text-xs mt-2 md:mt-1">
+                      {formatDate(singleFlight?.departure?.date)}
                     </p>
-                    <h3 className="mt-2 text-[13px]">
+                    <h3 className="text-xs mt-1">
                       {singleFlight?.departure?.city}
                     </h3>
                   </div>
 
                   <div align="center" className="space-y-1  pr-2">
-                    <p className="text-gray-400 text-[14px]">
+                    <p className="text-gray-400 text-xs">
                       {singleFlight?.duration < 60
                         ? `${singleFlight?.duration} min`
                         : `${Math.floor(singleFlight?.duration / 60)} hr ${
@@ -256,33 +241,29 @@ const BookFlight = () => {
                       src="https://flightexpert.com/assets/img/non-stop-shape.png"
                       alt=""
                     />
-                    <p>
-                      <small>{singleFlight?.stopType}</small>
-                    </p>
+                    <p className="text-xs pt-1">{singleFlight?.stopType}</p>
                   </div>
 
                   <div>
                     <h4 className="text-gray-400 text-[13px]">Arrive</h4>
-                    <h2 className="mt-2 text-[15px] font-semibold">
+                    <h2 className="mt-1 text-sm font-semibold">
                       {singleFlight?.arrival?.time}
                     </h2>
-                    <p className="-mt-1 pr-2">
-                      <small>
-                        {calculateArrivalDate(
-                          singleFlight?.departure?.date,
-                          singleFlight?.departure?.time,
-                          singleFlight?.arrival?.time
-                        )}
-                      </small>
+                    <p className=" pr-2 text-xs mt-2 md:mt-1">
+                      {calculateArrivalDate(
+                        singleFlight?.departure?.date,
+                        singleFlight?.departure?.time,
+                        singleFlight?.arrival?.time
+                      )}
                     </p>
-                    <h3 className="mt-2 text-[13px]">
+                    <h3 className="text-xs mt-2 md:mt-1">
                       {singleFlight?.arrival?.city}
                     </h3>
                   </div>
 
                   <div>
                     <h4 className="text-gray-400 text-[13px]">Prise</h4>
-                    <h2 className="mt-2 text-[15px] font-semibold">
+                    <h2 className="mt-1 text-xs md:text-sm font-semibold">
                       BDT {singleFlight?.fareSummary?.total}
                     </h2>
                   </div>
@@ -293,7 +274,7 @@ const BookFlight = () => {
                         onClick={() => {
                           dispatch(setFlightInfo(singleFlight));
                         }}
-                        className="p-3 bg-cyan-600 hover:bg-white hover:border-2 hover:text-cyan-600 hover:border-cyan-600 text-white rounded-md"
+                        className="btn p-2 bg-cyan-600 hover:bg-white hover:border-2 hover:text-cyan-600 hover:border-cyan-600 text-white rounded-md"
                       >
                         Book Now
                       </button>
@@ -303,12 +284,12 @@ const BookFlight = () => {
 
                 {/* View Details Section */}
                 <div className="flex justify-between items-center mt-8 lg:mt-1">
-                  <p>
+                  <p className="text-cyan-500">
                     <small>{singleFlight?.refundableStatus}</small>
                   </p>
                   <p
                     onClick={() => handelVisible(singleFlight)}
-                    className="hover:cursor-pointer link-hover"
+                    className="hover:cursor-pointer link-hover text-cyan-500"
                   >
                     <small>
                       {visibleDetails
@@ -381,7 +362,7 @@ const BookFlight = () => {
                     className={`pl-3 pr-3 pt-[6px] pb-[6px] border-[1px] ${
                       index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
                     }`}
-                    onClick={() => setCurrentPage(index + 1)}
+                    onClick={() => dispatch(setCurrentPage(index + 1))}
                   >
                     {index + 1}
                   </h3>

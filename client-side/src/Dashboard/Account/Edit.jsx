@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Edit = ({handleSubmit}) => {
+const Edit = ({ handleSubmit, currentUser }) => {
+    const { name, photo, role, email, about, dateOfBirth, gender, occupation, phone, bio, nickname, live, from, relationship, nation } = currentUser || {};
+
     return (
         <>
             <form onSubmit={handleSubmit}>
@@ -15,6 +17,7 @@ const Edit = ({handleSubmit}) => {
                             id="name"
                             placeholder="Enter Your Name Here"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={name}
                         />
                     </div>
                     <div>
@@ -27,6 +30,7 @@ const Edit = ({handleSubmit}) => {
                             id="occupation"
                             placeholder="Enter Your Occupation Here"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={occupation}
                         />
                     </div>
                 </div>
@@ -41,6 +45,7 @@ const Edit = ({handleSubmit}) => {
                             id="dateOfBirth"
                             placeholder="Enter Your Name Here"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={dateOfBirth}
                         />
                     </div>
                     <div>
@@ -51,12 +56,100 @@ const Edit = ({handleSubmit}) => {
                             name="gender"
                             id="gender"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={gender}
                         >
                             <option value="">Select Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                             <option value="other">Other</option>
                         </select>
+                    </div>
+                </div>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8'>
+                    <div>
+                        <label htmlFor="DateOfBirth" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                            Nationality:
+                        </label>
+                        <input
+                            type="text"
+                            name="nation"
+                            id="nation"
+                            placeholder="Enter Your Nationality Here"
+                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={nation}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="gender" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                        Relationship:
+                        </label>
+                        <select
+                            name="relationship"
+                            id="relationship"
+                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={relationship}
+                        >
+                            <option value="">Select Relationship</option>
+                            <option value="single">Single</option>
+                            <option value="marry">Marry</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8'>
+                    <div>
+                        <label htmlFor="DateOfBirth" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                            From:
+                        </label>
+                        <input
+                            type="text"
+                            name="from"
+                            id="from"
+                            placeholder="Enter Your From address Here"
+                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={from}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="DateOfBirth" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                            Lives in:
+                        </label>
+                        <input
+                            type="text"
+                            name="live"
+                            id="live"
+                            placeholder="Enter Your live address Here"
+                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={live}
+                        />
+                    </div>
+                </div>
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8'>
+                    <div>
+                        <label htmlFor="DateOfBirth" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                            Nickname:
+                        </label>
+                        <input
+                            type="text"
+                            name="nickname"
+                            id="nickname"
+                            placeholder="Enter Your From Nickname Here"
+                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={nickname}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="DateOfBirth" className="block mb-2 font-semibold text-[#222] text-[18px]">
+                            Bio:
+                        </label>
+                        <input
+                            type="text"
+                            name="bio"
+                            id="bio"
+                            placeholder="Enter Your live Bio Here"
+                            className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={bio}
+                        />
                     </div>
                 </div>
                 <div className='mt-8'>
@@ -71,6 +164,7 @@ const Edit = ({handleSubmit}) => {
                             placeholder="Enter Your Email Here"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
                             data-temp-mail-org="0"
+                            defaultValue={email}
                         />
                     </div>
                     <div className='mt-8'>
@@ -83,6 +177,7 @@ const Edit = ({handleSubmit}) => {
                             id="phone"
                             placeholder="Enter Your Phone Here"
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
+                            defaultValue={phone}
                         />
                     </div>
                     <div className='mt-8'>
@@ -96,6 +191,7 @@ const Edit = ({handleSubmit}) => {
                             className="w-full px-[24px] py-[16px] border rounded-md border-gray-300 focus:outline-cyan-500 bg-white text-gray-900"
                             cols="30"
                             rows="5"
+                            defaultValue={about}
                         ></textarea>
                     </div>
                 </div>

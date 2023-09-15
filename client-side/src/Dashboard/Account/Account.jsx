@@ -25,7 +25,7 @@ const Account = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [axiosSecure]);
+  }, [axiosSecure, users]);
 
   const currentUser = users.find((userData) => userData?.email === user?.email);
 
@@ -39,9 +39,13 @@ const Account = () => {
       email: event.target.email.value,
       phone: event.target.phone.value,
       about: event.target.about.value,
+      nation: event.target.nation.value,
+      relationship: event.target.relationship.value,
+      from: event.target.from.value,
+      live: event.target.live.value,
+      nickname: event.target.nickname.value,
+      bio: event.target.bio.value,
     };
-
-    console.log(usersData);
 
     fetch(`http://localhost:5000/users/${currentUser._id}`, {
       method: "PATCH",
@@ -72,11 +76,13 @@ const Account = () => {
           AirBliss Account
         </h1>
       </div>
-      <div className="grid lg:grid-cols-3 grid-cols-1 gap-8 mt-8">
-        <div className="bg-white shadow lg:col-span-1 py-[50px] px-[30px] h-fit rounded-xl">
+      <div className="grid lg:grid-row-3 grid-row-1 gap-8 mt-8">
+        <div className=" lg:row-span-1 h-fit rounded-xl">
           <InforMation currentUser={currentUser} />
         </div>
-        <div className="bg-white shadow lg:col-span-2 py-[30px] px-[50px] rounded-xl">
+
+        {/* User Personal info card */}
+        <div className="bg-white shadow-md  lg:row-span-2  py-[30px] px-6 md:px-8 rounded-xl">
           <div className="flex justify-between ">
             <h1 className="lg:text-[36px] text-xl mb-7 font-semibold text-gray-900 capitalize">
               Personal Information
@@ -87,7 +93,7 @@ const Account = () => {
           </div>
           <>
             {isEdit ? (
-              <Edit handleSubmit={handleSubmit} />
+              <Edit handleSubmit={handleSubmit} currentUser={currentUser} />
             ) : (
               <View currentUser={currentUser} />
             )}

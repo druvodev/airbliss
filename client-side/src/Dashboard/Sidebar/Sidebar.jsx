@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
-import logo from "../../assets/icon/airblissBlack.png";
+import logo from "../../assets/icon/airblissWhite.png";
 import useAuth from "../../hooks/useAuth";
 import DashboardNav from "../DashboardNav/DashboardNav";
 import { FaHome } from "react-icons/fa";
@@ -17,7 +17,7 @@ const Sidebar = ({ isActive }) => {
   return (
     <>
       {/* Small Screen Navbar */}
-      <div className="bg-gray-100 text-gray-800 flex justify-between md:hidden">
+      <div className="bg-gray-100 text-gray-800 justify-between hidden">
         <div>
           <div className="block cursor-pointer p-4 font-bold">
             <img
@@ -42,10 +42,10 @@ const Sidebar = ({ isActive }) => {
         <div>
           {/* Branding & Profile Info */}
           <div>
-            <div className="w-full  hidden md:flex py-2 justify-center items-center rounded-lg  mx-auto">
+            <div className="w-full md:flex py-2 justify-center items-center rounded-lg  mx-auto">
               <Link to="/">
                 <img
-                  className="hidden md:block w-[150px] h-[85px]"
+                  className=" mx-auto md:block w-[150px] h-[60px]"
                   src={logo}
                   alt=""
                 />

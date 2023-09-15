@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import { BsFillPersonFill } from "react-icons/bs";
-import { FaHome, FaHouseUser } from "react-icons/fa";
+import { FaHandHoldingMedical, FaHouseUser } from "react-icons/fa";
+import { MdDashboardCustomize, MdOutlineDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserBookings } from "../../../redux/features/usersSlice";
+import { MdManageSearch } from "react-icons/md";
 
 const UserNav = () => {
   const { user } = useAuth();
-  const refetch = useSelector((state) => state.userInfo.refetch);
+  const refetch = useSelector((state) => state.userInfo?.refetch);
   const dispatch = useDispatch();
+
+  console.log("refetch from userNav", refetch);
 
   useEffect(() => {
     fetch(`http://localhost:5000/userBooking/${user?.email}`)
@@ -31,9 +35,9 @@ const UserNav = () => {
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <MdDashboardCustomize className="w-5 h-5" />
 
-        <span className="mx-4 font-medium">User Home</span>
+        <span className="mx-4 font-medium">My Dashboard</span>
       </NavLink>
       <NavLink
         to="booking"
@@ -45,9 +49,23 @@ const UserNav = () => {
           }`
         }
       >
-        <FaHouseUser className="w-5 h-5" />
+        <MdManageSearch className="w-5 h-5" />
 
-        <span className="mx-4 font-medium">Manage Book</span>
+        <span className="mx-4 font-medium">My Bookings</span>
+      </NavLink>
+      <NavLink
+        to="userInsurance"
+        className={({ isActive }) =>
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
+          }`
+        }
+      >
+        <FaHandHoldingMedical className="w-5 h-5" />
+
+        <span className="mx-4 font-medium">Insurance</span>
       </NavLink>
       <NavLink
         to="account"

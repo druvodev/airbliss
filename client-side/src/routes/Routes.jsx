@@ -20,6 +20,11 @@ import TicketHistory from "../Dashboard/User/TicketHistory/TicketHistory";
 import ManageBooking from "../Dashboard/User/ManageBooking/ManageBooking";
 import HotDealDetails from "../pages/Home/HotDeals/HotDealDetails";
 import HotelDetails from "../pages/Home/HotelDiscount/HotelDetails";
+import AdminRoute from "./AdminRoute";
+import ManageAllBookings from "../Dashboard/Admin/ManageAllBookings/ManageAllBookings";
+import UserInsurance from "../Dashboard/User/UserInsurance/UserInsurance";
+import AdminInsurance from "../Dashboard/Admin/AdminInsurance/AdminInsurance";
+
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -40,7 +45,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/review/:id",
-        element: <Review />,
+        element: (
+          <PrivateRoute>
+            <Review />
+          </PrivateRoute>
+        ),
       },
 
       {
@@ -58,25 +67,37 @@ export const router = createBrowserRouter([
       },
       {
         path: "/booking-confirmed/:bookingId",
-        element: <ETicket />,
+        element: (
+          <PrivateRoute>
+            <ETicket />
+          </PrivateRoute>
+        ),
       },
       {
         path: "hotDeals/:id",
-        element: <HotDealDetails></HotDealDetails>  
+        element: <HotDealDetails></HotDealDetails>
       },
       {
         path: "hotelDetails/:id",
-        element: <HotelDetails></HotelDetails> 
+        element: <HotelDetails></HotelDetails>
       }
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "adminHome",
-        element: <AdminHome />,
+        element: (
+          <AdminRoute>
+            <AdminHome />
+          </AdminRoute>
+        ),
       },
 
       {
@@ -91,16 +112,35 @@ export const router = createBrowserRouter([
 
       {
         path: "ticketHistory/:bookingReference",
-        element: <TicketHistory />,
+        element: (
+          <PrivateRoute>
+            <TicketHistory />
+          </PrivateRoute>
+        ),
       },
-
       {
         path: "addFlight",
-        element: <AddFlight />,
+        element: (
+          <AdminRoute>
+            <AddFlight />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "managebookings",
+        element: (
+          <AdminRoute>
+            <ManageAllBookings />
+          </AdminRoute>
+        ),
       },
       {
         path: "manageUsers",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "account",
@@ -108,7 +148,23 @@ export const router = createBrowserRouter([
       },
       {
         path: "flightStatus",
-        element: <FlightStatus />,
+        element: (
+          <AdminRoute>
+            <FlightStatus />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "userInsurance",
+        element: <UserInsurance />,
+      },
+      {
+        path: "insurance",
+        element: (
+          <AdminRoute>
+            <AdminInsurance />
+          </AdminRoute>
+        ),
       },
     ],
   },

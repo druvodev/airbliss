@@ -4,13 +4,15 @@ import { useLocation, useParams } from "react-router";
 import useAuth from "../../../hooks/useAuth";
 import { formatDate } from "../../../utils/formatDate";
 import ETicket from "../../../Components/Ticket/ETicket";
+import { useSelector, useDispatch } from "react-redux";
+import { setBookingData } from "../../../redux/features/ticketHistorySlice";
 
 const TicketHistory = () => {
   const { bookingReference } = useParams();
-  const [booking, setBooking] = useState("");
   const { user } = useAuth();
 
-  console.log(booking);
+  const booking = useSelector((state) => state.booking.bookingData);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetch(`http://localhost:5000/userBooking/${user?.email}`)
@@ -20,9 +22,10 @@ const TicketHistory = () => {
           (singleFlight) => singleFlight?.bookingReference === bookingReference
         );
 
-        setBooking(singleData);
+        // Dispatch the action to set the booking data
+        dispatch(setBookingData(singleData));
       });
-  }, []);
+  }, [bookingReference, user, dispatch]);
 
   const {
     title,
@@ -50,7 +53,7 @@ const TicketHistory = () => {
   } = booking?.flight || {};
 
   return (
-    <section className="p-4">
+    <section className="md:p-4">
       {/* Top Logo  */}
       <div className=" p-4 shadow-md border  bg-white rounded-sm">
         <img className="w-24 mb-2" src={logo} alt="" />
@@ -84,11 +87,11 @@ const TicketHistory = () => {
             <p className="mb-3 font-semibold">Phone No: </p>
             <p className="mb-3 font-semibold">Passport No: </p>
           </div>
-          <div className="ml-9 md:ml-0">
+          <div className="ml-0 md:ml-0">
             <p className="mb-3">
               {title} {first_name} {last_name}{" "}
             </p>
-            <p className="mb-3">{traveler_email}</p>
+            <p className="mb-3 hidden md:block">{traveler_email}</p>
             <p className="mb-3">{seatNo}</p>
             <p className="mb-3">{phone_number}</p>
             <p className="mb-3">{passport_number}</p>
@@ -176,7 +179,9 @@ const TicketHistory = () => {
                 <p className="text-sm">{fareSummary?.total} BDT</p>
                 <p className="text-sm">{fareSummary?.taxesAndFees} BDT</p>
                 <p className=" text-sm">{booking?.paymentStatus}</p>
-                <p className=" text-sm">{booking?.transitionId}</p>
+                <p className=" text-sm hidden md:block">
+                  {booking?.transitionId}
+                </p>
               </div>
             </div>
           </div>

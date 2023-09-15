@@ -22,6 +22,7 @@ import useAxios from "../../hooks/useAxios";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { useCountdownContext } from "../../providers/CountdownContext";
+import { setLoading } from "../../redux/features/globalSlice";
 
 const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const { setIsStart } = useCountdownContext();
@@ -72,6 +73,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
 
   const handleSearch = () => {
     setIsStart(false); // Reset Session Countdown
+    dispatch(setLoading(true));
     const fromCity = fromCityInfo?.code;
     const toCity = toCityInfo?.code;
     const date = format(departureDate, "yyyy-MM-dd");
@@ -86,10 +88,14 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
         // Handle the response data here
         dispatch(storeFilteredFlights(data));
         dispatch(storeFlights(data));
+        dispatch(setLoading(false));
         navigate("/flights");
+        setIsStart(true);
       })
       .catch((error) => {
         // Handle any errors here
+        setIsStart(false); // Reset Session Countdown
+        dispatch(setLoading(false));
         console.error("Error fetching data:", error);
       });
   };

@@ -16,6 +16,8 @@ import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
 import { paymentLater, paymentProcessing } from "../../../utils/handlePayment";
 import SeatModel from "../../../Components/SeatModel/SeatModel";
 import useAuth from "../../../hooks/useAuth";
+import { errorToast } from "../../../utils/toast";
+import { setInsurance } from "../../../redux/features/insuranceSlice";
 
 const TravelerDetailsForm = () => {
   const [isCollapse, setIsCollapse] = useState(true);
@@ -27,11 +29,12 @@ const TravelerDetailsForm = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.userBookingInfo.userInfo); // get user information from redux
   const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo); // get flight information from redux
+  const insuranceStatus = useSelector((state) => state.insurance.insurance);
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false); //for Check box checked State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isInsuranceModal, setIsInsuranceModal] = useState(false);
   const [hasInsuranceModalShown, setHasInsuranceModalShown] = useState(false);
-  const [isNoInsuranceSelected, setIsNoInsuranceSelected] = useState(false);
+  const [isNoInsuranceSelected, setIsNoInsuranceSelected] = useState(true);
   const { user } = useAuth();
 
   const {
@@ -66,11 +69,16 @@ const TravelerDetailsForm = () => {
   }, []);
 
   const handleContinue = (data) => {
-    dispatch(setUserInfo(data)); // stored user information in redux
-    reset();
-    setContinue(true);
-    // document.body.classList.add("modal-open");
-    openModal();
+    const chekTitel = data.title;
+
+    if (chekTitel != null) {
+      dispatch(setUserInfo(data)); // stored user information in redux
+      reset();
+      setContinue(true);
+      openModal();
+    } else {
+      return errorToast("Please select titel");
+    }
   };
 
   // Function to open the modal
@@ -90,7 +98,7 @@ const TravelerDetailsForm = () => {
 
   // Handle Processing Payment
   const handleProcessingPayment = () => {
-    paymentProcessing(flightInfo, userInfo); // This function from utils
+    paymentProcessing(flightInfo, userInfo, insuranceStatus); // This function from utils
   };
 
   // Check box Handler
@@ -101,14 +109,23 @@ const TravelerDetailsForm = () => {
   // Insurance Modal Showing After 2sec
   if (isContinue && !isModalOpen && !hasInsuranceModalShown) {
     setTimeout(() => {
+      document.body.style.overflow = "hidden";
       setIsInsuranceModal(true);
       !setHasInsuranceModalShown(true);
     }, 2000);
   }
 
-  const handleNoInsuranceButtonClick = () => {
+  // Handel Insurance System
+  const handleInsuranceButtonClick = (status) => {
     setIsInsuranceModal(false);
-    setIsNoInsuranceSelected(true);
+    document.body.style.overflow = "auto";
+    if (status) {
+      dispatch(setInsurance(true));
+      setIsNoInsuranceSelected(status);
+    } else {
+      setIsNoInsuranceSelected(status);
+      dispatch(setInsurance(false));
+    }
   };
 
   return (
@@ -116,7 +133,7 @@ const TravelerDetailsForm = () => {
       {isContinue ? (
         <div>
           <h2 className="text-xl font-bold mb-4">Traveler Details</h2>
-          <div className="w-full bg-white shadow-lg rounded-lg pb-10">
+          <div className="w-full bg-white shadow-lg  rounded-lg pb-10 ">
             <div className="bg-cyan-700 rounded p-2 text-white mb-5">
               <h2 className="text-xl font-semibold">Traveler 1 (Adult)</h2>
             </div>
@@ -124,7 +141,7 @@ const TravelerDetailsForm = () => {
               <div className="flex justify-start items-start gap-4">
                 <div>
                   <p className="mb-3 font-semibold">Name: </p>
-                  <p className="mb-3 font-semibold">Email: </p>
+                  <p className="mb-3 font-semibold hidden md:block">Email: </p>
                   <p className="mb-3 font-semibold">Gender: </p>
                   <p className="mb-3 font-semibold">Date of Birth: </p>
                   <p className="mb-3 font-semibold">City: </p>
@@ -133,7 +150,9 @@ const TravelerDetailsForm = () => {
                   <p className="mb-3">
                     {userInfo.title} {userInfo.first_name} {userInfo.last_name}
                   </p>
-                  <p className="mb-3">{userInfo.traveler_email}</p>
+                  <p className="mb-3 hidden md:block">
+                    {userInfo.traveler_email}
+                  </p>
                   <p className="mb-3">
                     {userInfo.title === "Mr." ? "Male" : "Female"}
                   </p>
@@ -158,22 +177,29 @@ const TravelerDetailsForm = () => {
                 </div>
               </div>
             </div>
-            <div className="mt-5 mx-5 md:mx-10">
+            <div className="mt-5 mx-1 md:mx-10">
               <div className="border-2 border-accent py-5 px-2 rounded-xl relative">
                 <p className="absolute -top-4 left-10 px-2 font-semibold bg-white text-accent">
                   Select Travel Insurance Option
                 </p>
                 <div className="form-control">
-                  <label className="flex gap-2 cursor-pointer">
+                  <label
+                    className="flex gap-2 cursor-pointer"
+                    onClick={() => handleInsuranceButtonClick(true)}
+                  >
                     <input
                       type="radio"
                       name="radio-10"
                       className="radio radio-accent"
-                      checked
+                      checked={isNoInsuranceSelected}
                     />
                     <div className="label-text">
                       <p className="font-semibold">
-                        Yes, insure my trip for only 120 Taka.
+                        Yes, insure my trip for only{" "}
+                        <span className="font-bold">
+                          {(0.05 * flightInfo?.fareSummary.total).toFixed()}
+                        </span>{" "}
+                        BDT.
                       </p>
                       <small className="flex gap-1">
                         I have read, understand and agree to the terms and
@@ -196,17 +222,23 @@ const TravelerDetailsForm = () => {
                   </label>
                 </div>
                 <div className="form-control">
-                  <label className="flex gap-2 mt-4 cursor-pointer">
+                  <label
+                    className="flex gap-2 mt-4 cursor-pointer"
+                    onClick={() => handleInsuranceButtonClick(false)}
+                  >
                     <input
                       type="radio"
                       name="radio-10"
                       className="radio radio-accent"
-                      checked={isNoInsuranceSelected}
+                      checked={!isNoInsuranceSelected}
                     />
                     <div className="label-text">
                       <p className="font-semibold">
-                        No, I will travel without this insurance for my 2010
-                        Taka trip. I understand that by declining coverage I may
+                        No, I will travel without this insurance for my{" "}
+                        <span className="font-bold">
+                          {flightInfo?.fareSummary.total}
+                        </span>{" "}
+                        BDT trip. I understand that by declining coverage I may
                         be responsible for substantial cancellation fees and
                         delay expenses.
                       </p>
@@ -215,7 +247,7 @@ const TravelerDetailsForm = () => {
                 </div>
               </div>
             </div>
-            <div className="form-control mt-5 mx-5 md:mx-10">
+            <div className="form-control mt-5 mx-5 md:mx-10 text-xs md:text-[15px]">
               <label className="cursor-pointer flex items-center gap-3">
                 <input
                   type="checkbox"
@@ -235,7 +267,8 @@ const TravelerDetailsForm = () => {
                 </span>
               </label>
             </div>
-            <div className="mx-5 md:mx-10 flex gap-3 mt-5">
+
+            <div className="mx-5  md:mx-10 flex items-center flex-col md:flex-row  gap-3 mt-5">
               <button
                 onClick={handlePayLater}
                 className={`${
@@ -287,7 +320,7 @@ const TravelerDetailsForm = () => {
             </div>
             <div
               className={`duration-500 ${
-                isCollapse ? "max-h-[1275px] md:max-h-[925px]" : "max-h-0"
+                isCollapse ? "max-h-[1475px] md:max-h-[925px]" : "max-h-0"
               } transition-all ease-linear overflow-hidden`}
             >
               <div className="p-5">
@@ -470,11 +503,12 @@ const TravelerDetailsForm = () => {
                       </label>
                       <input
                         type="email"
+                        readOnly
                         name=""
+                        defaultValue={user?.email}
                         id=""
                         {...register("traveler_email", { required: true })}
                         placeholder="Email"
-                        defaultValue={user?.email}
                         className="block w-full px-2 py-2 mt-1 text-gray-500 bg-white border rounded-md focus:border-gray-500 focus:ring-gray-500 focus:outline-none focus:ring focus:ring-opacity-40"
                       />
                     </div>
@@ -538,23 +572,31 @@ const TravelerDetailsForm = () => {
                       />
                     </div>
                   </div>
-                  <button
-                    className=" my-10 block w-full bg-cyan-700 hover:bg-cyan-600 hover:tracking-wide px-5 rounded h-[38px] text-white font-semibold"
-                    type="submit"
-                  >
-                    Continue
-                  </button>
+
+                  {user ? (
+                    <button
+                      className=" my-10 block w-full bg-cyan-700 cursor-pointer hover:bg-cyan-600 hover:tracking-wide px-5 rounded h-[38px] text-white font-semibold "
+                      type="submit"
+                    >
+                      Continue
+                    </button>
+                  ) : (
+                    <div className="my-10 pt-[6px] block w-full bg-cyan-600 cursor-pointer px-5 rounded h-[38px] text-white font-semibold text-center">
+                      <p>Please Login For Continue</p>
+                    </div>
+                  )}
                 </form>
               </div>
             </div>
           </div>
         </div>
       )}
+
       {/* Seat selecting Modal */}
       {isModalOpen && (
-        <div className="fixed top-0 left-0 z-50 w-screen sm:w-full h-full overflow-y-auto">
-          <div className="w-screen sm:w-full bg-white/20 backdrop-blur-md backdrop-filter shadow-md sm:p-10">
-            <div className="text-center">
+        <div className="fixed top-0 left-0 z-50 w-full md:w-screen  h-full overflow-y-auto">
+          <div className="md:w-screen w-full  bg-white/20 backdrop-blur-md backdrop-filter shadow-md sm:p-10">
+            <div className="text-center ">
               <h3 className="mb-5 text-3xl sm:text-4xl font-bold bg-slate-500/30 backdrop-blur py-2 px-5 w-fit mx-auto rounded-xl shadow shadow-cyan-100">
                 Choose Your Seating Preference
               </h3>
@@ -564,7 +606,7 @@ const TravelerDetailsForm = () => {
         </div>
       )}
       {isContinue && isInsuranceModal && (
-        <div className="fixed top-0 left-0 z-50 w-full min-h-screen bg-black/20 overflow-y-auto flex items-center justify-center">
+        <div className="fixed p-4 top-0 left-0  z-50 w-full h-full bg-black/20 overflow-y-auto flex items-center justify-center">
           <div className="bg-white rounded-xl border p-5 w-fit relative">
             <h2 className="text-3xl font-semibold mb-4 text-center">
               Travel Insurance Preference
@@ -572,8 +614,14 @@ const TravelerDetailsForm = () => {
             <div className="">
               <p className="mb-4">
                 Protect your trip with our travel insurance for only
-                <span className="font-semibold"> 120 Taka</span>. Here's what it
-                covers:
+                <span className="font-semibold">
+                  {" "}
+                  <span className="font-bold">
+                    {(0.05 * flightInfo?.fareSummary.total).toFixed()}
+                  </span>{" "}
+                  BDT
+                </span>
+                . Here's what it covers:
               </p>
               <ul className="font-semibold">
                 <li className="flex gap-1 items-center">
@@ -614,15 +662,15 @@ const TravelerDetailsForm = () => {
                 expenses.
               </p>
             </div>
-            <div className="flex justify-center mt-6">
+            <div className="flex justify-center mt-6 pb-8">
               <button
-                onClick={() => setIsInsuranceModal(false)}
+                onClick={() => handleInsuranceButtonClick(true)}
                 className="bg-cyan-600 text-white font-semibold py-2 px-6 rounded-full hover:bg-cyan-700"
               >
                 Yes, insure my trip
               </button>
               <button
-                onClick={handleNoInsuranceButtonClick}
+                onClick={() => handleInsuranceButtonClick(false)}
                 className="text-cyan-600 font-semibold py-2 px-6 ml-4 border border-cyan-600 rounded-full hover:bg-cyan-100 hover:border-cyan-700"
               >
                 No, I will travel without insurance

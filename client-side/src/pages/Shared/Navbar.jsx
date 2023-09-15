@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useDispatch } from "react-redux";
-import { setUserInfo } from "../../redux/features/usersSlice";
+import { setAllUserInfo, setUserInfo } from "../../redux/features/usersSlice";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -22,15 +22,19 @@ const Navbar = () => {
   const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [axiosSecure] = UseAxiosSecure();
+  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    // setIsLoading(true);
     axiosSecure
       .get("/users")
       .then((response) => {
         setUsers(response?.data);
+        // setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        // setIsLoading(false);
       });
   }, [axiosSecure]);
 
@@ -39,6 +43,10 @@ const Navbar = () => {
   const isAdmin = currentUser?.role === "admin";
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setAllUserInfo(users))
+  }, [ users]);
 
   useEffect(() => {
     dispatch(setUserInfo(currentUser));

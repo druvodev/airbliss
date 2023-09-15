@@ -3,6 +3,10 @@ import { setLoading } from "../../../../redux/features/globalSlice";
 import { toast } from "react-hot-toast";
 import shortid from "shortid";
 import { MdOutlineCloudUpload } from "react-icons/md";
+import { errorToast, successToast } from "../../../../utils/toast";
+
+import { setAllFlights } from "../../../../redux/features/addFlightSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const initialFormData = {
   airportName: "",
@@ -38,17 +42,19 @@ const initialFormData = {
 };
 
 const AddFlight = () => {
-  const [allFlights, setAllFlights] = useState([]);
+  const allFlights = useSelector((state) => state.addFlight.allFlights);
   const [selectAirportId, setSelectAirportId] = useState("");
   const [selectAirportCode, setSelectAirportCode] = useState("");
   const [formData, setFormData] = useState(initialFormData);
   const [notes, setNotes] = useState(initialFormData.notes);
   const [chekAirportSelect, setchekAirportSelect] = useState(true);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     fetch("http://localhost:5000/flights")
       .then((res) => res.json())
-      .then((data) => setAllFlights(data));
+      .then((data) => dispatch(setAllFlights(data)));
   }, []);
 
   const handleAirportSelect = (event) => {
@@ -57,8 +63,6 @@ const AddFlight = () => {
       event.target.options[event.target.selectedIndex].text;
     setSelectAirportId(selectedAirportId);
     setSelectAirportCode(selectedAirportCode);
-
-    console.log(selectedAirportId);
 
     if (selectedAirportCode.length >= 1) {
       setchekAirportSelect(false);
@@ -184,7 +188,7 @@ const AddFlight = () => {
     event.preventDefault();
 
     if (chekAirportSelect) {
-      return toast.error("Please Select Airport From Top");
+      return errorToast("Please Select Airport From Top");
     }
 
     const generatedId = shortid.generate();
@@ -200,8 +204,6 @@ const AddFlight = () => {
       _id: generatedId,
       airportName: selectAirportCode,
     };
-
-    console.log(finalFormData);
 
     const queryString = `airportId=${selectAirportId}&airportCode=${selectAirportCode}`;
 
@@ -219,7 +221,7 @@ const AddFlight = () => {
         res.json();
       })
       .then((insertResult) => {
-        toast.success("Flight Added Successfully");
+        successToast("Flight Added Successfully");
       });
   };
 

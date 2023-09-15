@@ -125,8 +125,9 @@ export const paymentLater = (flightInfo, userInfo) => {
 };
 
 // -----------------------------------Handle Processing Payment
-export const paymentProcessing = (flightInfo, userInfo) => {
+export const paymentProcessing = (flightInfo, userInfo, insurance) => {
   userBookingInfo.bookingReference = generateBookingId();
+  userBookingInfo.insurance = insurance;
   userBookingInfo.user = {
     ...userInfo,
     PNR: generatePNR(),
@@ -137,6 +138,7 @@ export const paymentProcessing = (flightInfo, userInfo) => {
   userBookingInfo.bookingDateTime = formatDateTime(new Date());
   userBookingInfo.totalSeat = flightInfo?.departure.seats;
   userBookingInfo.flightId = flightInfo?._id;
+  userBookingInfo.airlineLogo = flightInfo?.airlineLogo;
 
   // Make a POST request using Axios from useAxios hook
   useAxios
