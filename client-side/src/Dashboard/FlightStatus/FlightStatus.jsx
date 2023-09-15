@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { MdOutlineFlightTakeoff, MdOutlineFlight } from "react-icons/md";
 import { TbBrandFlightradar24 } from "react-icons/tb";
-import { BsAirplaneEngines } from "react-icons/bs";
-import { VscKebabVertical } from "react-icons/vsc";
-import { Link } from "react-router-dom";
+import { GiWorld } from "react-icons/gi";
+import { BiStopCircle } from "react-icons/bi";
+import { RxUpdate } from "react-icons/rx";
 
 const FlightStatus = () => {
   return (
@@ -17,12 +17,12 @@ const FlightStatus = () => {
               All Flights
             </h4>
             <div className="flex justify-center items-center mb-2">
-              <BsAirplaneEngines size={35} color="#32a9db" />
+              <GiWorld size={35} color="#32a9db" />
             </div>
           </div>
 
           <div className="p-2 h-[120px] md:h-auto shadow-md border-t w-full">
-            <h4 className="font-semiboldtext-sm mb-2 md:mb-0 md:text-lg pl-2">
+            <h4 className="font-semibold text-sm mb-2 md:mb-0 md:text-lg pl-2">
               Running Flights
             </h4>
             <div className="flex justify-center items-center mb-2">
@@ -51,7 +51,7 @@ const FlightStatus = () => {
               <th>Departure</th>
               <th>Arrival</th>
               <th>Duration</th>
-              <th>Price ($)</th>
+              <th>Price (BDT)</th>
               <th>Total Bookings</th>
               <th>Action</th>
             </tr>
@@ -90,11 +90,22 @@ const FlightStatus = () => {
               <td>68.00</td>
               <td>
                 <div className="flex relative gap-x-3 items-center ">
-                  <div>
-                    <p>Confirmed(38)</p>
-                    <p>Refund(00)</p>
-                    <p>Available(08)</p>
+                  <div className="font-[450]">
+                    <p className="text-green-600">Confirmed(38)</p>
+                    <p className="text-red-500">Refund(00)</p>
+                    <p className="text-cyan-700">Available(08)</p>
                   </div>
+                </div>
+              </td>
+
+              <td>
+                <div className="flex items-center gap-1">
+                  <p className="text-cyan-500">
+                    <RxUpdate size={24} />{" "}
+                  </p>
+                  <p className="text-cyan-500">
+                    <BiStopCircle size={26} />
+                  </p>
                 </div>
               </td>
             </tr>
