@@ -6,22 +6,57 @@ import { BiStopCircle } from "react-icons/bi";
 import { RxUpdate } from "react-icons/rx";
 
 const FlightStatus = () => {
+  const [flight, setFlight] = useState([]);
+  const [allFlight, setAllFlight] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("allFlight");
+
+  useEffect(() => {
+    fetch("/flight.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setAllFlight(data);
+        const filteredData =
+          selectedStatus === "allFlight"
+            ? data
+            : data.filter(
+                (selectFlight) => selectFlight.status === selectedStatus
+              );
+        const sortedData = filteredData
+          .slice()
+          .sort((a, b) => a.flightName.localeCompare(b.flightName));
+        setFlight(sortedData);
+      });
+  }, [selectedStatus]);
+
+  const handleStatusChange = (status) => {
+    setSelectedStatus(status);
+  };
+
   return (
     <section>
       <section>
         <h1 className="font-semibold text-2xl">Flights</h1>
-
-        <div className="mt-3 flex justify-start items-center gap-6">
-          <div className="p-2 shadow-md h-[120px] md:h-auto border-t w-full">
+        <div className="mt-3 flex justify-start items-center gap-3 ">
+          <div
+            className={`p-2 h-[120px] md:h-auto shadow-md border-t w-full ${
+              selectedStatus === "allFlight" ? "bg-cyan-100" : "bg-white"
+            }`}
+            onClick={() => handleStatusChange("allFlight")}
+          >
             <h4 className="font-semibold text-sm mt-5 md:mt-0 mb-2 md:mb-0 md:text-lg pl-2">
               All Flights
             </h4>
-            <div className="flex justify-center items-center mb-2">
+            <div className="flex justify-center items-center mb-[14px]">
               <GiWorld size={35} color="#32a9db" />
             </div>
           </div>
 
-          <div className="p-2 h-[120px] md:h-auto shadow-md border-t w-full">
+          <div
+            className={`p-2 h-[120px] md:h-auto shadow-md border-t w-full ${
+              selectedStatus === "runningFlight" ? "bg-cyan-100" : "bg-white"
+            }`}
+            onClick={() => handleStatusChange("runningFlight")}
+          >
             <h4 className="font-semibold text-sm mb-2 md:mb-0 md:text-lg pl-2">
               Running Flights
             </h4>
@@ -30,7 +65,12 @@ const FlightStatus = () => {
             </div>
           </div>
 
-          <div className="p-2 h-[120px] md:h-auto shadow-md border-t w-full">
+          <div
+            className={`p-2 h-[120px] md:h-auto shadow-md border-t w-full ${
+              selectedStatus === "arriveFlight" ? "bg-cyan-100" : "bg-white"
+            }`}
+            onClick={() => handleStatusChange("arriveFlight")}
+          >
             <h4 className="font-semibold text-sm mb-2 md:mb-0 md:text-lg pl-2">
               Arrival Flight
             </h4>
@@ -57,58 +97,66 @@ const FlightStatus = () => {
             </tr>
           </thead>
           <tbody>
-            <tr className="border-b-2">
-              <td>
-                <div className="flex items-center space-x-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
-                      <img
-                        src="https://4.bp.blogspot.com/-GQ_AFkfZNDM/Tg379bG4OvI/AAAAAAAAZyw/t8MBnw5ZdWs/s1600/air_india_logo_history.png"
-                        alt="Avatar Tailwind CSS Component"
-                      />
+            {flight?.map((singleFlight) => (
+              <tr key={singleFlight?.flightImage} className="border-b-2">
+                <td>
+                  <div className="flex items-center space-x-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle w-12 h-12">
+                        <img
+                          src={singleFlight?.flightImage}
+                          alt="Avatar Tailwind CSS Component"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="">{singleFlight?.flightTrackingId}</div>
+                      <div className="text-md">{singleFlight?.flightName}</div>
                     </div>
                   </div>
-                  <div>
-                    <div className="">#72975</div>
-                    <div className="text-md">United States</div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <h4>New York</h4>
-                <p>5:29 pm</p>
-              </td>
-              <td>
-                <h4>New York</h4>
-                <p>5:29 pm</p>
-              </td>
-              <td>
-                <h4>Non-Stop</h4>
-                <p>23h 20min</p>
-              </td>
+                </td>
+                <td>
+                  <h4>{singleFlight?.departurePlace}</h4>
+                  <p>{singleFlight?.departureTime}</p>
+                </td>
+                <td>
+                  <h4>{singleFlight?.arrivalPlace}</h4>
+                  <p>{singleFlight?.arrivalTime}</p>
+                </td>
+                <td>
+                  <h4>Non-Stop</h4>
+                  <p>{singleFlight?.duration}</p>
+                </td>
 
-              <td>68.00</td>
-              <td>
-                <div className="flex relative gap-x-3 items-center ">
-                  <div className="font-[450]">
-                    <p className="text-green-600">Confirmed(38)</p>
-                    <p className="text-red-500">Refund(00)</p>
-                    <p className="text-cyan-700">Available(08)</p>
+                <td>{singleFlight?.ticketPrice}</td>
+                <td>
+                  <div className="flex relative gap-x-3 items-center ">
+                    <div className="font-[450]">
+                      <p className="text-green-600">
+                        Confirmed({singleFlight?.confirmed})
+                      </p>
+                      <p className="text-red-500">
+                        Refund({singleFlight?.refund})
+                      </p>
+                      <p className="text-cyan-700">
+                        Available({singleFlight?.available})
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </td>
+                </td>
 
-              <td>
-                <div className="flex items-center gap-1">
-                  <p className="text-cyan-500">
-                    <RxUpdate size={24} />{" "}
-                  </p>
-                  <p className="text-cyan-500">
-                    <BiStopCircle size={26} />
-                  </p>
-                </div>
-              </td>
-            </tr>
+                <td>
+                  <div className="flex items-center gap-1">
+                    <p className="text-cyan-500">
+                      <RxUpdate size={24} />{" "}
+                    </p>
+                    <p className="text-cyan-500">
+                      <BiStopCircle size={26} />
+                    </p>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
