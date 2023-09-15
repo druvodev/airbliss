@@ -45,6 +45,6 @@
 /* Media query for large screens (e.g., widescreen desktops) */
 @media (min-width: 1200px) {
   .login_form {
-    height: 600px; /* Adjust the height for large screens */
+    height: 450px; /* Adjust the height for large screens */
   }
 }
