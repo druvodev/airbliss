@@ -7,6 +7,7 @@ import HotDeals from "../HotDeals/HotDeals";
 import HotelDiscount from "../HotelDiscount/HotelDiscount";
 import OurServices from "../OurServices/OurServices";
 import RecommendedFlights from "../RecommendedFlight/RecommendedFlights";
+import LoginForm from "../Weather/Weather";
 
 const Home = () => {
   const { setIsStart } = useCountdownContext();
@@ -23,6 +24,7 @@ const Home = () => {
         <OurServices />
         <HotelDiscount></HotelDiscount>
         <PopUpOffer />
+        {/* <LoginForm /> */}
       </div>
     </div>
   );

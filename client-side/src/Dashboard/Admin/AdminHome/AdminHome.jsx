@@ -46,7 +46,6 @@ const AdminHome = () => {
   const allRevenue = totalRevenue?.map(
     (revenue) => revenue?.flight?.fareSummary?.total
   );
-
   let totalSum = 0;
 
   for (let i = 0; i < allRevenue?.length; i++) {
