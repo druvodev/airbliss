@@ -7,7 +7,13 @@
         "cost": 685,
         "discount": 35,
         "img": "https://c.fareportal.com/gcms/portals/2/images/destinations/MNL-rx.jpg",
-        "star": 5
+        "star": 5,
+        "room": 1,
+        "location": "New Work",
+        "bed": 2,
+        "wash_room": 1,
+        "balcony": 1
+        
     },
  
     {
@@ -18,7 +24,11 @@
         "cost": 893,
         "discount": 20,
         "img": "https://c.fareportal.com/gcms/portals/2/images/destinations/MLE-rx.jpg",
-        "star": 5
+        "star": 5,
+        "location": "Thailand",
+        "bed": 2,
+        "wash_room": 1,
+        "balcony": 1
     },
  
     {
@@ -29,7 +39,11 @@
         "cost": 904,
         "discount": 29,
         "img": "https://c.fareportal.com/gcms/portals/2/images/destinations/DXB-rx.jpg",
-        "star": 5
+        "star": 5,
+        "location": "Dubai",
+        "bed": 2,
+        "wash_room": 1,
+        "balcony": 1
     }
  
 ]
