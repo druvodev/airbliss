@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, ScrollRestoration } from 'react-router-dom'
 import Sidebar from '../Dashboard/Sidebar/Sidebar';
 import TopNav from '../Dashboard/DashboardShared/TopNav/TopNav';
 import { useState } from 'react';
@@ -30,6 +30,7 @@ const DashboardLayout = () => {
                 handleToggle={handleToggle}
               />
               <div className='p-5'>
+                <ScrollRestoration />
                 <Outlet />
               </div>
             </div>

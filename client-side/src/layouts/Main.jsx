@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import Navbar from "../pages/Shared/Navbar";
 import Footer from "../pages/Shared/Footer";
 import ScrollTopButton from "../Components/ScrollToTopButton/ScrollTopButton";
@@ -20,6 +20,7 @@ const Main = () => {
     <>
       <Navbar />
       <CountdownProvider>
+        <ScrollRestoration />
         <Outlet />
       </CountdownProvider>
       <Footer />
