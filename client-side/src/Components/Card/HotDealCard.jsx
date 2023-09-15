@@ -16,7 +16,7 @@ const HotDealCard = ({ deal }) => {
           {offer}
         </p>
         <Link
-          to={`hotDeals/${id}`}
+          to={`/hotDeals/${id}`}
           className="flex items-center gap-x-1 text-sm text-sky-500 font-medium"
         >
           Explore More <BsArrowRight />
