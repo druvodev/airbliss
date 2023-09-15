@@ -5,26 +5,24 @@ import { RxCross2 } from 'react-icons/rx';
 import { toast } from "react-hot-toast";
 import { MdDone } from 'react-icons/md';
 import ModalDenied from './ModalDenied';
+import { useDispatch, useSelector } from 'react-redux';
+import { setBookingsRefetch } from '../../../redux/features/bookingInfoSlice';
 
 const AdminInsurance = () => {
     const [selectedInsurance, setSelectedInsurance] = useState(null);
     const [isModalApprovedOpen, setIsModalApprovedOpen] = useState(false); // New state variable
-    const allBookingData = JSON.parse(sessionStorage.getItem("userBookings"));
+    const allBookingData = useSelector((state) => state.userBookingInfo.allBookings);
     const insuranceBookings = allBookingData.filter(booking => booking?.insurancePolicy?.claimedStatus != null)
+    const dispatch = useDispatch()
     const [isModalDeniedOpen, setIsModalDeniedOpen] = useState(false);
 
     console.log(insuranceBookings);
 
     const handleDenialSubmit = (insurance, premiumType, deniedFeedback) => {
-        console.log('Insurance:', insurance);
-        console.log('Premium Type:', premiumType);
-        console.log('Require Amount:', deniedFeedback);
-
         const insuranceData = {
             premiumType: premiumType,
             deniedFeedback: deniedFeedback,
         };
-
         fetch(`http://localhost:5000/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
             method: "PATCH",
             headers: {
@@ -36,6 +34,7 @@ const AdminInsurance = () => {
             .then((data) => {
                 if (data?.message == "Insurance policy updated") {
                     toast.success(data.message);
+                    dispatch(setBookingsRefetch(new Date().toString()))
                 } else {
                     toast.error(data.message);
                 }
@@ -67,6 +66,7 @@ const AdminInsurance = () => {
             .then((data) => {
                 if (data?.message == "Insurance policy updated") {
                     toast.success(data.message);
+                    dispatch(setBookingsRefetch(new Date().toString()))
                 } else {
                     toast.error(data.message);
                 }
