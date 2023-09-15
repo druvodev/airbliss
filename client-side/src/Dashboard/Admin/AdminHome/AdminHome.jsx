@@ -32,9 +32,9 @@ const AdminHome = () => {
   const todayDate = format(newDate, "dd/MM/yyyy");
 
   const allUserData = useSelector((state) => state?.userInfo?.allUserInfo);
-  const allBookingData = useSelector((state) => state?.userBookingInfo?.allBookings);
-
-  console.log("Chek User", allUserData, allBookingData);
+  const allBookingData = useSelector(
+    (state) => state?.userBookingInfo?.allBookings
+  );
 
   const todayBookingData = allBookingData?.filter(
     (bookingData) => bookingData?.bookingDateTime.split(" ")[0] == todayDate
