@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import DiscountedHotelCard from '../../../Components/Card/DiscountedHotelCard';
+import HotelAdd from '../../../Components/Card/HotelAdd';
 
 const HotDealDetails = () => {
     const { id } = useParams();
@@ -11,7 +11,6 @@ const HotDealDetails = () => {
             .then((res) => res.json())
             .then((data) => {
                 const hotDeal = data.filter(d => d.id === parseInt(id));
-
                 setDeal(hotDeal)
             });
     }, []);
@@ -45,7 +44,7 @@ const HotDealDetails = () => {
             <div className='mt-10'>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 md:gap-x-4 lg:gap-x-4 gap-6">
                     {
-                        discountedHotels.map((hotel, index) => <DiscountedHotelCard key={index} hotel={hotel}></DiscountedHotelCard>)
+                        discountedHotels.map((hotel, index) => <HotelAdd key={index} hotel={hotel}></HotelAdd>)
                     }
                 </div>
             </div>
