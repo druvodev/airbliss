@@ -108,10 +108,10 @@ export const paymentLater = (flightInfo, userInfo) => {
     // Come back soon...........................
     emailjs
       .send(
-        "service_y6ldylc",
-        "template_rkov8w3",
+        "service_g3u6g2j",
+        "template_6gdp0x6",
         templateParams,
-        "w9Pnw6KhtfQAcLD4k"
+        "08zZeCBY_SKio7TxV"
       )
       .then(
         (response) => {
