@@ -19,10 +19,12 @@ import PrivateRoute from "./PrivateRoute";
 import TicketHistory from "../Dashboard/User/TicketHistory/TicketHistory";
 import ManageBooking from "../Dashboard/User/ManageBooking/ManageBooking";
 import HotDealDetails from "../pages/Home/HotDeals/HotDealDetails";
+import HotelDetails from "../pages/Home/HotelDiscount/HotelDetails";
 import AdminRoute from "./AdminRoute";
 import ManageAllBookings from "../Dashboard/Admin/ManageAllBookings/ManageAllBookings";
 import UserInsurance from "../Dashboard/User/UserInsurance/UserInsurance";
 import AdminInsurance from "../Dashboard/Admin/AdminInsurance/AdminInsurance";
+
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -73,8 +75,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "hotDeals/:id",
-        element: <HotDealDetails />,
+        element: <HotDealDetails></HotDealDetails>
       },
+      {
+        path: "hotelDetails/:id",
+        element: <HotelDetails></HotelDetails>
+      }
     ],
   },
   {

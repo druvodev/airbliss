@@ -122,7 +122,7 @@ const InforMation = ({ currentUser }) => {
           />
           <div className="lg:mt-24 mt-12 -ml-2">
             <div className="flex justify-start font-bold capitalize items-center lg:text-[32px] ">
-              <h1 className="whitespace-nowrap">Jishan Hossain</h1>
+              <h1 className="whitespace-nowrap">{user?.displayName}</h1>
               <p className="ml-2 lowercase font-light hidden md:block whitespace-nowrap">
                 {nickname ? `(${nickname})` : <div className="w-10 "></div>}
               </p>
