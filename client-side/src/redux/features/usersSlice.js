@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  allUserInfo: [],
   userInfo: {},
   userBookings: [],
   flightRef: "",
@@ -11,6 +12,9 @@ export const usersSlice = createSlice({
   name: "userInfo",
   initialState,
   reducers: {
+    setAllUserInfo: (state, action) => {
+      state.allUserInfo = action.payload;
+    },
     setUserInfo: (state, action) => {
       state.userInfo = action.payload;
     },
@@ -26,6 +30,6 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { setUserInfo, setUserBookings, setFlightRef, setRefetch } =
+export const { setAllUserInfo, setUserInfo, setUserBookings, setFlightRef, setRefetch } =
   usersSlice.actions;
 export default usersSlice.reducer;

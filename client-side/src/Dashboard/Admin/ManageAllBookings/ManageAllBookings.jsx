@@ -3,6 +3,9 @@ import logo from "../../../assets/icon/airblissBlack.png";
 import { useForm } from "react-hook-form";
 import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
 import CancelBookingTable from "../../../Components/CancelBookingTable/CancelBookingTable";
+import { useDispatch, useSelector } from "react-redux";
+import { setBookingsRefetch } from "../../../redux/features/bookingInfoSlice";
+import { successToast } from "../../../utils/toast";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -11,26 +14,25 @@ const ManageAllBooking = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [flightRef, setFlightRef] = useState("");
   const [isActive, setIsActive] = useState("allbookings");
-  const [allBookings, setAllBookings] = useState([]);
+  const [date, setDate] = useState("");
+  const [airportCode, setAirportCode] = useState("");
+  const [details, setDetails] = useState(false);
+
+  const [cancelDetails, setCancelDetails] = useState(false);
+
+  const dispatch = useDispatch();
+  // const [allBookings, setAllBookings] = useState([]);
 
   const handleTabClick = (tab) => {
     setIsActive(tab);
   };
 
-  useEffect(() => {
-    fetch("http://localhost:5000/allBookings")
-      .then((res) => res.json())
-      .then((data) => setAllBookings(data));
-  }, []);
+  console.log("flightRef", flightRef);
 
-  // const bookings = useSelector((state) => state?.userInfo?.userBookings);
+  const allBookings = useSelector((state) => state.userBookingInfo.allBookings);
 
   const cancelBookings = allBookings?.filter(
     (booking) => booking?.requestStatus === "approved"
-  );
-
-  const cancelDeniedBookings = allBookings?.filter(
-    (booking) => booking?.requestStatus === "denied"
   );
 
   const confirmBookings = allBookings?.filter(
@@ -41,11 +43,9 @@ const ManageAllBooking = () => {
     (booking) => booking?.requestStatus === "pending"
   );
 
-  console.log("All bookings", allBookings);
-  // console.log("Cancel Bookings", cancelRequests);
-
-  console.log("bookings reference", flightRef);
-  // Initialize your form data state here
+  const cancelDeniedBookings = allBookings?.filter(
+    (booking) => booking?.requestStatus === "denied"
+  );
 
   const {
     register,
@@ -56,10 +56,16 @@ const ManageAllBooking = () => {
   } = useForm();
 
   const selectedFlight = allBookings?.find(
-    (flight) => flight.bookingReference === flightRef
+    (flight) => flight?.bookingReference === flightRef
   );
+  useEffect(() => {
+    if (selectedFlight) {
+      setDate(selectedFlight?.flight?.departureDate);
+      setAirportCode(selectedFlight?.flight?.departureAirport);
+    }
+  }, [selectedFlight]);
 
-  // console.log("My Flight", selectedFlight);
+  console.log("My Flight", selectedFlight);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -83,12 +89,13 @@ const ManageAllBooking = () => {
     }
   };
 
-  const handleCancelApproved = () => {
+  const handleCancelApproved = (flight) => {
     const cancelApprovedInfo = {
-      bookingInfo: selectedFlight,
+      bookingInfo: flight,
     };
+
     fetch(
-      `http://localhost:5000/refund/approved/${selectedFlight?.flight?.departureDate}/${selectedFlight?.flight?.departureAirport}/${selectedFlight?.bookingReference}`,
+      `http://localhost:5000/refund/approved/${flight?.flight?.departureDate}/${flight?.flight?.departureAirport}/${flight?.bookingReference}`,
       {
         method: "PATCH",
         headers: {
@@ -105,6 +112,8 @@ const ManageAllBooking = () => {
       })
       .then((data) => {
         console.log("Success:", data.message);
+        dispatch(setBookingsRefetch(new Date().toString()));
+        successToast("Refund request accepted");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -114,11 +123,10 @@ const ManageAllBooking = () => {
   const handleCancelDeny = (data) => {
     const cancelDenyInfo = {
       feedback: data?.feedback,
-      bookingInfo: selectedFlight,
     };
-    // console.log(cancelDenyInfo);
+
     fetch(
-      `http://localhost:5000/refund/denied/${selectedFlight?.flight?.departureDate}/${selectedFlight?.flight?.departureAirport}/${selectedFlight?.bookingReference}`,
+      `http://localhost:5000/refund/denied/${date}/${airportCode}/${flightRef}`,
       {
         method: "PATCH",
         headers: {
@@ -135,6 +143,8 @@ const ManageAllBooking = () => {
       })
       .then((data) => {
         console.log("Success:", data.message);
+        dispatch(setBookingsRefetch(new Date().toString()));
+        successToast("Refund request denied");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -147,9 +157,7 @@ const ManageAllBooking = () => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
   const paidAmount = selectedFlight?.flight?.fareSummary?.total;
-  const deductedAmount = Math.round(
-    selectedFlight?.flight?.fareSummary?.total * 0.3
-  );
+  const deductedAmount = Math.round(paidAmount * 0.3);
   const refundAmount = paidAmount - deductedAmount;
 
   return (
@@ -159,7 +167,7 @@ const ManageAllBooking = () => {
         <div className="mb-2 md:mb-0">
           <h1 className="font-semibold ">Filter Bookings: </h1>
         </div>
-        <div className="flex gap-1 rounded font-medium text-gray-600 text-sm">
+        <div className="flex md:flex-row flex-col gap-1 rounded font-medium text-gray-600 text-sm">
           <div
             onClick={() => handleTabClick("allbookings")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
@@ -180,16 +188,7 @@ const ManageAllBooking = () => {
           >
             Confirm Bookings
           </div>
-          <div
-            onClick={() => handleTabClick("cancel-request")}
-            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-              isActive === "cancel-request"
-                ? "border-t-2 bg-cyan-50 border-cyan-400"
-                : ""
-            }`}
-          >
-            Cancel Requests
-          </div>
+
           <div
             onClick={() => handleTabClick("cancel")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
@@ -202,6 +201,17 @@ const ManageAllBooking = () => {
           </div>
 
           <div
+            onClick={() => handleTabClick("cancel-request")}
+            className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
+              isActive === "cancel-request"
+                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                : ""
+            }`}
+          >
+            Refund Requests
+          </div>
+
+          <div
             onClick={() => handleTabClick("cancel-denied")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
               isActive === "cancel-denied"
@@ -209,7 +219,7 @@ const ManageAllBooking = () => {
                 : ""
             }`}
           >
-            Cancel Denied
+            Refund Denied
           </div>
         </div>
       </section>
@@ -234,17 +244,6 @@ const ManageAllBooking = () => {
         />
       )}
 
-      {isActive === "cancel-request" && (
-        <CancelBookingTable
-          bookings={cancelRequests}
-          openModal={openModal}
-          setFlightRef={setFlightRef}
-          status="cancel status"
-          action={false}
-          handleCancelApproved={handleCancelApproved}
-        />
-      )}
-
       {isActive === "cancel" && (
         <BookingFlightTable
           bookings={cancelBookings}
@@ -252,6 +251,18 @@ const ManageAllBooking = () => {
           setFlightRef={setFlightRef}
           status="cancel status"
           action={true}
+        />
+      )}
+
+      {isActive === "cancel-request" && (
+        <CancelBookingTable
+          bookings={cancelRequests}
+          openModal={openModal}
+          setFlightRef={setFlightRef}
+          status="cancel status"
+          action={false}
+          feedbackTitle={"refund reason"}
+          handleCancelApproved={handleCancelApproved}
         />
       )}
 
@@ -263,6 +274,8 @@ const ManageAllBooking = () => {
           status="cancel status"
           action={true}
           handleCancelApproved={handleCancelApproved}
+          feedbackTitle={"admin feedback"}
+          setDetails={setDetails}
         />
       )}
 
@@ -379,6 +392,7 @@ const ManageAllBooking = () => {
                   >
                     Submit
                   </button>
+
                   <div
                     onClick={closeModal}
                     className="btn ml-2 btn-warning border-none bg-red-400 hover:bg-red-500 text-white"

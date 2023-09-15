@@ -24,65 +24,77 @@ import {
 } from "recharts";
 import CircularProgressBar from "../../../Components/CircularProgressBar/CircularProgressBar";
 import FlightProgressBar from "../../../Components/CircularProgressBar/FlightProgressBar";
+import { format } from "date-fns";
+import { useSelector } from "react-redux";
 
 const AdminHome = () => {
-  const data = [
-    {
-      month: "January",
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      month: "February",
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      month: "March",
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      month: "April",
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      month: "May",
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-    {
-      month: "June",
-      uv: 3690,
-      pv: 4300,
-      amt: 2100,
-    },
-    {
-      month: "July",
-      uv: 3390,
-      pv: 4300,
-      amt: 2100,
-    },
-    {
-      month: "August",
-      uv: 3590,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+  const newDate = new Date();
+  const todayDate = format(newDate, "dd/MM/yyyy");
 
-  const userIcon = <FaUserAlt />;
-  const planIcon = <FaPlaneDeparture />;
-  const walletIcon = <FaWallet />;
-  const ticketIcon = <MdAirplaneTicket />;
-  const cancelIcon = <TiCancelOutline />;
-  const returnIcon = <GiReturnArrow />;
+  const allUserData = useSelector((state) => state?.userInfo?.allUserInfo);
+  const allBookingData = useSelector(
+    (state) => state?.userBookingInfo?.allBookings
+  );
+
+  const todayBookingData = allBookingData?.filter(
+    (bookingData) => bookingData?.bookingDateTime.split(" ")[0] == todayDate
+  );
+
+  const totalRevenue = todayBookingData?.filter(
+    (revenue) => revenue?.bookingStatus == "confirmed"
+  );
+  const allRevenue = totalRevenue?.map(
+    (revenue) => revenue?.flight?.fareSummary?.total
+  );
+
+  let totalSum = 0;
+
+  for (let i = 0; i < allRevenue?.length; i++) {
+    const revenue = parseFloat(allRevenue[i]);
+    if (!isNaN(revenue)) {
+      totalSum += revenue;
+    }
+  }
+
+  let thisMonthReveniew = 0;
+
+  const lifetimeConfirmBooking = allBookingData?.filter(
+    (bookingData) => bookingData?.bookingStatus == "confirmed"
+  );
+
+  console.log(lifetimeConfirmBooking, allBookingData);
+
+  for (const item of lifetimeConfirmBooking) {
+    const total = parseInt(item?.flight?.fareSummary?.total);
+    if (!isNaN(total)) {
+      thisMonthReveniew += total;
+    }
+  }
+
+  const data = lifetimeConfirmBooking?.map((booking) => {
+    const bookingDateTime = booking?.bookingDateTime?.split(" at ")[0];
+    const total = booking?.flight?.fareSummary?.total;
+
+    if (total && total?.length > 0) {
+      return {
+        month: bookingDateTime,
+        uv: total,
+        pv: 80,
+        amt: 70,
+      };
+    } else {
+      return {
+        name: "No Booking Found",
+      };
+    }
+  });
+
+  const totalCancel = todayBookingData?.filter(
+    (cancel) => cancel?.bookingStatus == "cancel"
+  );
+  const totalRefund = todayBookingData?.filter(
+    (refund) => refund?.requestStatus == "pending"
+  );
 
   return (
     <section>
@@ -92,62 +104,84 @@ const AdminHome = () => {
             <div className="flex justify-between items-center bg-white shadow-md rounded-xl p-10">
               <div>
                 <p className="text-lg font-semibold">Total User</p>
-                <h2 className="text-2xl font-bold">536</h2>
+                <h2 className="text-2xl font-bold">
+                  {allUserData?.length || 0}
+                </h2>
               </div>
-              <CircularProgressBar val="65" icon={userIcon} />
+              <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
+                <FaUserAlt className="text-white text-3xl font-bold" />
+              </div>
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
                 <p className="text-lg font-semibold">Total Flight</p>
-                <h2 className="text-2xl font-bold">200</h2>
+                <h2 className="text-2xl font-bold">
+                  {allBookingData?.length || 0}
+                </h2>
               </div>
-              <FlightProgressBar val={200} icon={planIcon} />
-              {/* <CircularProgressBar val={20} icon={planIcon} /> */}
+              <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
+                <FaPlaneDeparture className="text-white text-3xl font-bold" />
+              </div>
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
                 <p className="text-lg font-semibold">Revenue</p>
-                <h2 className="text-2xl font-bold">$200M</h2>
+                <h2 className="text-2xl font-bold">{totalSum} BDT</h2>
               </div>
-              <CircularProgressBar val={90} icon={walletIcon} />
+              <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
+                <FaWallet className="text-white text-3xl font-bold" />
+              </div>
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
-                <p className="text-lg font-semibold">Total booking ticket</p>
-                <h2 className="text-2xl font-bold">350M</h2>
+                <p className="text-lg font-semibold">Today booking ticket</p>
+                <h2 className="text-2xl font-bold">
+                  {todayBookingData?.length || 0}
+                </h2>
               </div>
-              <CircularProgressBar val="80" icon={ticketIcon} />
+              <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
+                <MdAirplaneTicket className="text-white text-3xl font-bold" />
+              </div>
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
-                <p className="text-lg font-semibold">Cancel Flight</p>
-                <h2 className="text-2xl font-bold">175</h2>
+                <p className="text-lg font-semibold">Today Cancel Flight</p>
+                <h2 className="text-2xl font-bold">
+                  {totalCancel?.length || 0}
+                </h2>
               </div>
-              <CircularProgressBar val={40} icon="B" />
+              <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
+                <TiCancelOutline className="text-white text-3xl font-bold" />
+              </div>
             </div>
             <div className="flex justify-between items-center bg-white shadow-md rounded-lg p-10">
               <div>
-                <p className="text-lg font-semibold">Refund request</p>
-                <h2 className="text-2xl font-bold">85</h2>
+                <p className="text-lg font-semibold">Today Refund request</p>
+                <h2 className="text-2xl font-bold">
+                  {totalRefund?.length || 0}
+                </h2>
               </div>
-
-              <CircularProgressBar val="20" icon={returnIcon} />
+              <div className="border-cyan-500 border-4 bg-[rgba(0,213,255,0.31)] w-16 h-16 rounded-full justify-center items-center flex">
+                <GiReturnArrow className="text-white text-3xl font-bold" />
+              </div>
             </div>
           </div>
         </div>
         <div className="mt-12 bg-white shadow-lg rounded-xl p-2 md:p-5">
           <div className="flex justify-between items-center my-5">
             <div>
-              <h2 className="text-xl md:text-2xl font-bold">Monthly Revenue</h2>
+              <h2 className="text-xl md:text-2xl font-bold">Today Revenue</h2>
               <p className="font-semibold text-gray-500 tracking-wider">
-                Total revenue this month
+                Revenue Without Vat
               </p>
             </div>
 
             <div className="text-right">
-              <h2 className="text-xl md:text-2xl font-bold">$450K</h2>
+              <h2 className="text-xl md:text-2xl font-bold">
+                {thisMonthReveniew} BDT
+              </h2>
               <p className="font-semibold text-gray-500 ">
-                <span className="text-cyan-600">+1.5%</span> than last Month
+                <span className="text-cyan-600">+1.5%</span> than last Day
               </p>
             </div>
           </div>

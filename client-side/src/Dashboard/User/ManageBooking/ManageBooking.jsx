@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import logo from "../../../assets/icon/airblissBlack.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFlightTable";
+import { setRefetch } from "../../../redux/features/usersSlice";
+import { successToast } from "../../../utils/toast";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -12,11 +14,14 @@ const ManageBooking = () => {
   const [flightRef, setFlightRef] = useState("");
   const [isActive, setIsActive] = useState("allflight");
 
+  const dispatch = useDispatch();
+
   const handleTabClick = (tab) => {
     setIsActive(tab);
   };
 
   const bookings = useSelector((state) => state?.userInfo?.userBookings);
+
   const cancelBookings = bookings?.filter(
     (booking) => booking?.bookingStatus === "cancel"
   );
@@ -24,11 +29,6 @@ const ManageBooking = () => {
   const confirmBookings = bookings?.filter(
     (booking) => booking?.bookingStatus === "confirmed"
   );
-  // console.log("All bookings", bookings);
-  // console.log("Cancel Bookings", cancelBookings);
-
-  const [formData, setFormData] = useState({});
-  // Initialize your form data state here
 
   const {
     register,
@@ -39,7 +39,7 @@ const ManageBooking = () => {
   } = useForm();
 
   const myFlight = bookings?.find(
-    (flight) => flight.bookingReference === flightRef
+    (flight) => flight?.bookingReference === flightRef
   );
 
   console.log(myFlight);
@@ -84,13 +84,16 @@ const ManageBooking = () => {
       }
     )
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
+        console.log("cancel Response", response);
+        // if (!response.ok) {
+        //   throw new Error("Network response was not ok");
+        // }
+        // return response.json();
       })
       .then((data) => {
-        console.log("Success:", data.message);
+        dispatch(setRefetch(new Date().toString()));
+        successToast("Cancel request submit successful");
+        console.log("Success:", data?.message);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -193,12 +196,14 @@ const ManageBooking = () => {
               <hr />
               <div className="flex gap-5 md:gap-10 items-center my-2">
                 <div>
-                  <h2 className="text-lg font-semibold">Booking Date:</h2>
-                  <p className="">{myFlight?.bookingDateTime}</p>
+                  <h2 className="text-md font-semibold">Booking Date:</h2>
+                  <p className="text-sm">
+                    {myFlight?.bookingDateTime.split(" ")[0]}
+                  </p>
                 </div>
                 <div>
-                  <h2 className="text-lg font-semibold">Traveler:</h2>
-                  <p className="">
+                  <h2 className="text-md font-semibold">Traveler:</h2>
+                  <p className="text-sm">
                     {myFlight?.user?.title} {myFlight?.user?.first_name}{" "}
                     {myFlight?.user?.last_name}
                   </p>
@@ -207,9 +212,9 @@ const ManageBooking = () => {
               <hr />
 
               <div className="mb-2 mt-5">
-                <h2 className="text-lg font-semibold">Flight Details</h2>
+                <h2 className="text-md font-semibold">Flight Details</h2>
                 <hr />
-                <div className="md:flex gap-5 items-center">
+                <div className="md:flex gap-5 items-center text-sm">
                   <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
                     <h2 className="font-semibold">Airline</h2>
                     <p>{myFlight?.flight?.airline}</p>
@@ -239,22 +244,22 @@ const ManageBooking = () => {
               </div>
 
               <div className="mt-5">
-                <h2 className="text-lg font-semibold">
+                <h2 className="text-md font-semibold">
                   Cancelation and Refund
                 </h2>
                 <hr />
-                <div className="grid grid-cols-2 mt-2">
+                <div className="grid grid-cols-2 mt-2 text-sm">
                   <p>Your paid amount for this flight</p>
                   <p>= {paidAmount} BDT</p>
                 </div>
-                <div className="grid grid-cols-2 mt-2 md:mt-0">
+                <div className="grid grid-cols-2 mt-2 md:mt-0 text-sm">
                   <p>Deducted 30% cancelation fee</p>
                   <p>= {deductedAmount} BDT</p>
                 </div>
                 <div className="w-3/4">
                   <hr />
                 </div>
-                <div className="grid grid-cols-2 mt-2 md:mt-0">
+                <div className="grid grid-cols-2 mt-2 md:mt-0 text-sm">
                   <p>Total refund amount</p>
                   <p>= {refundAmount} BDT</p>
                 </div>
@@ -263,7 +268,7 @@ const ManageBooking = () => {
                 <div className="mt-4">
                   <label
                     htmlFor="exampleField"
-                    className="block font-bold mb-2"
+                    className="block font-bold mb-2 text-md"
                   >
                     Why you want to cancel the flight?
                     <span className="text-red-600">*</span>
@@ -280,19 +285,19 @@ const ManageBooking = () => {
                   />
                 </div>
                 {/* End of form fields */}
-                <div className="flex justify-end mt-2">
-                  <button
-                    type="submit"
-                    className="bg-cyan-500 text-white py-2 px-4 rounded-lg hover:bg-cyan-600 transition duration-150"
-                  >
-                    Submit
-                  </button>
+                <div className="flex justify-end mt-2 sm:mt-5 tracking-wide">
                   <div
                     onClick={closeModal}
-                    className="btn ml-2 btn-warning border-none bg-red-400 hover:bg-red-500 text-white"
+                    className="mr-2 sm:mr-4 py-1 px-4 rounded-md border-none bg-red-500 hover:bg-red-600 cursor-pointer  transition duration-150 text-white"
                   >
                     Close
                   </div>
+                  <button
+                    type="submit"
+                    className="bg-cyan-500 text-white py-1 px-4 rounded-md border-none hover:bg-cyan-600 transition duration-150"
+                  >
+                    Submit
+                  </button>
                 </div>
               </form>
             </div>

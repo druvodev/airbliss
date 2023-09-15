@@ -13,6 +13,8 @@ const CancelBookingTable = ({
   status,
   action,
   handleCancelApproved,
+  setDetails,
+  feedbackTitle,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -36,117 +38,125 @@ const CancelBookingTable = ({
 
   return (
     <div className="overflow-x-auto shadow-md mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Booking Reference</th>
-            <th>Flight Name</th>
-            <th>Flight Date</th>
-            <th>Travel Path</th>
-            <th>Cancel Reason</th>
-            <th className="capitalize">{status}</th>
-            {!action && <th>Action</th>}
-          </tr>
-        </thead>
-        <tbody>
-          {bookings?.slice(startIndex, endIndex).map((flight, index) => (
-            <tr key={index}>
-              <th>{index + 1}</th>
-              <td>{flight?.bookingReference}</td>
+      {bookings.length < 1 ? (
+        <div className="w-full flex items-center justify-center mt-20">
+          <p className="sm:text-sm md:text-base lg:text-xl"> No data found</p>
+        </div>
+      ) : (
+        <table className="table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Booking Reference</th>
+              <th>Flight Name</th>
+              <th>Flight Date</th>
+              <th>Travel Path</th>
+              <th className="capitalize">{status}</th>
+              <th className="capitalize">{feedbackTitle}</th>
+              {!action && <th>Action</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {bookings?.slice(startIndex, endIndex).map((flight, index) => (
+              <tr key={index}>
+                <th>{index + 1}</th>
+                <td>{flight?.bookingReference}</td>
 
-              <td>{flight?.flight.airline}</td>
+                <td>{flight?.flight.airline}</td>
 
-              <td>{flight?.flight?.arrivalDate}</td>
-              <td>
-                {flight?.flight?.departureCity} To {flight?.flight?.arrivalCity}
-              </td>
-              <td>
-                {flight?.cancel_reason
-                  ? flight?.cancel_reason
-                  : "No Reason found"}
-              </td>
-              <td className="capitalize">
-                {status === "flight status" && (
-                  <span>
-                    {flight?.bookingStatus} ({flight?.requestStatus})
-                  </span>
-                )}
-                {status === "cancel status" && (
-                  <span>{flight?.requestStatus}</span>
-                )}
-                {status === "confirm status" && (
-                  <span>{flight?.requestStatus}</span>
-                )}
-              </td>
-              {!action && (
-                <td className="flex gap-2 mt-2">
-                  <Link
-                    to={{
-                      pathname: `/dashboard/ticketHistory/${flight?.bookingReference}`,
-                    }}
-                  >
-                    <button
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400 hover:bg-cyan-500
-                  }`}
-                    >
-                      <FaInfo />
-                    </button>
-                  </Link>
-
-                  {flight?.requestStatus === "pending" ? (
-                    <button
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 hover:bg-blue-500
-                  }`}
-                      onClick={() => {
-                        setFlightRef(flight?.bookingReference);
-                        handleCancelApproved();
-                      }}
-                    >
-                      <FaCheck />
-                    </button>
-                  ) : (
-                    <button
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 opacity-30
-                  }`}
-                      onClick={() => {
-                        setFlightRef(flight?.bookingReference);
-                        handleCancelApproved();
-                      }}
-                      disabled
-                    >
-                      <FaCheck />
-                    </button>
+                <td>{flight?.flight?.arrivalDate}</td>
+                <td>
+                  {flight?.flight?.departureCity} To{" "}
+                  {flight?.flight?.arrivalCity}
+                </td>
+                <td className="capitalize">
+                  {status === "flight status" && (
+                    <span>
+                      {flight?.bookingStatus}{" "}
+                      <span
+                        className={`${
+                          flight?.requestStatus === "denied" && "text-red-500"
+                        }`}
+                      >
+                        ({flight?.requestStatus})
+                      </span>
+                    </span>
                   )}
-
-                  {flight?.requestStatus === "pending" ? (
-                    <button
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  hover:bg-red-500`}
-                      onClick={() => {
-                        openModal();
-                        setFlightRef(flight?.bookingReference);
-                      }}
+                  {status === "cancel status" && (
+                    <span
+                      className={`${
+                        flight?.requestStatus === "denied" && "text-red-500"
+                      }`}
                     >
-                      <MdCancel />
-                    </button>
-                  ) : (
-                    <button
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  opacity-30`}
-                      onClick={() => {
-                        openModal();
-                        setFlightRef(flight?.bookingReference);
-                      }}
-                      disabled
-                    >
-                      <MdCancel />
-                    </button>
+                      {flight?.requestStatus}
+                    </span>
+                  )}
+                  {status === "confirm status" && (
+                    <span>{flight?.requestStatus}</span>
                   )}
                 </td>
-              )}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                <td>
+                  {feedbackTitle === "admin feedback"
+                    ? flight?.deniedFeedback
+                    : "I want to cancel for my personal issue"}
+                </td>
+                {!action && (
+                  <td className="flex gap-2 mt-2">
+                    {flight?.requestStatus === "pending" ? (
+                      <button
+                        className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 hover:bg-blue-500
+                  }`}
+                        onClick={() => {
+                          setFlightRef(flight?.bookingReference);
+                          handleCancelApproved(flight);
+                        }}
+                      >
+                        <FaCheck />
+                      </button>
+                    ) : (
+                      <button
+                        className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 opacity-30
+                  }`}
+                        onClick={() => {
+                          setFlightRef(flight?.bookingReference);
+                          handleCancelApproved();
+                        }}
+                        disabled
+                      >
+                        <FaCheck />
+                      </button>
+                    )}
+
+                    {flight?.requestStatus === "pending" ? (
+                      <button
+                        className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  hover:bg-red-500`}
+                        onClick={() => {
+                          openModal();
+                          setFlightRef(flight?.bookingReference);
+                        }}
+                      >
+                        <MdCancel />
+                      </button>
+                    ) : (
+                      <button
+                        className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  opacity-30`}
+                        onClick={() => {
+                          openModal();
+                          setFlightRef(flight?.bookingReference);
+                        }}
+                        disabled
+                      >
+                        <MdCancel />
+                      </button>
+                    )}
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
       <section className="mt-12 flex justify-end items-center">
         <button
           className="border-[1px] p-2 rounded-l-md"
