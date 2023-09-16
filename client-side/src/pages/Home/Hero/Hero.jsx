@@ -62,6 +62,8 @@ const Hero = () => {
                     "Special Easy Visa Processing & Perks!",
                     1000,
                   ]}
+                  cursor={false} // omit the default css typing animation class
+                  className="type"
                   deletionSpeed={60}
                   speed={{ type: "keyStrokeDelayInMs", value: 150 }}
                   repeat={Infinity}

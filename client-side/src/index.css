@@ -20,8 +20,13 @@
     grid-template-columns: 1fr 1fr 1.4fr 1fr;
   }
 }
-
-
-
-
-
+.type::after {
+  content: ".";
+  animation: cursor 0.8s infinite step-start;
+  color: #ff2b2b;
+}
+@keyframes cursor {
+  50% {
+    opacity: 0;
+  }
+}
