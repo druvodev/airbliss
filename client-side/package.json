@@ -36,6 +36,7 @@
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
     "react-spinners": "^0.13.8",
+    "react-type-animation": "^3.1.0",
     "recharts": "^2.7.3",
     "shortid": "^2.2.16",
     "swiper": "^10.2.0"
