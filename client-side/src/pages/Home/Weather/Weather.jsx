@@ -3,6 +3,7 @@ import SectionTitle from "../../../Components/SectionTitle";
 import moment from "moment/moment";
 import "./weather.css";
 import { useSelector } from "react-redux";
+import sky from "../../../assets/gif/pexels-miguel-á-padriñán-6772137 (2160p).mp4"
 
 const Weather = () => {
   const toDestination = useSelector(
@@ -14,9 +15,8 @@ const Weather = () => {
 
   const [weather, setWeather] = useState();
   useEffect(() => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${arrivalCity}&appid=${
-      import.meta.env.VITE_WEATHER_KEY
-    }`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${arrivalCity}&appid=${import.meta.env.VITE_WEATHER_KEY
+      }`;
 
     fetch(url)
       .then((res) => res.json())
@@ -53,12 +53,16 @@ const Weather = () => {
   return (
     <div className="bg-gradient mb-5 top-2 ">
       <div className="login_form_container">
+        <video autoPlay muted loop className="background-video">
+          <source src={sky} type="video/mp4" />
+          <div className="overlay"></div>
+        </video>
         <div className="login_form absolute ">
           <h1 className="text-white text-center md:text-2xl font-bold">
             Weather Update For Safe Journey
           </h1>
           {arrivalCity ? (
-            <div className="backdrop-blur-sm  md:h-[55%] text-black w mt-2 bg-black/10  rounded-lg">
+            <div className="backdrop-blur-sm  md:h-[55%] text-black w mt-2 rounded-lg">
               <h2 className="text-5xl pt-5 text-center">{weather?.name}</h2>
               <p className="text-center mb-5">
                 {moment(sunrise).format("MMM Do YYYY")}
@@ -72,7 +76,7 @@ const Weather = () => {
               </h1>
               <div>
                 <div className="grid font-semibold grid-cols-3 md:grid-cols-3 gap-4 md:mx-52 ">
-                  <div className="bg-white/20 flex flex-col  justify-center text-2xl glass rounded-md">
+                  <div className="bg-white/10 flex flex-col glass justify-center text-2xl rounded-md">
                     <img
                       className="object-cover w-24 mx-auto"
                       src="https://icons.iconarchive.com/icons/custom-icon-design/lovely-weather-2/512/Humidity-icon.png"
@@ -82,7 +86,7 @@ const Weather = () => {
                       {humidity}% Humidity
                     </p>
                   </div>
-                  <div className="bg-white/20 glass rounded-md">
+                  <div className="bg-white/10 glass rounded-md">
                     <img
                       className="object-cover w-24 mx-auto"
                       src={conditionalImg}
@@ -93,7 +97,7 @@ const Weather = () => {
                     </p>
                   </div>
 
-                  <div className="bg-white/20 flex flex-col justify-center text-2xl glass rounded-md">
+                  <div className="bg-white/10 flex flex-col justify-center text-2xl glass rounded-md">
                     <img
                       className="object-cover w-24 mx-auto"
                       src="https://cdn-icons-png.flaticon.com/512/2691/2691887.png"
