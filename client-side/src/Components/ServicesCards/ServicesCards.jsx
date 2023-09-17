@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ServicesCards = ({ services }) => {
   return (
@@ -26,9 +27,11 @@ const ServicesCards = ({ services }) => {
               )}
             </h2>
             <p className="mb-2 pr-2">{service?.caption}</p>
-            <button className="ml-auto bg-cyan-700 hover:bg-cyan-600 px-5 rounded-full h-[38px] text-white font-semibold">
-              See All
-            </button>
+            <Link to={`/service/${service?._id}`}>
+              <button className="ml-auto bg-cyan-700 hover:bg-cyan-600 px-5 rounded-full h-[38px] text-white font-semibold">
+                See All
+              </button>
+            </Link>
           </div>
         </div>
       ))}
