@@ -19,7 +19,7 @@ const RecommendedFlights = () => {
             <GiAirplaneDeparture /> --------
           </p> */}
           <SectionTitle sectionTitle={"Recommended Flights"} />
-          <p className=" text-sm sm:text-base mb-10">
+          <p className=" text-sm sm:text-base mb-5">
             Most famous Flights of us. Our happy clients always happy with these
             Flights. <br /> The flights are always maintenance there roles and
             regulations
@@ -33,12 +33,12 @@ const RecommendedFlights = () => {
           {flights.map((flight) => (
             <div
               key={flight._id}
-              className="border card overflow-hidden rounded-md shadow-lg p-5"
+              className="card overflow-hidden rounded-md shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] p-3 bg-white"
             >
               <div>
                 <div className="flex gap-5 container ">
                   <img
-                    className="object-cover rounded-md shadow-md h-52 mb-20 w-full"
+                    className="object-cover rounded-md shadow h-52 mb-20 w-full"
                     src={flight?.imageSrc}
                   />
                 </div>
@@ -61,10 +61,10 @@ const RecommendedFlights = () => {
                 </div>
               </div>
               <div className="flex  items-center align-middle justify-between  mt-8">
-                <button className="rounded-full  pb-[2px] bg-cyan-700 hover:bg-cyan-600 font-bold px-3 text-white">
+                <button className="rounded-full  pb-[2px] bg-cyan-700 hover:bg-cyan-600 font-semibold px-3 text-white">
                   View
                 </button>
-                <button className="rounded-full border text-sky-500 px-3 font-bold hover:bg-cyan-700 hover:text-white border-sky-500 ">
+                <button className="rounded-full border text-sky-500 px-3 font-semibold hover:bg-cyan-700 hover:text-white border-sky-500 ">
                   Book
                 </button>
               </div>
