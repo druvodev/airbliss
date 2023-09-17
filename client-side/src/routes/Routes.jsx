@@ -24,6 +24,7 @@ import AdminRoute from "./AdminRoute";
 import ManageAllBookings from "../Dashboard/Admin/ManageAllBookings/ManageAllBookings";
 import UserInsurance from "../Dashboard/User/UserInsurance/UserInsurance";
 import AdminInsurance from "../Dashboard/Admin/AdminInsurance/AdminInsurance";
+import InsurancePolicy from "../pages/InsurancePolicy/InsurancePolicy";
 import ServicesDetails from "../pages/ServicesDetails/ServicesDetails";
 
 // const selector = useSelector(state =>console.log(state))
@@ -81,7 +82,10 @@ export const router = createBrowserRouter([
         path: "hotelDetails/:id",
         element: <HotelDetails></HotelDetails>,
       },
-      ,
+      {
+        path: "/insurance-policy",
+        element: <InsurancePolicy />,
+      },
       {
         path: "service/:id",
         element: <ServicesDetails />,
