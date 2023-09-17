@@ -3,7 +3,9 @@ import { FaEye, FaHandsHolding, FaHandsHoldingCircle } from 'react-icons/fa6';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalInsurance from './ModalInsurance';
 import { toast } from "react-hot-toast";
-import { setRefetch } from "../../../redux/features/usersSlice";
+import { GrNext, GrPrevious } from 'react-icons/gr';
+
+const ITEMS_PER_PAGE = 5;
 
 const UserInsurance = () => {
     const bookings = useSelector((state) => state?.userInfo?.userBookings);
@@ -11,75 +13,91 @@ const UserInsurance = () => {
     console.log(insuranceBookings);
     const dispatch = useDispatch()
     const [selectedInsurance, setSelectedInsurance] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
 
-  const handleFormSubmit = (
-    insurance,
-    premiumType,
-    requireAmount,
-    summary,
-    image
-  ) => {
-    const formData = new FormData();
-    formData.append("image", image);
+    const handlePaginationPrev = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
-    const url = `https://api.imgbb.com/1/upload?key=${
-      import.meta.env.VITE_IMGBB_KEY
-    }`;
+    const handlePaginationNext = () => {
+        const totalPages = Math.ceil(insuranceBookings?.length / ITEMS_PER_PAGE);
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
 
-    fetch(url, {
-      method: "POST",
-      body: formData,
-    })
-      .then((res) => res.json())
-      .then((imageData) => {
-        const imageUrl = imageData.data.display_url;
-        console.log(imageUrl);
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
 
-        const insuranceData = {
-          media: imageUrl,
-          summary: summary,
-          requireAmount: requireAmount,
-          premiumType: premiumType,
-        };
-        fetch(
-          `http://localhost:5000/insuranceClaim/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ insuranceData }),
-          }
-        )
-          .then((res) => res.json())
-          .then((data) => {
-            // if (data.error) {
-            //     console.error("Server Error:", data.error);
-            // } else {
-            //     dispatch(setRefetch(new Date().toString()));
-            //     console.log(data);
-            // }
-            dispatch(setRefetch(new Date().toString()));
-            console.log(data);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err.message);
-        toast.error(err.message);
-      });
-  };
+    const handleFormSubmit = (
+        insurance,
+        premiumType,
+        requireAmount,
+        summary,
+        image
+    ) => {
+        const formData = new FormData();
+        formData.append("image", image);
 
-  const openModal = (insurance) => {
-    setSelectedInsurance(insurance);
-    document.getElementById("my_modal_1")?.showModal();
-  };
+        const url = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_KEY
+            }`;
 
-  const closeModal = () => {
-    setSelectedInsurance(null);
-  };
+        fetch(url, {
+            method: "POST",
+            body: formData,
+        })
+            .then((res) => res.json())
+            .then((imageData) => {
+                const imageUrl = imageData.data.display_url;
+                console.log(imageUrl);
+
+                const insuranceData = {
+                    media: imageUrl,
+                    summary: summary,
+                    requireAmount: requireAmount,
+                    premiumType: premiumType,
+                };
+                fetch(
+                    `http://localhost:5000/insuranceClaim/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
+                    {
+                        method: "PATCH",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ insuranceData }),
+                    }
+                )
+                    .then((res) => res.json())
+                    .then((data) => {
+                        // if (data.error) {
+                        //     console.error("Server Error:", data.error);
+                        // } else {
+                        //     dispatch(setRefetch(new Date().toString()));
+                        //     console.log(data);
+                        // }
+                        // dispatch(setRefetch(new Date().toString()));
+                        console.log(data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+            })
+            .catch((err) => {
+                console.log(err.message);
+                toast.error(err.message);
+            });
+    };
+
+    const openModal = (insurance) => {
+        setSelectedInsurance(insurance);
+        document.getElementById("my_modal_1")?.showModal();
+    };
+
+    const closeModal = () => {
+        setSelectedInsurance(null);
+    };
 
     return (
         <div>
@@ -109,7 +127,7 @@ const UserInsurance = () => {
                     </thead>
                     <tbody>
                         {
-                            insuranceBookings.map((insurance, index) =>
+                            insuranceBookings.slice(startIndex, endIndex).map((insurance, index) =>
                                 <tr key={index}>
                                     <th>
                                         {index + 1}
@@ -169,6 +187,34 @@ const UserInsurance = () => {
                     />
                 )}
             </div>
+            <section className="mt-12 flex justify-end items-center">
+                <button
+                    className="border-[1px] p-2 rounded-l-md"
+                    onClick={handlePaginationPrev}
+                >
+                    <GrPrevious size={20} />
+                </button>
+                {/* Render pagination buttons based on the total number of pages */}
+                {Array.from(
+                    { length: Math.ceil(insuranceBookings?.length / ITEMS_PER_PAGE) },
+                    (_, index) => (
+                        <h3
+                            key={index}
+                            className={`px-3 py-[6px] border-[1px] cursor-pointer ${index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                                }`}
+                            onClick={() => setCurrentPage(index + 1)}
+                        >
+                            {index + 1}
+                        </h3>
+                    )
+                )}
+                <button
+                    className="border-[1px] p-2 rounded-r-md"
+                    onClick={handlePaginationNext}
+                >
+                    <GrNext size={20} />
+                </button>
+            </section>
         </div>
     );
 };

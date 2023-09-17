@@ -7,6 +7,9 @@ import { MdDone } from 'react-icons/md';
 import ModalDenied from './ModalDenied';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBookingsRefetch } from '../../../redux/features/bookingInfoSlice';
+import { GrNext, GrPrevious } from 'react-icons/gr';
+
+const ITEMS_PER_PAGE = 5;
 
 const AdminInsurance = () => {
     const [selectedInsurance, setSelectedInsurance] = useState(null);
@@ -15,6 +18,23 @@ const AdminInsurance = () => {
     const insuranceBookings = allBookingData.filter(booking => booking?.insurancePolicy?.claimedStatus != null)
     const dispatch = useDispatch()
     const [isModalDeniedOpen, setIsModalDeniedOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const handlePaginationPrev = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const handlePaginationNext = () => {
+        const totalPages = Math.ceil(insuranceBookings?.length / ITEMS_PER_PAGE);
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
 
     console.log(insuranceBookings);
 
@@ -116,7 +136,7 @@ const AdminInsurance = () => {
                     </thead>
                     <tbody>
                         {
-                            insuranceBookings.map((insurance, index) =>
+                            insuranceBookings.slice(startIndex, endIndex).map((insurance, index) =>
                                 <tr key={index}>
                                     <th>
                                         {index + 1}
@@ -193,6 +213,34 @@ const AdminInsurance = () => {
                     />
                 )}
             </div>
+            <section className="mt-12 flex justify-end items-center">
+                <button
+                    className="border-[1px] p-2 rounded-l-md"
+                    onClick={handlePaginationPrev}
+                >
+                    <GrPrevious size={20} />
+                </button>
+                {/* Render pagination buttons based on the total number of pages */}
+                {Array.from(
+                    { length: Math.ceil(insuranceBookings?.length / ITEMS_PER_PAGE) },
+                    (_, index) => (
+                        <h3
+                            key={index}
+                            className={`px-3 py-[6px] border-[1px] cursor-pointer ${index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                                }`}
+                            onClick={() => setCurrentPage(index + 1)}
+                        >
+                            {index + 1}
+                        </h3>
+                    )
+                )}
+                <button
+                    className="border-[1px] p-2 rounded-r-md"
+                    onClick={handlePaginationNext}
+                >
+                    <GrNext size={20} />
+                </button>
+            </section>
         </div>
     );
 };
