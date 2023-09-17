@@ -26,7 +26,7 @@ const SpecialOffer = () => {
       .then((data) => {
         const toCity = data.filter((city) => city.destination !== fromCity);
         const shuffledToCity = [...toCity].sort(() => Math.random() - 0.5);
-        setData(shuffledToCity.slice(0, 6));
+        setData(shuffledToCity.slice(0, 8));
       });
   }, [departureDate, destination]);
 
