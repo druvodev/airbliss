@@ -15,22 +15,22 @@ const OfferCard = ({ offerImg, fromCity, toCity, date, discount }) => {
         >
           <p className="text-2xl font-bold text-white">{discount}%</p>
         </div>
-        <div className="py-2 pl-2 pr-3 flex gap-2 items-center justify-between w-full">
-          <div>
-            <h4 className="font-semibold flex items-center gap-1">
-              <MdOutlineLocationOn className="text-xl hidden sm:block" />{" "}
-              {fromCity.length > 6 ? `${fromCity.substring(0, 6)}..` : fromCity}{" "}
-              to {toCity.length > 6 ? `${toCity.substring(0, 6)}..` : toCity}
-            </h4>
-            <p className="text-sm">{date}</p>
-            <div className="flex items-center text-orange-500">
-              Save up to {discount}%
+        <div className="p-2 grid items-center w-full">
+          <h4 className="font-semibold flex items-center">
+            <MdOutlineLocationOn className="text-xl hidden sm:block" />{" "}
+            {fromCity} to {toCity}
+          </h4>
+          <div className="flex gap-1 justify-between">
+            <div className="mt-auto">
+              {" "}
+              <p className="text-sm">{date}</p>
+              <div className="flex items-center text-orange-500">
+                Save up to {discount}%
+              </div>
             </div>
-          </div>
-          <div className="mt-auto">
             <button
               onClick={handleSearch}
-              className="px-2 border border-accent rounded shadow hover:bg-accent hover:text-white duration-200"
+              className="px-2 mb-1 h-fit mt-auto border border-accent rounded shadow hover:bg-accent hover:text-white duration-200 "
             >
               Book Now
             </button>
