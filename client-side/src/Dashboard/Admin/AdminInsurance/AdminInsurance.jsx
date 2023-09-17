@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { FaEye, FaHandsHolding } from 'react-icons/fa6';
-import ModalApprove from './ModalApprove';
-import { RxCross2 } from 'react-icons/rx';
+import React, { useState } from "react";
+import { FaEye, FaHandsHolding } from "react-icons/fa6";
+import ModalApprove from "./ModalApprove";
+import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-hot-toast";
 import { MdDone } from 'react-icons/md';
 import ModalDenied from './ModalDenied';
@@ -36,77 +36,81 @@ const AdminInsurance = () => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
 
-    console.log(insuranceBookings);
-
-    const handleDenialSubmit = (insurance, premiumType, deniedFeedback) => {
-        const insuranceData = {
-            premiumType: premiumType,
-            deniedFeedback: deniedFeedback,
-        };
-        fetch(`http://localhost:5000/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ insuranceData }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data?.message == "Insurance policy updated") {
-                    toast.success(data.message);
-                    dispatch(setBookingsRefetch(new Date().toString()))
-                } else {
-                    toast.error(data.message);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-
-        setIsModalDeniedOpen(false);
+  const handleDenialSubmit = (insurance, premiumType, deniedFeedback) => {
+    const insuranceData = {
+      premiumType: premiumType,
+      deniedFeedback: deniedFeedback,
     };
+    fetch(
+      `http://localhost:5000/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ insuranceData }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.message == "Insurance policy updated") {
+          toast.success(data.message);
+          dispatch(setBookingsRefetch(new Date().toString()));
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-    const closeDeniedModal = () => {
-        setIsModalDeniedOpen(false);
-    };
+    setIsModalDeniedOpen(false);
+  };
 
-    const handleFormSubmit = (insurance, premiumType, payableAmount) => {
-        const insuranceData = {
-            premiumType: premiumType,
-            claimedAmount: payableAmount,
-        };
-        fetch(`http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ insuranceData }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data?.message == "Insurance policy updated") {
-                    toast.success(data.message);
-                    dispatch(setBookingsRefetch(new Date().toString()))
-                } else {
-                    toast.error(data.message);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        return
-    };
+  const closeDeniedModal = () => {
+    setIsModalDeniedOpen(false);
+  };
 
-    const openModal = (insurance) => {
-        setSelectedInsurance(insurance);
-        setIsModalApprovedOpen(true); // Open the "approved" modal by default
+  const handleFormSubmit = (insurance, premiumType, payableAmount) => {
+    const insuranceData = {
+      premiumType: premiumType,
+      claimedAmount: payableAmount,
     };
+    fetch(
+      `http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ insuranceData }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.message == "Insurance policy updated") {
+          toast.success(data.message);
+          dispatch(setBookingsRefetch(new Date().toString()));
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return;
+  };
 
-    const closeModal = () => {
-        setSelectedInsurance(null);
-        setIsModalApprovedOpen(false);
-        setIsModalDeniedOpen(false);
-    };
+  const openModal = (insurance) => {
+    setSelectedInsurance(insurance);
+    setIsModalApprovedOpen(true); // Open the "approved" modal by default
+  };
+
+  const closeModal = () => {
+    setSelectedInsurance(null);
+    setIsModalApprovedOpen(false);
+    setIsModalDeniedOpen(false);
+  };
 
     return (
         <div>
