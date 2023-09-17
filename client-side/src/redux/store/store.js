@@ -9,6 +9,7 @@ import trackingNavigationReducer from "../features/trakingNavigationSlice";
 import bookTicketReducer from "../features/bookTicketSlice";
 import addFlightReducer from "../features/addFlightSlice";
 import insuranceReducer from "../features/insuranceSlice";
+import services from "../features/servicesSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
     trackingNavigation: trackingNavigationReducer,
     bookTicket: bookTicketReducer,
     addFlight: addFlightReducer,
+    ourServices: services,
   },
 });

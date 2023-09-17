@@ -88,6 +88,7 @@ async function run() {
     const usersCollection = database.collection("users");
     const bookingsManageCollection = database.collection("bookingsManage");
     const insuranceCollection = database.collection("insurance");
+    const servicesCollection = database.collection("services");
 
     app.post("/jwt", (req, res) => {
       const user = req.body;
@@ -101,6 +102,12 @@ async function run() {
     // Flights Get
     app.get("/flights", async (req, res) => {
       const result = await flightsCollection.find().toArray();
+      res.send(result);
+    });
+
+    // API for Our Services
+    app.get("/services", async (req, res) => {
+      const result = await servicesCollection.find().toArray();
       res.send(result);
     });
 
