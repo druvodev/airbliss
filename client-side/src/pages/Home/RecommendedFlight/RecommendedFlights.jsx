@@ -30,9 +30,9 @@ const RecommendedFlights = () => {
           data-testid="cards-container"
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7"
         >
-          {flights.map((flight) => (
+          {flights.map((flight, inx) => (
             <div
-              key={flight._id}
+              key={inx}
               className="border card overflow-hidden rounded-md shadow-lg p-5"
             >
               <div>
