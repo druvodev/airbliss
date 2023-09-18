@@ -88,6 +88,7 @@ async function run() {
     const usersCollection = database.collection("users");
     const bookingsManageCollection = database.collection("bookingsManage");
     const insuranceCollection = database.collection("insurance");
+    const residualCollection = database.collection("residualBookings");
     const servicesCollection = database.collection("services");
 
     app.post("/jwt", (req, res) => {
@@ -909,7 +910,24 @@ async function run() {
       res.send(result);
     });
 
-    // ############################## Manage Bookings ##############################
+    // ######################### Booking Residual #########################
+    // send available seats
+    app.get(
+      "/rescheduleSeat/:flightId/:totalSeats/:departureDate",
+      async (req, res) => {
+        const { flightId, departureDate, totalSeats } = req.params;
+        const availableSeat =
+          (await availableSeats(flightId, departureDate)) ||
+          (await generateSeatData(totalSeats, flightId, departureDate));
+        if (availableSeat) {
+          res.status(200).json({ availableSeat });
+        } else {
+          res.status(404).json({ message: "No available seats." });
+        }
+      }
+    );
+
+    // ######################### Manage Bookings ############################
     // Get all request bookings
     app.get("/bookings-manage", async (req, res) => {
       const result = await bookingsManageCollection.find().toArray();
