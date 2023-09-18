@@ -26,6 +26,7 @@ import UserInsurance from "../Dashboard/User/UserInsurance/UserInsurance";
 import AdminInsurance from "../Dashboard/Admin/AdminInsurance/AdminInsurance";
 import InsurancePolicy from "../pages/InsurancePolicy/InsurancePolicy";
 import ServicesDetails from "../pages/ServicesDetails/ServicesDetails";
+import FlightDetails from "../Dashboard/FlightStatus/FlightDetails/FlightDetails";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -172,6 +173,15 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AdminInsurance />
+          </AdminRoute>
+        ),
+      },
+
+      {
+        path: "flightDetails/:airportCode/:_id/:id",
+        element: (
+          <AdminRoute>
+            <FlightDetails />
           </AdminRoute>
         ),
       },

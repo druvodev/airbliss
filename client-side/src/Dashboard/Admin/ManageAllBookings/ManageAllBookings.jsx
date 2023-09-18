@@ -18,16 +18,11 @@ const ManageAllBooking = () => {
   const [airportCode, setAirportCode] = useState("");
   const [details, setDetails] = useState(false);
 
-  const [cancelDetails, setCancelDetails] = useState(false);
-
   const dispatch = useDispatch();
-  // const [allBookings, setAllBookings] = useState([]);
 
   const handleTabClick = (tab) => {
     setIsActive(tab);
   };
-
-  console.log("flightRef", flightRef);
 
   const allBookings = useSelector((state) => state.userBookingInfo.allBookings);
 
@@ -64,8 +59,6 @@ const ManageAllBooking = () => {
       setAirportCode(selectedFlight?.flight?.departureAirport);
     }
   }, [selectedFlight]);
-
-  console.log("My Flight", selectedFlight);
 
   const openModal = () => {
     setIsModalOpen(true);
