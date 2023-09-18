@@ -1035,43 +1035,6 @@ async function run() {
       }
     );
 
-    app.get("/updateSeat/:flightDate/:flightId/:seatNo", async (req, res) => {
-      const { flightDate, flightId, seatNo } = req.params;
-      const available = false;
-
-      try {
-        const updateResult = await seatsCollection.updateOne(
-          {
-            [flightDate]: {
-              $elemMatch: {
-                flightId: flightId,
-                "seats.seatNo": seatNo,
-                "seats.available": true,
-              },
-            },
-          },
-          {
-            $set: {
-              [`${flightDate}.$[flight].seats.$[seat].available`]: available,
-            },
-            $inc: {
-              [`${flightDate}.$[flight].available`]: -1,
-            },
-          },
-          {
-            arrayFilters: [
-              { "flight.flightId": flightId },
-              { "seat.seatNo": seatNo },
-            ],
-          }
-        );
-
-        res.json({ success: updateResult.nModified > 0 });
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    });
-
     // ######################### Manage Bookings ############################
     // Get all request bookings
     app.get("/bookings-manage", async (req, res) => {
