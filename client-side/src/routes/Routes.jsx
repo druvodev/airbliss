@@ -26,6 +26,7 @@ import UserInsurance from "../Dashboard/User/UserInsurance/UserInsurance";
 import AdminInsurance from "../Dashboard/Admin/AdminInsurance/AdminInsurance";
 import InsurancePolicy from "../pages/InsurancePolicy/InsurancePolicy";
 import ServicesDetails from "../pages/ServicesDetails/ServicesDetails";
+import ApplyReschedule from "../Dashboard/User/ApplyReschedule/ApplyReschedule";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -175,6 +176,10 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+      {
+        path: "applyReschedule",
+        element: <ApplyReschedule />,
+      }
     ],
   },
 ]);

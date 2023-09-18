@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FaHandHoldingMedical, FaHome, FaHouseUser } from "react-icons/fa";
 import { TiGroup } from "react-icons/ti";
 import { BiSolidAddToQueue } from "react-icons/bi";
-import { MdManageSearch } from "react-icons/md";
+import { MdManageSearch, MdOutlineAirplaneTicket } from "react-icons/md";
 import { BsFillPersonFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -119,7 +119,7 @@ const AdminNav = () => {
           }`
         }
       >
-        <MdManageSearch className="w-5 h-5" />
+        <MdOutlineAirplaneTicket className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Bookings</span>
       </NavLink>

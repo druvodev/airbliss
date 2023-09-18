@@ -7,6 +7,7 @@ import useAuth from "../../../hooks/useAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserBookings } from "../../../redux/features/usersSlice";
 import { MdManageSearch } from "react-icons/md";
+import { TbCalendarTime } from "react-icons/tb";
 
 const UserNav = () => {
   const { user } = useAuth();
@@ -66,6 +67,20 @@ const UserNav = () => {
         <FaHandHoldingMedical className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Insurance</span>
+      </NavLink>
+      <NavLink
+        to="applyReschedule"
+        className={({ isActive }) =>
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
+          }`
+        }
+      >
+        <TbCalendarTime className="w-5 h-5" />
+
+        <span className="mx-4 font-medium">Reschedule</span>
       </NavLink>
       <NavLink
         to="account"
