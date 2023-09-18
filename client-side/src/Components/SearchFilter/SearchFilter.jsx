@@ -539,7 +539,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
         <div className="flex justify-center -mb-11">
           <Link to="/flights">
             <button
-              className="px-10 py-3 rounded bg-cyan-600 active:bg-cyan-700 text-white font-semibold"
+              className="px-10 py-3 rounded bg-cyan-600 hover:bg-cyan-700 active:bg-cyan-800 text-white font-semibold"
               onClick={handleSearch}
             >
               {filterName}

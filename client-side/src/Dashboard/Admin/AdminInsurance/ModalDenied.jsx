@@ -101,7 +101,7 @@ const ModalDenied = ({ insurance, onClose, onSubmit }) => {
                         <div className="mb-2 mt-5">
                             <h2 className="text-md font-semibold">Claimed Insurance</h2>
                             <hr />
-                            <div className="grid grid-cols-2 gap-5 mt-2 mb-3">
+                            <div className="grid gri lg:grid-cols-2 gap-5 mt-2 mb-3">
                                 <div className="text-sm">
                                     <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
                                         <h2 className="font-semibold">Premium Type</h2>
@@ -130,7 +130,7 @@ const ModalDenied = ({ insurance, onClose, onSubmit }) => {
                             </div>
                             <hr />
                             <form onSubmit={handleSubmit}>
-                                <div className="grid grid-cols-2 gap-5">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
                                     <div>
                                         <label
                                             htmlFor="gender"

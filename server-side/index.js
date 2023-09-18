@@ -88,6 +88,7 @@ async function run() {
     const usersCollection = database.collection("users");
     const bookingsManageCollection = database.collection("bookingsManage");
     const insuranceCollection = database.collection("insurance");
+    const servicesCollection = database.collection("services");
 
     app.post("/jwt", (req, res) => {
       const user = req.body;
@@ -101,6 +102,12 @@ async function run() {
     // Flights Get
     app.get("/flights", async (req, res) => {
       const result = await flightsCollection.find().toArray();
+      res.send(result);
+    });
+
+    // API for Our Services
+    app.get("/services", async (req, res) => {
+      const result = await servicesCollection.find().toArray();
       res.send(result);
     });
 
@@ -118,6 +125,7 @@ async function run() {
       // res.send(result);
     });
 
+    // Add Flight Api
     app.post("/add_flight/:id", async (req, res) => {
       const id = req.params.id;
       const formAirportCode = req.query.airportCode;
@@ -149,13 +157,32 @@ async function run() {
           { $push: { [formAirportCode]: newFlightObject } } // removed unnecessary template string
         );
 
-        console.log("Single Flight:", singleFlight);
-        console.log("Result:", result);
-
         res.send(result);
       } catch (error) {
         console.error("Error:", error);
         res.status(500).send("An error occurred");
+      }
+    });
+
+    // Manage Flight Api
+    app.get("/manageAllFlights/:airportCode/:id", async (req, res) => {
+      const { id, airportCode } = req.params;
+
+      try {
+        const findFlight = await flightsCollection.find().toArray();
+        const singleFlight = findFlight.find(
+          (flight) => flight._id.toString() === id
+        );
+
+        if (singleFlight && singleFlight[airportCode]) {
+          const airportData = singleFlight[airportCode];
+          res.send(airportData);
+        } else {
+          res.status(404).send("Airport data not found");
+        }
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
       }
     });
 

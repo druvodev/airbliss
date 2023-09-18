@@ -45,8 +45,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setAllUserInfo(users))
-  }, [ users]);
+    dispatch(setAllUserInfo(users));
+  }, [users]);
 
   useEffect(() => {
     dispatch(setUserInfo(currentUser));

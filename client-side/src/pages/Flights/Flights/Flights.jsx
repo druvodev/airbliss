@@ -7,12 +7,10 @@ import { useEffect, useState } from "react";
 import BookFlight from "../BookingFlights/BookFlight/BookFlight";
 import Weather from "../../Home/Weather/Weather";
 import { useCountdownContext } from "../../../providers/CountdownContext";
-import { useLocation } from "react-router";
 
+import SpecialOffer from "../../../Components/SpecialOffer/SpecialOffer";
 
 const Flights = () => {
-  
-
   const { setIsStart } = useCountdownContext();
   const [isShowSearch, setIsShowSearch] = useState(false);
 
@@ -58,7 +56,10 @@ const Flights = () => {
         <div className="hidden lg:block">
           <SearchFilter bookingType="flight" filterName="Modify Search" />
         </div>
-        <div className=" grid md:grid-cols-3 gap-10 mt-12 px-5 sm:px-10">
+        <div className="px-5 sm:px-10">
+          <SpecialOffer />
+        </div>
+        <div className="grid md:grid-cols-3 gap-10 mt-5 px-5 sm:px-10">
           <div className="col-span-1 hidden lg:block">
             <ResultsFilter />
           </div>

@@ -8,14 +8,33 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setAllBookings } from "../../../redux/features/bookingInfoSlice";
+import UseAxiosSecure from "../../../hooks/UseAxiosSecure";
+import { setAllUserInfo } from "../../../redux/features/usersSlice";
+import {
+  setFlights,
+  setLoading,
+} from "../../../redux/features/manageFlightSlice";
 
 const AdminNav = () => {
+  const [axiosSecure] = UseAxiosSecure();
   const dispatch = useDispatch();
-  const allBooking = useSelector((state) => state.userBookingInfo.allBookings);
+  const allBooking = useSelector((state) => state?.userBookingInfo.allBookings);
+  const { id, airportCode } = useSelector((state) => state?.manageFlight?.path);
+
   const bookingsRefetch = useSelector(
     (state) => state.userBookingInfo.bookingsRefetch
   );
-  const userData = useSelector((state) => state?.userInfo.allUserInfo);
+  useEffect(() => {
+    axiosSecure
+      .get("/users")
+      .then((response) => {
+        dispatch(setAllUserInfo(response?.data));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, [axiosSecure]);
+
   useEffect(() => {
     fetch(`http://localhost:5000/allBookings`)
       .then((res) => res.json())
@@ -23,6 +42,22 @@ const AdminNav = () => {
         dispatch(setAllBookings(data));
       });
   }, [bookingsRefetch]);
+
+  useEffect(() => {
+    if (airportCode) {
+      dispatch(setLoading(true));
+      fetch(`http://localhost:5000/manageAllFlights/${airportCode}/${id}`)
+        .then((response) => response.json())
+        .then((data) => {
+          dispatch(setFlights(data));
+          dispatch(setLoading(false));
+        })
+        .catch((error) => {
+          console.error(error);
+          dispatch(setLoading(false));
+        });
+    }
+  }, [id, airportCode]);
 
   return (
     <>

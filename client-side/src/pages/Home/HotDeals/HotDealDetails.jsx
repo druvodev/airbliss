@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router";
 import HotelAdd from "../../../Components/Card/HotelAdd";
+import useScrollTop from "../../../hooks/useScrollTop";
 import DiscountedHotelCard from "../../../Components/Card/DiscountedHotelCard";
 
 const HotDealDetails = () => {
@@ -25,6 +26,7 @@ const HotDealDetails = () => {
 
   return (
     <div>
+      {/* <img className="w-full object-cover h-52" src={detailsBanner} alt="" /> */}
       <div className="lg:pb-16 pt-24 px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
         <div className="lg:w-10/12 mx-auto">
           {deal.map((d) => (

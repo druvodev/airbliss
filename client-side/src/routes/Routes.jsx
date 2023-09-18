@@ -24,7 +24,9 @@ import AdminRoute from "./AdminRoute";
 import ManageAllBookings from "../Dashboard/Admin/ManageAllBookings/ManageAllBookings";
 import UserInsurance from "../Dashboard/User/UserInsurance/UserInsurance";
 import AdminInsurance from "../Dashboard/Admin/AdminInsurance/AdminInsurance";
-
+import InsurancePolicy from "../pages/InsurancePolicy/InsurancePolicy";
+import ServicesDetails from "../pages/ServicesDetails/ServicesDetails";
+import FlightDetails from "../Dashboard/FlightStatus/FlightDetails/FlightDetails";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -75,12 +77,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "hotDeals/:id",
-        element: <HotDealDetails></HotDealDetails>
+        element: <HotDealDetails></HotDealDetails>,
       },
       {
         path: "hotelDetails/:id",
-        element: <HotelDetails></HotelDetails>
-      }
+        element: <HotelDetails></HotelDetails>,
+      },
+      {
+        path: "/insurance-policy",
+        element: <InsurancePolicy />,
+      },
+      {
+        path: "service/:id",
+        element: <ServicesDetails />,
+      },
     ],
   },
   {
@@ -163,6 +173,15 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AdminInsurance />
+          </AdminRoute>
+        ),
+      },
+
+      {
+        path: "flightDetails/:airportCode/:_id/:id",
+        element: (
+          <AdminRoute>
+            <FlightDetails />
           </AdminRoute>
         ),
       },
