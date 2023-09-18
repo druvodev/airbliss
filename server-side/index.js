@@ -927,6 +927,151 @@ async function run() {
       }
     );
 
+    // Reusable specific seat value update function
+    async function updateSeatAvailability(
+      flightDate,
+      flightId,
+      seatNo,
+      available
+    ) {
+      try {
+        const updateResult = await seatsCollection.updateOne(
+          {
+            [flightDate]: {
+              $elemMatch: {
+                flightId: flightId,
+                "seats.seatNo": seatNo,
+                "seats.available": true,
+              },
+            },
+          },
+          {
+            $set: {
+              [`${flightDate}.$[flight].seats.$[seat].available`]: available,
+            },
+            $inc: {
+              [`${flightDate}.$[flight].available`]: available ? 0 : -1, // Decrease available total seats by 1 if available is false
+            },
+          },
+          {
+            arrayFilters: [
+              { "flight.flightId": flightId },
+              { "seat.seatNo": seatNo },
+            ],
+          }
+        );
+
+        return updateResult.nModified > 0;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    }
+
+    // reschedule bookings request (USER)
+    app.patch(
+      "/reschedule/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const { date, airportCode, bookingReference } = req.params;
+        const { flightDate, flightId, seatNo } = req.body;
+        const rescheduleStatus = "pending";
+        const available = false;
+        // const seatNo = "A20";
+
+        try {
+          // Construct the update query
+          const updateQuery = {
+            [`${date}.${airportCode}.bookingReference`]: bookingReference,
+          };
+
+          // Construct the update fields to set the residualStatus and seatNo
+          const updateFields = {
+            $set: {
+              [`${date}.${airportCode}.$.residualStatus`]: rescheduleStatus,
+              [`${date}.${airportCode}.$.user.seatNo`]: seatNo,
+            },
+          };
+
+          // Update the booking with the residualStatus and seatNo
+          const result = await bookingsCollection.updateOne(
+            updateQuery,
+            updateFields
+          );
+
+          if (result.modifiedCount === 1) {
+            // Fetch the updated booking information after the update
+            const updatedBookingInfo = await bookingsCollection.findOne({
+              [`${date}.${airportCode}.bookingReference`]: bookingReference,
+            });
+
+            // Update seat availability
+            await updateSeatAvailability(
+              flightDate,
+              flightId,
+              seatNo,
+              available
+            );
+
+            // Extract the updated booking info for the specific bookingReference
+            const updatedBooking = updatedBookingInfo[date][airportCode].find(
+              (booking) => booking.bookingReference === bookingReference
+            );
+
+            // Insert the updated booking into the residualCollection
+            await residualCollection.insertOne({
+              bookingInfo: updatedBooking,
+            });
+
+            res.json({
+              message: "Booking updated with residualStatus and seatNo",
+              updatedBookingInfo: updatedBooking,
+            });
+          } else {
+            res.status(404).json({ message: "Booking not found" });
+          }
+        } catch (err) {
+          console.error("Error updating booking:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
+
+    app.get("/updateSeat/:flightDate/:flightId/:seatNo", async (req, res) => {
+      const { flightDate, flightId, seatNo } = req.params;
+      const available = false;
+
+      try {
+        const updateResult = await seatsCollection.updateOne(
+          {
+            [flightDate]: {
+              $elemMatch: {
+                flightId: flightId,
+                "seats.seatNo": seatNo,
+                "seats.available": true,
+              },
+            },
+          },
+          {
+            $set: {
+              [`${flightDate}.$[flight].seats.$[seat].available`]: available,
+            },
+            $inc: {
+              [`${flightDate}.$[flight].available`]: -1,
+            },
+          },
+          {
+            arrayFilters: [
+              { "flight.flightId": flightId },
+              { "seat.seatNo": seatNo },
+            ],
+          }
+        );
+
+        res.json({ success: updateResult.nModified > 0 });
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    });
+
     // ######################### Manage Bookings ############################
     // Get all request bookings
     app.get("/bookings-manage", async (req, res) => {
@@ -1052,7 +1197,7 @@ async function run() {
     });
 
     app.get("/bookings", async (req, res) => {
-      const result = await bookingsCollection.find().toArray();
+      const result = await seatsCollection.find().toArray();
       res.send(result);
     });
 
