@@ -38,7 +38,8 @@ const RecommendedHotelDetails = () => {
                             <div className='flex gap-y-8  md:gap-x-4 lg:gap-x-6 flex-col md:flex-row md:items-start lg:items-center '>
                                 <img src={f?.bg_pic} alt="" className='md:w-8/12 border-b-2 border-gray-200 pb-3' />
                                 <div>
-
+                                    <h2 className='text-xl sm:text-2xl md:text-xl lg:text-2xl font-bold'>About {f?.airline_name}</h2>
+                                    <p>{f?.about}</p>
                                 </div>
                             </div>
                             <div className='flex md:flex-row gap-x-4 mt-6 flex-col '>
@@ -66,7 +67,7 @@ const RecommendedHotelDetails = () => {
                                                     </div>
                                                     <div className='flex justify-between items-center'>
                                                         <p className='uppercase text-[#01b7f2]'>Flight Change:</p>
-                                                        <p className='uppercase'>{overview?.flight_change}</p>
+                                                        <p className='uppercase'>${overview?.flight_change}/Person</p>
                                                     </div>
                                                     <div className='flex justify-between items-center'>
                                                         <p className='uppercase text-[#01b7f2]'>Seats & baggage:</p>
