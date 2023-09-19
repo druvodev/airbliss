@@ -1,6 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-import { TiTicket } from "react-icons/ti";
 import { RxCaretDown } from "react-icons/rx";
 import { BiScatterChart } from "react-icons/bi";
 import logoBlack from "../../assets/icon/airblissBlack.png";
@@ -11,6 +10,7 @@ import { AuthContext } from "../../providers/AuthProvider";
 import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useDispatch } from "react-redux";
 import { setAllUserInfo, setUserInfo } from "../../redux/features/usersSlice";
+import { PiPhone } from "react-icons/pi";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -72,6 +72,18 @@ const Navbar = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [prevScrollPos]);
+
+  // Scrollingto the section
+  const scrollToDiscountSection = (section) => {
+    const discountSection = document.getElementById(section);
+    const recommendedFlights = document.getElementById(section);
+    const searchFlights = document.getElementById(section);
+    if (discountSection || recommendedFlights || searchFlights) {
+      discountSection.scrollIntoView({ behavior: "smooth" });
+      recommendedFlights.scrollIntoView({ behavior: "smooth" });
+      searchFlights.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const navOption = (
     <>
@@ -154,29 +166,6 @@ const Navbar = () => {
                     tabIndex={0}
                     className="m-1 flex items-center font-medium cursor-pointer"
                   >
-                    <TiTicket className="text-lg mr-1" /> Bookings{" "}
-                    <RxCaretDown />
-                  </label>
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
-                  >
-                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
-                      Flight Booking
-                    </Link>
-                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
-                      Hotels Booking
-                    </Link>
-                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
-                      Cars Booking
-                    </Link>
-                  </ul>
-                </div>
-                <div className="dropdown">
-                  <label
-                    tabIndex={0}
-                    className="m-1 flex items-center font-medium cursor-pointer"
-                  >
                     <BiScatterChart className="text-lg mr-1" /> Categories{" "}
                     <RxCaretDown />
                   </label>
@@ -184,16 +173,67 @@ const Navbar = () => {
                     tabIndex={0}
                     className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
                   >
-                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
-                      Blogs
-                    </Link>
-                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
-                      Gallery
-                    </Link>
+                    <a
+                      onClick={() => {
+                        scrollToDiscountSection("search-flights");
+                      }}
+                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                    >
+                      Search Flights
+                    </a>
+                    <a
+                      onClick={() => {
+                        scrollToDiscountSection("discount-section");
+                      }}
+                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                    >
+                      Exclusive Discounts
+                    </a>
+                    <a
+                      onClick={() => {
+                        scrollToDiscountSection("recommended-flights");
+                      }}
+                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                    >
+                      Recommended Flights
+                    </a>
+                    <a
+                      onClick={() => {
+                        scrollToDiscountSection("discount-hotels");
+                      }}
+                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                    >
+                      Discount On Hotels
+                    </a>
+                  </ul>
+                </div>
+                <div className="dropdown">
+                  <label
+                    tabIndex={0}
+                    className="m-1 flex items-center font-medium cursor-pointer"
+                  >
+                    <PiPhone className="text-lg mr-1" /> Contact Us
+                    <RxCaretDown />
+                  </label>
+                  <ul
+                    tabIndex={0}
+                    className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
+                  >
+                    <a
+                      onClick={() => {
+                        scrollToDiscountSection("our-services");
+                      }}
+                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                    >
+                      Our Services
+                    </a>
                     <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
                       About Us
                     </Link>
-                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
+                    <Link
+                      to="/contact"
+                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                    >
                       Contact
                     </Link>
                   </ul>

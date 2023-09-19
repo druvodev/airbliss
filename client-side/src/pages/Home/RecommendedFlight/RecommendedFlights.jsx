@@ -11,7 +11,7 @@ const RecommendedFlights = () => {
   });
 
   return (
-    <div>
+    <div id="recommended-flights">
       <div>
         <div>
           {/* <h1 className="text-xl mt-2 font-semibold">Recommended Flights</h1>
