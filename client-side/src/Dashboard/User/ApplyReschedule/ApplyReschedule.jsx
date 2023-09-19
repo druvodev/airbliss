@@ -7,6 +7,7 @@ import RescheduleModalSeat from './RescheduleModalSeat';
 import toast from 'react-hot-toast';
 import { setRefetch } from '../../../redux/features/usersSlice';
 import { TbFidgetSpinner } from 'react-icons/tb';
+import { IoMdArrowDropdown } from 'react-icons/io';
 
 const ApplyReschedule = () => {
     const [isActive, setIsActive] = useState("allflight");
@@ -167,7 +168,7 @@ const ApplyReschedule = () => {
                     rescheduleBookingData={rescheduleBookingData}
                     openModal={openModal}
                     setFlightRef={setFlightRef}
-                    status="flight status"
+                    status="Residual Status"
                 />
             )}
 
@@ -322,6 +323,7 @@ const ApplyReschedule = () => {
                                             ) : (
                                                 "Select Seat"
                                             )}
+                                            <IoMdArrowDropdown />
                                         </button>
 
                                     </div>

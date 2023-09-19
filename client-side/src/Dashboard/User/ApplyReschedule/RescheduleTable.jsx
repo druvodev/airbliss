@@ -77,27 +77,26 @@ const RescheduleTable = ({ rescheduleBookingData, status, openModal, setFlightRe
                                     </td>
                                     <td>BDT {flight?.flight?.fareSummary?.total}</td>
                                     <td className="capitalize">
-                                        {status === "flight status" && (
+                                        {status === "Residual Status" && (
                                             <span>
-                                                {flight?.rescheduleBookingDatatatus}{" "}
+                                                {flight?.AllRescheduletatus}{" "}
                                                 <span
-                                                    className={`${flight?.requestStatus === "denied" && "text-red-500"
-                                                        }`}
+                                                    className={`${flight?.residualStatus === "denied" && "text-red-500 bg-red-50 rounded-full px-2 py-1" || flight?.residualStatus === "approved" && "text-green-500 bg-green-50 rounded-full px-2 py-1" || flight?.residualStatus === "pending" && "text-orange-500 bg-orange-50 rounded-full px-2 py-1"}`}
                                                 >
-                                                    ({flight?.requestStatus})
+                                                    {flight?.residualStatus}
                                                 </span>
                                             </span>
                                         )}
-                                        {status === "cancel status" && (
+                                        {/* {status === "cancel status" && (
                                             <span>{flight?.requestStatus}</span>
                                         )}
                                         {status === "confirm status" && (
                                             <span>{flight?.requestStatus}</span>
-                                        )}
+                                        )} */}
                                     </td>
                                     <td>
                                         <button
-                                            className="btn btn-xs bg-cyan-500 text-white"
+                                            className="btn btn-sm rounded-full px-4 bg-cyan-500 text-white"
                                             onClick={() => {
                                                 openModal();
                                                 setFlightRef(flight?.bookingReference);

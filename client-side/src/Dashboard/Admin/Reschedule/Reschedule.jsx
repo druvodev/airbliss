@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import TableReschedule from './TableReschedule';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import logo from "../../../assets/icon/airblissBlack.png";
+import { setBookingsRefetch } from '../../../redux/features/bookingInfoSlice';
+import toast from 'react-hot-toast';
+import { RxCross2 } from 'react-icons/rx';
 
 const Reschedule = () => {
     const [isActive, setIsActive] = useState("allflight");
@@ -14,6 +17,8 @@ const Reschedule = () => {
     const closeModal = () => {
         setIsModalOpen(false);
     };
+
+    const dispatch = useDispatch()
 
     const allBookingData = useSelector((state) => state.userBookingInfo.allBookings);
     const AllReschedule = allBookingData?.filter(booking => booking?.residualStatus != null)
@@ -33,6 +38,27 @@ const Reschedule = () => {
     const handleTabClick = (tab) => {
         setIsActive(tab);
     };
+    // /rescheduleManage/:status/:date/:airportCode/:bookingReference
+
+    const handleActionReschedule = (status) => {
+        fetch(`http://localhost:5000/rescheduleManage/${status}/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data);
+            if (data?.message) {
+                dispatch(setBookingsRefetch(new Date().toString()))
+                toast.success(data?.message);
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+    }
 
     return (
         <div className="lg:mt-10">
@@ -100,12 +126,20 @@ const Reschedule = () => {
 
             {isModalOpen && (
                 <div
-                    className={`fixed inset-0 flex items-center justify-center z-40 ${isModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
-                        } transition-opacity duration-300 `}
+                    className={`fixed inset-0 flex items-center justify-center z-40 ${isModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"} transition-opacity duration-300 `}
                 >
-                    <div className=" bg-black/20 min-h-screen w-full flex justify-center items-center">
+                    <div
+                        onClick={closeModal}
+                        className="bg-black/20 min-h-screen w-full flex justify-center items-center"
+                    >
                         {/* Modal content */}
-                        <div className="bg-white w-10/12 max-w-2xl max-h-[95vh] md:max-h-[100vh] overflow-y-scroll md:overflow-auto rounded-lg shadow-lg p-6">
+                        <div className="bg-white relative w-10/12 max-w-2xl max-h-[95vh] md:max-h-[100vh] overflow-y-scroll md:overflow-auto rounded-lg shadow-lg p-6">
+                            <div
+                                onClick={closeModal}
+                                className="absolute top-2 rounded-full right-2 p-2 border-none bg-red-200 hover:bg-red-500 hover:text-white cursor-pointer  transition duration-150 text-red-500"
+                            >
+                                <RxCross2 className='text-xl' />
+                            </div>
                             <div className="flex lg:flex-row flex-col gap-2 md:gap-5 lg:gap-10 items-center mb-5">
                                 <img className="w-24" src={logo} alt="Website Logo" />
                                 <h2 className="text-lg text-center md:text-left md:text-xl font-semibold">
@@ -184,23 +218,19 @@ const Reschedule = () => {
                                 </div>
                             </div>
                             <div className='mt-4'>
-                                <hr />
-                                <h2 className="text-md font-semibold">
-                                    Fill the Selected Item
-                                </h2>
                                 {/* End of form fields */}
                                 <div className="flex justify-end mt-2 sm:mt-5 tracking-wide">
-                                    <div
-                                        onClick={closeModal}
-                                        className="mr-2 sm:mr-4 py-1 px-4 rounded-md border-none bg-red-500 hover:bg-red-600 cursor-pointer  transition duration-150 text-white"
-                                    >
-                                        Close
-                                    </div>
                                     <button
-                                        type="submit"
+                                        onClick={() => handleActionReschedule("denied")}
+                                        className={`bg-red-500 mr-4 text-white py-1 px-4 rounded-md border-none hover:bg-red-600 transition duration-150`}
+                                    >
+                                        Denied
+                                    </button>
+                                    <button
+                                        onClick={() => handleActionReschedule("approved")}
                                         className={`bg-cyan-500 text-white py-1 px-4 rounded-md border-none hover:bg-cyan-600 transition duration-150`}
                                     >
-                                        Submit
+                                        Approved
                                     </button>
                                 </div>
                             </div>

@@ -5,6 +5,7 @@ const initialState = {
   flights: [],
   path: {},
   loading: false,
+  updateMode: true,
 };
 
 const manageFlightSlice = createSlice({
@@ -20,9 +21,13 @@ const manageFlightSlice = createSlice({
     setLoading: (state, action) => {
       state.loading = action.payload;
     },
+    setupdateMode: (state, action) => {
+      state.updateMode = action.payload;
+    },
   },
 });
 
-export const { setFlights, setPath, setLoading } = manageFlightSlice.actions;
+export const { setFlights, setPath, setLoading, setupdateMode } =
+  manageFlightSlice.actions;
 
 export default manageFlightSlice.reducer;
