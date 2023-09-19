@@ -196,7 +196,10 @@ const Navbar = () => {
                     >
                       About Us
                     </Link>
-                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
+                    <Link
+                      to="/contact"
+                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                    >
                       Contact
                     </Link>
                   </ul>
