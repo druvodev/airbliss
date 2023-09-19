@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { RxCaretDown } from "react-icons/rx";
-import { BiScatterChart } from "react-icons/bi";
+import { BiMoon, BiScatterChart, BiSun } from "react-icons/bi";
 import logoBlack from "../../assets/icon/airblissBlack.png";
 import logoWhite from "../../assets/icon/airblissWhite.png";
 import LoginSignupModal from "../../LogIn/LoginSignupModal";
@@ -11,6 +11,7 @@ import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useDispatch } from "react-redux";
 import { setAllUserInfo, setUserInfo } from "../../redux/features/usersSlice";
 import { PiPhone } from "react-icons/pi";
+import { BsMoonFill } from "react-icons/bs";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -22,6 +23,19 @@ const Navbar = () => {
   const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [axiosSecure] = UseAxiosSecure();
+
+  // Dark Mode
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      console.log(isDarkMode);
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [isDarkMode]);
+
   // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -238,6 +252,15 @@ const Navbar = () => {
                     </Link>
                   </ul>
                 </div>
+                {!isDarkMode ? (
+                  <button onClick={() => setIsDarkMode(!isDarkMode)}>
+                    <BsMoonFill className="text-2xl text-black " />
+                  </button>
+                ) : (
+                  <button onClick={() => setIsDarkMode(!isDarkMode)}>
+                    <BiSun className="text-2xl hover:animate-spin" />
+                  </button>
+                )}
               </div>
             </div>
             <div className="navbar-center">

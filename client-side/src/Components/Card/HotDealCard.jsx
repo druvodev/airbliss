@@ -31,11 +31,11 @@ const HotDealCard = ({ deal }) => {
         animate={animation}
       />
 
-      <div className="sm:pr-1 px-2 pb-2 sm:p-4 md:p-2 bg-cyan-100 md:pr-2 sm:pl-[18px] pt-3 sm:pt-6 space-y-2 md:space-y-4 lg:pr-2 lg:space-y-2 xl:pr-6 xl:space-y-3 lg:pl-3 xl:pl-[18px] h-full z-30">
-        <h5 className="sm:text-lg text-slate-700 font-semibold ">
+      <div className="sm:pr-1 px-2 pb-2 sm:p-4 md:p-2 dark:bg-white/10  bg-cyan-100 md:pr-2 sm:pl-[18px] pt-3 sm:pt-6 space-y-2 md:space-y-4 lg:pr-2 lg:space-y-2 xl:pr-6 xl:space-y-3 lg:pl-3 xl:pl-[18px] h-full z-30">
+        <h5 className="sm:text-lg dark:text-gray-400 text-slate-700 font-semibold ">
           {destination}
         </h5>
-        <p className="text-sm sm:text-base leading-4 sm:leading-5 text-[#322F63]">
+        <p className="text-sm sm:text-base leading-4 dark:text-gray-400 sm:leading-5 text-[#322F63]">
           {offer}
         </p>
         <Link

@@ -28,7 +28,7 @@ const Main = () => {
     }
   }, [loading]);
   return (
-    <>
+    <div className="  dark:bg-slate-900 dark:text-gray-300 ">
       <Navbar />
       <CountdownProvider>
         <ScrollRestoration />
@@ -41,7 +41,7 @@ const Main = () => {
           <Loader />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

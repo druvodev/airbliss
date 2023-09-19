@@ -7,7 +7,7 @@ const ServicesCards = ({ services }) => {
       {services.map((service, index) => (
         <div
           key={index}
-          className="flex shadow-lg overflow-hidden rounded-md items-center gap-5 w-full bg-white  py-2 text-gray-500"
+          className="flex shadow-lg overflow-hidden rounded-md items-center gap-5 w-full bg-white dark:border-y-0 dark:bg-white/10 dark:backdrop-blur-xl dark:border   py-2 text-gray-500"
         >
           <div className="h-[120px] md:h-[180px] w-1/2">
             <img
@@ -17,16 +17,16 @@ const ServicesCards = ({ services }) => {
             />
           </div>
           <div className="w-1/2">
-            <h2 className="text-lg md:text-xl font-semibold mb-2">
+            <h2 className="text-lg dark:text-gray-300 md:text-xl font-semibold mb-2">
               {service?.title}{" "}
               {service?.service && (
-                <span className="capitalize text-sm text-cyan-600">
+                <span className="capitalize  text-sm text-cyan-600">
                   {" "}
                   ({service?.service}){" "}
                 </span>
               )}
             </h2>
-            <p className="mb-2 pr-2">{service?.caption}</p>
+            <p className="mb-2 dark:text-gray-400 pr-2">{service?.caption}</p>
             <Link to={`/service/${service?._id}`}>
               <button className="ml-auto bg-cyan-700 hover:bg-cyan-600 px-5 rounded-full h-[38px] text-white font-semibold">
                 See All

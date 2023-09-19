@@ -19,7 +19,7 @@ const RecommendedFlights = () => {
             <GiAirplaneDeparture /> --------
           </p> */}
           <SectionTitle sectionTitle={"Recommended Flights"} />
-          <p className=" text-sm sm:text-base mb-5">
+          <p className=" text-sm dark:text-gray-500 sm:text-base mb-5">
             Most famous Flights of us. Our happy clients always happy with these
             Flights. <br /> The flights are always maintenance there roles and
             regulations
@@ -33,7 +33,7 @@ const RecommendedFlights = () => {
           {flights.map((flight, inx) => (
             <div
               key={inx}
-              className="border card overflow-hidden rounded-md shadow-lg p-5"
+              className="border dark:border-x-0 dark:bg-white/10 dark:backdrop-blur-lg card overflow-hidden rounded-md shadow-lg p-5"
             >
               <div>
                 <div className="flex gap-5 container ">
@@ -45,8 +45,8 @@ const RecommendedFlights = () => {
               </div>
               <div className="flex mt-2 gap-x-2 justify-between items-center">
                 <div>
-                  <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
-                    <GiAirplaneDeparture />
+                  <p className="w-10 h-10 rounded-[100%] border border-black dark:border-cyan-100 text-black pl-3 pt-3">
+                    <GiAirplaneDeparture className="dark:text-cyan-200" />
                   </p>
                 </div>
                 <div>
