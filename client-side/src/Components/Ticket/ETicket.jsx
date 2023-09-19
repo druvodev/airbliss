@@ -93,8 +93,6 @@ const ETicket = ({ booking }) => {
     }
   };
 
-  console.log(booking);
-
   const { title, first_name, last_name, seatNo } = booking?.user || {};
 
   const {
