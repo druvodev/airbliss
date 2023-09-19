@@ -206,26 +206,24 @@ const AddFlight = () => {
       airportName: selectAirportCode,
     };
 
-    console.log(finalFormData);
+    const queryString = `airportId=${selectAirportId}&airportCode=${selectAirportCode}`;
 
-    // const queryString = `airportId=${selectAirportId}&airportCode=${selectAirportCode}`;
-
-    // fetch(
-    //   `http://localhost:5000/add_flight/${selectAirportId}?${queryString}`,
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       "content-type": "application/json",
-    //     },
-    //     body: JSON.stringify(finalFormData),
-    //   }
-    // )
-    //   .then((res) => {
-    //     res.json();
-    //   })
-    //   .then((insertResult) => {
-    //     successToast("Flight Added Successfully");
-    //   });
+    fetch(
+      `http://localhost:5000/add_flight/${selectAirportId}?${queryString}`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(finalFormData),
+      }
+    )
+      .then((res) => {
+        res.json();
+      })
+      .then((insertResult) => {
+        successToast("Flight Added Successfully");
+      });
   };
 
   return (
