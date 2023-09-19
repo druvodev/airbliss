@@ -10,6 +10,7 @@ import "swiper/css/autoplay";
 import { format } from "date-fns";
 import OfferCard from "./OfferCard";
 import { useEffect, useState } from "react";
+import useAxios from "../../hooks/useAxios";
 const SpecialOffer = () => {
   const [data, setData] = useState([]);
   const departureDate = useSelector(
@@ -21,15 +22,18 @@ const SpecialOffer = () => {
   const date = format(departureDate, "dd MMM yy");
   const fromCity = destination.split(",")[0];
   useEffect(() => {
-    fetch("/offer.json")
-      .then((res) => res.json())
-      .then((data) => {
-        const toCity = data.filter(
+    useAxios
+      .get("/specialDiscount")
+      .then((response) => {
+        const toCity = response.data.filter(
           (city) => city.destination.split(",")[0] !== fromCity
         );
 
         const shuffledToCity = [...toCity].sort(() => Math.random() - 0.5);
         setData(shuffledToCity.slice(0, 8));
+      })
+      .catch((error) => {
+        console.log("Special Discount Offer Can't Fetch", error);
       });
   }, [departureDate, destination]);
 
