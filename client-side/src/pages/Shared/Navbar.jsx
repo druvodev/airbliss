@@ -96,7 +96,7 @@ const Navbar = () => {
             <ul className="grid gap-1">
               <Link>Blogs</Link>
               <Link>Gallery</Link>
-              <Link>About Us</Link>
+              <Link to="/about">About Us</Link>
               <Link to="/contact">Contact</Link>
             </ul>
           )}
@@ -190,7 +190,10 @@ const Navbar = () => {
                     <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
                       Gallery
                     </Link>
-                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
+                    <Link
+                      to="/about"
+                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                    >
                       About Us
                     </Link>
                     <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">

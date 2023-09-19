@@ -3,9 +3,13 @@
 const Heading = ({ subtitle, title }) => {
   return (
     <>
-      <div className="capitalize text-cyan-700" id="heading">
-        <h3 className="text-2xl text-center text-cyan-700">{subtitle}</h3>
-        <h1 className="text-4xl text-center text-cyan-700">{title} </h1>
+      <div className="capitalize">
+        <h3 className="text-3xl text-center text-white font-semibold md:text-5xl mb-3">
+          {subtitle}
+        </h3>
+        <h1 className="text-2xl text-center text-white font-bold md:text-3xl">
+          {title}
+        </h1>
       </div>
     </>
   );
