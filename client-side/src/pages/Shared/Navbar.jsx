@@ -122,7 +122,7 @@ const Navbar = () => {
             <ul className="grid gap-1">
               <Link>Blogs</Link>
               <Link>Gallery</Link>
-              <Link>About Us</Link>
+              <Link to="/about">About Us</Link>
               <Link to="/contact">Contact</Link>
             </ul>
           )}
