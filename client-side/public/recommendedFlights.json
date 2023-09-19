@@ -1,92 +1,52 @@
 [
-    {
-        "id": 1,
-        "destination": "Dhaka to Jashore",
-        "route": "ONE WAY FLIGHTS",
-        "fare": 2499,
-        "discount": 18,
-        "about":"Looking for Dhaka to Jashore Flight? Here’s all you need to know! For convenience and to save time, pick the airport that is closest to your destination. The nearest airport to Jessore is Jessore and the IATA code for the same is JSR. Currently, there are 2 airlines operating flights between the two destinations and approximately 5 flights take off from Dhaka to Jessore every week.",
-        "img": "https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-        "bg_pic":"https://i.ibb.co/N3f0WLz/john-mcarthur-8-KLLgq-HMAv4-unsplash.jpg",
-        "overviews": 
-        [
-            {
-                "airline": "Qatar Airlines",
-                "flight": "First Class",
-                "fare_type": "Refundable",
-                "cancel_fee": 78,
-                "flight_change":53,
-                "baggage": "extra Charge",
-                "base_fare": 2499,
-                "tax": 350,
-                "total_price": 2849
-            }
-        ],
-        "airline_name": "Qatar Airlines",
-        "coach_number": "AI-635 First Class",
-        "first_take_off": "13 NOV 2023, 7.50 AM",
-        "first_landing": "13 NOV 2023, 9.20 AM",
-        "second_take_off": "16 NOV 2023, 7.50 AM",
-        "second_landing": "16 NOV 2023, 9.20 AM" 
-    },
-    {
-        "id": 2,
-        "destination": "Dhaka to Barishal",
-        "route": "ONE WAY FLIGHTS",
-        "fare": 2499,
-        "discount": 25,
-        "about":"Looking for Dhaka to Barisal Flight? Here’s all you need to know! For convenience and to save time, pick the airport that is closest to your destination. The nearest airport to Jessore is Jessore and the IATA code for the same is JSR. Currently, there are 2 airlines operating flights between the two destinations and approximately 5 flights take off from Dhaka to Jessore every week.",
-        "img": "https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg",
-        "bg_pic":"https://i.ibb.co/N3f0WLz/john-mcarthur-8-KLLgq-HMAv4-unsplash.jpg",
-        "overviews": 
-        [
-            {
-                "airline": "Bangladesh Airlines",
-                "flight": "First Class",
-                "fare_type": "Refundable",
-                "cancel_fee": 78,
-                "flight_change":53,
-                "baggage": "extra Charge",
-                "base_fare": 2499,
-                "tax": 350,
-                "total_price": 2849
-            }
-        ],
-        "airline_name": "Bangladesh Airlines",
-        "coach_number": "AI-635 First Class",
-        "first_take_off": "13 NOV 2023, 6.50 AM",
-        "first_landing": "13 NOV 2023, 8.20 AM",
-        "second_take_off": "16 NOV 2023, 6.50 AM",
-        "second_landing": "16 NOV 2023, 8.20 AM" 
-    },
-    {
-        "id": 3,
-        "destination": "Dhaka to Cox'z Bazar",
-        "route": "ONE WAY FLIGHTS",
-        "fare": 2499,
-        "discount": 11,
-        "about":"Looking for Dhaka to Cox'z Bazar Flight? Here’s all you need to know! For convenience and to save time, pick the airport that is closest to your destination. The nearest airport to Jessore is Jessore and the IATA code for the same is JSR. Currently, there are 2 airlines operating flights between the two destinations and approximately 5 flights take off from Dhaka to Jessore every week.",
-        "img": "https://www.traveloffpath.com/wp-content/uploads/2021/11/New%E2%80%8B-Low-Cost-Airline-Set-To-Launch-In-Calgary-Next-Year.jpg",
-        "bg_pic":"https://i.ibb.co/N3f0WLz/john-mcarthur-8-KLLgq-HMAv4-unsplash.jpg",
-        "overviews": 
-        [
-            {
-                "airline": "Saudi Airlines",
-                "flight": "First Class",
-                "fare_type": "Refundable",
-                "cancel_fee": 78,
-                "flight_change":53,
-                "baggage": "extra Charge",
-                "base_fare": 2499,
-                "tax": 350,
-                "total_price": 2849
-            }
-        ],
-        "airline_name": "Saudi Airlines",
-        "coach_number": "AI-635 First Class",
-        "first_take_off": "13 NOV 2023, 10.10 AM",
-        "first_landing": "13 NOV 2023, 12.20 PM",
-        "second_take_off": "16 NOV 2023, 7.50 AM",
-        "second_landing": "16 NOV 2023, 9.20 AM" 
-    }
+  {
+    "id": 1,
+    "destination": "Dhaka to Jashore",
+    "route": "ONE WAY FLIGHTS",
+    "fare": 2499,
+    "discount": 18,
+    "img": "https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "bg_pic": "https://i.ibb.co/N3f0WLz/john-mcarthur-8-KLLgq-HMAv4-unsplash.jpg",
+    "overviews": [
+      {
+        "airline": "Qatar Airlines",
+        "flight": "First Class",
+        "fare_type": "Refundable",
+        "cancel_fee": 78,
+        "flight_change": 53,
+        "baggage": "extra Charge",
+        "base_fare": 2499,
+        "tax": 350,
+        "total_price": 2849
+      }
+    ],
+    "airline_name": "Qatar Airlines",
+    "coach_number": "AI-635 First Class",
+    "first_take_off": "13 NOV 2023, 7.50 AM",
+    "first_landing": "13 NOV 2023, 9.20 AM",
+    "second_take_off": "16 NOV 2023, 7.50 AM",
+    "second_landing": "16 NOV 2023, 9.20 AM"
+  },
+  {
+    "id": 2,
+    "destination": "Dhaka to Barishal",
+    "route": "ONE WAY FLIGHTS",
+    "fare": 2499,
+    "discount": 18,
+    "img": "https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg",
+    "ban_airlines": " Bangladesh Air Lines are giving 19% of discount on your visit from Dhaka to Jashore. The offer will continue till 30th September 2023",
+    "saudi_airlines": " Soudi Air Lines are giving 25% of discount on your visit from Dhaka to Jashore. The offer will continue till 2th OCtober 2023",
+    "qatar_airlines": " Qatar Air Lines are giving 11% of discount on your visit from Dhaka to Jashore. The offer will continue till 27th September 2023"
+  },
+  {
+    "id": 3,
+    "destination": "Dhaka to Cox'z",
+    "route": "ONE WAY FLIGHTS",
+    "fare": 2499,
+    "discount": 18,
+    "img": "https://www.traveloffpath.com/wp-content/uploads/2021/11/New%E2%80%8B-Low-Cost-Airline-Set-To-Launch-In-Calgary-Next-Year.jpg",
+    "ban_airlines": " Bangladesh Air Lines are giving 19% of discount on your visit from Dhaka to Jashore. The offer will continue till 30th September 2023",
+    "saudi_airlines": " Soudi Air Lines are giving 25% of discount on your visit from Dhaka to Jashore. The offer will continue till 2th OCtober 2023",
+    "qatar_airlines": " Qatar Air Lines are giving 11% of discount on your visit from Dhaka to Jashore. The offer will continue till 27th September 2023"
+  }
 ]
