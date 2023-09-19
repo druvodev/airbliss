@@ -35,7 +35,7 @@ const RecommendedFlights = () => {
           {recommendedFlights?.map((flight) => (
             <div
               key={flight?.id}
-              className="overflow-hidden rounded-md shadow-lg p-5 text-white dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500"
+              className="overflow-hidden rounded-md shadow-lg p-5  dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500"
             >
               <div>
                 <div className="flex gap-5 container ">
