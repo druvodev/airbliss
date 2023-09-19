@@ -911,22 +911,6 @@ async function run() {
     });
 
     // ######################### Booking Residual #########################
-    // send available seats
-    app.get(
-      "/rescheduleSeat/:flightId/:totalSeats/:departureDate",
-      async (req, res) => {
-        const { flightId, departureDate, totalSeats } = req.params;
-        const availableSeat =
-          (await availableSeats(flightId, departureDate)) ||
-          (await generateSeatData(totalSeats, flightId, departureDate));
-        if (availableSeat) {
-          res.status(200).json({ availableSeat });
-        } else {
-          res.status(404).json({ message: "No available seats." });
-        }
-      }
-    );
-
     // Reusable specific seat value update function
     async function updateSeatAvailability(
       flightDate,
@@ -966,6 +950,22 @@ async function run() {
         throw new Error(error.message);
       }
     }
+
+    // send available seats
+    app.get(
+      "/rescheduleSeat/:flightId/:totalSeats/:departureDate",
+      async (req, res) => {
+        const { flightId, departureDate, totalSeats } = req.params;
+        const availableSeat =
+          (await availableSeats(flightId, departureDate)) ||
+          (await generateSeatData(totalSeats, flightId, departureDate));
+        if (availableSeat) {
+          res.status(200).json({ availableSeat });
+        } else {
+          res.status(404).json({ message: "No available seats." });
+        }
+      }
+    );
 
     // reschedule bookings request (USER)
     app.patch(
@@ -1024,6 +1024,58 @@ async function run() {
             res.json({
               message: "Booking updated with residualStatus and seatNo",
               updatedBookingInfo: updatedBooking,
+            });
+          } else {
+            res.status(404).json({ message: "Booking not found" });
+          }
+        } catch (err) {
+          console.error("Error updating booking:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
+
+    // reschedule request manage (ADMIN)
+    app.patch(
+      "/rescheduleManage/:status/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const { status, date, airportCode, bookingReference } = req.params;
+        let rescheduleStatus = "denied";
+        if (status === "approved") {
+          rescheduleStatus = status;
+        }
+
+        try {
+          // Construct the update query for user bookings collection
+          const updateQuery = {
+            [`${date}.${airportCode}.bookingReference`]: bookingReference,
+          };
+
+          // Construct the update fields to set the residualStatus and seatNo
+          const updateFields = {
+            $set: {
+              [`${date}.${airportCode}.$.residualStatus`]: rescheduleStatus,
+            },
+          };
+
+          // Update the booking with the residualStatus and seatNo
+          const result = await bookingsCollection.updateOne(
+            updateQuery,
+            updateFields
+          );
+
+          if (result.modifiedCount === 1) {
+            await residualCollection.updateOne(
+              { "bookingInfo.bookingReference": bookingReference },
+              {
+                $set: {
+                  "bookingInfo.residualStatus": rescheduleStatus,
+                },
+              }
+            );
+
+            res.json({
+              message: "Booking updated with residualStatus",
             });
           } else {
             res.status(404).json({ message: "Booking not found" });
@@ -1160,7 +1212,7 @@ async function run() {
     });
 
     app.get("/bookings", async (req, res) => {
-      const result = await seatsCollection.find().toArray();
+      const result = await residualCollection.find().toArray();
       res.send(result);
     });
 
