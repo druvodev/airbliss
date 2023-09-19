@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FaHandHoldingMedical, FaHome, FaHouseUser } from "react-icons/fa";
 import { TiGroup } from "react-icons/ti";
 import { BiSolidAddToQueue } from "react-icons/bi";
-import { MdManageSearch } from "react-icons/md";
+import { MdManageSearch, MdOutlineAirplaneTicket } from "react-icons/md";
 import { BsFillPersonFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,6 +14,7 @@ import {
   setFlights,
   setLoading,
 } from "../../../redux/features/manageFlightSlice";
+import { TbCalendarTime } from "react-icons/tb";
 
 const AdminNav = () => {
   const [axiosSecure] = UseAxiosSecure();
@@ -64,10 +65,9 @@ const AdminNav = () => {
       <NavLink
         to="adminHome"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
-            isActive
-              ? "bg-white text-cyan-500 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
+            ? "bg-white text-cyan-500 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
@@ -77,10 +77,9 @@ const AdminNav = () => {
       <NavLink
         to="manageUsers"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
-            isActive
-              ? "bg-white text-cyan-500 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
+            ? "bg-white text-cyan-500 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
@@ -91,10 +90,9 @@ const AdminNav = () => {
       <NavLink
         to="addFlight"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
-            isActive
-              ? "bg-white text-cyan-500 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
+            ? "bg-white text-cyan-500 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
@@ -105,10 +103,9 @@ const AdminNav = () => {
       <NavLink
         to="flightStatus"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
-            isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
+            ? "bg-white text-gray-800 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
@@ -119,10 +116,9 @@ const AdminNav = () => {
       <NavLink
         to="insurance"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
-            isActive
-              ? "bg-white text-cyan-500 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
+            ? "bg-white text-cyan-500 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
@@ -131,26 +127,37 @@ const AdminNav = () => {
         <span className="mx-4 font-medium">Insurance</span>
       </NavLink>
       <NavLink
-        to="managebookings"
+        to="reschedule"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
-            isActive
-              ? "bg-white text-gray-800 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
+            ? "bg-white text-cyan-500 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
-        <MdManageSearch className="w-5 h-5" />
+        <TbCalendarTime className="w-5 h-5" />
+
+        <span className="mx-4 font-medium">Reschedule</span>
+      </NavLink>
+      <NavLink
+        to="managebookings"
+        className={({ isActive }) =>
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
+            ? "bg-white text-gray-800 active:border rounded-full"
+            : "text-white"
+          }`
+        }
+      >
+        <MdOutlineAirplaneTicket className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Bookings</span>
       </NavLink>
       <NavLink
         to="account"
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
-            isActive
-              ? "bg-white text-cyan-500 active:border rounded-full"
-              : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
+            ? "bg-white text-cyan-500 active:border rounded-full"
+            : "text-white"
           }`
         }
       >
