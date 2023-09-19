@@ -22,7 +22,7 @@ const Footer = () => {
   return (
     <div>
       <section className="bg-[#414D5E]  relative mt-28  ">
-        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden  -top-[75px] md:-top-[90px] lg:-top-[105px]  left-0 md:left-0">
+        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden  -top-[75px] md:-top-[90px] lg:-top-[105px]  left-0 md:left-0 ">
           <svg
             version="1.1"
             width="2000"
@@ -70,12 +70,12 @@ const Footer = () => {
           </svg>
         </div>
 
-        <div className="sm:px-10 md:px-0 max-w-7xl mx-auto h-auto overflow-hidden">
+        <div className="sm:px-10 md:px-0 max-w-7xl mx-auto h-auto overflow-hidden  ">
           <div>
             {/* Footer Item Design */}
-            <section className="  text-white p-3 md:p-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <section className="text-white p-3 grid grid-cols-1 lg:grid-cols-3 gap-10">
               {/* Airblees Text */}
-              <div>
+              <div className="dark:text-gray-400">
                 <img
                   className="w-24"
                   src="https://i.ibb.co/C8G1Npj/airbliss-White.png"
@@ -121,8 +121,10 @@ const Footer = () => {
               </div>
 
               <div className="grid grid-flow-col gap-4">
-                <div className="mt-6 lg:mt-0">
-                  <h1 className="text-xl font-bold">Quick Links</h1>
+                <div className="mt-6 lg:mt-0 dark:text-gray-400 ">
+                  <h1 className="text-xl font-bold dark:text-gray-400 ">
+                    Quick Links
+                  </h1>
                   <p>
                     <span className="flex items-center  tracking-widest">
                       <IoAirplaneSharp />
@@ -136,7 +138,7 @@ const Footer = () => {
                   </p>
 
                   <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
+                    <p className="inline-flex items-center  gap-1 mt-3">
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
@@ -172,7 +174,7 @@ const Footer = () => {
                   </div>
                 </div>
 
-                <div className="mt-6 lg:mt-0">
+                <div className="mt-6 lg:mt-0 dark:text-gray-400 ">
                   <h1 className="text-xl font-bold">Contact Us</h1>
                   <p>
                     <span className="flex items-center  tracking-widest">
@@ -215,7 +217,7 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="mt-12 lg:mt-0">
+              <div className="mt-12 lg:mt-0 dark:text-gray-400">
                 <h1 className="text-xl font-bold">Recent Postes</h1>
                 <p>
                   <span className="flex items-center  tracking-widest">
@@ -271,12 +273,12 @@ const Footer = () => {
 
             {/* Payment Partner */}
             <div>
-              <h1 className="md:ml-12 ml-3 text-white text-xl font-bold mb-2">
+              <h1 className=" ml-3 dark:text-gray-400 text-white text-xl font-bold mb-2">
                 Payment Partner
               </h1>
               <hr className="w-[170px] md:ml-12 ml-3" />
 
-              <div className="md:ml-10 ml-2 flex lg:flex-row flex-col ">
+              <div className=" ml-2 flex lg:flex-row flex-col ">
                 <div className="flex justify-start items-center">
                   <img
                     className="h-16 "
@@ -347,7 +349,7 @@ const Footer = () => {
 
             <hr className="mt-12" />
 
-            <p className="pb-4 text-white text-center mt-4">
+            <p className="pb-4 text-white text-center mt-4 dark:text-gray-400">
               &copy; 2023 Airbliess Bd Ltd. All rights reserved.
             </p>
           </div>

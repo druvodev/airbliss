@@ -7,7 +7,7 @@ const ServicesCards = ({ services }) => {
       {services.map((service, index) => (
         <div
           key={index}
-          className="flex shadow-lg overflow-hidden rounded-md items-center gap-5 w-full bg-white dark:border-y-0 dark:bg-white/10 dark:backdrop-blur-xl dark:border   py-2 text-gray-500"
+          className="flex shadow-lg overflow-hidden rounded-md items-center gap-5 w-full bg-white py-2 text-gray-500 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500"
         >
           <div className="h-[120px] md:h-[180px] w-1/2">
             <img

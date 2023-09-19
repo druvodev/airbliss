@@ -107,13 +107,13 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
 
   return (
     <div className="max-w-7xl  dark:text-gray-300  mx-auto grid justify-center">
-      <div className="p-5 sm:mx-10 dark:border dark:border-x-0 rounded-xl dark:bg-slate-900 shadow-md bg-white">
+      <div className="p-5 sm:mx-10 text-gray-500 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 rounded-xl dark:bg-slate-900 shadow-md bg-white">
         {bookingType === "all" && (
-          <div className="flex gap-1  bg-gray-200 p-1 rounded w-fit font-medium text-gray-600 text-sm">
+          <div className="flex gap-1  bg-gray-200 p-1 rounded w-fit font-medium text-gray-600 text-sm  dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500">
             <div
               onClick={() => dispatch(setIsActive("flight"))}
-              className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
-                isActive === "flight" ? "bg-cyan-300" : "bg-white"
+              className={`px-4 py-2 cursor-pointer flex items-center gap-1  ${
+                isActive === "flight" ? "bg-cyan-300" : "bg-white "
               }`}
             >
               <MdFlight /> Flight
@@ -137,18 +137,18 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
           </div>
         )}
         <div className="flex gap-4 font-semibold text-gray-600 my-4">
-          <label className="flex gap-1">
+          <label className="flex gap-1 dark:text-gray-400">
             <input
               type="radio"
               name="flightType"
               value="oneWay"
-              className="radio radio-accent"
+              className="radio  radio-accent"
               checked={flightType === "oneWay"}
               onChange={() => dispatch(setFlightType("oneWay"))}
             />
             One Way
           </label>
-          <label className="flex gap-1">
+          <label className="flex gap-1 dark:text-gray-400">
             <input
               type="radio"
               name="flightType"
@@ -159,7 +159,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
             />
             Round Trip
           </label>
-          <label className="flex gap-1">
+          <label className="flex gap-1 dark:text-gray-400">
             <input
               type="radio"
               name="flightType"
@@ -275,7 +275,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                       <input
                         id="fromCity"
                         type="text"
-                        className="text-xl t  font-semibold outline-none"
+                        className="text-xl  font-semibold outline-none"
                         value="Dhaka"
                       />
                       <div className="cursor-pointer">
@@ -391,7 +391,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                   <input
                     id="fromCity"
                     type="text"
-                    className="text-xl dark:text-cyan-200 dark:bg-gray-900 font-semibold outline-none cursor-pointer"
+                    className="text-xl dark:text-cyan-200 dark:bg-gray-800 font-semibold outline-none cursor-pointer"
                     value={fromCityInfo.destination.split(",")[0]}
                     readOnly
                   />
@@ -426,7 +426,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                   <input
                     id="toCity"
                     type="text"
-                    className="text-lg sm:text-xl dark:text-cyan-200 dark:bg-gray-900 font-semibold outline-none cursor-pointer"
+                    className="text-lg sm:text-xl dark:text-cyan-200 dark:bg-gray-800 font-semibold outline-none cursor-pointer"
                     value={toCityInfo.destination.split(",")[0]}
                     readOnly
                   />

@@ -241,7 +241,10 @@ const Navbar = () => {
                     >
                       Our Services
                     </a>
-                    <Link className="cursor-pointer rounded-md p-2 hover:bg-base-200">
+                    <Link
+                      to="/about"
+                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                    >
                       About Us
                     </Link>
                     <Link
@@ -254,7 +257,7 @@ const Navbar = () => {
                 </div>
                 {!isDarkMode ? (
                   <button onClick={() => setIsDarkMode(!isDarkMode)}>
-                    <BsMoonFill className="text-2xl text-black " />
+                    <BsMoonFill className="text-xl  " />
                   </button>
                 ) : (
                   <button onClick={() => setIsDarkMode(!isDarkMode)}>

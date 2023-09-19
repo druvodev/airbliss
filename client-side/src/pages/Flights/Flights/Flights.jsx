@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import BookFlight from "../BookingFlights/BookFlight/BookFlight";
 import Weather from "../../Home/Weather/Weather";
 import { useCountdownContext } from "../../../providers/CountdownContext";
-
 import SpecialOffer from "../../../Components/SpecialOffer/SpecialOffer";
 
 const Flights = () => {
