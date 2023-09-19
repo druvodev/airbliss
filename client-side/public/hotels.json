@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "name": "Wonders Hostel Boat Quayland",
+        "name": "Royal Tulip Sea Pearl Resort & Spa",
         "distance": "5 min away from  Mumbai Airport",
         "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
         "cost": 685,
@@ -18,8 +18,8 @@
  
     {
         "id": 2,
-        "name": "Wonders Hostel Boat Quayland",
-        "distance": "5 min away from  Mumbai Airport",
+        "name": "Wonders Hostel Boat Cox's Bazar",
+        "distance": "20 min away from  Mumbai Airport",
         "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
         "cost": 893,
         "discount": 20,
@@ -33,8 +33,8 @@
  
     {
         "id": 3,
-        "name": "Wonders Hostel Boat Quayland",
-        "distance": "5 min away from  Mumbai Airport",
+        "name": "Hotel Sea view Crown of Cox's Bazar",
+        "distance": "15 min away from  Cox's Bazar Airport",
         "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
         "cost": 904,
         "discount": 29,
