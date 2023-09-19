@@ -27,6 +27,7 @@ import AdminInsurance from "../Dashboard/Admin/AdminInsurance/AdminInsurance";
 import InsurancePolicy from "../pages/InsurancePolicy/InsurancePolicy";
 import ServicesDetails from "../pages/ServicesDetails/ServicesDetails";
 import FlightDetails from "../Dashboard/FlightStatus/FlightDetails/FlightDetails";
+import AboutUs from "../pages/AboutUs/AboutUs";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -57,6 +58,10 @@ export const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/about",
+        element: <AboutUs />,
       },
 
       {
