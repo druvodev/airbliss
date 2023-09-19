@@ -162,7 +162,7 @@ const FlightStatus = () => {
                           </div>
                           <div>
                             <div className="">
-                              #{singleFlight?._id.slice(0, 7)}
+                              #{singleFlight?._id?.slice(0, 7)}
                             </div>
                             <div className="text-md">
                               {singleFlight?.airlineName}
@@ -185,22 +185,13 @@ const FlightStatus = () => {
                       </td>
 
                       <td>
-                        <div className="flex items-center gap-1">
-                          <p className="text-cyan-500 cursor-pointer">
-                            <RxUpdate size={22} />{" "}
+                        <Link
+                          to={`/dashboard/flightDetails/${airportCode}/${singleFlight?._id}/${id}`}
+                        >
+                          <p className="text-cyan-500">
+                            <GoInfo size={24} />
                           </p>
-
-                          <p className="text-cyan-500 cursor-pointer">
-                            <BiStopCircle size={24} />
-                          </p>
-                          <Link
-                            to={`/dashboard/flightDetails/${airportCode}/${singleFlight?._id}/${id}`}
-                          >
-                            <p className="text-cyan-500">
-                              <GoInfo size={24} />
-                            </p>
-                          </Link>
-                        </div>
+                        </Link>
                       </td>
                     </tr>
                   ))}
