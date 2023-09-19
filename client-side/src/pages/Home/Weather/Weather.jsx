@@ -3,7 +3,7 @@ import SectionTitle from "../../../Components/SectionTitle";
 import moment from "moment/moment";
 import "./weather.css";
 import { useSelector } from "react-redux";
-import sky from "../../../assets/gif/pexels-miguel-á-padriñán-6772137 (2160p).mp4"
+import sky from "../../../assets/gif/sky.mp4";
 
 const Weather = () => {
   const toDestination = useSelector(
@@ -15,8 +15,9 @@ const Weather = () => {
 
   const [weather, setWeather] = useState();
   useEffect(() => {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${arrivalCity}&appid=${import.meta.env.VITE_WEATHER_KEY
-      }`;
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${arrivalCity}&appid=${
+      import.meta.env.VITE_WEATHER_KEY
+    }`;
 
     fetch(url)
       .then((res) => res.json())

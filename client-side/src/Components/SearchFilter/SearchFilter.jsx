@@ -43,10 +43,8 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
     (state) => state?.searchFilter?.fromCityInfo
   );
   const toCityInfo = useSelector((state) => state?.searchFilter?.toCityInfo);
-
   // Dispatch redux state
   const dispatch = useDispatch();
-  const flight = useSelector((state) => state?.flights?.flights);
 
   // Convert Date Format
   const formattedDate = (date) => {

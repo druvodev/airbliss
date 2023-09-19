@@ -12,6 +12,7 @@ const initialFormData = {
   airportName: "",
   airlineLogo: "",
   airlineName: "",
+  airlineStatus: "",
   amountPerKm: "",
   taxesAndFees: "",
   totalSeats: "",
@@ -205,24 +206,26 @@ const AddFlight = () => {
       airportName: selectAirportCode,
     };
 
-    const queryString = `airportId=${selectAirportId}&airportCode=${selectAirportCode}`;
+    console.log(finalFormData);
 
-    fetch(
-      `http://localhost:5000/add_flight/${selectAirportId}?${queryString}`,
-      {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(finalFormData),
-      }
-    )
-      .then((res) => {
-        res.json();
-      })
-      .then((insertResult) => {
-        successToast("Flight Added Successfully");
-      });
+    // const queryString = `airportId=${selectAirportId}&airportCode=${selectAirportCode}`;
+
+    // fetch(
+    //   `http://localhost:5000/add_flight/${selectAirportId}?${queryString}`,
+    //   {
+    //     method: "POST",
+    //     headers: {
+    //       "content-type": "application/json",
+    //     },
+    //     body: JSON.stringify(finalFormData),
+    //   }
+    // )
+    //   .then((res) => {
+    //     res.json();
+    //   })
+    //   .then((insertResult) => {
+    //     successToast("Flight Added Successfully");
+    //   });
   };
 
   return (
@@ -386,6 +389,20 @@ const AddFlight = () => {
                   placeholder="Duration Per Km Ex:(0.2)"
                   required
                 />
+              </div>
+
+              <div>
+                <select
+                  className="p-2 border-b-[0.5px] border-black"
+                  name="airlineStatus"
+                  value={formData.airlineStatus}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Flight Status</option>
+                  <option value="running">Running</option>
+                  <option value="stop">Stop</option>
+                </select>
               </div>
             </div>
           </section>
