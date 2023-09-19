@@ -8,7 +8,7 @@ const Hero = () => {
       <section className="hero">
         <div className="bg-black w-full h-full bg-opacity-30">
           <div className="container">
-            <div className="flex flex-col justify-center items-center w-full h-full mt-40 text-cyan-700">
+            <div className="flex flex-col justify-center items-center w-full h-full mt-20 md:mt-40  text-cyan-700">
               <Heading
                 subtitle="About Airbliss"
                 title="Your Gateway to Seamless Travel Experiences"
