@@ -90,6 +90,7 @@ async function run() {
     const insuranceCollection = database.collection("insurance");
     const residualCollection = database.collection("residualBookings");
     const servicesCollection = database.collection("services");
+    const specialDiscountCollection = database.collection("specialDiscount");
 
     app.post("/jwt", (req, res) => {
       const user = req.body;
@@ -1106,6 +1107,12 @@ async function run() {
         }
       }
     );
+
+    // ##################### Get Today's Offer ######################
+    app.get("/specialDiscount", async (req, res) => {
+      const result = await specialDiscountCollection.find().toArray();
+      res.send(result);
+    });
 
     // ######################### Manage Bookings ############################
     // Get all request bookings
