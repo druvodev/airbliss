@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 5;
 
-const RescheduleTable = ({ rescheduleBookingData, status, action }) => {
+const RescheduleTable = ({ rescheduleBookingData, status, openModal, setFlightRef }) => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const handlePaginationPrev = () => {
@@ -14,6 +14,10 @@ const RescheduleTable = ({ rescheduleBookingData, status, action }) => {
             setCurrentPage(currentPage - 1);
         }
     };
+
+    // todo /rescheduleSeat/: flightId /: totalSeats /: departureDate
+    // todo /reschedule/:date/:airportCode/:bookingReference
+    // todo /rescheduleManage/:status/:date/:airportCode/:bookingReference
 
     const handlePaginationNext = () => {
         const totalPages = Math.ceil(rescheduleBookingData?.length / ITEMS_PER_PAGE);
@@ -43,7 +47,8 @@ const RescheduleTable = ({ rescheduleBookingData, status, action }) => {
                                 <th>Travel Path</th>
                                 <th>Ticket Price</th>
                                 <th className="capitalize">{status}</th>
-                                {!action && <th>Action</th>}
+                                <th>Action</th>
+                                <th>Details</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -90,45 +95,31 @@ const RescheduleTable = ({ rescheduleBookingData, status, action }) => {
                                             <span>{flight?.requestStatus}</span>
                                         )}
                                     </td>
-                                    {!action && (
-                                        <td className="flex gap-2 mt-2">
-                                            <Link
-                                                to={{
-                                                    pathname: `/dashboard/ticketHistory/${flight?.bookingReference}`,
-                                                }}
-                                            >
-                                                <button
-                                                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400 hover:bg-cyan-500
+                                    <td>
+                                        <button
+                                            className="btn btn-xs"
+                                            onClick={() => {
+                                                openModal();
+                                                setFlightRef(flight?.bookingReference);
+                                            }}
+                                        >
+                                            Apply
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <Link
+                                            to={{
+                                                pathname: `/dashboard/ticketHistory/${flight?.bookingReference}`,
+                                            }}
+                                        >
+                                            <button
+                                                className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400 hover:bg-cyan-500
               }`}
-                                                >
-                                                    <FaInfo />
-                                                </button>
-                                            </Link>
-
-                                            {flight?.requestStatus !== "success" ? (
-                                                <button
-                                                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  opacity-30`}
-                                                    onClick={() => {
-                                                        openModal();
-                                                        setFlightRef(flight?.bookingReference);
-                                                    }}
-                                                    disabled
-                                                >
-                                                    <MdCancel />
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400 hover:bg-red-500`}
-                                                    onClick={() => {
-                                                        openModal();
-                                                        setFlightRef(flight?.bookingReference);
-                                                    }}
-                                                >
-                                                    <MdCancel />
-                                                </button>
-                                            )}
-                                        </td>
-                                    )}
+                                            >
+                                                <FaInfo />
+                                            </button>
+                                        </Link>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
