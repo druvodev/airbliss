@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { FaInfo } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { MdWifiProtectedSetup } from 'react-icons/md';
 
 const ITEMS_PER_PAGE = 5;
 
@@ -75,18 +76,11 @@ const TableReschedule = ({ AllReschedule, status, openModal, setFlightRef }) => 
                                             <span>
                                                 {flight?.AllRescheduletatus}{" "}
                                                 <span
-                                                    className={`${flight?.residualStatus === "denied" && "text-red-500"
-                                                        }`}
+                                                    className={`${flight?.residualStatus === "denied" && "text-red-500 bg-red-50 rounded-full px-2 py-1" || flight?.residualStatus === "approved" && "text-green-500 bg-green-50 rounded-full px-2 py-1" || flight?.residualStatus === "pending" && "text-orange-500 bg-orange-50 rounded-full px-2 py-1"}`}
                                                 >
-                                                    ({flight?.residualStatus})
+                                                    {flight?.residualStatus}
                                                 </span>
                                             </span>
-                                        )}
-                                        {status === "cancel status" && (
-                                            <span>{flight?.requestStatus}</span>
-                                        )}
-                                        {status === "confirm status" && (
-                                            <span>{flight?.requestStatus}</span>
                                         )}
                                     </td>
                                     <td>
@@ -95,10 +89,10 @@ const TableReschedule = ({ AllReschedule, status, openModal, setFlightRef }) => 
                                                 openModal();
                                                 setFlightRef(flight?.bookingReference);
                                             }}
-                                            className={`btn btn-xs text-white ${flight?.residualStatus === "pending" ? "bg-cyan-400" : "bg-green-400"}`}
+                                            className={`btn btn-sm rounded-full px-4 text-white ${flight?.residualStatus === "pending" ? "bg-cyan-400" : "bg-green-400"}`}
                                             disabled={flight?.residualStatus === "denied" || flight?.residualStatus === "approved"}
                                         >
-                                            {flight?.residualStatus}
+                                            Process <MdWifiProtectedSetup />
                                         </button>
                                     </td>
                                     <td>
