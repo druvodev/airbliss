@@ -97,11 +97,12 @@ const RescheduleTable = ({ rescheduleBookingData, status, openModal, setFlightRe
                                     </td>
                                     <td>
                                         <button
-                                            className="btn btn-xs"
+                                            className="btn btn-xs bg-cyan-500 text-white"
                                             onClick={() => {
                                                 openModal();
                                                 setFlightRef(flight?.bookingReference);
                                             }}
+                                            disabled={flight?.residualStatus === "denied" || flight?.residualStatus === "approved" || flight?.residualStatus === "pending"}
                                         >
                                             Apply
                                         </button>

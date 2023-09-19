@@ -6,6 +6,7 @@ import logo from "../../../assets/icon/airblissBlack.png";
 import RescheduleModalSeat from './RescheduleModalSeat';
 import toast from 'react-hot-toast';
 import { setRefetch } from '../../../redux/features/usersSlice';
+import { TbFidgetSpinner } from 'react-icons/tb';
 
 const ApplyReschedule = () => {
     const [isActive, setIsActive] = useState("allflight");
@@ -16,6 +17,7 @@ const ApplyReschedule = () => {
     const [isRescheduleModalOpen, setIsRescheduleModalOpen] = useState(false);
     const [newSeat, setNewSeat] = useState("");
     const [flightDate, setFlightDate] = useState("")
+    const [isLoading, setIsLoading] = useState(false);
 
     const openModal = () => {
         setIsModalOpen(true);
@@ -53,7 +55,12 @@ const ApplyReschedule = () => {
     const rescheduleBookingData = bookings.filter(
         (bookingData) => bookingData?.flight?.arrivalDate >= todayDate
     )
-    // console.log(rescheduleBookingData);
+    const rescheduleBookingConfirmed = rescheduleBookingData.filter(
+        (bookingData) => bookingData?.residualStatus === "approved"
+    )
+    const rescheduleBookingDenied = rescheduleBookingData.filter(
+        (bookingData) => bookingData?.residualStatus === "denied"
+    )
 
     const myFlight = bookings?.find(
         (flight) => flight?.bookingReference === flightRef
@@ -66,8 +73,8 @@ const ApplyReschedule = () => {
     const refundAmount = paidAmount - deductedAmount;
 
     const handleDateChange = (event) => {
-        //* Check if a date is selected
         if (event.target.value) {
+            setIsLoading(true);
             const [year, day, month] = event.target.value.split('-');
             const date = parse(`${year}-${month}-${day}`, 'yyyy-dd-MM', new Date());
             const newDate = format(date, 'yyyy-MM-dd');
@@ -77,10 +84,13 @@ const ApplyReschedule = () => {
                 .then((res) => res.json())
                 .then((data) => {
                     setSeats(data?.availableSeat?.seats)
-                    // console.log("new date",data)
                     setDateSelected(true);
+                    setIsLoading(false);
                 })
-                .catch((err) => console.log(err))
+                .catch((err) => {
+                    console.log(err)
+                    setIsLoading(false);
+                })
         } else {
             setDateSelected(false);
         }
@@ -163,18 +173,18 @@ const ApplyReschedule = () => {
 
             {isActive === "cancel" && (
                 <RescheduleTable
-                    rescheduleBookingData={rescheduleBookingData}
+                    rescheduleBookingData={rescheduleBookingDenied}
                     // openModal={openModal}
-                    // setFlightRef={setFlightRef}
+                    setFlightRef={setFlightRef}
                     status="cancel status"
                 />
             )}
 
             {isActive === "confirm" && (
                 <RescheduleTable
-                    rescheduleBookingData={rescheduleBookingData}
+                    rescheduleBookingData={rescheduleBookingConfirmed}
                     // openModal={openModal}
-                    // setFlightRef={setFlightRef}
+                    setFlightRef={setFlightRef}
                     status="confirm status"
                 />
             )}
@@ -301,7 +311,17 @@ const ApplyReschedule = () => {
                                             className={`btn btn-sm text-white ${isDateSelected ? 'bg-cyan-500' : 'bg-gray-400'}`}
                                             disabled={!isDateSelected} // Disable the button if no date is selected
                                         >
-                                            Select Seat
+                                            {isLoading ? (
+                                                <div className="flex items-center gap-3">
+                                                    <TbFidgetSpinner
+                                                        size={24}
+                                                        className="m-auto animate-spin"
+                                                    />
+                                                    Loading...
+                                                </div>
+                                            ) : (
+                                                "Select Seat"
+                                            )}
                                         </button>
 
                                     </div>
