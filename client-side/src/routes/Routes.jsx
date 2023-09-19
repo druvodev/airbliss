@@ -25,10 +25,11 @@ import ManageAllBookings from "../Dashboard/Admin/ManageAllBookings/ManageAllBoo
 import UserInsurance from "../Dashboard/User/UserInsurance/UserInsurance";
 import AdminInsurance from "../Dashboard/Admin/AdminInsurance/AdminInsurance";
 import RecommendedHotelDetails from "../pages/Home/RecommendedFlight/RecommendedHotelDetails";
-
 import InsurancePolicy from "../pages/InsurancePolicy/InsurancePolicy";
 import ServicesDetails from "../pages/ServicesDetails/ServicesDetails";
+import ApplyReschedule from "../Dashboard/User/ApplyReschedule/ApplyReschedule";
 import FlightDetails from "../Dashboard/FlightStatus/FlightDetails/FlightDetails";
+import Reschedule from "../Dashboard/Admin/Reschedule/Reschedule";
 import AboutUs from "../pages/AboutUs/AboutUs";
 
 // const selector = useSelector(state =>console.log(state))
@@ -187,12 +188,23 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
-
+      {
+        path: "applyReschedule",
+        element: <ApplyReschedule />,
+      },
       {
         path: "flightDetails/:airportCode/:_id/:id",
         element: (
           <AdminRoute>
             <FlightDetails />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "reschedule",
+        element: (
+          <AdminRoute>
+            <Reschedule />
           </AdminRoute>
         ),
       },
