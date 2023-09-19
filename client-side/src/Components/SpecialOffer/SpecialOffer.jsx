@@ -24,7 +24,10 @@ const SpecialOffer = () => {
     fetch("/offer.json")
       .then((res) => res.json())
       .then((data) => {
-        const toCity = data.filter((city) => city.destination !== fromCity);
+        const toCity = data.filter(
+          (city) => city.destination.split(",")[0] !== fromCity
+        );
+
         const shuffledToCity = [...toCity].sort(() => Math.random() - 0.5);
         setData(shuffledToCity.slice(0, 8));
       });
@@ -55,14 +58,13 @@ const SpecialOffer = () => {
         }}
         modules={[Autoplay]}
       >
-        {data.map((city) => (
-          <SwiperSlide>
+        {data.map((city, index) => (
+          <SwiperSlide key={index}>
             <OfferCard
               offerImg={offerImg}
               date={date}
               fromCity={fromCity}
-              toCity={city.destination}
-              discount={city.discount}
+              toCity={city}
             />
           </SwiperSlide>
         ))}

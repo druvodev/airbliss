@@ -1,94 +1,117 @@
 [
   {
-    "destination": "Dhaka",
+    "destination": "Dhaka, Bangladesh",
+    "code": "DAC",
     "discount": 10
   },
   {
-    "destination": "Chittagong",
+    "destination": "Chittagong, Bangladesh",
+    "code": "CGP",
     "discount": 15
   },
   {
-    "destination": "Sylhet",
+    "destination": "Sylhet, Bangladesh",
+    "code": "ZYL",
     "discount": 11
   },
   {
-    "destination": "Jessore",
+    "destination": "Jessore, Bangladesh",
+    "code": "JSR",
     "discount": 5
   },
   {
-    "destination": "Rajshahi",
+    "destination": "Rajshahi, Bangladesh",
+    "code": "RJH",
     "discount": 25
   },
   {
-    "destination": "Barisal",
+    "destination": "Barisal, Bangladesh",
+    "code": "BZL",
     "discount": 10
   },
   {
-    "destination": "Cox's Bazar",
+    "destination": "Cox's Bazar, Bangladesh",
+    "code": "CXB",
     "discount": 14
   },
   {
-    "destination": "Lalmonirhat",
+    "destination": "Lalmonirhat, Bangladesh",
+    "code": "LLJ",
     "discount": 19
   },
   {
-    "destination": "Syedpur",
+    "destination": "Syedpur, Bangladesh",
+    "code": "SPD",
     "discount": 9
   },
   {
-    "destination": "Thakurgaon",
+    "destination": "Thakurgaon, Bangladesh",
+    "code": "TKZ",
     "discount": 10
   },
   {
-    "destination": "Comilla",
+    "destination": "Comilla, Bangladesh",
+    "code": "CLA",
     "discount": 17
   },
   {
-    "destination": "Rangpur",
+    "destination": "Rangpur, Bangladesh",
+    "code": "RAU",
     "discount": 10
   },
   {
-    "destination": "Bogra",
+    "destination": "Bogra, Bangladesh",
+    "code": "BOG",
     "discount": 23
   },
   {
-    "destination": "New Delhi",
+    "destination": "New Delhi, India",
+    "code": "DEL",
     "discount": 19
   },
   {
-    "destination": "Mumbai",
+    "destination": "Mumbai, India",
+    "code": "BOM",
     "discount": 21
   },
   {
-    "destination": "Bengaluru",
+    "destination": "Bengaluru, India",
+    "code": "BLR",
     "discount": 7
   },
   {
-    "destination": "Chennai",
+    "destination": "Chennai, India",
+    "code": "MAA",
     "discount": 15
   },
   {
-    "destination": "Kolkata",
+    "destination": "Kolkata, India",
+    "code": "CCU",
     "discount": 4
   },
   {
-    "destination": "Hyderabad",
+    "destination": "Hyderabad, India",
+    "code": "HYD",
     "discount": 20
   },
   {
-    "destination": "Kochi",
+    "destination": "Kochi, India",
+    "code": "COK",
     "discount": 17
   },
   {
-    "destination": "Ahmedabad",
+    "destination": "Ahmedabad, India",
+    "code": "AMD",
     "discount": 30
   },
   {
-    "destination": "Pune",
+    "destination": "Pune, India",
+    "code": "PNQ",
     "discount": 18
   },
   {
-    "destination": "Goa",
+    "destination": "Goa, India",
+    "code": "GOI",
     "discount": 11
   }
 ]
