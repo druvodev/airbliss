@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
-import { FaEye, FaHandsHolding } from 'react-icons/fa6';
-import ModalApprove from './ModalApprove';
-import { RxCross2 } from 'react-icons/rx';
+import React, { useState } from "react";
+import { FaEye, FaHandsHolding } from "react-icons/fa6";
+import ModalApprove from "./ModalApprove";
+import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-hot-toast";
 import { MdDone } from 'react-icons/md';
 import ModalDenied from './ModalDenied';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBookingsRefetch } from '../../../redux/features/bookingInfoSlice';
+import { GrNext, GrPrevious } from 'react-icons/gr';
+
+const ITEMS_PER_PAGE = 5;
 
 const AdminInsurance = () => {
     const [selectedInsurance, setSelectedInsurance] = useState(null);
@@ -15,78 +18,99 @@ const AdminInsurance = () => {
     const insuranceBookings = allBookingData.filter(booking => booking?.insurancePolicy?.claimedStatus != null)
     const dispatch = useDispatch()
     const [isModalDeniedOpen, setIsModalDeniedOpen] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
 
-    console.log(insuranceBookings);
-
-    const handleDenialSubmit = (insurance, premiumType, deniedFeedback) => {
-        const insuranceData = {
-            premiumType: premiumType,
-            deniedFeedback: deniedFeedback,
-        };
-        fetch(`http://localhost:5000/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ insuranceData }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data?.message == "Insurance policy updated") {
-                    toast.success(data.message);
-                    dispatch(setBookingsRefetch(new Date().toString()))
-                } else {
-                    toast.error(data.message);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-
-        setIsModalDeniedOpen(false);
+    const handlePaginationPrev = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
     };
 
-    const closeDeniedModal = () => {
-        setIsModalDeniedOpen(false);
+    const handlePaginationNext = () => {
+        const totalPages = Math.ceil(insuranceBookings?.length / ITEMS_PER_PAGE);
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
     };
 
-    const handleFormSubmit = (insurance, premiumType, payableAmount) => {
-        const insuranceData = {
-            premiumType: premiumType,
-            claimedAmount: payableAmount,
-        };
-        fetch(`http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ insuranceData }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data?.message == "Insurance policy updated") {
-                    toast.success(data.message);
-                    dispatch(setBookingsRefetch(new Date().toString()))
-                } else {
-                    toast.error(data.message);
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-        return
-    };
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
 
-    const openModal = (insurance) => {
-        setSelectedInsurance(insurance);
-        setIsModalApprovedOpen(true); // Open the "approved" modal by default
+  const handleDenialSubmit = (insurance, premiumType, deniedFeedback) => {
+    const insuranceData = {
+      premiumType: premiumType,
+      deniedFeedback: deniedFeedback,
     };
+    fetch(
+      `http://localhost:5000/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ insuranceData }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.message == "Insurance policy updated") {
+          toast.success(data.message);
+          dispatch(setBookingsRefetch(new Date().toString()));
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-    const closeModal = () => {
-        setSelectedInsurance(null);
-        setIsModalApprovedOpen(false);
-        setIsModalDeniedOpen(false);
+    setIsModalDeniedOpen(false);
+  };
+
+  const closeDeniedModal = () => {
+    setIsModalDeniedOpen(false);
+  };
+
+  const handleFormSubmit = (insurance, premiumType, payableAmount) => {
+    const insuranceData = {
+      premiumType: premiumType,
+      claimedAmount: payableAmount,
     };
+    fetch(
+      `http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ insuranceData }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.message == "Insurance policy updated") {
+          toast.success(data.message);
+          dispatch(setBookingsRefetch(new Date().toString()));
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    return;
+  };
+
+  const openModal = (insurance) => {
+    setSelectedInsurance(insurance);
+    setIsModalApprovedOpen(true); // Open the "approved" modal by default
+  };
+
+  const closeModal = () => {
+    setSelectedInsurance(null);
+    setIsModalApprovedOpen(false);
+    setIsModalDeniedOpen(false);
+  };
 
     return (
         <div>
@@ -116,7 +140,7 @@ const AdminInsurance = () => {
                     </thead>
                     <tbody>
                         {
-                            insuranceBookings.map((insurance, index) =>
+                            insuranceBookings.slice(startIndex, endIndex).map((insurance, index) =>
                                 <tr key={index}>
                                     <th>
                                         {index + 1}
@@ -193,6 +217,34 @@ const AdminInsurance = () => {
                     />
                 )}
             </div>
+            <section className="mt-12 flex justify-end items-center">
+                <button
+                    className="border-[1px] p-2 rounded-l-md"
+                    onClick={handlePaginationPrev}
+                >
+                    <GrPrevious size={20} />
+                </button>
+                {/* Render pagination buttons based on the total number of pages */}
+                {Array.from(
+                    { length: Math.ceil(insuranceBookings?.length / ITEMS_PER_PAGE) },
+                    (_, index) => (
+                        <h3
+                            key={index}
+                            className={`px-3 py-[6px] border-[1px] cursor-pointer ${index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                                }`}
+                            onClick={() => setCurrentPage(index + 1)}
+                        >
+                            {index + 1}
+                        </h3>
+                    )
+                )}
+                <button
+                    className="border-[1px] p-2 rounded-r-md"
+                    onClick={handlePaginationNext}
+                >
+                    <GrNext size={20} />
+                </button>
+            </section>
         </div>
     );
 };

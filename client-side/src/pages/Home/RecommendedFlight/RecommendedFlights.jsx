@@ -29,7 +29,7 @@ const RecommendedFlights = () => {
             <GiAirplaneDeparture /> --------
           </p> */}
           <SectionTitle sectionTitle={"Recommended Flights"} />
-          <p className=" text-sm sm:text-base mb-10">
+          <p className=" text-sm sm:text-base mb-5">
             Most famous Flights of us. Our happy clients always happy with these
             Flights. <br /> The flights are always maintenance there roles and
             regulations
@@ -117,13 +117,47 @@ const RecommendedFlights = () => {
             </div>
           </div>
 
-          <div className="border overflow-hidden rounded-md shadow-lg p-5">
-            <div>
-              <div className="flex gap-5 container ">
-                <img
-                  className="object-cover rounded-md shadow-md h-52 mb-20 w-full"
-                  src="https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg"
-                />
+        <div
+          data-testid="cards-container"
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7"
+        >
+          {flights.map((flight) => (
+            <div
+              key={flight._id}
+              className="card overflow-hidden rounded-md shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] p-3 bg-white"
+            >
+              <div>
+                <div className="flex gap-5 container ">
+                  <img
+                    className="object-cover rounded-md shadow h-52 mb-20 w-full"
+                    src={flight?.imageSrc}
+                  />
+                </div>
+              </div>
+              <div className="flex mt-2 gap-x-2 justify-between items-center">
+                <div>
+                  <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
+                    <GiAirplaneDeparture />
+                  </p>
+                </div>
+                <div>
+                  <h3 className="card-title mr-16 text-lg">{flight?.title}</h3>
+                  <p className="text-semibold text-xs font-semibold">
+                    {flight?.description}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs">FROM</p>
+                  <p className="text-sky-400 font-bold">{flight?.price}</p>
+                </div>
+              </div>
+              <div className="flex  items-center align-middle justify-between  mt-8">
+                <button className="rounded-full  pb-[2px] bg-cyan-700 hover:bg-cyan-600 font-semibold px-3 text-white">
+                  View
+                </button>
+                <button className="rounded-full border text-sky-500 px-3 font-semibold hover:bg-cyan-700 hover:text-white border-sky-500 ">
+                  Book
+                </button>
               </div>
             </div>
             <div className="flex mt-2 gap-x-2  justify-between items-center">

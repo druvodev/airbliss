@@ -70,7 +70,7 @@ const Footer = () => {
           </svg>
         </div>
 
-        <div className="px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
+        <div className="sm:px-10 md:px-0 max-w-7xl mx-auto h-auto overflow-hidden">
           <div>
             {/* Footer Item Design */}
             <section className="  text-white p-3 md:p-12 grid grid-cols-1 lg:grid-cols-3 gap-10">

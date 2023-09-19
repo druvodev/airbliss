@@ -4,7 +4,7 @@ import DomToImage from "dom-to-image";
 import { useParams } from "react-router";
 import useAxios from "../../hooks/useAxios";
 import airbliss from "../../assets/banner/airblibanner.png";
-
+import emailjs from "@emailjs/browser";
 import { HashLoader } from "react-spinners";
 
 const ETicket = ({ booking }) => {
@@ -29,25 +29,25 @@ const ETicket = ({ booking }) => {
           amount: info?.flight.fareSummary.total,
           departureDate: info?.flight.departureDate,
         };
-        // emailjs
-        //   .send(
-        //     "service_y6ldylc",
-        //     "template_3zv6g6c",
-        //     templateParams,
-        //     "w9Pnw6KhtfQAcLD4k"
-        //   )
-        //   .then(
-        //     (response) => {
-        //       console.log(
-        //         "Invoice Send SUCCESS!",
-        //         response.status,
-        //         response.text
-        //       );
-        //     },
-        //     (err) => {
-        //       console.log("FAILED...", err);
-        //     }
-        //   );
+        emailjs
+          .send(
+            "service_g3u6g2j",
+            "template_lie9arz",
+            templateParams,
+            "08zZeCBY_SKio7TxV"
+          )
+          .then(
+            (response) => {
+              console.log(
+                "Invoice Send SUCCESS!",
+                response.status,
+                response.text
+              );
+            },
+            (err) => {
+              console.log("FAILED...", err);
+            }
+          );
       })
       .catch((err) => {
         setIsLoading(false);
@@ -92,8 +92,6 @@ const ETicket = ({ booking }) => {
       });
     }
   };
-
-  console.log(booking);
 
   const { title, first_name, last_name, seatNo } = booking?.user || {};
 
