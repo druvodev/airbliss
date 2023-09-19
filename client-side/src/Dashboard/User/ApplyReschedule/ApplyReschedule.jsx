@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { format, parse } from 'date-fns';
 import logo from "../../../assets/icon/airblissBlack.png";
 import RescheduleModalSeat from './RescheduleModalSeat';
+import toast from 'react-hot-toast';
+import { setRefetch } from '../../../redux/features/usersSlice';
 
 const ApplyReschedule = () => {
     const [isActive, setIsActive] = useState("allflight");
@@ -13,12 +15,13 @@ const ApplyReschedule = () => {
     const [isSeats, setSeats] = useState([]);
     const [isRescheduleModalOpen, setIsRescheduleModalOpen] = useState(false);
     const [newSeat, setNewSeat] = useState("");
+    const [flightDate, setFlightDate] = useState("")
 
     const openModal = () => {
         setIsModalOpen(true);
     };
 
-    console.log(newSeat);
+    // console.log(newSeat);
 
     // Function to close the modal
     const closeModal = () => {
@@ -42,15 +45,15 @@ const ApplyReschedule = () => {
 
     const newDate = new Date();
     const todayDate = format(newDate, "yyyy-MM-dd");
-    console.log(todayDate);
+    // console.log(todayDate);
 
     const bookings = useSelector((state) => state?.userInfo?.userBookings);
-    console.log(bookings);
+    // console.log(bookings);
 
     const rescheduleBookingData = bookings.filter(
         (bookingData) => bookingData?.flight?.arrivalDate >= todayDate
     )
-    console.log(rescheduleBookingData);
+    // console.log(rescheduleBookingData);
 
     const myFlight = bookings?.find(
         (flight) => flight?.bookingReference === flightRef
@@ -68,7 +71,8 @@ const ApplyReschedule = () => {
             const [year, day, month] = event.target.value.split('-');
             const date = parse(`${year}-${month}-${day}`, 'yyyy-dd-MM', new Date());
             const newDate = format(date, 'yyyy-MM-dd');
-            console.log("date", newDate);
+            setFlightDate(newDate)
+            // console.log("date", newDate);
             fetch(`http://localhost:5000/rescheduleSeat/${myFlight?.flightId}/${myFlight?.totalSeat}/${newDate}`)
                 .then((res) => res.json())
                 .then((data) => {
@@ -82,7 +86,33 @@ const ApplyReschedule = () => {
         }
     };
 
-    console.log("new date", isSeats);
+    // console.log("new date", isSeats);
+
+    const handleReschedule = () => {
+        const requestData = {
+            flightDate: flightDate,
+            flightId: myFlight?.flightId,
+            seatNo: newSeat,
+        };
+        fetch(`http://localhost:5000/reschedule/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestData),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data?.message) {
+                    dispatch(setRefetch(new Date().toString()))
+                    toast.success(data?.message);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
 
 
     return (
@@ -285,8 +315,10 @@ const ApplyReschedule = () => {
                                         Close
                                     </div>
                                     <button
+                                        onClick={handleReschedule}
                                         type="submit"
-                                        className="bg-cyan-500 text-white py-1 px-4 rounded-md border-none hover:bg-cyan-600 transition duration-150"
+                                        className={`bg-cyan-500 text-white py-1 px-4 rounded-md border-none hover:bg-cyan-600 transition duration-150 ${newSeat === "" ? "bg-gray-400" : "bg-cyan-400"}`}
+                                        disabled={newSeat === ""}
                                     >
                                         Submit
                                     </button>
