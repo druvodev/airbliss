@@ -2,8 +2,8 @@
 
 const Heading = ({ subtitle, title }) => {
   return (
-    <>
-      <div className="capitalize">
+    <div className="w-full h-full flex flex-col items-center justify-center">
+      <div className="capitalize mx-auto">
         <h3 className="text-2xl text-center text-white font-semibold md:text-5xl mb-3">
           {subtitle}
         </h3>
@@ -11,7 +11,7 @@ const Heading = ({ subtitle, title }) => {
           {title}
         </h1>
       </div>
-    </>
+    </div>
   );
 };
 
