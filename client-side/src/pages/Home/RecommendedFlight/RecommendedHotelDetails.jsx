@@ -45,7 +45,8 @@ const RecommendedHotelDetails = () => {
                 alt=""
                 className="md:w-8/12 border-b-2 border-gray-200 pb-3"
               />
-              <div></div>
+              <div>
+              </div>
             </div>
             <div className="flex md:flex-row gap-x-4 mt-6 flex-col ">
               {/* Flight Overview  */}
