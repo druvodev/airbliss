@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { HashLoader } from "react-spinners";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 15;
 
 const FlightStatus = () => {
   // Redux state
