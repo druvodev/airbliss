@@ -109,12 +109,12 @@ const ResultsFilter = () => {
   ]);
 
   return (
-    <div className="rounded-2xl shadow-md sm:py-5">
-      <div>
+    <div className="rounded-2xl shadow-md sm:py-">
+      <div className="dark:bg-gray-800">
         <CountdownTimer />
       </div>
       <hr className="text-gray-300" />
-      <div className="p-5">
+      <div className="p-5 dark:bg-gray-700">
         <p className="text-lg font-semibold mb-4">One way price</p>
         <div>
           <input
@@ -133,7 +133,7 @@ const ResultsFilter = () => {
         </p>
       </div>
       <hr className="text-gray-300" />
-      <div className="p-5">
+      <div className="p-5 dark:bg-gray-700">
         <p className="text-lg font-semibold mb-4">Departure time in Dhaka</p>
         <div>
           <div className="flex gap-5 w-full mb-5">
@@ -183,7 +183,7 @@ const ResultsFilter = () => {
         </div>
       </div>
       <hr className="text-gray-300" />
-      <div className="p-5">
+      <div className="p-5 dark:bg-gray-700">
         <p className="text-lg font-semibold mb-4">Stops From Dhaka</p>
         <div className="flex items-center justify-between flex-wrap gap-1">
           <div className="flex items-center gap-2">
@@ -198,7 +198,7 @@ const ResultsFilter = () => {
         </div>
       </div>
       <hr className="text-gray-300" />
-      <div className="p-5">
+      <div className="p-5 dark:bg-gray-700">
         <p className="text-lg font-semibold mb-4">Check in Baggage Allowance</p>
         <div className="flex items-center gap-2">
           <input
@@ -213,7 +213,7 @@ const ResultsFilter = () => {
         </div>
       </div>
       <hr className="text-gray-300" />
-      <div className="p-5">
+      <div className="p-5 dark:bg-gray-700">
         <p className="text-lg font-semibold mb-4">Refundable</p>
         <div className="flex items-center gap-2">
           <input
@@ -226,7 +226,7 @@ const ResultsFilter = () => {
         </div>
       </div>
       <hr className="text-gray-300" />
-      <div className="p-5">
+      <div className="p-5 dark:bg-gray-700">
         <p className="text-lg font-semibold mb-4">
           Transit Time in {"Dhaka"} - {"Chittagong"}
         </p>
@@ -240,7 +240,7 @@ const ResultsFilter = () => {
           <span>No Transit Time ({noTranTimeL})</span>
         </div>
       </div>
-      <div className="p-5">
+      <div className="p-5 dark:bg-gray-700">
         <button
           onClick={clearFilters}
           className="py-2 w-full text-lg text-cyan-600 font-semibold border border-cyan-600 hover:bg-cyan-600 hover:text-white rounded"

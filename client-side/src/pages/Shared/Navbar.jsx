@@ -158,6 +158,7 @@ const Navbar = () => {
           </p>
           {isMenuTwo && (
             <ul className="grid gap-1">
+              <Link to="/">Home</Link>
               <Link to="/about">About Us</Link>
               <Link to="/contact">Contact</Link>
             </ul>
@@ -284,6 +285,12 @@ const Navbar = () => {
                     className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
                   >
                     <Link
+                      to="/"
+                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                    >
+                      Home
+                    </Link>
+                    <Link
                       to="/about"
                       className="cursor-pointer rounded-md p-2 hover:bg-base-200"
                     >
@@ -297,7 +304,7 @@ const Navbar = () => {
                     </Link>
                   </ul>
                 </div>
-                {!isDarkMode ? (
+                {/* {!isDarkMode ? (
                   <button onClick={() => setIsDarkMode(!isDarkMode)}>
                     <BsMoonFill className="text-xl  " />
                   </button>
@@ -305,10 +312,19 @@ const Navbar = () => {
                   <button onClick={() => setIsDarkMode(!isDarkMode)}>
                     <BiSun className="text-2xl hover:animate-spin" />
                   </button>
-                )}
+                )} */}
               </div>
             </div>
             <div className="navbar-center">
+              {!isDarkMode ? (
+                <button onClick={() => setIsDarkMode(!isDarkMode)}>
+                  <BsMoonFill className="text-xl  " />
+                </button>
+              ) : (
+                <button onClick={() => setIsDarkMode(!isDarkMode)}>
+                  <BiSun className="text-2xl hover:animate-spin" />
+                </button>
+              )}
               {user ? (
                 <div className="dropdown dropdown-end ml-5">
                   <label
