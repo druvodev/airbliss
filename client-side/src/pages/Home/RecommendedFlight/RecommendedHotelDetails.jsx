@@ -39,13 +39,16 @@ const RecommendedHotelDetails = () => {
       <div className="pb-10 lg:pb-16 pt-16 px-5 sm:px-10 md:px-6  max-w-5xl mx-auto h-auto overflow-hidden border shadow-lg  mt-6">
         {flight?.map((f) => (
           <div key={f?.id}>
-            <div className="flex gap-y-8  md:gap-x-4 lg:gap-x-6 flex-col md:flex-row md:items-start lg:items-center ">
+            <div className="flex gap-y-8  md:gap-x-4 lg:gap-x-6 flex-col-reverse md:flex-row md:items-start lg:items-center ">
               <img
                 src={f?.bg_pic}
                 alt=""
                 className="md:w-8/12 border-b-2 border-gray-200 pb-3"
               />
-              <div></div>
+              <div>
+                <h2 className="text-cyan-500 text-2xl font-bold md:text-4xl pb-3">About Us</h2>
+                <p>{f?.about}</p>
+              </div>
             </div>
             <div className="flex md:flex-row gap-x-4 mt-6 flex-col ">
               {/* Flight Overview  */}
@@ -98,7 +101,7 @@ const RecommendedHotelDetails = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <p className="uppercase text-[#01b7f2]">Total Price:</p>
-                        <p className="uppercase">${overview?.total_price}.00</p>
+                        <p className="uppercase">${overview?.base_fare + overview?.tax}.00</p>
                       </div>
                     </div>
                   ))}
