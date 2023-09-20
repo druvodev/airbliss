@@ -162,7 +162,7 @@ const ETicket = ({ booking }) => {
                 <div className="text-cyan-900 p-2 md:border-r-4 pr-10 border-cyan-600 border-dotted dark:text-gray-400  dark:border-gray-400">
                   <div className="pb-2 border-b border-cyan-600 border-dotted ">
                     <p>Passenger</p>
-                    <p className="font-semibold borde">
+                    <p className="font-semibold">
                       {myBooking.user?.title
                         ? `${myBooking.user?.title} ${myBooking.user?.first_name} ${myBooking.user?.last_name}`
                         : `${title} ${first_name} ${last_name}`}
