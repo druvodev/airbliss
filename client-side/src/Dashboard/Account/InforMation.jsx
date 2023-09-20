@@ -121,13 +121,16 @@ const InforMation = ({ currentUser }) => {
             className=" w-[100px] h-[100px]   lg:w-[200px] lg:h-[200px] rounded-full"
           />
           <div className="lg:mt-24 mt-12 -ml-2">
-            <div className="flex justify-start font-bold capitalize items-center lg:text-[32px] ">
-              <h1 className="whitespace-nowrap">{user?.displayName}</h1>
-              <p className="ml-2 lowercase font-light hidden md:block whitespace-nowrap">
+            <div className="flex lg:justify-start lg:items-center flex-col lg:flex-row font-bold capitalize lg:mt-3 text-xl lg:text-[32px] ">
+              <h1 className="whitespace-nowrap ">{user?.displayName}</h1>
+              <p className="lg:ml-2 lowercase font-light text-sm lg:text-[32px] whitespace-nowrap">
                 {nickname ? `(${nickname})` : <div className="w-10 "></div>}
               </p>
             </div>
-            <p>{bio}</p>
+
+            <div className=" mt-3 text-sm">
+              <p className="hidden lg:block">{bio}</p>
+            </div>
           </div>
         </div>
       </div>
