@@ -23,7 +23,7 @@ const Navbar = () => {
   const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [axiosSecure] = UseAxiosSecure();
-  const location = useLocation()
+  const location = useLocation();
 
   // Dark Mode
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -113,22 +113,41 @@ const Navbar = () => {
                 onClick={() => {
                   scrollToDiscountSection("search-flights");
                 }}
+                className="cursor-pointer rounded-md p-2 hover:bg-base-200"
               >
-                Flight Booking
+                Search Flights
               </a>
               <a
                 onClick={() => {
-                  scrollToDiscountSection("discount-hotels");
+                  scrollToDiscountSection("our-services");
                 }}
+                className="cursor-pointer rounded-md p-2 hover:bg-base-200"
               >
-                Hotels Booking
+                Our Services
               </a>
               <a
                 onClick={() => {
                   scrollToDiscountSection("discount-section");
                 }}
+                className="cursor-pointer rounded-md p-2 hover:bg-base-200"
               >
                 Exclusive Discounts
+              </a>
+              <a
+                onClick={() => {
+                  scrollToDiscountSection("recommended-flights");
+                }}
+                className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+              >
+                Recommended Flights
+              </a>
+              <a
+                onClick={() => {
+                  scrollToDiscountSection("discount-hotels");
+                }}
+                className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+              >
+                Discount On Hotels
               </a>
             </ul>
           )}
@@ -139,13 +158,6 @@ const Navbar = () => {
           </p>
           {isMenuTwo && (
             <ul className="grid gap-1">
-              <a
-                onClick={() => {
-                  scrollToDiscountSection("our-services");
-                }}
-              >
-                Our Services
-              </a>
               <Link to="/about">About Us</Link>
               <Link to="/contact">Contact</Link>
             </ul>
@@ -199,8 +211,10 @@ const Navbar = () => {
             </div>
             <div className="navbar-end hidden lg:flex">
               <div className="px-1 flex gap-5">
-                {
-                  location?.pathname != "/" ? <></> : <>
+                {location?.pathname != "/" ? (
+                  <></>
+                ) : (
+                  <>
                     <div className="dropdown">
                       <label
                         tabIndex={0}
@@ -220,6 +234,14 @@ const Navbar = () => {
                           className="cursor-pointer rounded-md p-2 hover:bg-base-200"
                         >
                           Search Flights
+                        </a>
+                        <a
+                          onClick={() => {
+                            scrollToDiscountSection("our-services");
+                          }}
+                          className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                        >
+                          Our Services
                         </a>
                         <a
                           onClick={() => {
@@ -248,7 +270,7 @@ const Navbar = () => {
                       </ul>
                     </div>
                   </>
-                }
+                )}
                 <div className="dropdown">
                   <label
                     tabIndex={0}
@@ -261,14 +283,6 @@ const Navbar = () => {
                     tabIndex={0}
                     className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
                   >
-                    <a
-                      onClick={() => {
-                        scrollToDiscountSection("our-services");
-                      }}
-                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
-                    >
-                      Our Services
-                    </a>
                     <Link
                       to="/about"
                       className="cursor-pointer rounded-md p-2 hover:bg-base-200"

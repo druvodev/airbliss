@@ -1,0 +1,28 @@
+.hero {
+  /* background-image: url("https://www.libertytravel.com/sites/default/files/styles/full_size/public/flight-hero.jpg?itok=hhscHSGZ"); */
+  background-size: cover;
+  background-attachment: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 60vh;
+  color: #fff;
+}
+
+
+@media screen and (max-width: 768px) {
+  .hero {
+    /* background-image: url("https://www.libertytravel.com/sites/default/files/styles/full_size/public/flight-hero.jpg?itok=hhscHSGZ"); */
+    background-size: contain;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+   height: 30vh;
+    color: #fff;
+  }
+  .hero .row {
+    width: 100%;
+  }
+}
