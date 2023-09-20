@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { FaInfo } from "react-icons/fa";
-import { MdCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 15;
 
 const RescheduleTable = ({ rescheduleBookingData, status, openModal, setFlightRef }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -15,9 +14,9 @@ const RescheduleTable = ({ rescheduleBookingData, status, openModal, setFlightRe
         }
     };
 
-    // todo /rescheduleSeat/: flightId /: totalSeats /: departureDate
-    // todo /reschedule/:date/:airportCode/:bookingReference
-    // todo /rescheduleManage/:status/:date/:airportCode/:bookingReference
+    // /rescheduleSeat/: flightId /: totalSeats /: departureDate
+    // /reschedule/:date/:airportCode/:bookingReference
+    // /rescheduleManage/:status/:date/:airportCode/:bookingReference
 
     const handlePaginationNext = () => {
         const totalPages = Math.ceil(rescheduleBookingData?.length / ITEMS_PER_PAGE);
@@ -77,22 +76,14 @@ const RescheduleTable = ({ rescheduleBookingData, status, openModal, setFlightRe
                                     </td>
                                     <td>BDT {flight?.flight?.fareSummary?.total}</td>
                                     <td className="capitalize">
-                                        {status === "Residual Status" && (
-                                            <span>
-                                                {flight?.AllRescheduletatus}{" "}
-                                                <span
-                                                    className={`${flight?.residualStatus === "denied" && "text-red-500 bg-red-50 rounded-full px-2 py-1" || flight?.residualStatus === "approved" && "text-green-500 bg-green-50 rounded-full px-2 py-1" || flight?.residualStatus === "pending" && "text-orange-500 bg-orange-50 rounded-full px-2 py-1"}`}
-                                                >
-                                                    {flight?.residualStatus}
-                                                </span>
+                                        <span>
+                                            {flight?.AllRescheduletatus}{" "}
+                                            <span
+                                                className={`${flight?.residualStatus === "denied" && "text-red-500 bg-red-50 rounded-full px-2 py-1" || flight?.residualStatus === "approved" && "text-green-500 bg-green-50 rounded-full px-2 py-1" || flight?.residualStatus === "pending" && "text-orange-500 bg-orange-50 rounded-full px-2 py-1"}`}
+                                            >
+                                                {flight?.residualStatus}
                                             </span>
-                                        )}
-                                        {/* {status === "cancel status" && (
-                                            <span>{flight?.requestStatus}</span>
-                                        )}
-                                        {status === "confirm status" && (
-                                            <span>{flight?.requestStatus}</span>
-                                        )} */}
+                                        </span>
                                     </td>
                                     <td>
                                         <button

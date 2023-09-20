@@ -67,8 +67,6 @@ const ApplyReschedule = () => {
         (flight) => flight?.bookingReference === flightRef
     );
 
-    console.log(myFlight);
-
     const paidAmount = myFlight?.flight?.fareSummary?.total;
     const deductedAmount = Math.round(myFlight?.flight?.fareSummary?.total * 0.3);
     const refundAmount = paidAmount - deductedAmount;
@@ -171,7 +169,7 @@ const ApplyReschedule = () => {
                     rescheduleBookingData={rescheduleBookingData}
                     openModal={openModal}
                     setFlightRef={setFlightRef}
-                    status="Residual Status"
+                    status="Reschedule Status"
                 />
             )}
 

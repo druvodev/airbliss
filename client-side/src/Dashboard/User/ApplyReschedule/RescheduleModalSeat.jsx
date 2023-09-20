@@ -3,22 +3,14 @@ import frontSide from "../../../assets/seatModel/frontSide.png";
 import bottomSide from "../../../assets/seatModel/bottom.png";
 import leftSide from "../../../assets/seatModel/leftSide.png";
 import { FcLock } from "react-icons/fc";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserInfo } from '../../../redux/features/bookingInfoSlice';
 
 const RescheduleModalSeat = ({ setIsRescheduleModalOpen, isSeats, setNewSeat }) => {
-    const userInfo = useSelector((state) => state.userBookingInfo.userInfo);
-    const dispatch = useDispatch();
     const aSeats = isSeats.filter((seat) => seat.seatNo.startsWith("A"));
     const bSeats = isSeats.filter((seat) => seat.seatNo.startsWith("B"));
 
     const handleSeat = (seatNo) => {
         setNewSeat(seatNo)
-        // document.body.classList.remove("modal-open");
-        // const updatedUserInfo = { ...userInfo };
-        // updatedUserInfo.seatNo = seatNo;
-        setIsRescheduleModalOpen(false); // Fix this line
-        // dispatch(setUserInfo(updatedUserInfo));
+        setIsRescheduleModalOpen(false);
     };
 
     return (
