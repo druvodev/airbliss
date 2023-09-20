@@ -40,7 +40,7 @@ const HotDealDetails = () => {
           {deal.map((d) => (
             <div key={d?.id} className="">
               <div className="mb-10 flex sm:gap-x-5 items-center justify-center">
-                <h2 className="text-xl sm:text-3xl md:text-5xl font-bold text-cyan-600">AirBLiss <span>|</span> </h2>
+                <h2 className="text-xl sm:t traveler information formext-3xl md:text-5xl font-bold text-cyan-600">AirBLiss <span>|</span> </h2>
                 <img src={d?.offered_by} alt="" className="w-8/12 sm:w-6/12 md:w-1/2 lg:w-1/2 " />
               </div>
               {/* Offer  */}

@@ -13,6 +13,7 @@ import {
   AiFillLinkedin,
   AiOutlineWhatsApp,
 } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const svgStyle = {
@@ -147,30 +148,30 @@ const Footer = () => {
                   </div>
 
                   <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
+                    <Link to="/refund" className="inline-flex items-center gap-1 mt-3">
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
-                      <span>Blogs</span>
-                    </p>
+                      <span>Refund</span>
+                    </Link>
                   </div>
 
                   <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
+                    <Link to="/terms" className="inline-flex items-center gap-1 mt-3">
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
-                      <span>Destination</span>
-                    </p>
+                      <span>Terms</span>
+                    </Link>
                   </div>
 
                   <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
+                    <Link to="/contact" className="inline-flex items-center gap-1 mt-3">
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
-                      <span>Booking Flight</span>
-                    </p>
+                      <span>Contact</span>
+                    </Link>
                   </div>
                 </div>
 
