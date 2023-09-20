@@ -38,7 +38,6 @@ const Reschedule = () => {
     const handleTabClick = (tab) => {
         setIsActive(tab);
     };
-    // /rescheduleManage/:status/:date/:airportCode/:bookingReference
 
     const handleActionReschedule = (status) => {
         fetch(`http://localhost:5000/rescheduleManage/${status}/${myFlight?.flight?.departureDate}/${myFlight?.flight?.departureAirport}/${myFlight?.bookingReference}`, {
@@ -47,17 +46,17 @@ const Reschedule = () => {
                 "Content-Type": "application/json",
             },
         })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-            if (data?.message) {
-                dispatch(setBookingsRefetch(new Date().toString()))
-                toast.success(data?.message);
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data?.message) {
+                    dispatch(setBookingsRefetch(new Date().toString()))
+                    toast.success(data?.message);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
 
     return (
@@ -110,7 +109,7 @@ const Reschedule = () => {
                 <TableReschedule
                     AllReschedule={Denied}
                     // openModal={openModal}
-                    // setFlightRef={setFlightRef}
+                    setFlightRef={setFlightRef}
                     status="cancel status"
                 />
             )}
@@ -119,7 +118,7 @@ const Reschedule = () => {
                 <TableReschedule
                     AllReschedule={Confirmed}
                     // openModal={openModal}
-                    // setFlightRef={setFlightRef}
+                    setFlightRef={setFlightRef}
                     status="confirm status"
                 />
             )}
@@ -198,42 +197,47 @@ const Reschedule = () => {
 
                             <div className="mt-5">
                                 <h2 className="text-md font-semibold">
-                                    Cancelation and Refund
+                                    New Flight Information
                                 </h2>
                                 <hr />
-                                <div className="grid grid-cols-2 mt-2 text-sm">
-                                    <p>Your paid amount for this flight</p>
-                                    <p>= {paidAmount} BDT</p>
-                                </div>
-                                <div className="grid grid-cols-2 mt-2 md:mt-0 text-sm">
-                                    <p>Deducted 30% cancelation fee</p>
-                                    <p>= {deductedAmount} BDT</p>
-                                </div>
-                                <div className="w-3/4">
-                                    <hr />
-                                </div>
-                                <div className="grid grid-cols-2 mt-2 md:mt-0 text-sm">
-                                    <p>Total refund amount</p>
-                                    <p>= {refundAmount} BDT</p>
-                                </div>
-                            </div>
-                            <div className='mt-4'>
-                                {/* End of form fields */}
-                                <div className="flex justify-end mt-2 sm:mt-5 tracking-wide">
-                                    <button
-                                        onClick={() => handleActionReschedule("denied")}
-                                        className={`bg-red-500 mr-4 text-white py-1 px-4 rounded-md border-none hover:bg-red-600 transition duration-150`}
-                                    >
-                                        Denied
-                                    </button>
-                                    <button
-                                        onClick={() => handleActionReschedule("approved")}
-                                        className={`bg-cyan-500 text-white py-1 px-4 rounded-md border-none hover:bg-cyan-600 transition duration-150`}
-                                    >
-                                        Approved
-                                    </button>
+                                <div className="md:flex gap-5 items-center text-sm">
+                                    <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
+                                        <h2 className="font-semibold">Flight Id</h2>
+                                        <p>{myFlight?.flightId}</p>
+                                    </div>
+                                    <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
+                                        <h2 className="font-semibold">Flight Date</h2>
+                                        <p>{myFlight?.createdAt}</p>
+                                    </div>
+                                    <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0">
+                                        <h2 className="font-semibold">Seat No.</h2>
+                                        <p>
+                                            {myFlight?.user?.seatNo}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
+                            {
+                                myFlight?.residualStatus === "denied" || myFlight?.residualStatus === "approved" ? <></> : <>
+                                    <div className='mt-4'>
+                                        {/* End of form fields */}
+                                        <div className="flex justify-end mt-2 sm:mt-5 tracking-wide">
+                                            <button
+                                                onClick={() => handleActionReschedule("denied")}
+                                                className={`bg-red-500 mr-4 text-white py-1 px-4 rounded-md border-none hover:bg-red-600 transition duration-150`}
+                                            >
+                                                Denied
+                                            </button>
+                                            <button
+                                                onClick={() => handleActionReschedule("approved")}
+                                                className={`bg-cyan-500 text-white py-1 px-4 rounded-md border-none hover:bg-cyan-600 transition duration-150`}
+                                            >
+                                                Approved
+                                            </button>
+                                        </div>
+                                    </div>
+                                </>
+                            }
                         </div>
                     </div>
                 </div>
