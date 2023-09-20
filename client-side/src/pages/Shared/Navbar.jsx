@@ -5,7 +5,7 @@ import { BiMoon, BiScatterChart, BiSun } from "react-icons/bi";
 import logoBlack from "../../assets/icon/airblissBlack.png";
 import logoWhite from "../../assets/icon/airblissWhite.png";
 import LoginSignupModal from "../../LogIn/LoginSignupModal";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
 import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import { useDispatch } from "react-redux";
@@ -23,6 +23,7 @@ const Navbar = () => {
   const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
   const [axiosSecure] = UseAxiosSecure();
+  const location = useLocation()
 
   // Dark Mode
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -108,9 +109,27 @@ const Navbar = () => {
           </p>
           {isMenuOne && (
             <ul className="grid gap-1">
-              <Link>Flight Booking</Link>
-              <Link>Hotels Booking</Link>
-              <Link>Cars Booking</Link>
+              <a
+                onClick={() => {
+                  scrollToDiscountSection("search-flights");
+                }}
+              >
+                Flight Booking
+              </a>
+              <a
+                onClick={() => {
+                  scrollToDiscountSection("discount-hotels");
+                }}
+              >
+                Hotels Booking
+              </a>
+              <a
+                onClick={() => {
+                  scrollToDiscountSection("discount-section");
+                }}
+              >
+                Exclusive Discounts
+              </a>
             </ul>
           )}
         </li>
@@ -120,8 +139,13 @@ const Navbar = () => {
           </p>
           {isMenuTwo && (
             <ul className="grid gap-1">
-              <Link>Blogs</Link>
-              <Link>Gallery</Link>
+              <a
+                onClick={() => {
+                  scrollToDiscountSection("our-services");
+                }}
+              >
+                Our Services
+              </a>
               <Link to="/about">About Us</Link>
               <Link to="/contact">Contact</Link>
             </ul>
@@ -175,58 +199,62 @@ const Navbar = () => {
             </div>
             <div className="navbar-end hidden lg:flex">
               <div className="px-1 flex gap-5">
+                {
+                  location?.pathname != "/" ? <></> : <>
+                    <div className="dropdown">
+                      <label
+                        tabIndex={0}
+                        className="m-1 flex items-center font-medium cursor-pointer"
+                      >
+                        <BiScatterChart className="text-lg mr-1" /> Categories{" "}
+                        <RxCaretDown />
+                      </label>
+                      <ul
+                        tabIndex={0}
+                        className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
+                      >
+                        <a
+                          onClick={() => {
+                            scrollToDiscountSection("search-flights");
+                          }}
+                          className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                        >
+                          Search Flights
+                        </a>
+                        <a
+                          onClick={() => {
+                            scrollToDiscountSection("discount-section");
+                          }}
+                          className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                        >
+                          Exclusive Discounts
+                        </a>
+                        <a
+                          onClick={() => {
+                            scrollToDiscountSection("recommended-flights");
+                          }}
+                          className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                        >
+                          Recommended Flights
+                        </a>
+                        <a
+                          onClick={() => {
+                            scrollToDiscountSection("discount-hotels");
+                          }}
+                          className="cursor-pointer rounded-md p-2 hover:bg-base-200"
+                        >
+                          Discount On Hotels
+                        </a>
+                      </ul>
+                    </div>
+                  </>
+                }
                 <div className="dropdown">
                   <label
                     tabIndex={0}
                     className="m-1 flex items-center font-medium cursor-pointer"
                   >
-                    <BiScatterChart className="text-lg mr-1" /> Categories{" "}
-                    <RxCaretDown />
-                  </label>
-                  <ul
-                    tabIndex={0}
-                    className="dropdown-content text-black z-[1] menu p-3 shadow bg-base-100 rounded-box w-52 space-y-1"
-                  >
-                    <a
-                      onClick={() => {
-                        scrollToDiscountSection("search-flights");
-                      }}
-                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
-                    >
-                      Search Flights
-                    </a>
-                    <a
-                      onClick={() => {
-                        scrollToDiscountSection("discount-section");
-                      }}
-                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
-                    >
-                      Exclusive Discounts
-                    </a>
-                    <a
-                      onClick={() => {
-                        scrollToDiscountSection("recommended-flights");
-                      }}
-                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
-                    >
-                      Recommended Flights
-                    </a>
-                    <a
-                      onClick={() => {
-                        scrollToDiscountSection("discount-hotels");
-                      }}
-                      className="cursor-pointer rounded-md p-2 hover:bg-base-200"
-                    >
-                      Discount On Hotels
-                    </a>
-                  </ul>
-                </div>
-                <div className="dropdown">
-                  <label
-                    tabIndex={0}
-                    className="m-1 flex items-center font-medium cursor-pointer"
-                  >
-                    <PiPhone className="text-lg mr-1" /> Contact Us
+                    <PiPhone className="text-lg mr-1" /> About Airbliss
                     <RxCaretDown />
                   </label>
                   <ul

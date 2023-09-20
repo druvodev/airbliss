@@ -72,7 +72,7 @@ const Footer = () => {
         </div>
 
         <div className="sm:px-10 md:px-0 max-w-7xl mx-auto h-auto overflow-hidden  ">
-          <div>
+          <div className="mt-14">
             {/* Footer Item Design */}
             <section className="text-white p-3 grid grid-cols-1 lg:grid-cols-3 gap-10">
               {/* Airblees Text */}
@@ -139,7 +139,10 @@ const Footer = () => {
                   </p>
 
                   <div>
-                    <Link to="/about" className="inline-flex items-center  gap-1 mt-3">
+                    <Link
+                      to="/about"
+                      className="inline-flex items-center  gap-1 mt-3"
+                    >
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
@@ -148,7 +151,10 @@ const Footer = () => {
                   </div>
 
                   <div>
-                    <Link to="/refund" className="inline-flex items-center gap-1 mt-3">
+                    <Link
+                      to="/refund"
+                      className="inline-flex items-center gap-1 mt-3"
+                    >
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
@@ -157,7 +163,10 @@ const Footer = () => {
                   </div>
 
                   <div>
-                    <Link to="/terms" className="inline-flex items-center gap-1 mt-3">
+                    <Link
+                      to="/terms"
+                      className="inline-flex items-center gap-1 mt-3"
+                    >
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
@@ -166,7 +175,10 @@ const Footer = () => {
                   </div>
 
                   <div>
-                    <Link to="/contact" className="inline-flex items-center gap-1 mt-3">
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-1 mt-3"
+                    >
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>

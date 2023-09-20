@@ -21,13 +21,9 @@ const RecommendedHotelDetails = () => {
   }, []);
   return (
     <div className="pb-16">
-      <div className="">
-        <img
-          src="https://i.ibb.co/99WG5TR/pascal-meier-UYies-SO4-Fi-M-unsplash.jpg"
-          className="w-full h-[450px] object-cover"
-          alt=""
-        />
-        <div className="absolute left-4 top-20  sm:left-1/3 sm:top-1/3  md:left-1/4 md:top-1/3  lg:left-1/3 lg:top-1/3 text-white text-center">
+      <div className="bg-[url('https://i.ibb.co/99WG5TR/pascal-meier-UYies-SO4-Fi-M-unsplash.jpg')] py-48 bg-cover bg-no-repeat bg-center ">
+        
+        <div className="text-center text-white">
           <h3 className="text-xl sm:text-3xl md:text-5xl lg:text-7xl font-bold">
             AirBliss
           </h3>

@@ -9,7 +9,10 @@ const Terms = () => {
         .then(data => setPolicies(data))
     },[])
     return (
-        <div className='py-20 '>
+        <div>
+            <div className="bg-[url('https://i.ibb.co/GssKHPL/sonia-nadales-i-TYVXGu-Ar-M-unsplash.jpg')] py-48 bg-cover bg-no-repeat bg-center">
+
+            </div>
           
             <div className='pb-8 md:pb-16 pt-12 px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden'>
             <div className='flex flex-row  overflow-x-auto justify-between gap-x-3 px-3'>
