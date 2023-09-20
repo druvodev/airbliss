@@ -14,11 +14,17 @@ import {
   AiOutlineWhatsApp,
 } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
   const svgStyle = {
     fill: "#414D5E",
   };
+
+  const allServices = useSelector((state) => state?.ourServices?.services);
+  const sliceService = allServices?.slice(4, 6);
+  console.log(sliceService);
+
   // className = "px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden";
   return (
     <div>
@@ -231,7 +237,7 @@ const Footer = () => {
               </div>
 
               <div className="mt-12 lg:mt-0 dark:text-gray-400">
-                <h1 className="text-xl font-bold">Recent Postes</h1>
+                <h1 className="text-xl font-bold">Recent Service</h1>
                 <p>
                   <span className="flex items-center  tracking-widest">
                     <IoAirplaneSharp />
@@ -241,46 +247,36 @@ const Footer = () => {
                     <BsDashLg />
                     <BsDashLg />
                     <BsDashLg />
+                    <BsDashLg />
+                    <BsDashLg />
                   </span>
                 </p>
 
-                <div className="mt-2 flex justify-start items-center gap-2">
-                  <img
-                    className="rounded shadow-md"
-                    src="https://www.adivaha.com/themeforest-travon/assets/img/blog/recent-post-2-1.jpg"
-                    alt=""
-                  />
+                {/* Recent Service Card */}
+                {sliceService?.map((service, index) => (
+                  <div
+                    key={index}
+                    className="mt-2 flex justify-start items-center gap-2"
+                  >
+                    <img
+                      className="rounded shadow-md h-16"
+                      src={service?.image}
+                      alt=""
+                    />
 
-                  <div>
-                    <h1 className="font-bold ">
-                      5 Ways To Get Your Dream Photos On Picnic
-                    </h1>
-                    <p className="mt-1 inline-flex items-center gap-1">
-                      <span>
-                        <AiOutlineCalendar size={18} />{" "}
-                      </span>{" "}
-                      <span>21 June,2023</span>
-                    </p>
+                    <Link to={`/service/${service?._id}`}>
+                      <div className="cursor-pointer">
+                        <h1 className="font-bold ">{service?.title}</h1>
+                        <p className="mt-1 inline-flex items-center gap-1">
+                          <span>
+                            <AiOutlineCalendar size={18} />{" "}
+                          </span>{" "}
+                          <span>{service?.date}</span>
+                        </p>
+                      </div>
+                    </Link>
                   </div>
-                </div>
-
-                <div className="mt-2 flex justify-start items-center gap-2">
-                  <img
-                    className="rounded shadow-md"
-                    src="https://www.adivaha.com/themeforest-travon/assets/img/blog/recent-post-2-2.jpg"
-                    alt=""
-                  />
-
-                  <div>
-                    <h1 className="font-bold ">9 Essential Tips For Ture.</h1>
-                    <p className="mt-1 inline-flex items-center gap-1">
-                      <span>
-                        <AiOutlineCalendar size={18} />{" "}
-                      </span>{" "}
-                      <span>18 June,2023</span>
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </section>
 
