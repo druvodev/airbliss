@@ -9,8 +9,9 @@ const Terms = () => {
         .then(data => setPolicies(data))
     },[])
     return (
-        <div className='py-20'>
+        <div className='py-20 '>
           
+            <div className='pb-8 md:pb-16 pt-12 px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden'>
             <div className='flex flex-row  overflow-x-auto justify-between gap-x-3 px-3'>
                 {
                     policies.map((policy, index) => <div key={index} className="flex cursor-pointer flex-col  text-cyan-700 hover:text-cyan-800 justify-center border-b-2 border-transparent hover:border-cyan-300 items-center gap-2 transition duration-500 whitespace-nowrap">
@@ -27,6 +28,7 @@ const Terms = () => {
                 {
                     policies.map((policy, index) => <TermsShow key={index} policy={policy}></TermsShow>)
                 }
+            </div>
             </div>
         </div>
     );

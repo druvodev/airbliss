@@ -1,4 +1,6 @@
 import { FaLocationDot } from "react-icons/fa6";
+import { FaPhone, FaEnvelope } from "react-icons/fa";
+
 import ContactForm from "../../Components/Form/ContactForm";
 
 
@@ -21,7 +23,7 @@ const Contact = () => {
         <div className="grid sm:grid-cols-2 gap-y-10 mt-10 items-center px-6 ">
           <div className="space-y-3">
             <div className="flex items-start gap-2">
-              <FaLocationDot className="text-2xl"></FaLocationDot>
+              <FaLocationDot className="text-xl"></FaLocationDot>
               <div>
                 <h6 className="text-cyan-600  ">Address</h6>
                 <p className=" w-8/12 text-sm">
@@ -30,14 +32,14 @@ const Contact = () => {
               </div>
             </div>
             <div className="flex items-start gap-2">
-              <FaLocationDot className="text-2xl"></FaLocationDot>
+              <FaPhone className="text-xl"></FaPhone>
               <div>
                 <h6 className="text-cyan-600  ">Phone</h6>
                 <p className=" w-/12 text-sm">+88017325856</p>
               </div>
             </div>
             <div className="flex items-start gap-2">
-              <FaLocationDot className="text-2xl"></FaLocationDot>
+              <FaEnvelope className="text-xl"></FaEnvelope>
               <div>
                 <h6 className="text-cyan-600 ">Email</h6>
                 <p className=" w-8/12 text-sm">
