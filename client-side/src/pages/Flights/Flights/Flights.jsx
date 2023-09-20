@@ -50,7 +50,7 @@ const Flights = () => {
           </div>
         </div>
         {isShowSearch && (
-          <SearchFilter bookingType="flight" filterName="Modify Search" />
+          <SearchFilter bookingType="flight" filterName="Modify Search " />
         )}
         <div className="hidden lg:block">
           <SearchFilter bookingType="flight" filterName="Modify Search" />

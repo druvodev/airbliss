@@ -163,7 +163,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               name="flightType"
               value="oneWay"
               className="radio  radio-accent"
-              checked={flightType === "oneWay"}
+              checked
               onChange={() => dispatch(setFlightType("oneWay"))}
             />
             One Way
@@ -174,7 +174,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               name="flightType"
               value="roundTrip"
               className="radio radio-accent"
-              checked={flightType === "roundTrip"}
+              // checked={flightType === "roundTrip"}
               onChange={() => dispatch(setFlightType("roundTrip"))}
               disabled
             />
@@ -186,7 +186,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               name="flightType"
               value="multiCity"
               className="radio radio-accent"
-              checked={flightType === "multiCity"}
+              // checked={flightType === "multiCity"}
               onChange={() => dispatch(setFlightType("multiCity"))}
               disabled
             />
