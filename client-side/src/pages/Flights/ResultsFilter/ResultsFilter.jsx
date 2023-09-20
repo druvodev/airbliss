@@ -138,10 +138,10 @@ const ResultsFilter = () => {
         <div>
           <div className="flex gap-5 w-full mb-5">
             <div
-              className={`shadow rounded py-4 w-full text-center cursor-pointer ${
+              className={`shadow rounded py-4 w-full text-center cursor-pointer  ${
                 departureTime === "morning"
-                  ? "border border-cyan-600  bg-cyan-600 text-white"
-                  : "border border-black/40"
+                  ? "border border-cyan-600  bg-cyan-600 text-white dark:bg-gray-600 dark:border-0"
+                  : "border dark:border-0 dark:bg-gray-700 border-black/40"
               }`}
               onClick={() => setDepartureTime("morning")}
             >
@@ -154,8 +154,8 @@ const ResultsFilter = () => {
             <div
               className={`shadow rounded py-4 w-full text-center cursor-pointer ${
                 departureTime === "noon"
-                  ? "border border-cyan-600  bg-cyan-600 text-white"
-                  : "border border-black/40"
+                  ? "border border-cyan-600  bg-cyan-600 text-white dark:bg-gray-600 dark:border-0"
+                  : "border border-black/40 dark:border-0 dark:bg-gray-700"
               }`}
               onClick={() => setDepartureTime("noon")}
             >
@@ -169,8 +169,8 @@ const ResultsFilter = () => {
           <div
             className={`shadow rounded py-4 w-full text-center cursor-pointer ${
               departureTime === "evening"
-                ? "border border-cyan-600  bg-cyan-600 text-white"
-                : "border border-black/40"
+                ? "border border-cyan-600  bg-cyan-600 text-white dark:bg-gray-600 dark:border-0"
+                : "border border-black/40 dark:border-0 dark:bg-gray-700"
             }`}
             onClick={() => setDepartureTime("evening")}
           >

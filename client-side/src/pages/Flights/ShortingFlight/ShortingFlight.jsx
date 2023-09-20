@@ -32,7 +32,7 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
   // console.log(airlines);
 
   return (
-    <div className="mb-10 overflow-hidden shadow-md border-[1px] border-gray-100">
+    <div className="mb-10 overflow-hidden shadow-md border-[1px] border-gray-100 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 dark:border-0">
       {/* <div className="flex justify-between mx-8 items-center mb-3 mt-2">
         <div className="tooltip tooltip-bottom" data-tip="Previous Day Flight">
           <FaCaretLeft className="lg:text-[45px] text-[20px] md:text-[25px] text-cyan-500 cursor-pointer" />
@@ -81,9 +81,9 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
                 onClick={() =>
                   handleCardCompanyFilter(singleAirline?.airlineName)
                 }
-                className={`md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer ${
+                className={`md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer dark:border-0 dark:backdrop-blur-md ${
                   selectedCard === singleAirline?.airlineName
-                    ? "bg-cyan-50" // Set the background color to cyan-500 when selected
+                    ? "bg-cyan-50 dark:bg-gray-600" // Set the background color to cyan-500 when selected
                     : "" // Use an empty string for the default background color
                 }`}
               >

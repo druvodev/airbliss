@@ -60,13 +60,13 @@ const TrackingNavigation = () => {
         ""
       ) : (
         <section>
-          <div className=" mb-8 flex lg:justify-between lg:items-center lg:flex-row flex-col">
-            <h1 className="font-bold text-lg md:text-3xl text-cyan-600">
+          <div className=" mb-8 flex lg:justify-between lg:items-center lg:flex-row flex-col ">
+            <h1 className="font-bold text-lg md:text-3xl text-cyan-600 dark:text-gray-400">
               Review Your Booking
             </h1>
 
             <div className="text-cyan-600  mt-4 lg:mt-0">
-              <h1 className="inline-flex items-center gap-3 text-sm md:text-[18px]">
+              <h1 className="inline-flex items-center gap-3 text-sm md:text-[18px] dark:text-gray-400">
                 Flight Section <FaAngleRight /> <strong>Booking</strong>{" "}
                 <FaAngleRight /> Payment
               </h1>
@@ -74,7 +74,7 @@ const TrackingNavigation = () => {
           </div>
 
           {/* Traking Card */}
-          <div className="shadow-lg block rounded-xl overflow-hidden">
+          <div className="shadow-lg block rounded-xl overflow-hidden dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500">
             <div className="px-5">
               <div className="flex items-center gap-1 mb-4 md:mb-2 mt-4">
                 <h5 className="font-semibold text-gray-600 text-sm md:text-[16px]">
@@ -88,7 +88,7 @@ const TrackingNavigation = () => {
                   <div>
                     <button
                       onClick={() => window.my_modal_1.showModal()}
-                      className="pt-[5px] md:pt-2 pl-2 pr-2 pb-2 mr-12 btn btn-xs md:btn-sm  bg-cyan-600 text-white rounded-md hover:bg-white hover:border-2 hover:border-cyan-600 hover:text-gray-500"
+                      className="pt-[5px] dark:border-0 md:pt-2 pl-2 pr-2 pb-2 mr-12 btn btn-xs md:btn-sm  bg-cyan-600 text-white rounded-md hover:bg-white hover:border-2 hover:border-cyan-600 hover:text-gray-500"
                     >
                       View Baggage
                     </button>
@@ -96,9 +96,9 @@ const TrackingNavigation = () => {
                   <div>
                     <button onClick={() => dispatch(setIsCollapse())}>
                       {isCollapse ? (
-                        <MdKeyboardArrowUp className="text-2xl rounded-full bg-gray-300" />
+                        <MdKeyboardArrowUp className="text-2xl rounded-full bg-gray-300 dark:text-cyan-500 dark:bg-gray-500" />
                       ) : (
-                        <MdKeyboardArrowDown className="text-2xl rounded-full bg-gray-300" />
+                        <MdKeyboardArrowDown className="text-2xl rounded-full bg-gray-300 dark:bg-gray-500 dark:text-cyan-500" />
                       )}
                     </button>
                   </div>

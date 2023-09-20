@@ -33,6 +33,8 @@ const Weather = () => {
   const weatherCondition = weather?.weather?.map((d) => d?.description);
 
   const [conditionalImg, setImg] = useState("");
+  const [weatherAlert, setAlert] = useState("The Day is Perfect For");
+
   useEffect(() => {
     if (weatherCondition == "light rain") {
       setImg("https://i.ibb.co/12wFypt/cloudy.png");
@@ -48,22 +50,23 @@ const Weather = () => {
       );
     } else if (weatherCondition == "broken clouds") {
       setImg("https://i.ibb.co/8BYhhjn/brokenclouds-removebg-preview.png");
+    } else if (weatherCondition == "heavy intensity rain") {
+      setImg("https://cdn-icons-png.flaticon.com/512/3937/3937493.png");
     }
   }, [weatherCondition]);
 
   return (
-    <div className="bg-gradient mb-5 top-2 ">
-      <div className="login_form_container">
+    <div className="mb-5 top-2">
+      <div className="main-container  ">
         <video autoPlay muted loop className="background-video">
           <source src={sky} type="video/mp4" />
-          <div className="overlay"></div>
         </video>
-        <div className="login_form absolute ">
+        <div className="absolute w-full   dark:h-[450px] dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500">
           <h1 className="text-white text-center md:text-2xl font-bold">
             Weather Update For Safe Journey
           </h1>
           {arrivalCity ? (
-            <div className="backdrop-blur-sm  md:h-[55%] text-black w mt-2 rounded-lg">
+            <div className="backdrop-blur-sm  text-black w mt-2 ">
               <h2 className="text-5xl pt-5 text-center">{weather?.name}</h2>
               <p className="text-center mb-5">
                 {moment(sunrise).format("MMM Do YYYY")}
