@@ -120,9 +120,6 @@ async function run() {
       const singleFlight = findFlight.find(
         (flight) => flight._id.toString() === id
       );
-
-      console.log(singleFlight);
-
       // const result = await flightsCollection.find().toArray();
       // res.send(result);
     });
@@ -240,7 +237,6 @@ async function run() {
       };
 
       await seatsCollection.updateOne({}, updateQuery, { upsert: true });
-      console.log(seatData);
       console.log(
         `New seat data generated for flight ${flightId} on ${bookingDate}.`
       );
@@ -285,7 +281,6 @@ async function run() {
         return res.json("Not found proper url!");
       }
       const flightsResult = [];
-      console.log("searching");
       try {
         const fromCityData = await flightsCollection.findOne({
           [fromCity]: { $exists: true },
@@ -391,7 +386,6 @@ async function run() {
         }
 
         // Respond with the flights data including fare summary
-        console.log("send");
         res.json({ flights: flightsResult });
       } catch (error) {
         console.error("Error in /flights/search:", error);
@@ -438,7 +432,6 @@ async function run() {
 
           await bookingsCollection.insertOne(newEntry);
         }
-        console.log("Booking info saved to database.");
       } catch (error) {
         console.error("Error saving booking info to database:", error);
       } finally {
@@ -600,6 +593,7 @@ async function run() {
           bookingInfo.bookingStatus = "confirmed";
           bookingInfo.requestStatus = "success";
           bookingInfo.insurancePolicy = insurancePolicy;
+          bookingInfo.createdAt = new Date();
 
           await selectAvailableSeat(
             flightId,
@@ -619,7 +613,6 @@ async function run() {
               bookingInfo,
             };
             await insuranceCollection.insertOne(insuranceInfo);
-            console.log("add insurance");
           }
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
@@ -726,7 +719,6 @@ async function run() {
         } else {
           newRequestStatus = "denied";
         }
-        console.log(bookingReference);
 
         try {
           const path = `${date}.${airportCode}`;
@@ -1167,7 +1159,6 @@ async function run() {
     // Get user's all booking by email----------
     app.get("/userBooking/:email", async (req, res) => {
       const traveler_email = req.params.email;
-      console.log(traveler_email);
       let myBookings = [];
       try {
         const bookings = await bookingsCollection.find().toArray();
@@ -1182,13 +1173,15 @@ async function run() {
                   bookingObj.user.traveler_email === traveler_email
               );
               if (foundBookingObj) {
-                console.log(foundBookingObj);
                 myBookings = myBookings.concat(foundBookingObj);
               }
             }
           }
         }
         if (myBookings) {
+          myBookings.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
           res.json(myBookings);
         } else {
           res.status(404).json({ message: "Booking not found" });
@@ -1228,6 +1221,11 @@ async function run() {
 
         // Check if any bookings were found
         if (allBookings.length > 0) {
+          // Sort the bookings by createdAt value
+          allBookings.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
+
           res.json(allBookings);
         } else {
           res.status(404).json({ message: "No bookings found" });
@@ -1281,10 +1279,8 @@ async function run() {
     // Save user
     app.post("/users", async (req, res) => {
       const user = req.body;
-      console.log(user);
       const query = { email: user.email };
       const existingUser = await usersCollection.findOne(query);
-      console.log(existingUser, "existing user");
       if (existingUser) {
         return; //res.send({ message: "User already exists" });
       }
@@ -1301,10 +1297,6 @@ async function run() {
     app.patch("/users/:id", async (req, res) => {
       const id = req.params.id;
       const usersData = req.body.usersData; // No need for req.body.usersData
-
-      console.log(id);
-      console.log(usersData);
-
       const filter = { _id: new ObjectId(id) };
       const updateDoc = {
         $set: {
