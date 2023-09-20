@@ -1,14 +1,18 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import ServicesCards from "../../Components/ServicesCards/ServicesCards";
-import AboutUsBanner from "../../Components/AboutUsBanner/AboutUsBanner";
+import SectionBanner from "../../Components/AboutUsBanner/SectionBanner";
 
 const AboutUs = () => {
   const services = useSelector((state) => state.ourServices?.services);
   console.log(services);
   return (
     <div>
-      <AboutUsBanner />
+      <SectionBanner
+        subtitle="About Airbliss"
+        title="Your Gateway to Seamless Travel Experiences"
+        bgImage="url('https://i.ibb.co/v4PLr16/flight-hero.jpg')"
+      />
       <div className="md:p-5">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 px-3 md:px-10 py-20 bg-white">
           <div className="">

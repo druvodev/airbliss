@@ -24,7 +24,9 @@ const OurServices = () => {
         </p>
         <button
           onClick={handleViewAll}
-          className="ml-auto bg-cyan-700 hover:bg-cyan-600  px-5 rounded-full h-[45px] text-white font-semibold"
+          className={`ml-auto bg-cyan-700 hover:bg-cyan-600  px-5 rounded-full h-[45px] text-white font-semibold ${
+            viewAll && "hidden"
+          }`}
         >
           View All
         </button>
