@@ -11,7 +11,7 @@ const Contact = () => {
       get better work in-front of you.</p>
   </>
   return (
-    <div className="py-20 lg:w-10/12 mx-auto">
+    <div className="pb-8 md:pb-16 pt-12 px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
       <div className=" py-10 ">
         <h3 className="text-3xl  font-bold text-center">
           Contact Us
