@@ -12,6 +12,7 @@ import { BiCurrentLocation } from "react-icons/bi";
 import { CiBadgeDollar } from "react-icons/ci";
 import { PiNoteLight } from "react-icons/pi";
 import axios from "axios";
+import { errorToast, successToast } from "../../../utils/toast";
 
 const FlightDetails = () => {
   const { airportCode, _id, id } = useParams();
@@ -51,16 +52,15 @@ const FlightDetails = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("submitData", updateData);
-
     try {
       const response = await axios.put(
         `http://localhost:5000/update/${airportCode}/${id}/${_id}`,
         updateData
       );
 
-      console.log("Flight updated:", response.data);
+      successToast("Flight Data Updated Success");
     } catch (error) {
+      errorToast("Flight Data Fail to Update");
       console.error("Error updating flight:", error);
     }
   };
