@@ -14,7 +14,7 @@ const OurServices = () => {
   const services = viewAll ? allServices : allServices.slice(0, 4);
 
   return (
-    <section>
+    <section id="our-services">
       <SectionTitle sectionTitle="Our Services" />
       <div className="grid grid-cols-2 text-gray-500">
         <p>

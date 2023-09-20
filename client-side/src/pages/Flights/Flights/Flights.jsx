@@ -7,14 +7,9 @@ import { useEffect, useState } from "react";
 import BookFlight from "../BookingFlights/BookFlight/BookFlight";
 import Weather from "../../Home/Weather/Weather";
 import { useCountdownContext } from "../../../providers/CountdownContext";
-import { useLocation } from "react-router";
-import useScrollTop from "./../../../hooks/useScrollTop";
 import SpecialOffer from "../../../Components/SpecialOffer/SpecialOffer";
 
 const Flights = () => {
-  const { path } = useLocation();
-  useScrollTop(path);
-
   const { setIsStart } = useCountdownContext();
   const [isShowSearch, setIsShowSearch] = useState(false);
 
@@ -55,7 +50,7 @@ const Flights = () => {
           </div>
         </div>
         {isShowSearch && (
-          <SearchFilter bookingType="flight" filterName="Modify Search" />
+          <SearchFilter bookingType="flight" filterName="Modify Search " />
         )}
         <div className="hidden lg:block">
           <SearchFilter bookingType="flight" filterName="Modify Search" />

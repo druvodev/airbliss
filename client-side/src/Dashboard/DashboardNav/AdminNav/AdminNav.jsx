@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { FaHandHoldingMedical, FaHome, FaHouseUser } from "react-icons/fa";
 import { TiGroup } from "react-icons/ti";
 import { BiSolidAddToQueue } from "react-icons/bi";
-import { MdManageSearch } from "react-icons/md";
+import { MdManageSearch, MdOutlineAirplaneTicket } from "react-icons/md";
 import { BsFillPersonFill } from "react-icons/bs";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,8 +14,9 @@ import {
   setFlights,
   setLoading,
 } from "../../../redux/features/manageFlightSlice";
+import { TbCalendarTime } from "react-icons/tb";
 
-const AdminNav = () => {
+const AdminNav = ({closeSidebar}) => {
   const [axiosSecure] = UseAxiosSecure();
   const dispatch = useDispatch();
   const allBooking = useSelector((state) => state?.userBookingInfo.allBookings);
@@ -63,6 +64,7 @@ const AdminNav = () => {
     <>
       <NavLink
         to="adminHome"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
           `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
             isActive
@@ -76,6 +78,7 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="manageUsers"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
           `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
             isActive
@@ -90,6 +93,7 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="addFlight"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
           `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
             isActive
@@ -104,6 +108,7 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="flightStatus"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
           `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
             isActive
@@ -118,6 +123,7 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="insurance"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
           `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
             isActive
@@ -131,7 +137,23 @@ const AdminNav = () => {
         <span className="mx-4 font-medium">Insurance</span>
       </NavLink>
       <NavLink
+        to="reschedule"
+        onClick={()=>closeSidebar('false')}
+        className={({ isActive }) =>
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
+          }`
+        }
+      >
+        <TbCalendarTime className="w-5 h-5" />
+
+        <span className="mx-4 font-medium">Reschedule</span>
+      </NavLink>
+      <NavLink
         to="managebookings"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
           `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
             isActive
@@ -140,12 +162,13 @@ const AdminNav = () => {
           }`
         }
       >
-        <MdManageSearch className="w-5 h-5" />
+        <MdOutlineAirplaneTicket className="w-5 h-5" />
 
         <span className="mx-4 font-medium">Bookings</span>
       </NavLink>
       <NavLink
         to="account"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
           `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
             isActive

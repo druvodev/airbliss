@@ -120,9 +120,6 @@ async function run() {
       const singleFlight = findFlight.find(
         (flight) => flight._id.toString() === id
       );
-
-      console.log(singleFlight);
-
       // const result = await flightsCollection.find().toArray();
       // res.send(result);
     });
@@ -166,7 +163,7 @@ async function run() {
       }
     });
 
-    // Manage Flight Api
+    // Manage Flight Api ========================================
     app.get("/manageAllFlights/:airportCode/:id", async (req, res) => {
       const { id, airportCode } = req.params;
 
@@ -185,6 +182,81 @@ async function run() {
       } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
+      }
+    });
+
+    app.put("/update/:airportCode/:airportId/:flightId", async (req, res) => {
+      try {
+        const { airportCode, airportId, flightId } = req.params;
+        const updateData = req.body;
+
+        const airport = await flightsCollection.findOne({
+          _id: airportId,
+        });
+
+        if (!airport) {
+          return res.status(404).json({ message: "Airport not found" });
+        }
+
+        const flightIndex = airport[airportCode].findIndex(
+          (flight) => flight._id === flightId
+        );
+
+        if (flightIndex === -1) {
+          return res.status(404).json({ message: "Flight not found" });
+        }
+
+        const dynamicField = `${airportCode}`;
+
+        airport[dynamicField][flightIndex].airportName = updateData.airportName;
+        airport[dynamicField][flightIndex].airlineName = updateData.airlineName;
+        airport[dynamicField][flightIndex].amountPerKm = updateData.amountPerKm;
+        airport[dynamicField][flightIndex].taxesAndFees =
+          updateData.taxesAndFees;
+        airport[dynamicField][flightIndex].totalSeats = updateData.totalSeats;
+        airport[dynamicField][flightIndex].airlineStatus =
+          updateData.airlineStatus;
+        airport[dynamicField][flightIndex].durationPerKm =
+          updateData.durationPerKm;
+
+        airport[dynamicField][flightIndex].flightInfo.aircraft =
+          updateData.aircraft;
+        airport[dynamicField][flightIndex].flightInfo.flightNumber =
+          updateData.flightNumber;
+        airport[dynamicField][flightIndex].flightInfo.baggage =
+          updateData.baggage;
+        airport[dynamicField][flightIndex].flightInfo.baggage =
+          updateData.baggage;
+        airport[dynamicField][flightIndex].flightInfo.checkIn =
+          updateData.checkIn;
+        airport[dynamicField][flightIndex].flightInfo.cabin = updateData.cabin;
+
+        airport[dynamicField][flightIndex].details.code = updateData.code;
+        airport[dynamicField][flightIndex].details.time = updateData.time;
+        airport[dynamicField][flightIndex].details.latitude =
+          updateData.latitude;
+        airport[dynamicField][flightIndex].details.longitude =
+          updateData.longitude;
+
+        airport[dynamicField][flightIndex].dateChangeRules[0].amountPerKm =
+          updateData.dateAmountPerKm;
+        airport[dynamicField][flightIndex].cancellationRules[0].amountPerKm =
+          updateData.cancelAmountPerKm;
+
+        await flightsCollection.updateOne(
+          {
+            _id: airportId,
+            [dynamicField + "._id"]: flightId,
+          },
+          { $set: airport }
+        );
+
+        console.log(airport);
+
+        return res.status(200).json(airport);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
       }
     });
 
@@ -240,7 +312,6 @@ async function run() {
       };
 
       await seatsCollection.updateOne({}, updateQuery, { upsert: true });
-      console.log(seatData);
       console.log(
         `New seat data generated for flight ${flightId} on ${bookingDate}.`
       );
@@ -285,7 +356,6 @@ async function run() {
         return res.json("Not found proper url!");
       }
       const flightsResult = [];
-      console.log("searching");
       try {
         const fromCityData = await flightsCollection.findOne({
           [fromCity]: { $exists: true },
@@ -391,7 +461,6 @@ async function run() {
         }
 
         // Respond with the flights data including fare summary
-        console.log("send");
         res.json({ flights: flightsResult });
       } catch (error) {
         console.error("Error in /flights/search:", error);
@@ -438,7 +507,6 @@ async function run() {
 
           await bookingsCollection.insertOne(newEntry);
         }
-        console.log("Booking info saved to database.");
       } catch (error) {
         console.error("Error saving booking info to database:", error);
       } finally {
@@ -600,6 +668,7 @@ async function run() {
           bookingInfo.bookingStatus = "confirmed";
           bookingInfo.requestStatus = "success";
           bookingInfo.insurancePolicy = insurancePolicy;
+          bookingInfo.createdAt = new Date();
 
           await selectAvailableSeat(
             flightId,
@@ -619,7 +688,6 @@ async function run() {
               bookingInfo,
             };
             await insuranceCollection.insertOne(insuranceInfo);
-            console.log("add insurance");
           }
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
@@ -726,7 +794,6 @@ async function run() {
         } else {
           newRequestStatus = "denied";
         }
-        console.log(bookingReference);
 
         try {
           const path = `${date}.${airportCode}`;
@@ -1167,7 +1234,6 @@ async function run() {
     // Get user's all booking by email----------
     app.get("/userBooking/:email", async (req, res) => {
       const traveler_email = req.params.email;
-      console.log(traveler_email);
       let myBookings = [];
       try {
         const bookings = await bookingsCollection.find().toArray();
@@ -1182,13 +1248,15 @@ async function run() {
                   bookingObj.user.traveler_email === traveler_email
               );
               if (foundBookingObj) {
-                console.log(foundBookingObj);
                 myBookings = myBookings.concat(foundBookingObj);
               }
             }
           }
         }
         if (myBookings) {
+          myBookings.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
           res.json(myBookings);
         } else {
           res.status(404).json({ message: "Booking not found" });
@@ -1228,6 +1296,11 @@ async function run() {
 
         // Check if any bookings were found
         if (allBookings.length > 0) {
+          // Sort the bookings by createdAt value
+          allBookings.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
+
           res.json(allBookings);
         } else {
           res.status(404).json({ message: "No bookings found" });
@@ -1281,10 +1354,8 @@ async function run() {
     // Save user
     app.post("/users", async (req, res) => {
       const user = req.body;
-      console.log(user);
       const query = { email: user.email };
       const existingUser = await usersCollection.findOne(query);
-      console.log(existingUser, "existing user");
       if (existingUser) {
         return; //res.send({ message: "User already exists" });
       }
@@ -1301,10 +1372,6 @@ async function run() {
     app.patch("/users/:id", async (req, res) => {
       const id = req.params.id;
       const usersData = req.body.usersData; // No need for req.body.usersData
-
-      console.log(id);
-      console.log(usersData);
-
       const filter = { _id: new ObjectId(id) };
       const updateDoc = {
         $set: {

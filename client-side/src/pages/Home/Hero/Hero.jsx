@@ -72,7 +72,7 @@ const Hero = () => {
               <p className="mt-3 sm:mt-6 sm:text-lg">
                 Save up to <span className="font-semibold">10%</span> on fares
               </p>
-              <button className="sm:text-lg px-6 sm:px-10 py-1 sm:py-2 rounded-full border mt-4 sm:mt-8">
+              <button className="hidden sm:text-lg px-6 sm:px-10 py-1 sm:py-2 rounded-full border mt-4 sm:mt-8">
                 Book Now
               </button>
             </div>
@@ -80,7 +80,7 @@ const Hero = () => {
         </div>
       </div>
 
-      <div className="z-30 relative -mt-16">
+      <div id="search-flights" className="z-30 relative -mt-16">
         <SearchFilter bookingType="all" filterName="Search" />
       </div>
     </>

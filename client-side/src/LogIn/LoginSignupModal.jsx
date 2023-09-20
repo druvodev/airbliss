@@ -25,7 +25,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
     const email = emailRef.current.value
     resetPassword(email)
       .then(() => {
-        toast.success("Please check your email for rest link")
+        toast.success("Please check your email for reset link")
       })
       .catch(err => {
         setLoading(false)

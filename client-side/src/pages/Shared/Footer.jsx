@@ -13,16 +13,23 @@ import {
   AiFillLinkedin,
   AiOutlineWhatsApp,
 } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Footer = () => {
   const svgStyle = {
     fill: "#414D5E",
   };
+
+  const allServices = useSelector((state) => state?.ourServices?.services);
+  const sliceService = allServices?.slice(4, 6);
+  console.log(sliceService);
+
   // className = "px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden";
   return (
     <div>
       <section className="bg-[#414D5E]  relative mt-28  ">
-        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden  -top-[75px] md:-top-[90px] lg:-top-[105px]  left-0 md:left-0">
+        <div className="absolute w-full sm:pr-11 md:pr-0   h-auto overflow-hidden  -top-[75px] md:-top-[90px] lg:-top-[105px]  left-0 md:left-0 ">
           <svg
             version="1.1"
             width="2000"
@@ -70,12 +77,12 @@ const Footer = () => {
           </svg>
         </div>
 
-        <div className="sm:px-10 md:px-0 max-w-7xl mx-auto h-auto overflow-hidden">
-          <div>
+        <div className="sm:px-10 md:px-0 max-w-7xl mx-auto h-auto overflow-hidden  ">
+          <div className="mt-14">
             {/* Footer Item Design */}
-            <section className="  text-white p-3 md:p-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <section className="text-white p-3 grid grid-cols-1 lg:grid-cols-3 gap-10">
               {/* Airblees Text */}
-              <div>
+              <div className="dark:text-gray-400">
                 <img
                   className="w-24"
                   src="https://i.ibb.co/C8G1Npj/airbliss-White.png"
@@ -121,8 +128,10 @@ const Footer = () => {
               </div>
 
               <div className="grid grid-flow-col gap-4">
-                <div className="mt-6 lg:mt-0">
-                  <h1 className="text-xl font-bold">Quick Links</h1>
+                <div className="mt-6 lg:mt-0 dark:text-gray-400 ">
+                  <h1 className="text-xl font-bold dark:text-gray-400 ">
+                    Quick Links
+                  </h1>
                   <p>
                     <span className="flex items-center  tracking-widest">
                       <IoAirplaneSharp />
@@ -136,43 +145,55 @@ const Footer = () => {
                   </p>
 
                   <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
+                    <Link
+                      to="/about"
+                      className="inline-flex items-center  gap-1 mt-3"
+                    >
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
                       <span>About Us</span>
-                    </p>
+                    </Link>
                   </div>
 
                   <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
+                    <Link
+                      to="/refund"
+                      className="inline-flex items-center gap-1 mt-3"
+                    >
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
-                      <span>Blogs</span>
-                    </p>
+                      <span>Refund</span>
+                    </Link>
                   </div>
 
                   <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
+                    <Link
+                      to="/terms"
+                      className="inline-flex items-center gap-1 mt-3"
+                    >
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
-                      <span>Destination</span>
-                    </p>
+                      <span>Terms</span>
+                    </Link>
                   </div>
 
                   <div>
-                    <p className="inline-flex items-center gap-1 mt-3">
+                    <Link
+                      to="/contact"
+                      className="inline-flex items-center gap-1 mt-3"
+                    >
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
-                      <span>Booking Flight</span>
-                    </p>
+                      <span>Contact</span>
+                    </Link>
                   </div>
                 </div>
 
-                <div className="mt-6 lg:mt-0">
+                <div className="mt-6 lg:mt-0 dark:text-gray-400 ">
                   <h1 className="text-xl font-bold">Contact Us</h1>
                   <p>
                     <span className="flex items-center  tracking-widest">
@@ -215,8 +236,8 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="mt-12 lg:mt-0">
-                <h1 className="text-xl font-bold">Recent Postes</h1>
+              <div className="mt-12 lg:mt-0 dark:text-gray-400">
+                <h1 className="text-xl font-bold">Recent Service</h1>
                 <p>
                   <span className="flex items-center  tracking-widest">
                     <IoAirplaneSharp />
@@ -226,57 +247,47 @@ const Footer = () => {
                     <BsDashLg />
                     <BsDashLg />
                     <BsDashLg />
+                    <BsDashLg />
+                    <BsDashLg />
                   </span>
                 </p>
 
-                <div className="mt-2 flex justify-start items-center gap-2">
-                  <img
-                    className="rounded shadow-md"
-                    src="https://www.adivaha.com/themeforest-travon/assets/img/blog/recent-post-2-1.jpg"
-                    alt=""
-                  />
+                {/* Recent Service Card */}
+                {sliceService?.map((service, index) => (
+                  <div
+                    key={index}
+                    className="mt-2 flex justify-start items-center gap-2"
+                  >
+                    <img
+                      className="rounded shadow-md h-16"
+                      src={service?.image}
+                      alt=""
+                    />
 
-                  <div>
-                    <h1 className="font-bold ">
-                      5 Ways To Get Your Dream Photos On Picnic
-                    </h1>
-                    <p className="mt-1 inline-flex items-center gap-1">
-                      <span>
-                        <AiOutlineCalendar size={18} />{" "}
-                      </span>{" "}
-                      <span>21 June,2023</span>
-                    </p>
+                    <Link to={`/service/${service?._id}`}>
+                      <div className="cursor-pointer">
+                        <h1 className="font-bold ">{service?.title}</h1>
+                        <p className="mt-1 inline-flex items-center gap-1">
+                          <span>
+                            <AiOutlineCalendar size={18} />{" "}
+                          </span>{" "}
+                          <span>{service?.date}</span>
+                        </p>
+                      </div>
+                    </Link>
                   </div>
-                </div>
-
-                <div className="mt-2 flex justify-start items-center gap-2">
-                  <img
-                    className="rounded shadow-md"
-                    src="https://www.adivaha.com/themeforest-travon/assets/img/blog/recent-post-2-2.jpg"
-                    alt=""
-                  />
-
-                  <div>
-                    <h1 className="font-bold ">9 Essential Tips For Ture.</h1>
-                    <p className="mt-1 inline-flex items-center gap-1">
-                      <span>
-                        <AiOutlineCalendar size={18} />{" "}
-                      </span>{" "}
-                      <span>18 June,2023</span>
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </section>
 
             {/* Payment Partner */}
             <div>
-              <h1 className="md:ml-12 ml-3 text-white text-xl font-bold mb-2">
+              <h1 className=" ml-3 dark:text-gray-400 text-white text-xl font-bold mb-2">
                 Payment Partner
               </h1>
               <hr className="w-[170px] md:ml-12 ml-3" />
 
-              <div className="md:ml-10 ml-2 flex lg:flex-row flex-col ">
+              <div className=" ml-2 flex lg:flex-row flex-col ">
                 <div className="flex justify-start items-center">
                   <img
                     className="h-16 "
@@ -347,7 +358,7 @@ const Footer = () => {
 
             <hr className="mt-12" />
 
-            <p className="pb-4 text-white text-center mt-4">
+            <p className="pb-4 text-white text-center mt-4 dark:text-gray-400">
               &copy; 2023 Airbliess Bd Ltd. All rights reserved.
             </p>
           </div>

@@ -15,8 +15,8 @@ const DiscountedHotelCard = ({ hotel }) => {
           key={i}
           type="radio"
           name="rating-5"
-          className="mask mask-star-2 bg-orange-400"
-          checked
+          className="mask  mask-star-2 bg-orange-400"
+          readOnly
         />
       );
     } else if (hasInactiveStar && i === activeStars) {
@@ -44,7 +44,7 @@ const DiscountedHotelCard = ({ hotel }) => {
   }
 
   return (
-    <div className="shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] p-3 rounded-md bg-white">
+    <div className="shadow-[rgba(17,_17,_26,_0.1)_0px_0px_16px] p-3 rounded-md bg-white dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500">
       <div className="relative">
         <img
           className="object-cover mx-auto h-56 shadow-md rounded-md"
@@ -77,7 +77,7 @@ const DiscountedHotelCard = ({ hotel }) => {
             to={`/HotelDetails/${id}`}
             className="py-1 px-4 text-sm md:text-lg rounded-md font-medium bg-cyan-700 hover:bg-cyan-600 text-white duration-500 ml-auto"
           >
-            Book Now
+            Details
           </Link>
         </div>
       </div>
