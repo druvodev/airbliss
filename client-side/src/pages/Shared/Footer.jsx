@@ -139,12 +139,12 @@ const Footer = () => {
                   </p>
 
                   <div>
-                    <p className="inline-flex items-center  gap-1 mt-3">
+                    <Link to="/about" className="inline-flex items-center  gap-1 mt-3">
                       <span>
                         <AiOutlineArrowRight size={16} />
                       </span>
                       <span>About Us</span>
-                    </p>
+                    </Link>
                   </div>
 
                   <div>
