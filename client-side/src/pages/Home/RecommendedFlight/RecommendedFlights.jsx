@@ -6,27 +6,23 @@ import { Link } from "react-router-dom";
 const RecommendedFlights = () => {
   const [recommendedFlights, setRecommendedFLights] = useState([]);
 
-  useEffect(() =>{
-
+  useEffect(() => {
     fetch("recommendedFlights.json")
-    .then(res => res.json())
-    .then(data =>{
-      setRecommendedFLights(data)
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        setRecommendedFLights(data);
+      });
+  }, []);
 
-  },[]);
+  console.log(recommendedFlights);
 
-  console.log(recommendedFlights)
-  
   return (
- 
-
-    <div>
+    <div id="recommended-flights">
       <div>
         <div>
          
           <SectionTitle sectionTitle={"Recommended Flights"} />
-          <p className=" text-sm sm:text-base mb-5">
+          <p className=" text-sm dark:text-gray-400 sm:text-base mb-5">
             Most famous Flights of us. Our happy clients always happy with these
             Flights. <br /> The flights are always maintenance there roles and
             regulations

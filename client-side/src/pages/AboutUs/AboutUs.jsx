@@ -1,5 +1,4 @@
 import React from "react";
-import Hero from "../../Components/Hero/Hero";
 import "./AboutUs.css";
 import { useSelector } from "react-redux";
 import ServicesCards from "../../Components/ServicesCards/ServicesCards";
@@ -8,7 +7,6 @@ const AboutUs = () => {
   const services = useSelector((state) => state.ourServices?.services);
   return (
     <div>
-      <Hero />
       <div className="md:p-5">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 px-3 md:px-10 py-20 bg-white">
           <div className="">
