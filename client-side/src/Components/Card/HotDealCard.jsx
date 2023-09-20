@@ -27,7 +27,7 @@ const HotDealCard = ({ deal }) => {
       <motion.img
         src={img}
         alt=""
-        className="rounded-ss-3xl rounded-bl-md object-cover sm:object-cover"
+        className="rounded-ss-3xl rounded-bl-md object-cover sm:object-cover w-1/2 "
         animate={animation}
       />
 
