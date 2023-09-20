@@ -47,27 +47,27 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
       </div> */}
 
       <div className="flex justify-between items-center mt-2">
-        <div className="px-2 py-2 relative cursor-pointer">
-          <FaCaretLeft className="text-cyan-500 text-[23px]" />
+        <div className="px-2 py-2 ">
+          {/* <FaCaretLeft className="text-cyan-500 text-[23px]" /> */}
           {/* <p className="p-1 -mt-2 opacity-0 cursor-pointer hover:opacity-100 rounded-md  text-[8px] lg:text-[12px] absolute">
             Previous
           </p> */}
         </div>
 
-        <div className="font-sans font-semibold text-[20] md:text-[25px] ">
+        <div className="font-sans mt-3 font-semibold text-[20] md:text-[25px] ">
           Flights {destenation[0]?.departure?.city} to{" "}
           {destenation[0]?.arrival?.city}
         </div>
 
         <div className="px-2 py-2">
-          <FaCaretRight className="text-cyan-500 text-[23px]" />
+          {/* <FaCaretRight className="text-cyan-500 text-[23px]" /> */}
           {/* <p className="p-1 -ml-4 -mt-2 opacity-0 cursor-pointer hover:opacity-100 rounded-md  text-[8px] lg:text-[12px] absolute">
             Next
           </p> */}
         </div>
       </div>
 
-      <div className="mt-8 p-5  mb-6 rounded-md flex justify-center items-center">
+      <div className="mt-6 p-5  mb-6 rounded-md flex justify-center items-center">
         <Swiper
           slidesPerView={3}
           spaceBetween={20}
