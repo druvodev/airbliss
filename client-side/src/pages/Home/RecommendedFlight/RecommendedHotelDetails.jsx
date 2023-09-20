@@ -3,6 +3,7 @@ import { GiAirplaneDeparture } from "react-icons/gi";
 import { FaClock, FaEnvelope, FaLocationDot } from "react-icons/fa6";
 import { useParams } from "react-router";
 import Amenities from "./Amenities";
+import { Link } from "react-router-dom";
 
 const RecommendedHotelDetails = () => {
   const { id } = useParams();
@@ -48,6 +49,9 @@ const RecommendedHotelDetails = () => {
               <div>
                 <h2 className="text-cyan-500 text-2xl font-bold md:text-4xl pb-3">About Us</h2>
                 <p>{f?.about}</p>
+                <div className="mt-6 md:mt-4 lg:mt-8 md:text-center lg:text-left">
+                  <Link to="/" className="px-4 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-semibold">Book Now</Link>
+                </div>
               </div>
             </div>
             <div className="flex md:flex-row gap-x-4 mt-6 flex-col ">
@@ -199,7 +203,7 @@ const RecommendedHotelDetails = () => {
                     are 24/7 at your service to help you.
                   </p>
                   <div>
-                    <p>(+347) 123 456 7890</p>
+                    <p>(+880) 163 456 7890</p>
                     <p className="flex items-center gap-x-2">
                       <FaEnvelope className="text-cyan-400"></FaEnvelope>{" "}
                       airbliss@gmail.com
@@ -208,16 +212,6 @@ const RecommendedHotelDetails = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className='space-y-2 mt-6'>
-                            <p className='text-2xl font-bold'>{f?.destination}</p>
-                            <p className='text-lg font-semibold'>Route: <span className='text-base font-normal'>{f?.route}</span></p>
-                            <p className='text-lg font-semibold'>Regular Price: <span className='text-base font-normal'>${f?.fare}</span></p>
-                            <p>{f?.ban_airlines}</p>
-                            <p>{f?.saudi_airlines}</p>
-                            <p>{f?.qatar_airlines}</p>
-
-                        </div> */}
           </div>
         ))}
       </div>
