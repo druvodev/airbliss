@@ -172,7 +172,7 @@ const FlightStatus = () => {
                           <td>
                             <div className="flex items-center space-x-3">
                               <div className="avatar">
-                                <div className="mask mask-squircle w-12 h-12">
+                                <div className="mask mask-squircle rounded-full w-12 h-12">
                                   <img
                                     src={singleFlight?.airlineLogo}
                                     alt="Avatar Tailwind CSS Component"
@@ -227,7 +227,7 @@ const FlightStatus = () => {
           </div>
         )}
 
-        <section className="mt-12 flex justify-end items-center cursor-pointer">
+        <section className="mt-12 mr-6 mb-8 flex justify-end items-center cursor-pointer">
           <button
             className="border-[1px] p-2 rounded-l-md"
             onClick={handlePaginationPrev}
