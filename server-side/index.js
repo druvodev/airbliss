@@ -164,7 +164,7 @@ async function run() {
       }
     });
 
-    // Manage Flight Api
+    // Manage Flight Api ========================================
     app.get("/manageAllFlights/:airportCode/:id", async (req, res) => {
       const { id, airportCode } = req.params;
 
@@ -183,6 +183,81 @@ async function run() {
       } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
+      }
+    });
+
+    app.put("/update/:airportCode/:airportId/:flightId", async (req, res) => {
+      try {
+        const { airportCode, airportId, flightId } = req.params;
+        const updateData = req.body;
+
+        const airport = await flightsCollection.findOne({
+          _id: airportId,
+        });
+
+        if (!airport) {
+          return res.status(404).json({ message: "Airport not found" });
+        }
+
+        const flightIndex = airport[airportCode].findIndex(
+          (flight) => flight._id === flightId
+        );
+
+        if (flightIndex === -1) {
+          return res.status(404).json({ message: "Flight not found" });
+        }
+
+        const dynamicField = `${airportCode}`;
+
+        airport[dynamicField][flightIndex].airportName = updateData.airportName;
+        airport[dynamicField][flightIndex].airlineName = updateData.airlineName;
+        airport[dynamicField][flightIndex].amountPerKm = updateData.amountPerKm;
+        airport[dynamicField][flightIndex].taxesAndFees =
+          updateData.taxesAndFees;
+        airport[dynamicField][flightIndex].totalSeats = updateData.totalSeats;
+        airport[dynamicField][flightIndex].airlineStatus =
+          updateData.airlineStatus;
+        airport[dynamicField][flightIndex].durationPerKm =
+          updateData.durationPerKm;
+
+        airport[dynamicField][flightIndex].flightInfo.aircraft =
+          updateData.aircraft;
+        airport[dynamicField][flightIndex].flightInfo.flightNumber =
+          updateData.flightNumber;
+        airport[dynamicField][flightIndex].flightInfo.baggage =
+          updateData.baggage;
+        airport[dynamicField][flightIndex].flightInfo.baggage =
+          updateData.baggage;
+        airport[dynamicField][flightIndex].flightInfo.checkIn =
+          updateData.checkIn;
+        airport[dynamicField][flightIndex].flightInfo.cabin = updateData.cabin;
+
+        airport[dynamicField][flightIndex].details.code = updateData.code;
+        airport[dynamicField][flightIndex].details.time = updateData.time;
+        airport[dynamicField][flightIndex].details.latitude =
+          updateData.latitude;
+        airport[dynamicField][flightIndex].details.longitude =
+          updateData.longitude;
+
+        airport[dynamicField][flightIndex].dateChangeRules[0].amountPerKm =
+          updateData.dateAmountPerKm;
+        airport[dynamicField][flightIndex].cancellationRules[0].amountPerKm =
+          updateData.cancelAmountPerKm;
+
+        await flightsCollection.updateOne(
+          {
+            _id: airportId,
+            [dynamicField + "._id"]: flightId,
+          },
+          { $set: airport }
+        );
+
+        console.log(airport);
+
+        return res.status(200).json(airport);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server error" });
       }
     });
 
