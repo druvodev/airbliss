@@ -5,10 +5,15 @@ import useAuth from "../../hooks/useAuth";
 import DashboardNav from "../DashboardNav/DashboardNav";
 import { FaHome } from "react-icons/fa";
 
-const Sidebar = ({ isActive }) => {
+const Sidebar = ({ isActive, setActive }) => {
   const navigate = useNavigate();
   // const [toggle, setToggle] = useState(false)
   const { user, logOut } = useAuth();
+
+  const closeSidebar = (value) => {
+    console.log('closeSidebar called', value);
+    setActive(value);
+  };
 
   const handleLogOut = () => {
     logOut();
@@ -32,9 +37,8 @@ const Sidebar = ({ isActive }) => {
       </div>
       {/* Sidebar */}
       <div
-        className={`z-10 px-[25px] bg-[#37517e] md:fixed flex flex-col justify-between overflow-x-hidden w-64 space-y-6 py-4 absolute inset-y-0 left-0 transform ${
-          isActive && "-translate-x-full"
-        }  md:translate-x-0  transition duration-200 ease-in-out`}
+        className={`z-10 px-[25px] bg-[#37517e] md:fixed flex flex-col justify-between overflow-x-hidden w-64 space-y-6 py-4 absolute inset-y-0 left-0 transform ${isActive && "-translate-x-full"
+          }  md:translate-x-0  transition duration-200 ease-in-out`}
         style={{
           backgroundImage: "linear-gradient(to bottom, #70cfc9 , #5daad6 )",
         }}
@@ -57,7 +61,7 @@ const Sidebar = ({ isActive }) => {
           <div className="flex flex-col justify-between flex-1 mt-6">
             <nav>
               <>
-                <DashboardNav />
+                <DashboardNav closeSidebar={closeSidebar} />
               </>
             </nav>
           </div>
@@ -68,10 +72,9 @@ const Sidebar = ({ isActive }) => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
-                isActive
-                  ? "bg-white text-cyan-500 active:border rounded-full"
-                  : "text-white"
+              `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
+                ? "bg-white text-cyan-500 active:border rounded-full"
+                : "text-white"
               }`
             }
           >

@@ -12,6 +12,7 @@ import { BiCurrentLocation } from "react-icons/bi";
 import { CiBadgeDollar } from "react-icons/ci";
 import { PiNoteLight } from "react-icons/pi";
 import axios from "axios";
+import { errorToast, successToast } from "../../../utils/toast";
 
 const FlightDetails = () => {
   const { airportCode, _id, id } = useParams();
@@ -51,16 +52,15 @@ const FlightDetails = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("submitData", updateData);
-
     try {
       const response = await axios.put(
         `http://localhost:5000/update/${airportCode}/${id}/${_id}`,
         updateData
       );
 
-      console.log("Flight updated:", response.data);
+      successToast("Flight Data Updated Success");
     } catch (error) {
+      errorToast("Flight Data Fail to Update");
       console.error("Error updating flight:", error);
     }
   };
@@ -295,7 +295,7 @@ const FlightDetails = () => {
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px]  border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="airportName"
                           value={updateData.airportName}
@@ -307,7 +307,7 @@ const FlightDetails = () => {
 
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="airlineName"
                           value={updateData.airlineName}
@@ -319,7 +319,7 @@ const FlightDetails = () => {
 
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="number"
                           name="amountPerKm"
                           value={updateData.amountPerKm}
@@ -331,7 +331,7 @@ const FlightDetails = () => {
 
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="number"
                           name="taxesAndFees"
                           value={updateData.taxesAndFees}
@@ -343,7 +343,7 @@ const FlightDetails = () => {
 
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="number"
                           name="totalSeats"
                           value={updateData.totalSeats}
@@ -355,7 +355,7 @@ const FlightDetails = () => {
 
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="durationPerKm"
                           value={updateData.durationPerKm}
@@ -367,7 +367,7 @@ const FlightDetails = () => {
 
                       <div>
                         <select
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           name="airlineStatus"
                           value={updateData.airlineStatus}
                           onChange={handleChange}
@@ -391,7 +391,7 @@ const FlightDetails = () => {
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="aircraft"
                           value={updateData.aircraft}
@@ -403,7 +403,7 @@ const FlightDetails = () => {
 
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="flightNumber"
                           value={updateData.flightNumber}
@@ -415,7 +415,7 @@ const FlightDetails = () => {
 
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="baggage"
                           value={updateData.baggage}
@@ -426,7 +426,7 @@ const FlightDetails = () => {
                       </div>
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="checkIn"
                           value={updateData.checkIn}
@@ -438,7 +438,7 @@ const FlightDetails = () => {
 
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="cabin"
                           value={updateData.cabin}
@@ -460,7 +460,7 @@ const FlightDetails = () => {
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="code"
                           value={updateData.code}
@@ -471,7 +471,7 @@ const FlightDetails = () => {
                       </div>
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="time"
                           name="time"
                           value={updateData.time}
@@ -483,7 +483,7 @@ const FlightDetails = () => {
 
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="latitude"
                           value={updateData.latitude}
@@ -494,7 +494,7 @@ const FlightDetails = () => {
                       </div>
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="text"
                           name="longitude"
                           value={updateData.longitude}
@@ -517,7 +517,7 @@ const FlightDetails = () => {
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="number"
                           name="dateAmountPerKm"
                           value={updateData.dateAmountPerKm}
@@ -529,7 +529,7 @@ const FlightDetails = () => {
 
                       <div>
                         <input
-                          className="p-2 border-b-[0.5px] border-black"
+                          className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                           type="number"
                           name="cancelAmountPerKm"
                           value={updateData.cancelAmountPerKm}

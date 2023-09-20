@@ -314,7 +314,7 @@ const ETicket = ({ booking }) => {
                   </span>
                 </div>
                 {/* passenger details area */}
-                <div className="text-white p-2 md:border-r-4 pr-10 border-white border-dotted dark:text-gray-400 dark:border-gray-400">
+                <div className="text-white p-2 md:border-r-4 pr-[6.6%] border-white border-dotted dark:text-gray-400 dark:border-gray-400">
                   <div className=" pb-2 border-b-2 border-white border-dotted">
                     <p>Passenger</p>
                     <p className="font-semibold">

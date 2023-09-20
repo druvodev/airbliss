@@ -3,6 +3,7 @@ import { GiAirplaneDeparture } from "react-icons/gi";
 import { FaClock, FaEnvelope, FaLocationDot } from "react-icons/fa6";
 import { useParams } from "react-router";
 import Amenities from "./Amenities";
+import { Link } from "react-router-dom";
 
 const RecommendedHotelDetails = () => {
   const { id } = useParams();
@@ -20,13 +21,9 @@ const RecommendedHotelDetails = () => {
   }, []);
   return (
     <div className="pb-16">
-      <div className="">
-        <img
-          src="https://i.ibb.co/99WG5TR/pascal-meier-UYies-SO4-Fi-M-unsplash.jpg"
-          className="w-full h-[450px] object-cover"
-          alt=""
-        />
-        <div className="absolute left-4 top-20  sm:left-1/3 sm:top-1/3  md:left-1/4 md:top-1/3  lg:left-1/3 lg:top-1/3 text-white text-center">
+      <div className="bg-[url('https://i.ibb.co/99WG5TR/pascal-meier-UYies-SO4-Fi-M-unsplash.jpg')] py-48 bg-cover bg-no-repeat bg-center ">
+        
+        <div className="text-center text-white">
           <h3 className="text-xl sm:text-3xl md:text-5xl lg:text-7xl font-bold">
             AirBliss
           </h3>
@@ -39,13 +36,19 @@ const RecommendedHotelDetails = () => {
       <div className="pb-10 lg:pb-16 pt-16 px-5 sm:px-10 md:px-6  max-w-5xl mx-auto h-auto overflow-hidden border shadow-lg  mt-6">
         {flight?.map((f) => (
           <div key={f?.id}>
-            <div className="flex gap-y-8  md:gap-x-4 lg:gap-x-6 flex-col md:flex-row md:items-start lg:items-center ">
+            <div className="flex gap-y-8  md:gap-x-4 lg:gap-x-6 flex-col-reverse md:flex-row md:items-start lg:items-center ">
               <img
                 src={f?.bg_pic}
                 alt=""
                 className="md:w-8/12 border-b-2 border-gray-200 pb-3"
               />
-              <div></div>
+              <div>
+                <h2 className="text-cyan-500 text-2xl font-bold md:text-4xl pb-3">About Us</h2>
+                <p>{f?.about}</p>
+                <div className="mt-6 md:mt-4 lg:mt-8 md:text-center lg:text-left">
+                  <Link to="/" className="px-4 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-semibold">Book Now</Link>
+                </div>
+              </div>
             </div>
             <div className="flex md:flex-row gap-x-4 mt-6 flex-col ">
               {/* Flight Overview  */}
@@ -98,7 +101,7 @@ const RecommendedHotelDetails = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <p className="uppercase text-[#01b7f2]">Total Price:</p>
-                        <p className="uppercase">${overview?.total_price}.00</p>
+                        <p className="uppercase">${overview?.base_fare + overview?.tax}.00</p>
                       </div>
                     </div>
                   ))}
@@ -196,7 +199,7 @@ const RecommendedHotelDetails = () => {
                     are 24/7 at your service to help you.
                   </p>
                   <div>
-                    <p>(+347) 123 456 7890</p>
+                    <p>(+880) 163 456 7890</p>
                     <p className="flex items-center gap-x-2">
                       <FaEnvelope className="text-cyan-400"></FaEnvelope>{" "}
                       airbliss@gmail.com
@@ -205,16 +208,6 @@ const RecommendedHotelDetails = () => {
                 </div>
               </div>
             </div>
-
-            {/* <div className='space-y-2 mt-6'>
-                            <p className='text-2xl font-bold'>{f?.destination}</p>
-                            <p className='text-lg font-semibold'>Route: <span className='text-base font-normal'>{f?.route}</span></p>
-                            <p className='text-lg font-semibold'>Regular Price: <span className='text-base font-normal'>${f?.fare}</span></p>
-                            <p>{f?.ban_airlines}</p>
-                            <p>{f?.saudi_airlines}</p>
-                            <p>{f?.qatar_airlines}</p>
-
-                        </div> */}
           </div>
         ))}
       </div>

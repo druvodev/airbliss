@@ -4,7 +4,7 @@ import AdminNav from './AdminNav/AdminNav';
 import UseAxiosSecure from '../../hooks/UseAxiosSecure';
 import useAuth from '../../hooks/useAuth';
 
-const DashboardNav = () => {
+const DashboardNav = ({closeSidebar}) => {
     const { user } = useAuth()
     const [users, setUsers] = useState([])
     const [axiosSecure] = UseAxiosSecure()
@@ -26,9 +26,9 @@ const DashboardNav = () => {
 
     const renderNavigation = () => {
         if (userType === "admin") {
-            return <AdminNav />;
+            return <AdminNav closeSidebar={closeSidebar} />;
         } else if (userType === "user") {
-            return <UserNav />;
+            return <UserNav closeSidebar={closeSidebar} />;
         }
         return null;
     };

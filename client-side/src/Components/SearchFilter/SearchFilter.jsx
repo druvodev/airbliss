@@ -23,9 +23,11 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { useCountdownContext } from "../../providers/CountdownContext";
 import { setLoading } from "../../redux/features/globalSlice";
+import { errorToast } from "../../utils/toast";
 
 const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const { setIsStart } = useCountdownContext();
+  const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
   const [locationModal, setLocationModal] = useState("");
@@ -45,6 +47,18 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
   const toCityInfo = useSelector((state) => state?.searchFilter?.toCityInfo);
   // Dispatch redux state
   const dispatch = useDispatch();
+
+  // handel same destination
+  useEffect(() => {
+    if (
+      fromCityInfo.destination.split(",")[0] ===
+      toCityInfo.destination.split(",")[0]
+    ) {
+      setErrorMsg("From & To airports can't be same");
+    } else {
+      setErrorMsg("");
+    }
+  }, [fromCityInfo, toCityInfo]);
 
   // Convert Date Format
   const formattedDate = (date) => {
@@ -119,57 +133,72 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               <MdFlight /> Flight
             </div>
             <div
-              onClick={() => dispatch(setIsActive("hotel"))}
+              // onClick={() => dispatch(setIsActive("hotel"))}
               className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
                 isActive === "hotel" ? "bg-cyan-300" : "bg-white"
               }`}
             >
-              <RiHotelFill /> Hotel
+              <RiHotelFill /> Hotel{" "}
+              <small className="text-xs font-normal hidden sm:block">
+                (Upcoming)
+              </small>
             </div>
             <div
-              onClick={() => dispatch(setIsActive("visa"))}
+              // onClick={() => dispatch(setIsActive("visa"))}
               className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
                 isActive === "visa" ? "bg-cyan-300" : "bg-white"
               }`}
             >
-              <BsPostcardFill /> Visa
+              <BsPostcardFill /> Visa{" "}
+              <small className="text-xs font-normal  hidden sm:block">
+                (Upcoming)
+              </small>
             </div>
           </div>
         )}
-        <div className="flex gap-4 font-semibold text-gray-600 my-4">
+        <div className="flex flex-wrap gap-4 font-semibold text-gray-600 my-4">
           <label className="flex gap-1 dark:text-gray-400">
             <input
               type="radio"
               name="flightType"
               value="oneWay"
               className="radio  radio-accent"
-              checked={flightType === "oneWay"}
+              checked
               onChange={() => dispatch(setFlightType("oneWay"))}
             />
-            One Way
+            One Way for One Traveler
           </label>
-          <label className="flex gap-1 dark:text-gray-400">
-            <input
-              type="radio"
-              name="flightType"
-              value="roundTrip"
-              className="radio radio-accent"
-              checked={flightType === "roundTrip"}
-              onChange={() => dispatch(setFlightType("roundTrip"))}
-            />
-            Round Trip
-          </label>
-          <label className="flex gap-1 dark:text-gray-400">
-            <input
-              type="radio"
-              name="flightType"
-              value="multiCity"
-              className="radio radio-accent"
-              checked={flightType === "multiCity"}
-              onChange={() => dispatch(setFlightType("multiCity"))}
-            />
-            Multi City
-          </label>
+          <div className="relative w-fit">
+            <small className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-sm bg-white dark:bg-transparent dark:text-gray-300">
+              Upcoming
+            </small>
+            <div className="border border-cyan-500 py-1 px-3 rounded-full flex gap-4">
+              <label className="flex gap-1 dark:text-gray-400">
+                <input
+                  type="radio"
+                  name="flightType"
+                  value="roundTrip"
+                  className="radio radio-accent"
+                  // checked={flightType === "roundTrip"}
+                  onChange={() => dispatch(setFlightType("roundTrip"))}
+                  disabled
+                />
+                Round Trip
+              </label>
+              <label className="flex gap-1 dark:text-gray-400">
+                <input
+                  type="radio"
+                  name="flightType"
+                  value="multiCity"
+                  className="radio radio-accent"
+                  // checked={flightType === "multiCity"}
+                  onChange={() => dispatch(setFlightType("multiCity"))}
+                  disabled
+                />
+                Multi City
+              </label>
+            </div>
+          </div>
         </div>
 
         <div className="mb-3">
@@ -421,6 +450,11 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                   setLocationModal("to");
                 }}
               >
+                {errorMsg && (
+                  <div className="absolute -bottom-3 px-2 rounded-full left-0 text-sm bg-red-50 text-red-500">
+                    From & To airports can't be same
+                  </div>
+                )}
                 <label htmlFor="toCity">
                   <p className="text-sm">To</p>
                   <input
@@ -480,8 +514,8 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                   <div
                     className="w-full p-2 cursor-pointer"
                     onClick={() => {
-                      dispatch(setFlightType("roundTrip"));
-                      dispatch(setCalendarModal("return"));
+                      // dispatch(setFlightType("roundTrip"));
+                      // dispatch(setCalendarModal("return"));
                     }}
                   >
                     <p className="text-sm">Return</p>
@@ -493,7 +527,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                 {flightType === "roundTrip" && (
                   <div
                     className="w-full p-2 border-r relative"
-                    onClick={() => dispatch(setCalendarModal("return"))}
+                    // onClick={() => dispatch(setCalendarModal("return"))}
                   >
                     <p className="text-sm">Return</p>
                     <div className="cursor-pointer">
@@ -537,14 +571,20 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
         </div>
 
         <div className="flex justify-center -mb-11">
-          <Link to="/flights">
-            <button
-              className="px-10 py-3 rounded bg-cyan-600 hover:bg-cyan-700 active:bg-cyan-800 text-white font-semibold"
-              onClick={handleSearch}
-            >
+          {errorMsg ? (
+            <button className="px-10 py-3 rounded bg-gray-400 cursor-not-allowed text-white font-semibold">
               {filterName}
             </button>
-          </Link>
+          ) : (
+            <Link to="/flights">
+              <button
+                className="px-10 py-3 rounded bg-cyan-600 hover:bg-cyan-700 active:bg-cyan-800 text-white font-semibold"
+                onClick={handleSearch}
+              >
+                {filterName}
+              </button>
+            </Link>
+          )}
         </div>
       </div>
     </div>

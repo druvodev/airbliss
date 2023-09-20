@@ -198,7 +198,7 @@ const ManageUsers = () => {
           </div>
         </dialog>
       </div>
-      <section className="mt-12 flex justify-end items-center">
+      <section className="mt-12 mr-6 mb-8 flex justify-end items-center">
         <button
           className="border-[1px] p-2 rounded-l-md"
           onClick={handlePaginationPrev}

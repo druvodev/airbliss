@@ -77,7 +77,7 @@ const DiscountedHotelCard = ({ hotel }) => {
             to={`/HotelDetails/${id}`}
             className="py-1 px-4 text-sm md:text-lg rounded-md font-medium bg-cyan-700 hover:bg-cyan-600 text-white duration-500 ml-auto"
           >
-            Book Now
+            Details
           </Link>
         </div>
       </div>

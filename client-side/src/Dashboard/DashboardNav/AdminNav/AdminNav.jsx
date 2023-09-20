@@ -16,7 +16,7 @@ import {
 } from "../../../redux/features/manageFlightSlice";
 import { TbCalendarTime } from "react-icons/tb";
 
-const AdminNav = () => {
+const AdminNav = ({closeSidebar}) => {
   const [axiosSecure] = UseAxiosSecure();
   const dispatch = useDispatch();
   const allBooking = useSelector((state) => state?.userBookingInfo.allBookings);
@@ -64,10 +64,12 @@ const AdminNav = () => {
     <>
       <NavLink
         to="adminHome"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
-            ? "bg-white text-cyan-500 active:border rounded-full"
-            : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -76,10 +78,12 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="manageUsers"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
-            ? "bg-white text-cyan-500 active:border rounded-full"
-            : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -89,10 +93,12 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="addFlight"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
-            ? "bg-white text-cyan-500 active:border rounded-full"
-            : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -102,10 +108,12 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="flightStatus"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
-            ? "bg-white text-gray-800 active:border rounded-full"
-            : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+            isActive
+              ? "bg-white text-gray-800 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -115,10 +123,12 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="insurance"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
-            ? "bg-white text-cyan-500 active:border rounded-full"
-            : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -128,10 +138,12 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="reschedule"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
-            ? "bg-white text-cyan-500 active:border rounded-full"
-            : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -141,10 +153,12 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="managebookings"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${isActive
-            ? "bg-white text-gray-800 active:border rounded-full"
-            : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-gray-800 ${
+            isActive
+              ? "bg-white text-gray-800 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
@@ -154,10 +168,12 @@ const AdminNav = () => {
       </NavLink>
       <NavLink
         to="account"
+        onClick={()=>closeSidebar('false')}
         className={({ isActive }) =>
-          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
-            ? "bg-white text-cyan-500 active:border rounded-full"
-            : "text-white"
+          `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+            isActive
+              ? "bg-white text-cyan-500 active:border rounded-full"
+              : "text-white"
           }`
         }
       >
