@@ -4,7 +4,7 @@ import { FaInfo } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { MdWifiProtectedSetup } from 'react-icons/md';
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 15;
 
 const TableReschedule = ({ AllReschedule, status, openModal, setFlightRef }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -42,7 +42,7 @@ const TableReschedule = ({ AllReschedule, status, openModal, setFlightRef }) => 
                                 <th>Travel Path</th>
                                 <th>Ticket Price</th>
                                 <th className="capitalize">{status}</th>
-                                <th>Action</th>
+                                <th className='text-center'>Action</th>
                                 <th>Details</th>
                             </tr>
                         </thead>
@@ -72,16 +72,26 @@ const TableReschedule = ({ AllReschedule, status, openModal, setFlightRef }) => 
                                     </td>
                                     <td>BDT {flight?.flight?.fareSummary?.total}</td>
                                     <td className="capitalize">
-                                        {status === "Residual Status" && (
-                                            <span>
-                                                {flight?.AllRescheduletatus}{" "}
-                                                <span
-                                                    className={`${flight?.residualStatus === "denied" && "text-red-500 bg-red-50 rounded-full px-2 py-1" || flight?.residualStatus === "approved" && "text-green-500 bg-green-50 rounded-full px-2 py-1" || flight?.residualStatus === "pending" && "text-orange-500 bg-orange-50 rounded-full px-2 py-1"}`}
-                                                >
-                                                    {flight?.residualStatus}
-                                                </span>
+                                        <span>
+                                            {flight?.AllRescheduletatus}{" "}
+                                            <span
+                                                className={`${flight?.residualStatus === "denied" && "text-red-500 bg-red-50 rounded-full px-2 py-1" || flight?.residualStatus === "approved" && "text-green-500 bg-green-50 rounded-full px-2 py-1" || flight?.residualStatus === "pending" && "text-orange-500 bg-orange-50 rounded-full px-2 py-1"}`}
+                                            >
+                                                {flight?.residualStatus}
                                             </span>
-                                        )}
+                                        </span>
+                                    </td>
+                                    <td className='flex justify-center mt-2'>
+                                        <button
+                                            onClick={() => {
+                                                openModal();
+                                                setFlightRef(flight?.bookingReference);
+                                            }}
+                                            className={`btn btn-sm w-[120px] rounded-full  text-white ${flight?.residualStatus === "pending" ? "bg-cyan-400" : "bg-green-400"}`}
+                                            disabled={flight?.residualStatus === "denied" || flight?.residualStatus === "approved"}
+                                        >
+                                            Process <MdWifiProtectedSetup />
+                                        </button>
                                     </td>
                                     <td>
                                         <button
@@ -89,25 +99,11 @@ const TableReschedule = ({ AllReschedule, status, openModal, setFlightRef }) => 
                                                 openModal();
                                                 setFlightRef(flight?.bookingReference);
                                             }}
-                                            className={`btn btn-sm rounded-full px-4 text-white ${flight?.residualStatus === "pending" ? "bg-cyan-400" : "bg-green-400"}`}
-                                            disabled={flight?.residualStatus === "denied" || flight?.residualStatus === "approved"}
+                                            className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${flight?.residualStatus === "pending" ? "bg-cyan-400" : "bg-cyan-400 hover:bg-cyan-500"}}`}
+                                            disabled={flight?.residualStatus === "pending"}
                                         >
-                                            Process <MdWifiProtectedSetup />
+                                            <FaInfo />
                                         </button>
-                                    </td>
-                                    <td>
-                                        <Link
-                                            to={{
-                                                pathname: `/dashboard/ticketHistory/${flight?.bookingReference}`,
-                                            }}
-                                        >
-                                            <button
-                                                className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-cyan-400 hover:bg-cyan-500
-              }`}
-                                            >
-                                                <FaInfo />
-                                            </button>
-                                        </Link>
                                     </td>
                                 </tr>
                             ))}

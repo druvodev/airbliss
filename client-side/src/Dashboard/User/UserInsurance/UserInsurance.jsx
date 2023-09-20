@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import ModalInsurance from './ModalInsurance';
 import { toast } from "react-hot-toast";
 import { GrNext, GrPrevious } from 'react-icons/gr';
+import { FaInfo } from 'react-icons/fa';
+import { format } from 'date-fns';
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 15;
 
 const UserInsurance = () => {
     const bookings = useSelector((state) => state?.userInfo?.userBookings);
@@ -14,6 +16,9 @@ const UserInsurance = () => {
     const dispatch = useDispatch()
     const [selectedInsurance, setSelectedInsurance] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+
+    const newDate = new Date();
+    const todayDate = format(newDate, "yyyy-MM-dd");
 
     const handlePaginationPrev = () => {
         if (currentPage > 1) {
@@ -155,12 +160,18 @@ const UserInsurance = () => {
                                     <td>{insurance?.insurancePolicy?.policyNumber}</td>
                                     <td>{insurance?.insurancePolicy?.startDate}</td>
                                     <td>{insurance?.insurancePolicy?.endDate}</td>
-                                    <td>{insurance?.insurancePolicy?.claimedStatus}</td>
+                                    <td>
+                                        <span
+                                            className={`capitalize ${insurance?.insurancePolicy?.claimedStatus === "denied" && "text-red-500 bg-red-50 rounded-full px-2 py-1" || insurance?.insurancePolicy?.claimedStatus === "success" && "text-green-500 bg-green-50 rounded-full px-2 py-1" || insurance?.insurancePolicy?.claimedStatus === "pending" && "text-orange-500 bg-orange-50 rounded-full px-2 py-1"}`}
+                                        >
+                                            {insurance?.insurancePolicy?.claimedStatus}
+                                        </span>
+                                    </td>
                                     <th>
                                         <button
                                             onClick={() => openModal(insurance)}
                                             className='btn btn-xs bg-green-400 text-white hover:btn-outline'
-                                            disabled={insurance?.insurancePolicy?.claimedStatus === "pending" || insurance?.insurancePolicy?.claimedStatus === "denied" || insurance?.insurancePolicy?.claimedStatus === "approved"}
+                                            disabled={insurance?.insurancePolicy?.claimedStatus === "pending" || insurance?.insurancePolicy?.claimedStatus === "denied" || insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.endDate == todayDate}
                                         >
                                             Claim
                                         </button>
@@ -171,7 +182,7 @@ const UserInsurance = () => {
                                             className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === null ? "bg-gray-400" : "bg-cyan-400"}`}
                                             disabled={insurance?.insurancePolicy?.claimedStatus === null}
                                         >
-                                            <FaEye className='text-xl' />
+                                            <FaInfo />
                                         </button>
                                     </th>
                                 </tr>

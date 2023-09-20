@@ -8,6 +8,7 @@ import ModalDenied from './ModalDenied';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBookingsRefetch } from '../../../redux/features/bookingInfoSlice';
 import { GrNext, GrPrevious } from 'react-icons/gr';
+import { FaInfo } from "react-icons/fa";
 
 const ITEMS_PER_PAGE = 5;
 
@@ -36,81 +37,81 @@ const AdminInsurance = () => {
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
 
-  const handleDenialSubmit = (insurance, premiumType, deniedFeedback) => {
-    const insuranceData = {
-      premiumType: premiumType,
-      deniedFeedback: deniedFeedback,
+    const handleDenialSubmit = (insurance, premiumType, deniedFeedback) => {
+        const insuranceData = {
+            premiumType: premiumType,
+            deniedFeedback: deniedFeedback,
+        };
+        fetch(
+            `http://localhost:5000/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ insuranceData }),
+            }
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                if (data?.message == "Insurance policy updated") {
+                    toast.success(data.message);
+                    dispatch(setBookingsRefetch(new Date().toString()));
+                } else {
+                    toast.error(data.message);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        setIsModalDeniedOpen(false);
     };
-    fetch(
-      `http://localhost:5000/insuranceClaimRequest/denied/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ insuranceData }),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.message == "Insurance policy updated") {
-          toast.success(data.message);
-          dispatch(setBookingsRefetch(new Date().toString()));
-        } else {
-          toast.error(data.message);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
-    setIsModalDeniedOpen(false);
-  };
-
-  const closeDeniedModal = () => {
-    setIsModalDeniedOpen(false);
-  };
-
-  const handleFormSubmit = (insurance, premiumType, payableAmount) => {
-    const insuranceData = {
-      premiumType: premiumType,
-      claimedAmount: payableAmount,
+    const closeDeniedModal = () => {
+        setIsModalDeniedOpen(false);
     };
-    fetch(
-      `http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ insuranceData }),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data?.message == "Insurance policy updated") {
-          toast.success(data.message);
-          dispatch(setBookingsRefetch(new Date().toString()));
-        } else {
-          toast.error(data.message);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    return;
-  };
 
-  const openModal = (insurance) => {
-    setSelectedInsurance(insurance);
-    setIsModalApprovedOpen(true); // Open the "approved" modal by default
-  };
+    const handleFormSubmit = (insurance, premiumType, payableAmount) => {
+        const insuranceData = {
+            premiumType: premiumType,
+            claimedAmount: payableAmount,
+        };
+        fetch(
+            `http://localhost:5000/insuranceClaimRequest/approved/${insurance?.flight?.departureDate}/${insurance?.flight?.departureAirport}/${insurance?.bookingReference}`,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ insuranceData }),
+            }
+        )
+            .then((res) => res.json())
+            .then((data) => {
+                if (data?.message == "Insurance policy updated") {
+                    toast.success(data.message);
+                    dispatch(setBookingsRefetch(new Date().toString()));
+                } else {
+                    toast.error(data.message);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        return;
+    };
 
-  const closeModal = () => {
-    setSelectedInsurance(null);
-    setIsModalApprovedOpen(false);
-    setIsModalDeniedOpen(false);
-  };
+    const openModal = (insurance) => {
+        setSelectedInsurance(insurance);
+        setIsModalApprovedOpen(true); // Open the "approved" modal by default
+    };
+
+    const closeModal = () => {
+        setSelectedInsurance(null);
+        setIsModalApprovedOpen(false);
+        setIsModalDeniedOpen(false);
+    };
 
     return (
         <div>
@@ -168,7 +169,13 @@ const AdminInsurance = () => {
                                     <td>{insurance?.insurancePolicy?.policyNumber}</td>
                                     <td>{insurance?.insurancePolicy?.startDate}</td>
                                     <td>{insurance?.insurancePolicy?.endDate}</td>
-                                    <td>{insurance?.insurancePolicy?.claimedStatus}</td>
+                                    <td>
+                                        <span
+                                            className={`capitalize ${insurance?.insurancePolicy?.claimedStatus === "denied" && "text-red-500 bg-red-50 rounded-full px-2 py-1" || insurance?.insurancePolicy?.claimedStatus === "approved" && "text-green-500 bg-green-50 rounded-full px-2 py-1" || insurance?.insurancePolicy?.claimedStatus === "pending" && "text-orange-500 bg-orange-50 rounded-full px-2 py-1"}`}
+                                        >
+                                            {insurance?.insurancePolicy?.claimedStatus}
+                                        </span>
+                                    </td>
                                     <th className='flex gap-3 mt-2'>
                                         <button
                                             onClick={() => openModal(insurance)}
@@ -194,7 +201,7 @@ const AdminInsurance = () => {
                                             className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "pending" ? "bg-gray-400" : "bg-cyan-400"}`}
                                             disabled={insurance?.insurancePolicy?.claimedStatus === "pending"}
                                         >
-                                            <FaEye className='text-xl' />
+                                            <FaInfo />
                                         </button>
                                     </th>
                                 </tr>
