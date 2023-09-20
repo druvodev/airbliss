@@ -159,16 +159,16 @@ const ETicket = ({ booking }) => {
                   </span>
                 </div>
                 {/* passenger details area */}
-                <div className="text-cyan-900 p-2 md:border-r-4 pr-10 border-cyan-600 border-dotted dark:text-gray-400 dark:border-gray-400 ">
-                  <div className="pb-2 border-b-2 border-cyan-600 border-dotted ">
+                <div className="text-cyan-900 p-2 md:border-r-4 pr-10 border-cyan-600 border-dotted dark:text-gray-400  dark:border-gray-400">
+                  <div className="pb-2 border-b border-cyan-600 border-dotted ">
                     <p>Passenger</p>
-                    <p className="font-semibold">
+                    <p className="font-semibold borde">
                       {myBooking.user?.title
                         ? `${myBooking.user?.title} ${myBooking.user?.first_name} ${myBooking.user?.last_name}`
                         : `${title} ${first_name} ${last_name}`}
                     </p>
                   </div>
-                  <hr className="text-cyan-500 font-bold" />
+
                   <div className="flex gap-5 pb-2 border-b-2 border-cyan-600 border-dotted ">
                     <div>
                       <p>Boarding Time</p>
