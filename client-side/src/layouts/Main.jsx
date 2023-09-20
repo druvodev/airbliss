@@ -28,7 +28,7 @@ const Main = () => {
     }
   }, [loading]);
   return (
-    <div className="bg-[#f9f9f9]">
+    <div className="  dark:bg-slate-900 dark:text-gray-300 ">
       <Navbar />
       <CountdownProvider>
         <ScrollRestoration />
@@ -37,7 +37,7 @@ const Main = () => {
       <Footer />
       <ScrollTopButton />
       {loading && (
-        <div className="fixed top-0 left-0  h-full w-full bg-[#f9f9f9] z-[100]">
+        <div className="fixed top-0 left-0  h-full bg-white w-full z-[100]">
           <Loader />
         </div>
       )}

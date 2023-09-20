@@ -88,7 +88,9 @@ async function run() {
     const usersCollection = database.collection("users");
     const bookingsManageCollection = database.collection("bookingsManage");
     const insuranceCollection = database.collection("insurance");
+    const residualCollection = database.collection("residualBookings");
     const servicesCollection = database.collection("services");
+    const specialDiscountCollection = database.collection("specialDiscount");
 
     app.post("/jwt", (req, res) => {
       const user = req.body;
@@ -118,9 +120,6 @@ async function run() {
       const singleFlight = findFlight.find(
         (flight) => flight._id.toString() === id
       );
-
-      console.log(singleFlight);
-
       // const result = await flightsCollection.find().toArray();
       // res.send(result);
     });
@@ -313,7 +312,6 @@ async function run() {
       };
 
       await seatsCollection.updateOne({}, updateQuery, { upsert: true });
-      console.log(seatData);
       console.log(
         `New seat data generated for flight ${flightId} on ${bookingDate}.`
       );
@@ -358,7 +356,6 @@ async function run() {
         return res.json("Not found proper url!");
       }
       const flightsResult = [];
-      console.log("searching");
       try {
         const fromCityData = await flightsCollection.findOne({
           [fromCity]: { $exists: true },
@@ -464,7 +461,6 @@ async function run() {
         }
 
         // Respond with the flights data including fare summary
-        console.log("send");
         res.json({ flights: flightsResult });
       } catch (error) {
         console.error("Error in /flights/search:", error);
@@ -511,7 +507,6 @@ async function run() {
 
           await bookingsCollection.insertOne(newEntry);
         }
-        console.log("Booking info saved to database.");
       } catch (error) {
         console.error("Error saving booking info to database:", error);
       } finally {
@@ -673,6 +668,7 @@ async function run() {
           bookingInfo.bookingStatus = "confirmed";
           bookingInfo.requestStatus = "success";
           bookingInfo.insurancePolicy = insurancePolicy;
+          bookingInfo.createdAt = new Date();
 
           await selectAvailableSeat(
             flightId,
@@ -692,7 +688,6 @@ async function run() {
               bookingInfo,
             };
             await insuranceCollection.insertOne(insuranceInfo);
-            console.log("add insurance");
           }
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
@@ -799,7 +794,6 @@ async function run() {
         } else {
           newRequestStatus = "denied";
         }
-        console.log(bookingReference);
 
         try {
           const path = `${date}.${airportCode}`;
@@ -1004,7 +998,190 @@ async function run() {
       res.send(result);
     });
 
-    // ############################## Manage Bookings ##############################
+    // ######################### Booking Residual #########################
+    // Reusable specific seat value update function
+    async function updateSeatAvailability(
+      flightDate,
+      flightId,
+      seatNo,
+      available
+    ) {
+      try {
+        const updateResult = await seatsCollection.updateOne(
+          {
+            [flightDate]: {
+              $elemMatch: {
+                flightId: flightId,
+                "seats.seatNo": seatNo,
+                "seats.available": true,
+              },
+            },
+          },
+          {
+            $set: {
+              [`${flightDate}.$[flight].seats.$[seat].available`]: available,
+            },
+            $inc: {
+              [`${flightDate}.$[flight].available`]: available ? 0 : -1, // Decrease available total seats by 1 if available is false
+            },
+          },
+          {
+            arrayFilters: [
+              { "flight.flightId": flightId },
+              { "seat.seatNo": seatNo },
+            ],
+          }
+        );
+
+        return updateResult.nModified > 0;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    }
+
+    // send available seats
+    app.get(
+      "/rescheduleSeat/:flightId/:totalSeats/:departureDate",
+      async (req, res) => {
+        const { flightId, departureDate, totalSeats } = req.params;
+        const availableSeat =
+          (await availableSeats(flightId, departureDate)) ||
+          (await generateSeatData(totalSeats, flightId, departureDate));
+        if (availableSeat) {
+          res.status(200).json({ availableSeat });
+        } else {
+          res.status(404).json({ message: "No available seats." });
+        }
+      }
+    );
+
+    // reschedule bookings request (USER)
+    app.patch(
+      "/reschedule/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const { date, airportCode, bookingReference } = req.params;
+        const { flightDate, flightId, seatNo } = req.body;
+        const rescheduleStatus = "pending";
+        const available = false;
+        // const seatNo = "A20";
+
+        try {
+          // Construct the update query
+          const updateQuery = {
+            [`${date}.${airportCode}.bookingReference`]: bookingReference,
+          };
+
+          // Construct the update fields to set the residualStatus and seatNo
+          const updateFields = {
+            $set: {
+              [`${date}.${airportCode}.$.residualStatus`]: rescheduleStatus,
+              [`${date}.${airportCode}.$.user.seatNo`]: seatNo,
+            },
+          };
+
+          // Update the booking with the residualStatus and seatNo
+          const result = await bookingsCollection.updateOne(
+            updateQuery,
+            updateFields
+          );
+
+          if (result.modifiedCount === 1) {
+            // Fetch the updated booking information after the update
+            const updatedBookingInfo = await bookingsCollection.findOne({
+              [`${date}.${airportCode}.bookingReference`]: bookingReference,
+            });
+
+            // Update seat availability
+            await updateSeatAvailability(
+              flightDate,
+              flightId,
+              seatNo,
+              available
+            );
+
+            // Extract the updated booking info for the specific bookingReference
+            const updatedBooking = updatedBookingInfo[date][airportCode].find(
+              (booking) => booking.bookingReference === bookingReference
+            );
+
+            // Insert the updated booking into the residualCollection
+            await residualCollection.insertOne({
+              bookingInfo: updatedBooking,
+            });
+
+            res.json({
+              message: "Booking updated with residualStatus and seatNo",
+              updatedBookingInfo: updatedBooking,
+            });
+          } else {
+            res.status(404).json({ message: "Booking not found" });
+          }
+        } catch (err) {
+          console.error("Error updating booking:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
+
+    // reschedule request manage (ADMIN)
+    app.patch(
+      "/rescheduleManage/:status/:date/:airportCode/:bookingReference",
+      async (req, res) => {
+        const { status, date, airportCode, bookingReference } = req.params;
+        let rescheduleStatus = "denied";
+        if (status === "approved") {
+          rescheduleStatus = status;
+        }
+
+        try {
+          // Construct the update query for user bookings collection
+          const updateQuery = {
+            [`${date}.${airportCode}.bookingReference`]: bookingReference,
+          };
+
+          // Construct the update fields to set the residualStatus and seatNo
+          const updateFields = {
+            $set: {
+              [`${date}.${airportCode}.$.residualStatus`]: rescheduleStatus,
+            },
+          };
+
+          // Update the booking with the residualStatus and seatNo
+          const result = await bookingsCollection.updateOne(
+            updateQuery,
+            updateFields
+          );
+
+          if (result.modifiedCount === 1) {
+            await residualCollection.updateOne(
+              { "bookingInfo.bookingReference": bookingReference },
+              {
+                $set: {
+                  "bookingInfo.residualStatus": rescheduleStatus,
+                },
+              }
+            );
+
+            res.json({
+              message: "Booking updated with residualStatus",
+            });
+          } else {
+            res.status(404).json({ message: "Booking not found" });
+          }
+        } catch (err) {
+          console.error("Error updating booking:", err);
+          res.status(500).json({ error: "An error occurred" });
+        }
+      }
+    );
+
+    // ##################### Get Today's Offer ######################
+    app.get("/specialDiscount", async (req, res) => {
+      const result = await specialDiscountCollection.find().toArray();
+      res.send(result);
+    });
+
+    // ######################### Manage Bookings ############################
     // Get all request bookings
     app.get("/bookings-manage", async (req, res) => {
       const result = await bookingsManageCollection.find().toArray();
@@ -1057,7 +1234,6 @@ async function run() {
     // Get user's all booking by email----------
     app.get("/userBooking/:email", async (req, res) => {
       const traveler_email = req.params.email;
-      console.log(traveler_email);
       let myBookings = [];
       try {
         const bookings = await bookingsCollection.find().toArray();
@@ -1072,13 +1248,15 @@ async function run() {
                   bookingObj.user.traveler_email === traveler_email
               );
               if (foundBookingObj) {
-                console.log(foundBookingObj);
                 myBookings = myBookings.concat(foundBookingObj);
               }
             }
           }
         }
         if (myBookings) {
+          myBookings.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
           res.json(myBookings);
         } else {
           res.status(404).json({ message: "Booking not found" });
@@ -1118,6 +1296,11 @@ async function run() {
 
         // Check if any bookings were found
         if (allBookings.length > 0) {
+          // Sort the bookings by createdAt value
+          allBookings.sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt);
+          });
+
           res.json(allBookings);
         } else {
           res.status(404).json({ message: "No bookings found" });
@@ -1129,7 +1312,7 @@ async function run() {
     });
 
     app.get("/bookings", async (req, res) => {
-      const result = await bookingsCollection.find().toArray();
+      const result = await residualCollection.find().toArray();
       res.send(result);
     });
 
@@ -1171,10 +1354,8 @@ async function run() {
     // Save user
     app.post("/users", async (req, res) => {
       const user = req.body;
-      console.log(user);
       const query = { email: user.email };
       const existingUser = await usersCollection.findOne(query);
-      console.log(existingUser, "existing user");
       if (existingUser) {
         return; //res.send({ message: "User already exists" });
       }
@@ -1191,10 +1372,6 @@ async function run() {
     app.patch("/users/:id", async (req, res) => {
       const id = req.params.id;
       const usersData = req.body.usersData; // No need for req.body.usersData
-
-      console.log(id);
-      console.log(usersData);
-
       const filter = { _id: new ObjectId(id) };
       const updateDoc = {
         $set: {

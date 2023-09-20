@@ -15,8 +15,8 @@ const ServicesDetails = () => {
     <div className="relative">
       <div>
         <img
-          className="sm:h-[20vh] md:h-[30vh] lg:h-[50vh] w-full z-0"
-          src={"https://i.ibb.co/K9NG5yC/cover.jpg"}
+          className="w-full lg:h-[500px] md:h-[250px] h-44 object-cover"
+          src={"https://i.ibb.co/RyyZQvC/services.png"}
           alt=""
         />
       </div>

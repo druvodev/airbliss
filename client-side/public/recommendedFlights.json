@@ -1,20 +1,52 @@
 [
   {
-    "imageSrc": "https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-    "title": "Dhaka to Khulna",
-    "description": "ONE WAY FLIGHTS",
-    "price": "2499 BDT"
+    "id": 1,
+    "destination": "Dhaka to Jashore",
+    "route": "ONE WAY FLIGHTS",
+    "fare": 2499,
+    "discount": 18,
+    "img": "https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "bg_pic": "https://i.ibb.co/N3f0WLz/john-mcarthur-8-KLLgq-HMAv4-unsplash.jpg",
+    "overviews": [
+      {
+        "airline": "Qatar Airlines",
+        "flight": "First Class",
+        "fare_type": "Refundable",
+        "cancel_fee": 78,
+        "flight_change": 53,
+        "baggage": "extra Charge",
+        "base_fare": 2499,
+        "tax": 350,
+        "total_price": 2849
+      }
+    ],
+    "airline_name": "Qatar Airlines",
+    "coach_number": "AI-635 First Class",
+    "first_take_off": "13 NOV 2023, 7.50 AM",
+    "first_landing": "13 NOV 2023, 9.20 AM",
+    "second_take_off": "16 NOV 2023, 7.50 AM",
+    "second_landing": "16 NOV 2023, 9.20 AM"
   },
   {
-    "imageSrc": "https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg",
-    "title": "Dhaka to Barisal",
-    "description": "ONE WAY FLIGHT",
-    "price": "2799 BDT"
+    "id": 2,
+    "destination": "Dhaka to Barishal",
+    "route": "ONE WAY FLIGHTS",
+    "fare": 2499,
+    "discount": 18,
+    "img": "https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg",
+    "ban_airlines": " Bangladesh Air Lines are giving 19% of discount on your visit from Dhaka to Jashore. The offer will continue till 30th September 2023",
+    "saudi_airlines": " Soudi Air Lines are giving 25% of discount on your visit from Dhaka to Jashore. The offer will continue till 2th OCtober 2023",
+    "qatar_airlines": " Qatar Air Lines are giving 11% of discount on your visit from Dhaka to Jashore. The offer will continue till 27th September 2023"
   },
   {
-    "imageSrc": "https://www.traveloffpath.com/wp-content/uploads/2021/11/New%E2%80%8B-Low-Cost-Airline-Set-To-Launch-In-Calgary-Next-Year.jpg",
-    "title": "Dhaka to Cox's",
-    "description": "ONE WAY FLIGHTS",
-    "price": "2699 BDT"
+    "id": 3,
+    "destination": "Dhaka to Cox'z",
+    "route": "ONE WAY FLIGHTS",
+    "fare": 2499,
+    "discount": 18,
+    "img": "https://www.traveloffpath.com/wp-content/uploads/2021/11/New%E2%80%8B-Low-Cost-Airline-Set-To-Launch-In-Calgary-Next-Year.jpg",
+    "ban_airlines": " Bangladesh Air Lines are giving 19% of discount on your visit from Dhaka to Jashore. The offer will continue till 30th September 2023",
+    "saudi_airlines": " Soudi Air Lines are giving 25% of discount on your visit from Dhaka to Jashore. The offer will continue till 2th OCtober 2023",
+    "qatar_airlines": " Qatar Air Lines are giving 11% of discount on your visit from Dhaka to Jashore. The offer will continue till 27th September 2023"
   }
 ]

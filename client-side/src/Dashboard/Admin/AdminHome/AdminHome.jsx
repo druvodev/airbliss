@@ -61,7 +61,7 @@ const AdminHome = () => {
     (bookingData) => bookingData?.bookingStatus == "confirmed"
   );
 
-  console.log(TodayConfirmBooking);
+  // console.log(TodayConfirmBooking);
 
   for (const item of TodayConfirmBooking) {
     const total = parseInt(item?.flight?.fareSummary?.total);
