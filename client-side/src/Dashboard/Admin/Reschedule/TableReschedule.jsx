@@ -42,7 +42,7 @@ const TableReschedule = ({ AllReschedule, status, openModal, setFlightRef }) => 
                                 <th>Travel Path</th>
                                 <th>Ticket Price</th>
                                 <th className="capitalize">{status}</th>
-                                <th>Action</th>
+                                <th className='text-center'>Action</th>
                                 <th>Details</th>
                             </tr>
                         </thead>
@@ -72,7 +72,7 @@ const TableReschedule = ({ AllReschedule, status, openModal, setFlightRef }) => 
                                     </td>
                                     <td>BDT {flight?.flight?.fareSummary?.total}</td>
                                     <td className="capitalize">
-                                        {status === "Residual Status" && (
+                                        {/* {status === "Residual Status" && ( */}
                                             <span>
                                                 {flight?.AllRescheduletatus}{" "}
                                                 <span
@@ -81,15 +81,15 @@ const TableReschedule = ({ AllReschedule, status, openModal, setFlightRef }) => 
                                                     {flight?.residualStatus}
                                                 </span>
                                             </span>
-                                        )}
+                                        {/* )} */}
                                     </td>
-                                    <td>
+                                    <td className='flex justify-center mt-2'>
                                         <button
                                             onClick={() => {
                                                 openModal();
                                                 setFlightRef(flight?.bookingReference);
                                             }}
-                                            className={`btn btn-sm rounded-full px-4 text-white ${flight?.residualStatus === "pending" ? "bg-cyan-400" : "bg-green-400"}`}
+                                            className={`btn btn-sm w-[120px] rounded-full  text-white ${flight?.residualStatus === "pending" ? "bg-cyan-400" : "bg-green-400"}`}
                                             disabled={flight?.residualStatus === "denied" || flight?.residualStatus === "approved"}
                                         >
                                             Process <MdWifiProtectedSetup />
