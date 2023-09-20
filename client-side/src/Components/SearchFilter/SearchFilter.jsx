@@ -106,7 +106,27 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
   }, [filterName]);
 
   return (
-    <div className="max-w-7xl  dark:text-gray-300  mx-auto grid justify-center">
+    <div className="max-w-7xl  dark:text-gray-300  mx-auto grid justify-center relative">
+      {isModal && locationModal && (
+        <div
+          onClick={() => {
+            setIsModal(!isModal),
+              setLocationModal(!locationModal),
+              setCalendarModal("");
+          }}
+          className="w-full h-full fixed top-0 right-0"
+        ></div>
+      )}{" "}
+      {calendarModal && (
+        <div
+          onClick={() => {
+            setIsModal(!isModal),
+              setLocationModal(!locationModal),
+              dispatch(setCalendarModal(""));
+          }}
+          className="w-full h-full fixed top-0 right-0"
+        ></div>
+      )}
       <div className="p-5 sm:mx-10 text-gray-500 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 rounded-xl dark:bg-slate-900 shadow-md bg-white">
         {bookingType === "all" && (
           <div className="flex gap-1  bg-gray-200 p-1 rounded w-fit font-medium text-gray-600 text-sm  dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500">
@@ -119,7 +139,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               <MdFlight /> Flight
             </div>
             <div
-              onClick={() => dispatch(setIsActive("hotel"))}
+              // onClick={() => dispatch(setIsActive("hotel"))}
               className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
                 isActive === "hotel" ? "bg-cyan-300" : "bg-white"
               }`}
@@ -127,7 +147,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               <RiHotelFill /> Hotel
             </div>
             <div
-              onClick={() => dispatch(setIsActive("visa"))}
+              // onClick={() => dispatch(setIsActive("visa"))}
               className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
                 isActive === "visa" ? "bg-cyan-300" : "bg-white"
               }`}
@@ -143,7 +163,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               name="flightType"
               value="oneWay"
               className="radio  radio-accent"
-              checked={flightType === "oneWay"}
+              checked
               onChange={() => dispatch(setFlightType("oneWay"))}
             />
             One Way
@@ -154,8 +174,9 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               name="flightType"
               value="roundTrip"
               className="radio radio-accent"
-              checked={flightType === "roundTrip"}
+              // checked={flightType === "roundTrip"}
               onChange={() => dispatch(setFlightType("roundTrip"))}
+              disabled
             />
             Round Trip
           </label>
@@ -165,8 +186,9 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               name="flightType"
               value="multiCity"
               className="radio radio-accent"
-              checked={flightType === "multiCity"}
+              // checked={flightType === "multiCity"}
               onChange={() => dispatch(setFlightType("multiCity"))}
+              disabled
             />
             Multi City
           </label>
@@ -480,8 +502,8 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                   <div
                     className="w-full p-2 cursor-pointer"
                     onClick={() => {
-                      dispatch(setFlightType("roundTrip"));
-                      dispatch(setCalendarModal("return"));
+                      // dispatch(setFlightType("roundTrip"));
+                      // dispatch(setCalendarModal("return"));
                     }}
                   >
                     <p className="text-sm">Return</p>
@@ -493,7 +515,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
                 {flightType === "roundTrip" && (
                   <div
                     className="w-full p-2 border-r relative"
-                    onClick={() => dispatch(setCalendarModal("return"))}
+                    // onClick={() => dispatch(setCalendarModal("return"))}
                   >
                     <p className="text-sm">Return</p>
                     <div className="cursor-pointer">
