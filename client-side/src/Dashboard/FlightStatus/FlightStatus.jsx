@@ -32,6 +32,15 @@ const FlightStatus = () => {
       .then((data) => setAllFlight(data));
   }, []);
 
+  const filteredFlights =
+    isActive === "running"
+      ? flights?.filter((flight) => flight?.airlineStatus === "running")
+      : isActive === "stop"
+      ? flights?.filter((flight) => flight?.airlineStatus === "stop")
+      : flights;
+
+  console.log(filteredFlights);
+
   const handleTabClick = (tab) => {
     setIsActive(tab);
   };
@@ -70,6 +79,7 @@ const FlightStatus = () => {
               <div className="mb-2 md:mb-0">
                 <h1 className="font-semibold ">Filter Flights: </h1>
               </div>
+
               <div className="flex md:flex-row flex-col gap-1 rounded font-medium text-gray-600 text-sm">
                 <div
                   onClick={() => handleTabClick("allFlights")}
@@ -155,7 +165,7 @@ const FlightStatus = () => {
                   </tr>
                 ) : (
                   <>
-                    {flights
+                    {filteredFlights
                       ?.slice(startIndex, endIndex)
                       ?.map((singleFlight) => (
                         <tr key={singleFlight?._id} className="border-b-2">
