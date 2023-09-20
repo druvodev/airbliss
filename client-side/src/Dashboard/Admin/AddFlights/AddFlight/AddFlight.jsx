@@ -234,7 +234,7 @@ const AddFlight = () => {
           <p className="text-[10px]">Airbliss Ltd.</p>
         </div>
 
-        <div className="flex items-center bg-white shadow-md  hover:border-2 border-t-2 border-black p-4 rounded-md mr-6">
+        <div className="flex items-center bg-white shadow-md  hover:border-2 border-t-2 border-black p-4 rounded-md md:mr-6">
           <select
             required
             className=" cursor-pointer "
@@ -268,7 +268,7 @@ const AddFlight = () => {
             <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
               <div>
                 <input
-                  className="p-2 border-b-[0.5px]  border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="airportName"
                   value={formData.airportName}
@@ -280,7 +280,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="airlineName"
                   value={formData.airlineName}
@@ -291,7 +291,7 @@ const AddFlight = () => {
               </div>
 
               <div>
-                <label className=" relative border-b-[1px] border-black w-[195px] py-2 px-4 cursor-pointer flex items-center">
+                <label className=" relative border-b-[1px] w-full border-black md:w-[195px] py-2 px-4 cursor-pointer flex items-center">
                   <span className="absolute inset-0 z-10"></span>
                   <MdOutlineCloudUpload className="mr-2" />
                   Airline Image
@@ -300,14 +300,14 @@ const AddFlight = () => {
                     accept="image/*"
                     onChange={handleImageUpload}
                     required
-                    className="absolute inset-0 z-20 w-full h-full opacity-0 cursor-pointer"
+                    className="absolute inset-0 z-20  w-full h-full opacity-0 cursor-pointer"
                   />
                 </label>
               </div>
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min  border-black"
                   type="number"
                   name="amountPerKm"
                   value={formData.amountPerKm}
@@ -319,7 +319,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="number"
                   name="taxesAndFees"
                   value={formData.taxesAndFees}
@@ -331,7 +331,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="number"
                   name="totalSeats"
                   value={formData.totalSeats}
@@ -343,7 +343,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="passengerType"
                   value={formData.passengerType}
@@ -355,7 +355,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="stopType"
                   value={formData.stopType}
@@ -367,7 +367,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="refundableStatus"
                   value={formData.refundableStatus}
@@ -379,7 +379,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="durationPerKm"
                   value={formData.durationPerKm}
@@ -391,7 +391,7 @@ const AddFlight = () => {
 
               <div>
                 <select
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   name="airlineStatus"
                   value={formData.airlineStatus}
                   onChange={handleChange}
@@ -413,7 +413,7 @@ const AddFlight = () => {
             <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="flightInfo.aircraft"
                   value={formData.flightInfo.aircraft}
@@ -425,7 +425,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="flightInfo.operatedBy"
                   value={formData.flightInfo.operatedBy}
@@ -437,7 +437,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="flightInfo.flightNumber"
                   value={formData.flightInfo.flightNumber}
@@ -449,7 +449,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="flightInfo.class"
                   value={formData.flightInfo.class}
@@ -461,7 +461,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="flightInfo.baggage"
                   value={formData.flightInfo.baggage}
@@ -472,7 +472,7 @@ const AddFlight = () => {
               </div>
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="flightInfo.checkIn"
                   value={formData.flightInfo.checkIn}
@@ -484,7 +484,7 @@ const AddFlight = () => {
 
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="flightInfo.cabin"
                   value={formData.flightInfo.cabin}
@@ -504,7 +504,7 @@ const AddFlight = () => {
             <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="details.code"
                   value={formData.details.code}
@@ -515,7 +515,7 @@ const AddFlight = () => {
               </div>
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="time"
                   name="details.time"
                   value={formData.details.time}
@@ -526,7 +526,7 @@ const AddFlight = () => {
               </div>
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="details.city"
                   value={formData.details.city}
@@ -537,7 +537,7 @@ const AddFlight = () => {
               </div>
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="details.latitude"
                   value={formData.details.latitude}
@@ -548,7 +548,7 @@ const AddFlight = () => {
               </div>
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="details.longitude"
                   value={formData.details.longitude}
@@ -559,7 +559,7 @@ const AddFlight = () => {
               </div>
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="details.terminal"
                   value={formData.details.terminal}
@@ -580,7 +580,7 @@ const AddFlight = () => {
               <div>
                 {/* Adding date change rules */}
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="dateChangeRules[0].rule"
                   onChange={handleChange}
@@ -590,7 +590,7 @@ const AddFlight = () => {
               </div>
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="number"
                   name="dateChangeRules[0].amountPerKm"
                   onChange={handleChange}
@@ -601,7 +601,7 @@ const AddFlight = () => {
               <div>
                 {/* Adding cancellation rules */}
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="text"
                   name="cancellationRules[0].rule"
                   onChange={handleChange}
@@ -611,7 +611,7 @@ const AddFlight = () => {
               </div>
               <div>
                 <input
-                  className="p-2 border-b-[0.5px] border-black"
+                  className="p-2 border-b-[0.5px] w-full md:w-min border-black"
                   type="number"
                   name="cancellationRules[0].amountPerKm"
                   onChange={handleChange}
