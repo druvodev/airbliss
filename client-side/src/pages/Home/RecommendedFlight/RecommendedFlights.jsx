@@ -59,16 +59,13 @@ const RecommendedFlights = () => {
                 <p className="text-sky-400 font-bold">{flight?.fare} BDT</p>
               </div>
             </div>
-            <div className="flex  items-center align-middle justify-between  mt-8">
+            <div className="flex  items-center align-middle justify-end  mt-8">
               <Link to={`/recommendedFlight/${flight?.id}`}>
               <button className="rounded-full  pb-[2px] bg-cyan-700 hover:bg-cyan-600 font-bold px-3 text-white">
                 View
               </button>
               </Link>
 
-              <button className="rounded-full border text-sky-500 px-3 font-bold hover:bg-cyan-700 hover:text-white border-sky-500 ">
-                Book
-              </button>
             </div>
 
             </div>

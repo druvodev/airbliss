@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { MdOutlineBalcony } from "react-icons/md";
-import {FaBed, FaToilet} from "react-icons/fa"
+import {FaBed, FaToilet, FaPhone} from "react-icons/fa"
 import HotelAdd from '../../../Components/Card/HotelAdd';
 
 const HotelDetails = () => {
@@ -49,6 +49,7 @@ const HotelDetails = () => {
                                         <li className='text-xl font-semibold flex items-center gap-x-1'><FaBed></FaBed> <span>{h?.bed}</span></li>
                                         <li className='text-xl font-semibold flex items-center gap-x-1'><FaToilet></FaToilet> <span>{h?.wash_room}</span></li>
                                         <li className='text-xl font-semibold flex items-center gap-x-1'><MdOutlineBalcony></MdOutlineBalcony> <span>{h?.balcony}</span></li>
+                                        <li className='text-xl font-semibold flex items-center gap-x-1'><FaPhone></FaPhone><span>{h?.contact}</span></li>
                                     </ul>
 
 
