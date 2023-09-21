@@ -118,22 +118,62 @@ const BookingFlightTable = ({
                   <td>BDT {flight?.flight?.fareSummary?.total}</td>
                   <td className="capitalize">
                     {status === "flight status" && (
-                      <span>
+                      <span
+                        className={`${
+                          flight?.requestStatus === "denied" &&
+                          "text-red-500 bg-red-50 rounded-full px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "success" &&
+                          "text-green-600 bg-green-50 rounded-full px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "approved" &&
+                          "text-orange-500 bg-green-50 rounded-full px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "pending" &&
+                          "text-orange-500 bg-orange-50 rounded-full px-2 py-1"
+                        } `}
+                      >
                         {flight?.bookingStatus}{" "}
-                        <span
-                          className={`${
-                            flight?.requestStatus === "denied" && "text-red-500"
-                          }`}
-                        >
-                          ({flight?.requestStatus})
-                        </span>
+                        <span>({flight?.requestStatus})</span>
                       </span>
                     )}
                     {status === "cancel status" && (
-                      <span>{flight?.requestStatus}</span>
+                      <span
+                        className={`${
+                          flight?.requestStatus === "denied" &&
+                          "text-red-500 bg-red-50 rounded-full px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "success" &&
+                          "text-green-600 bg-green-50 rounded-full px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "approved" &&
+                          "text-orange-500 bg-green-50 rounded-full px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "pending" &&
+                          "text-orange-500 bg-orange-50 rounded-full px-2 py-1"
+                        } `}
+                      >
+                        {flight?.requestStatus}
+                      </span>
                     )}
                     {status === "confirm status" && (
-                      <span>{flight?.requestStatus}</span>
+                      <span
+                        className={`${
+                          flight?.requestStatus === "denied" &&
+                          "text-red-500 bg-red-50 rounded-full px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "success" &&
+                          "text-green-600 bg-green-50 rounded-full px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "approved" &&
+                          "text-orange-500 bg-green-50 rounded-full px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "pending" &&
+                          "text-orange-500 bg-orange-50 rounded-full px-2 py-1"
+                        } `}
+                      >
+                        {flight?.requestStatus}
+                      </span>
                     )}
                   </td>
                   {!action && (
