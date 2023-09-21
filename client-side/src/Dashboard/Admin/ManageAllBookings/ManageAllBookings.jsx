@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBookingsRefetch } from "../../../redux/features/bookingInfoSlice";
 import { successToast } from "../../../utils/toast";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 15;
 
 const ManageAllBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);

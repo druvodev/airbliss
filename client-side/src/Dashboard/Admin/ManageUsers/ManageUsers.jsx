@@ -6,7 +6,7 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import logo from "../../../assets/icon/airblissBlack.png";
 import Loader from "../../../Components/Loader/Loader";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 15;
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);

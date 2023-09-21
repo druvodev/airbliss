@@ -4,7 +4,7 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 15;
 
 const CancelBookingTable = ({
   bookings,

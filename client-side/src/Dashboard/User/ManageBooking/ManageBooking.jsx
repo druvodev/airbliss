@@ -6,7 +6,7 @@ import BookingFlightTable from "../../../Components/BookingFlightTable/BookingFl
 import { setRefetch } from "../../../redux/features/usersSlice";
 import { successToast } from "../../../utils/toast";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 15;
 
 const ManageBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);

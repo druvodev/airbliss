@@ -10,7 +10,7 @@ import { setBookingsRefetch } from "../../../redux/features/bookingInfoSlice";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { FaInfo } from "react-icons/fa";
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 15;
 
 const AdminInsurance = () => {
   const [selectedInsurance, setSelectedInsurance] = useState(null);
