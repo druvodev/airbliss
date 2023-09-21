@@ -29,7 +29,7 @@ const HotDealDetails = () => {
 
   return (
     <div>
-      <div className="bg-[url('https://i.ibb.co/7Wn7njw/offer-bg.jpg')] py-64 bg-cover bg-no-repeat bg-center opacity-90">
+      <div className="bg-[url('https://i.ibb.co/7Wn7njw/offer-bg.jpg')] py-64 bg-cover bg-no-repeat  object-cover">
         hi
       </div>
 
