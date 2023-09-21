@@ -13,7 +13,7 @@ const CountdownTimer = () => {
   const seconds = remainingTime % 60;
 
   return (
-    <div className="p-5 grid justify-center">
+    <div className="p-5 grid justify-center dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 ">
       <p className="text-lg font-semibold mb-4">Session Time Out</p>
       <div className="flex justify-center gap-2">
         <div className="text-center">
