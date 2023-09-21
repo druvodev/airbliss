@@ -8,34 +8,9 @@ import { useState } from "react";
 const AboutUs = () => {
   const [open, setOpen] = useState(false);
   const services = useSelector((state) => state.ourServices?.services);
-  console.log(services);
-  const accordionData = [
-    {
-      title: "Expertise",
-      description:
-        "When it comes to travel, knowledge is key. At Airbliss, we've assembled a team of travel experts who are not only passionate about exploring the world but also possess extensive knowledge of the industry. Their expertise ensures that you receive the best advice and recommendations for your trips. Whether it's finding the best time to visit a destination, securing the most convenient flight routes, or uncovering hidden gems at your chosen location, our experts are your ultimate resource for making informed travel decisions.",
-    },
-    {
-      title: "Convenience",
-      description:
-        "We believe that travel planning should be a pleasure, not a chore. That's why we've invested in creating a user-friendly website and providing dedicated customer support. Our goal is to make planning your entire journey a seamless experience all in one place. From browsing options to booking, managing reservations, and even seeking assistance along the way, Airbliss is your go-to platform for stress-free travel arrangements.",
-    },
-    {
-      title: "Variety",
-      description:
-        "We understand that every traveler is unique, and that's why we offer a diverse range of services to cater to all travelers. Whether you're a budget-conscious adventurer seeking affordable accommodations, a luxury seeker desiring lavish indulgence, or somewhere in between, our extensive selection of services allows you to tailor your trip precisely to your preferences. With Airbliss, the world is your oyster, and you have the freedom to design your travel experiences just the way you want them.",
-    },
-    {
-      title: "Security",
-      description:
-        "Your safety and privacy are of utmost importance to us. We've taken comprehensive measures to ensure that your personal information is safeguarded and your transactions are secure. Our booking system adheres to the highest industry standards for security, guaranteeing a worry-free travel experience. When you choose Airbliss, you can focus on the excitement of your journey, knowing that your safety and privacy are in reliable hands.",
-    },
-    {
-      title: "Personalization",
-      description:
-        "We recognize that your journey is a reflection of who you are. It's as unique as your interests and desires. That's why we put the power of personalization in your hands. Our team works closely with you to create customized itineraries that perfectly match your preferences and interests. Whether you're a history enthusiast, a culinary explorer, a nature lover, or someone with a blend of interests, we're here to ensure that every aspect of your journey aligns with your vision. Your adventure with Airbliss is truly yours to define.",
-    },
-  ];
+  const accordionData = useSelector(
+    (state) => state.ourServices?.accordionData
+  );
 
   const toggle = (index) => {
     if (open === index) {

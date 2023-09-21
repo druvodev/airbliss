@@ -6,7 +6,7 @@ import { CountdownProvider } from "../providers/CountdownContext";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Components/Loader/Loader";
 import { useEffect } from "react";
-import { setServices } from "../redux/features/servicesSlice";
+import { setAccordionData, setServices } from "../redux/features/servicesSlice";
 
 const Main = () => {
   const loading = useSelector((state) => state.global.loading);
@@ -18,6 +18,15 @@ const Main = () => {
     fetch("http://localhost:5000/services")
       .then((res) => res.json())
       .then((data) => dispatch(setServices(data)));
+  }, [refetch]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/whyairbliss")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Data", data);
+        dispatch(setAccordionData(data));
+      });
   }, [refetch]);
 
   useEffect(() => {
