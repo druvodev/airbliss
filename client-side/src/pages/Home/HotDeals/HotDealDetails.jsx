@@ -29,7 +29,9 @@ const HotDealDetails = () => {
 
   return (
     <div>
-      <div className="bg-[url('https://i.ibb.co/7Wn7njw/offer-bg.jpg')] py-64 bg-cover bg-no-repeat bg-center opacity-90"></div>
+      <div className="bg-[url('https://i.ibb.co/7Wn7njw/offer-bg.jpg')] py-64 bg-cover bg-no-repeat  object-cover">
+        hi
+      </div>
 
       {/* <img className="w-full object-cover h-52" src={detailsBanner} alt="" /> */}
       <div className="pb-8 md:pb-16 pt-12 px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
@@ -55,8 +57,8 @@ const HotDealDetails = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 text-center ">
-                  <div className="bg-[#F8F9FA] pt-20 pb-8 px-6 relative">
-                    <div className="p-8 rounded-full absolute shadow-xl left-1/3 -top-10 bg-white">
+                  <div className="bg-[#F8F9FA] dark:bg-slate-800 pt-20 pb-8 px-6 relative">
+                    <div className="p-8 rounded-full absolute shadow-xl left-1/3 -top-10 bg-white ">
                       <GrAnnounce className="text-3xl"></GrAnnounce>
                     </div>
 
@@ -65,7 +67,7 @@ const HotDealDetails = () => {
                     </h4>
                     <p className="text-sm">{d?.applicable}</p>
                   </div>
-                  <div className="bg-[#F8F9FA] pt-24 pb-8 px-6 relative">
+                  <div className="bg-[#F8F9FA] dark:bg-slate-800  pt-24 pb-8 px-6 relative">
                     <div className="p-8 rounded-full absolute shadow-xl left-1/3 -top-10 bg-white">
                       <FaHandshake className="text-3xl"></FaHandshake>
                     </div>
@@ -74,7 +76,7 @@ const HotDealDetails = () => {
                     </h4>
                     <p className="text-sm">{d?.sponsor}</p>
                   </div>
-                  <div className="bg-[#F8F9FA] pt-20 pb-8 px-6 relative">
+                  <div className="bg-[#F8F9FA] dark:bg-slate-800  pt-20 pb-8 px-6 relative">
                     <div className="p-8 rounded-full absolute shadow-xl left-1/3 -top-10 bg-white">
                       <FaCalendarAlt className="text-3xl"></FaCalendarAlt>
                     </div>
@@ -88,7 +90,7 @@ const HotDealDetails = () => {
 
               {/* Get Offer  */}
 
-              <div className="pt-10 md:pt-20  bg-[#F8F9FA] ">
+              <div className="pt-10 md:pt-20  bg-[#F8F9FA] dark:bg-slate-800  ">
                 <h3 className="text-cyan-600 text-3xl font-semibold text-center mb-12">
                   How to avail the offer
                 </h3>

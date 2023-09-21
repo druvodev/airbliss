@@ -27,7 +27,7 @@ const AboutUs = () => {
         bgImage="url('https://i.ibb.co/v4PLr16/flight-hero.jpg')"
       />
       <div className="md:p-5">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 px-3 py-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 px-3 md:px-10 py-20 bg-white dark:bg-slate-800">
           <div className="">
             <h3 className="text-xl font-semibold">About Airbliss</h3>
             <p className="text-base text-justify">
