@@ -91,6 +91,7 @@ async function run() {
     const residualCollection = database.collection("residualBookings");
     const servicesCollection = database.collection("services");
     const specialDiscountCollection = database.collection("specialDiscount");
+    const accordionData = database.collection("whyAirbliss");
 
     app.post("/jwt", (req, res) => {
       const user = req.body;
@@ -110,6 +111,12 @@ async function run() {
     // API for Our Services
     app.get("/services", async (req, res) => {
       const result = await servicesCollection.find().toArray();
+      res.send(result);
+    });
+
+    // API for Our Services
+    app.get("/whyairbliss", async (req, res) => {
+      const result = await accordionData.find().toArray();
       res.send(result);
     });
 
