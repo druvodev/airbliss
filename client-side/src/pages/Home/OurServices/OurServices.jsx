@@ -16,7 +16,7 @@ const OurServices = () => {
   return (
     <section id="our-services">
       <SectionTitle sectionTitle="Our Services" />
-      <div className="grid grid-cols-2 text-gray-500">
+      <div className="grid grid-cols-2 text-gray-500 dark:bg-slate-800">
         <p>
           Explore seamless travel with our flight, hotel, car, and cruise
           booking services. Effortlessly tailor your journey for a memorable,

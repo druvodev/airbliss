@@ -1,16 +1,43 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router";
-import HotelAdd from "../../../Components/Card/HotelAdd";
-import useScrollTop from "../../../hooks/useScrollTop";
+import { useParams } from "react-router";
 import DiscountedHotelCard from "../../../Components/Card/DiscountedHotelCard";
 import { GrAnnounce } from "react-icons/gr";
 import { FaCalendarAlt, FaHandshake } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Accordion from "../../../Components/Accordion/Accordion";
 
 const HotDealDetails = () => {
   const { id } = useParams();
   const [deal, setDeal] = useState([]);
   const [discountedHotels, setDiscountedHotels] = useState([]);
+  const [open, setOpen] = useState(false);
+  const faqData = [
+    {
+      title: "What is the offer?",
+      description:
+        "Up to 15% discount on domestic flight bookings for EBL Visa debit & credit cards.",
+    },
+    {
+      title: "How long is this offer valid?",
+      description: "The offer is valid till 10 Oct 2023.",
+    },
+    {
+      title: "What is the travel period of this offer?",
+      description:
+        "There is no specific travel period. Customers can purchase air tickets, book hotels and book bus tickets during the offer period for any available travel date.",
+    },
+    {
+      title: "Who is eligible to avail these discounts?",
+      description:
+        "All EBL Visa debit and credit card holders are eligible to avail the offer.",
+    },
+    {
+      title: "For which routes are these discounts available?",
+      description:
+        "Applicable for both one way and round way domestic flight bookings.",
+    },
+  ];
+
   useEffect(() => {
     fetch("/hotDeals.json")
       .then((res) => res.json())
@@ -27,9 +54,16 @@ const HotDealDetails = () => {
       });
   }, []);
 
+  const toggle = (index) => {
+    if (open === index) {
+      return setOpen(false);
+    }
+    setOpen(index);
+  };
+
   return (
     <div>
-      <div className="bg-[url('https://i.ibb.co/7Wn7njw/offer-bg.jpg')] py-64 bg-cover bg-no-repeat bg-center opacity-90">
+      <div className="bg-[url('https://i.ibb.co/7Wn7njw/offer-bg.jpg')] py-64 bg-cover bg-no-repeat  object-cover">
         hi
       </div>
 
@@ -177,67 +211,16 @@ const HotDealDetails = () => {
           {/* FAQ Part  */}
           <div className="mt-6 sm:mt-10">
             <h2 className="text-cyan-600 text-3xl font-semibold mb-6">FAQ</h2>
-
-            <div className="space-y-1">
-              <div className="collapse collapse-arrow border-b">
-                <input type="radio" name="my-accordion-2" />
-                <div className="collapse-title font-medium">
-                  What is the offer?
-                </div>
-                <div className="collapse-content">
-                  <p>
-                    Up to 15% discount on domestic flight bookings for EBL Visa
-                    debit & credit cards.
-                  </p>
-                </div>
-              </div>
-              <div className="collapse collapse-arrow border-b">
-                <input type="radio" name="my-accordion-2" />
-                <div className="collapse-title  font-medium">
-                  How long is this offer valid?
-                </div>
-                <div className="collapse-content">
-                  <p>The offer is valid till 10 Oct 2023.</p>
-                </div>
-              </div>
-              <div className="collapse collapse-arrow border-b">
-                <input type="radio" name="my-accordion-2" />
-                <div className="collapse-title  font-medium">
-                  What is the travel period of this offer?
-                </div>
-                <div className="collapse-content">
-                  <p>
-                    There is no specific travel period. Customers can purchase
-                    air tickets, book hotels and book bus tickets during the
-                    offer period for any available travel date.
-                  </p>
-                </div>
-              </div>
-              <div className="collapse collapse-arrow border-b">
-                <input type="radio" name="my-accordion-2" />
-                <div className="collapse-title  font-medium">
-                  Who is eligible to avail these discounts?
-                </div>
-                <div className="collapse-content">
-                  <p>
-                    All EBL Visa debit and credit card holders are eligible to
-                    avail the offer.
-                  </p>
-                </div>
-              </div>
-              <div className="collapse collapse-arrow border-b">
-                <input type="radio" name="my-accordion-2" />
-                <div className="collapse-title  font-medium">
-                  For which routes are these discounts available?
-                </div>
-                <div className="collapse-content">
-                  <p>
-                    Applicable for both one way and round way domestic flight
-                    bookings.
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* FAQ Accordion */}
+            {faqData.map((data, index) => (
+              <Accordion
+                key={index}
+                open={index === open}
+                title={data?.title}
+                description={data?.description}
+                toggle={() => toggle(index)}
+              />
+            ))}
           </div>
         </div>
 
