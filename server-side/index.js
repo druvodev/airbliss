@@ -114,7 +114,7 @@ async function run() {
       res.send(result);
     });
 
-    // API for Our Services
+    // API for Why choose Airbliss accordion Data
     app.get("/whyairbliss", async (req, res) => {
       const result = await accordionData.find().toArray();
       res.send(result);
