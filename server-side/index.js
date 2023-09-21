@@ -627,10 +627,10 @@ async function run() {
         total_amount: totalAmount,
         currency: "BDT",
         tran_id: transitionId,
-        success_url: `http://localhost:5000/booking-confirmed/${bookingInfo.bookingReference}`,
-        fail_url: "http://localhost:5000/booking-failed",
-        cancel_url: "http://localhost:5000/booking-cancel",
-        ipn_url: "http://localhost:5000/ipn",
+        success_url: `https://server-side-tawny-sigma.vercel.app/booking-confirmed/${bookingInfo.bookingReference}`,
+        fail_url: "https://server-side-tawny-sigma.vercel.app/booking-failed",
+        cancel_url: "https://server-side-tawny-sigma.vercel.app/booking-cancel",
+        ipn_url: "https://server-side-tawny-sigma.vercel.app/ipn",
         shipping_method: "Air Flights",
         product_name: "Airline Ticket",
         product_category: "Flights Tickets",
@@ -692,7 +692,7 @@ async function run() {
         });
       app.post("/booking-confirmed/:bookingId", async (req, res) => {
         res.redirect(
-          `http://localhost:5173/booking-confirmed/${req.params.bookingId}`
+          `https://airbliss-flight-booking.web.app/booking-confirmed/${req.params.bookingId}`
         );
       });
     });
