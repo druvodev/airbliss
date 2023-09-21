@@ -131,7 +131,7 @@ const TravelerDetailsForm = () => {
   return (
     <section>
       {isContinue ? (
-        <div className="dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 dark:p-2">
+        <div className=" dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 dark:p-2">
           <h2 className="text-xl font-bold mb-4 px-2">Traveler Details</h2>
           <div className="w-full ">
             <div className="bg-cyan-700 dark:bg-transparent mb-5">
@@ -298,7 +298,7 @@ const TravelerDetailsForm = () => {
           </div>
         </div>
       ) : (
-        <div className="relative dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 rounded p-2 text-white dark:text-gray-400">
+        <div className="relative dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 rounded p-2  dark:text-gray-400">
           <div className="shadow-lg rounded-xl overflow-hidden">
             <div className="px-5 ">
               <div className="flex items-center gap-2 mt-4 mb-8 ">
