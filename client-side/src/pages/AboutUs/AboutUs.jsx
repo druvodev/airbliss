@@ -2,10 +2,23 @@ import React from "react";
 import { useSelector } from "react-redux";
 import ServicesCards from "../../Components/ServicesCards/ServicesCards";
 import SectionBanner from "../../Components/AboutUsBanner/SectionBanner";
+import Accordion from "../../Components/Accordion/Accordion";
+import { useState } from "react";
 
 const AboutUs = () => {
+  const [open, setOpen] = useState(false);
   const services = useSelector((state) => state.ourServices?.services);
-  console.log(services);
+  const accordionData = useSelector(
+    (state) => state.ourServices?.accordionData
+  );
+
+  const toggle = (index) => {
+    if (open === index) {
+      return setOpen(false);
+    }
+    setOpen(index);
+  };
+
   return (
     <div>
       <SectionBanner
@@ -50,79 +63,24 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-3 md:px-10 py-10">
+        <div className="max-w-7xl mx-auto px-3  py-10">
           <h3 className="text-xl md:text-4xl font-semibold">We are Offering</h3>
           <ServicesCards services={services} />
         </div>
-        <div className="max-w-7xl mx-auto px-10">
-          <div className="join join-vertical w-full mx-auto ">
-            <h3 className="text-xl md:text-4xl font-semibold mb-10">
-              Why Choose Airbliss?
-            </h3>
-            <div className="collapse collapse-arrow join-item border border-base-300">
-              <input type="radio" name="my-accordion-4" />
-              <div className="collapse-title text-xl font-medium">
-                Expertise:
-              </div>
-              <div className="collapse-content">
-                <p>
-                  Our team of travel experts has extensive knowledge of the
-                  industry, ensuring that you receive the best advice and
-                  recommendations for your trips.
-                </p>
-              </div>
-            </div>
-            <div className="collapse collapse-arrow join-item border border-base-300 ">
-              <input type="radio" name="my-accordion-4" />
-              <div className="collapse-title text-xl font-medium">
-                Convenience:
-              </div>
-              <div className="collapse-content">
-                <p>
-                  We believe that travel planning should be stress-free. With
-                  our user-friendly website and dedicated customer support, we
-                  make it easy for you to plan your entire journey in one place.
-                </p>
-              </div>
-            </div>
-            <div className="collapse collapse-arrow join-item border border-base-300">
-              <input type="radio" name="my-accordion-4" />
-              <div className="collapse-title text-xl font-medium">Variety:</div>
-              <div className="collapse-content">
-                <p>
-                  From budget to luxury, we offer a wide range of options to
-                  cater to all travelers. Our diverse selection of services
-                  allows you to tailor your trip to your specific desires.
-                </p>
-              </div>
-            </div>
-            <div className="collapse collapse-arrow join-item border border-base-300">
-              <input type="radio" name="my-accordion-4" />
-              <div className="collapse-title text-xl font-medium">
-                Security:
-              </div>
-              <div className="collapse-content">
-                <p>
-                  We prioritize your safety and privacy. Our secure booking
-                  system and payment processes guarantee a worry-free travel
-                  experience.
-                </p>
-              </div>
-            </div>
-            <div className="collapse collapse-arrow join-item border border-base-300">
-              <input type="radio" name="my-accordion-4" />
-              <div className="collapse-title text-xl font-medium">
-                Personalization:
-              </div>
-              <div className="collapse-content">
-                <p>
-                  Your journey is as unique as you are. We work closely with you
-                  to create customized itineraries that match your preferences
-                  and interests.
-                </p>
-              </div>
-            </div>
-          </div>
+        <div className="max-w-7xl mx-auto px-3">
+          <h3 className="text-xl md:text-4xl font-semibold mb-10">
+            Why Choose Airbliss?
+          </h3>
+
+          {accordionData.map((data, index) => (
+            <Accordion
+              key={index}
+              open={index === open}
+              title={data?.title}
+              description={data?.description}
+              toggle={() => toggle(index)}
+            />
+          ))}
         </div>
       </div>
     </div>
