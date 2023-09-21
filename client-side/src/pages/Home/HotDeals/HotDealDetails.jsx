@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router";
-import HotelAdd from "../../../Components/Card/HotelAdd";
-import useScrollTop from "../../../hooks/useScrollTop";
+import { useParams } from "react-router";
 import DiscountedHotelCard from "../../../Components/Card/DiscountedHotelCard";
 import { GrAnnounce } from "react-icons/gr";
 import { FaCalendarAlt, FaHandshake } from "react-icons/fa";
