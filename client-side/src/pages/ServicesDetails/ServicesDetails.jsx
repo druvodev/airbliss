@@ -17,7 +17,7 @@ const ServicesDetails = () => {
     <div className="">
       <SectionBanner subtitle={service?.title} title={service?.subTitle} />
 
-      <div className="p-5 mx-auto z-10 sm:px-10 max-w-7xl h-auto overflow-hidden shadow-lg bg-white rounded-xl relative">
+      <div className="p-5 mx-auto z-10 sm:px-10 max-w-7xl h-auto overflow-hidden shadow-lg bg-white dark:bg-none rounded-xl relative">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-5">
           <img src={service?.image} alt="" className="rounded-md" />
           <div className="flex flex-col justify-between items-stretch">
