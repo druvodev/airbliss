@@ -18,7 +18,7 @@ const Contact = () => {
     <div>
       <SectionBanner title="" subtitle="Get in Touch with AirBliss" />
 
-      <div className="pb-8 md:pb-16 px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
+      <div className="pb-8 md:pb-16 md:px-3 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
         <div className=" py-10 ">
           <h3 className="text-3xl  font-bold text-center">Contact Us</h3>
           <p className=" lg:text-lg mt-3 w-11/12 md:w-5/6 lg:w-2/3 mx-auto text-center hidden sm:block">
