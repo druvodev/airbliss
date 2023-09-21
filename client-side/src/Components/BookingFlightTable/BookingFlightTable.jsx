@@ -73,7 +73,7 @@ const BookingFlightTable = ({
     <div>
       <div className="overflow-x-auto shadow-md md:mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
         {bookings.length < 1 ? (
-          <div className="w-full flex items-center justify-center mt-20">
+          <div className="w-full flex items-center justify-center my-20">
             <p className="sm:text-sm md:text-base lg:text-xl"> No data found</p>
           </div>
         ) : (
@@ -182,7 +182,7 @@ const BookingFlightTable = ({
         )}
       </div>
 
-      <section className="mt-12 flex justify-end items-center">
+      <section className="mt-12 md:pe-7 flex justify-end items-center ">
         <button
           className="border-[1px] p-2 rounded-l-md"
           onClick={handlePaginationPrev}

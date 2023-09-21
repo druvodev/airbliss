@@ -5,7 +5,7 @@
 }
 
 /* Default styles for desktop */
-.login_form_container {
+.main-container {
   width: 100%;
   max-width: 100%;
   height: 500px;
@@ -17,10 +17,10 @@
   overflow: hidden;
 }
 
-.login_form {
+.main-contain {
   position: absolute;
   content: "";
-  border-radius: 50px 50px 50px 50px;
+
   inset: 5px;
   padding-top: 50px;
   z-index: 0;

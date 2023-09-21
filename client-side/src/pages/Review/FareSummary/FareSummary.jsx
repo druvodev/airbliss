@@ -10,18 +10,20 @@ const FareSummary = React.memo(() => {
   const insuranceStatus = useSelector((state) => state.insurance.insurance);
 
   return (
-    <div className="">
-      <div className="shadow-lg rounded-xl overflow-hidden">
+    <div>
+      <div className="shadow-lg rounded-xl overflow-hidden dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500">
         <div className="px-5">
           <div className="flex items-center gap-1 mb-2">
             <img className="h-12 w-12 rounded-full" src={airlineLogo} alt=" " />{" "}
-            <h5 className="font-semibold text-gray-600">{airlineName}</h5>
+            <h5 className="font-semibold text-gray-600 dark:text-gray-500">
+              {airlineName}
+            </h5>
           </div>
           <hr />
           <div className="text-end -mt-3">
             <button onClick={() => setIsCollapse(!isCollapse)}>
               {isCollapse ? (
-                <MdKeyboardArrowUp className="text-2xl rounded-full bg-gray-300" />
+                <MdKeyboardArrowUp className="text-2xl rounded-full bg-gray-300 dark:bg-gray-500 dark:text-cyan-500" />
               ) : (
                 <MdKeyboardArrowDown className="text-2xl rounded-full bg-gray-300" />
               )}
@@ -65,11 +67,11 @@ const FareSummary = React.memo(() => {
                   <p>
                     BDT{" "}
                     <span className="font-semibold">
-                      {(0.05 * fareSummary.total).toFixed()}
+                      {(0.05 * fareSummary?.total).toFixed()}
                     </span>
                   </p>
                   <p className="text-xs text-gray-500">{`( 1 x ${(
-                    0.05 * fareSummary.total
+                    0.05 * fareSummary?.total
                   ).toFixed()} )`}</p>
                 </div>
               </div>
@@ -82,13 +84,13 @@ const FareSummary = React.memo(() => {
                 <span className="font-semibold">
                   {(
                     parseInt(fareSummary?.total) +
-                    parseInt(0.05 * fareSummary.total)
+                    parseInt(0.05 * fareSummary?.total)
                   ).toFixed()}
                 </span>
               </p>
             </div>
           </div>
-          <div className="flex justify-between p-5 bg-cyan-100">
+          <div className="flex justify-between p-5 bg-cyan-100 dark:bg-gray-700">
             <p>
               <span className="font-semibold">You Pay</span>{" "}
               <span className="text-sm text-gray-500">
@@ -99,13 +101,13 @@ const FareSummary = React.memo(() => {
               BDT{" "}
               {(
                 parseInt(fareSummary?.total) +
-                parseInt(0.05 * fareSummary.total)
+                parseInt(0.05 * fareSummary?.total)
               ).toFixed()}
             </p>
           </div>
         </div>
       </div>
-      <div className="mt-5 shadow-lg rounded-xl">
+      <div className="mt-5 shadow-lg rounded-xl ">
         <CountdownTimer />
       </div>
     </div>

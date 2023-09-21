@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.ReactCollapse--collapse {
+  transition: height 500ms;
+}
+
 @media (min-width: 768px) and (max-width: 1120px) {
   .search-grid {
     display: grid;

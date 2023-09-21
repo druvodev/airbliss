@@ -16,7 +16,7 @@ const OurServices = () => {
   return (
     <section id="our-services">
       <SectionTitle sectionTitle="Our Services" />
-      <div className="grid grid-cols-2 text-gray-500">
+      <div className="grid grid-cols-2 text-gray-500 dark:bg-slate-800">
         <p>
           Explore seamless travel with our flight, hotel, car, and cruise
           booking services. Effortlessly tailor your journey for a memorable,
@@ -24,7 +24,9 @@ const OurServices = () => {
         </p>
         <button
           onClick={handleViewAll}
-          className="ml-auto bg-cyan-700 hover:bg-cyan-600  px-5 rounded-full h-[45px] text-white font-semibold"
+          className={`ml-auto bg-cyan-700 hover:bg-cyan-600  px-5 rounded-full h-[45px] text-white font-semibold ${
+            viewAll && "hidden"
+          }`}
         >
           View All
         </button>

@@ -22,7 +22,6 @@ const RecommendedHotelDetails = () => {
   return (
     <div className="pb-16">
       <div className="bg-[url('https://i.ibb.co/99WG5TR/pascal-meier-UYies-SO4-Fi-M-unsplash.jpg')] py-48 bg-cover bg-no-repeat bg-center ">
-        
         <div className="text-center text-white">
           <h3 className="text-xl sm:text-3xl md:text-5xl lg:text-7xl font-bold">
             AirBliss
@@ -43,10 +42,17 @@ const RecommendedHotelDetails = () => {
                 className="md:w-8/12 border-b-2 border-gray-200 pb-3"
               />
               <div>
-                <h2 className="text-cyan-500 text-2xl font-bold md:text-4xl pb-3">About Us</h2>
+                <h2 className="text-cyan-500 text-2xl font-bold md:text-4xl pb-3">
+                  About Us
+                </h2>
                 <p>{f?.about}</p>
                 <div className="mt-6 md:mt-4 lg:mt-8 md:text-center lg:text-left">
-                  <Link to="/" className="px-4 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-semibold">Book Now</Link>
+                  <Link
+                    to="/"
+                    className="px-4 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-semibold"
+                  >
+                    Book Now
+                  </Link>
                 </div>
               </div>
             </div>
@@ -57,7 +63,7 @@ const RecommendedHotelDetails = () => {
                   {f?.overviews?.map((overview, index) => (
                     <div
                       key={index}
-                      className="py-4 px-6 bg-[#f5f5f5] text-sm space-y-2 "
+                      className="py-4 px-6 bg-[#f5f5f5] dark:bg-slate-800 text-sm space-y-2 "
                     >
                       <div className="flex justify-between items-center">
                         <p className="uppercase text-[#01b7f2]">AIRLINE:</p>
@@ -101,7 +107,9 @@ const RecommendedHotelDetails = () => {
                       </div>
                       <div className="flex justify-between items-center">
                         <p className="uppercase text-[#01b7f2]">Total Price:</p>
-                        <p className="uppercase">${overview?.base_fare + overview?.tax}.00</p>
+                        <p className="uppercase">
+                          ${overview?.base_fare + overview?.tax}.00
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -112,7 +120,7 @@ const RecommendedHotelDetails = () => {
 
                 {/* Travel Information  */}
                 <div className="text-sm uppercase mt-4">
-                  <div className="p-2 bg-[#f5f5f5] text-sm">
+                  <div className="p-2 bg-[#f5f5f5] dark:bg-slate-800  text-sm">
                     <h1 className="text-lg font-semibold">
                       Travel Information
                     </h1>

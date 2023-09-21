@@ -236,7 +236,7 @@ const Footer = () => {
               </div>
 
               <div className="mt-12 lg:mt-0 dark:text-gray-400">
-                <h1 className="text-xl font-bold">Recent Service</h1>
+                <h1 className="text-xl font-bold">Coming Soon Services</h1>
                 <p>
                   <span className="flex items-center  tracking-widest">
                     <IoAirplaneSharp />
