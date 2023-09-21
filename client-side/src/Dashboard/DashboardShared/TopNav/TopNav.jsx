@@ -66,7 +66,7 @@ const TopNav = ({ handleToggle }) => {
         </div>
         <div className="navbar-end">
           <button className="btn btn-ghost btn-circle">
-            <div className="indicator">
+            {/* <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -82,7 +82,7 @@ const TopNav = ({ handleToggle }) => {
                 />
               </svg>
               <span className="badge badge-xs badge-error indicator-item"></span>
-            </div>
+            </div> */}
           </button>
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="avatar">
@@ -107,7 +107,7 @@ const TopNav = ({ handleToggle }) => {
                     {user?.displayName}
                   </h1>
                   <p
-                    className="mt-2 text-[12px] lg:text-[14px] font-medium text-[#37517e] hover:underline"
+                    className="mt-2 text-[10px] lg:text-[12px] font-medium text-[#37517e] hover:underline"
                   >
                     {user?.email}
                   </p>

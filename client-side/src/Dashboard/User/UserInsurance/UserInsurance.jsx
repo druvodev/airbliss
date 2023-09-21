@@ -194,7 +194,7 @@ const UserInsurance = () => {
                           "denied" ||
                         insurance?.insurancePolicy?.claimedStatus ===
                           "approved" ||
-                        insurance?.insurancePolicy?.endDate == todayDate
+                        insurance?.insurancePolicy?.endDate < todayDate
                       }
                     >
                       Claim
