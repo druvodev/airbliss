@@ -10,7 +10,7 @@ import { HiOutlineExternalLink } from "react-icons/hi";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserInfo } from "../../../redux/features/bookingInfoSlice";
 import { paymentLater, paymentProcessing } from "../../../utils/handlePayment";
@@ -36,6 +36,7 @@ const TravelerDetailsForm = () => {
   const [hasInsuranceModalShown, setHasInsuranceModalShown] = useState(false);
   const [isNoInsuranceSelected, setIsNoInsuranceSelected] = useState(true);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -94,6 +95,7 @@ const TravelerDetailsForm = () => {
   // Handle Payment Later
   const handlePayLater = () => {
     paymentLater(flightInfo, userInfo); // This function from utils
+    navigate("/");
   };
 
   // Handle Processing Payment

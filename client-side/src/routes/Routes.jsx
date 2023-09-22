@@ -31,6 +31,7 @@ import ApplyReschedule from "../Dashboard/User/ApplyReschedule/ApplyReschedule";
 import FlightDetails from "../Dashboard/FlightStatus/FlightDetails/FlightDetails";
 import Reschedule from "../Dashboard/Admin/Reschedule/Reschedule";
 import AboutUs from "../pages/AboutUs/AboutUs";
+import LoginSignupModal from "../LogIn/LoginSignupModal";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -89,11 +90,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "hotelDetails/:id",
-        element: <HotelDetails></HotelDetails>
+        element: <HotelDetails></HotelDetails>,
       },
       {
         path: "recommendedFlight/:id",
-        element: <RecommendedHotelDetails></RecommendedHotelDetails>
+        element: <RecommendedHotelDetails></RecommendedHotelDetails>,
       },
       {
         path: "/insurance-policy",
@@ -209,5 +210,9 @@ export const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "login",
+    element: <LoginSignupModal></LoginSignupModal>,
   },
 ]);

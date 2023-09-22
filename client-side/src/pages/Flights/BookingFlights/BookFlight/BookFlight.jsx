@@ -4,7 +4,7 @@ import FlightSummery from "../FlightSummery/FlightSummery";
 import FareRuls from "../FareRuls/FareRuls";
 import ShortingFlight from "../../ShortingFlight/ShortingFlight";
 import { GrPrevious, GrNext } from "react-icons/gr";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFlightInfo } from "../../../../redux/features/bookingInfoSlice";
 import { calculateArrivalDate } from "../../../../utils/calculateArrivalDate";
@@ -22,6 +22,7 @@ import {
   setCurrentPage,
   setFlightDetailsVisibility,
 } from "../../../../redux/features/bookTicketSlice.js";
+import useAuth from "../../../../hooks/useAuth";
 
 const ITEMS_PER_PAGE = 3;
 
@@ -132,6 +133,7 @@ const BookFlight = () => {
   };
 
   const handelCardComapnyFilter = (airlineName) => {
+    console.log(airlineName);
     const filteredData = flight.filter(
       (item) => item.airlineName === airlineName
     );
@@ -141,6 +143,19 @@ const BookFlight = () => {
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
+
+  const { user } = useAuth()
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+
+  const handleBooking = () => {
+    if (!user) {
+
+      navigate(from, { replace: true });
+    }
+    
+  }
 
   return (
     <section className="mb-16 ">
@@ -157,11 +172,10 @@ const BookFlight = () => {
           <section>
             <div className="flex w-full p-5 mt-10 rounded-md justify-between shadow-md">
               <button
-                className={`p-4 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
-                  selectedButton === "cheapest"
+                className={`p-4 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${selectedButton === "cheapest"
                     ? "bg-cyan-50 text-white dark:bg-white/20"
                     : "text-white"
-                }`}
+                  }`}
                 onClick={() => handleButtonClick("cheapest")}
               >
                 <h1 className="text-[18px] font-semibold mb-2 text-gray-900 dark:text-white">
@@ -173,11 +187,10 @@ const BookFlight = () => {
               </button>
               <div className="border self-stretch mx-5"></div>
               <button
-                className={`p-4 text-left  flex-grow py-2 px-3 pe-5 mb-0 border-0 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 ${
-                  selectedButton === "shortest"
+                className={`p-4 text-left  flex-grow py-2 px-3 pe-5 mb-0 border-0 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 ${selectedButton === "shortest"
                     ? "bg-cyan-50 text-white dark:bg-white/20   "
                     : "text-white"
-                }`}
+                  }`}
                 onClick={() => handleButtonClick("shortest")}
               >
                 <h1 className="text-[18px] font-semibold mb-2 text-gray-900 dark:text-white">
@@ -229,9 +242,8 @@ const BookFlight = () => {
                     <p className="text-gray-400 text-xs">
                       {singleFlight?.duration < 60
                         ? `${singleFlight?.duration} min`
-                        : `${Math.floor(singleFlight?.duration / 60)} hr ${
-                            singleFlight?.duration % 60
-                          } min`}
+                        : `${Math.floor(singleFlight?.duration / 60)} hr ${singleFlight?.duration % 60
+                        } min`}
                     </p>
                     <img
                       style={{
@@ -271,9 +283,7 @@ const BookFlight = () => {
                   <div align="center">
                     <Link to={`/review/${singleFlight?._id}`}>
                       <button
-                        onClick={() => {
-                          dispatch(setFlightInfo(singleFlight));
-                        }}
+                        onClick={() => { handleBooking(), dispatch(setFlightInfo(singleFlight)); }}
                         className="btn p-2 bg-cyan-600 hover:bg-white hover:border-2 hover:text-cyan-600 hover:border-cyan-600 text-white rounded-md dark:border-0"
                       >
                         Book Now
@@ -307,25 +317,22 @@ const BookFlight = () => {
                     <section className="flex justify-start items-center mt-5 text-[12px]">
                       <p
                         onClick={() => handleFlightDetailsClick()}
-                        className={`border-2 p-2 rounded-md cursor-pointer ${
-                          showFlightDetails ? "bg-cyan-600 text-white" : ""
-                        }`}
+                        className={`border-2 p-2 rounded-md cursor-pointer ${showFlightDetails ? "bg-cyan-600 text-white" : ""
+                          }`}
                       >
                         Flight Details
                       </p>
                       <p
                         onClick={() => handleFlightSummaryClick()}
-                        className={`border-2 p-2 rounded-md cursor-pointer ${
-                          showFlightSummary ? "bg-cyan-600 text-white" : ""
-                        }`}
+                        className={`border-2 p-2 rounded-md cursor-pointer ${showFlightSummary ? "bg-cyan-600 text-white" : ""
+                          }`}
                       >
                         Fare Summary
                       </p>
                       <p
                         onClick={() => handleFareRulesClick()}
-                        className={`border-2 p-2 rounded-md cursor-pointer ${
-                          showFareRules ? "bg-cyan-600 text-white" : ""
-                        }`}
+                        className={`border-2 p-2 rounded-md cursor-pointer ${showFareRules ? "bg-cyan-600 text-white" : ""
+                          }`}
                       >
                         Fare Rules
                       </p>
@@ -359,9 +366,8 @@ const BookFlight = () => {
                 (_, index) => (
                   <h3
                     key={index}
-                    className={`pl-3 pr-3 pt-[6px] pb-[6px] border-[1px] ${
-                      index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
-                    }`}
+                    className={`pl-3 pr-3 pt-[6px] pb-[6px] border-[1px] ${index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                      }`}
                     onClick={() => dispatch(setCurrentPage(index + 1))}
                   >
                     {index + 1}

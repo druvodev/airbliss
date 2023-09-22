@@ -28,25 +28,27 @@ const FlightDetails = () => {
     dispatch(setPath({ id, airportCode }));
   }, [id]);
 
+  console.log(filterFlight);
+
   const [updateData, setUpdateData] = useState({
-    airportName: "",
-    airlineName: "",
-    amountPerKm: "",
-    taxesAndFees: "",
-    totalSeats: "",
-    durationPerKm: "",
+    airportName: filterFlight[0]?.airportName,
+    airlineName: filterFlight[0]?.airlineName,
+    amountPerKm: filterFlight[0]?.amountPerKm,
+    taxesAndFees: filterFlight[0]?.taxesAndFees,
+    totalSeats: filterFlight[0]?.totalSeats,
+    durationPerKm: filterFlight[0]?.durationPerKm,
     airlineStatus: "",
-    aircraft: "",
-    flightNumber: "",
-    baggage: "",
-    checkIn: "",
-    cabin: "",
-    code: "",
-    time: "",
-    latitude: "",
-    longitude: "",
-    dateAmountPerKm: "",
-    cancelAmountPerKm: "",
+    aircraft: filterFlight[0]?.flightInfo?.aircraft,
+    flightNumber: filterFlight[0]?.flightInfo?.flightNumber,
+    baggage: filterFlight[0]?.flightInfo?.baggage,
+    checkIn: filterFlight[0]?.flightInfo?.checkIn,
+    cabin: filterFlight[0]?.flightInfo?.cabin,
+    code: filterFlight[0]?.details?.code,
+    time: filterFlight[0]?.details?.time,
+    latitude: filterFlight[0]?.details?.longitude,
+    longitude: filterFlight[0]?.details?.longitude,
+    dateAmountPerKm: filterFlight[0]?.dateChangeRules[0]?.amountPerKm,
+    cancelAmountPerKm: filterFlight[0]?.cancellationRules[0]?.amountPerKm,
   });
 
   const handleSubmit = async (e) => {
