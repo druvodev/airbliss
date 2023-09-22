@@ -4,6 +4,7 @@ import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import InforMation from "./InforMation";
 import Edit from "./Edit";
 import View from "./View";
+import { FiEdit } from "react-icons/fi";
 import { toast } from "react-hot-toast";
 
 const Account = () => {
@@ -85,17 +86,19 @@ const Account = () => {
         <div className="bg-white shadow-md  lg:row-span-2  py-[30px] px-6 md:px-8 rounded-xl">
           <div className="flex justify-between ">
             <h1 className="lg:text-[36px] text-xl mb-7 font-semibold text-gray-900 capitalize">
-              Personal Information
+              Edit Your Personal Information
             </h1>
-            <button className="btn btn-sm" onClick={switchToEditOrUpdate}>
-              {isEdit ? "View" : "Edit"}
+            <button className="btn btn-md bg-cyan-500 text-white" onClick={switchToEditOrUpdate}>
+              {/* {isEdit ? "View" : "Edit"} */}
+              <FiEdit className="text-xl" />
             </button>
           </div>
           <>
             {isEdit ? (
               <Edit handleSubmit={handleSubmit} currentUser={currentUser} />
             ) : (
-              <View currentUser={currentUser} />
+                // <View currentUser={currentUser} /> 
+                <></>
             )}
           </>
         </div>
