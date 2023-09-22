@@ -16,10 +16,10 @@ export function formatDate(dateString) {
   ];
 
   const date = new Date(dateString);
-  const dayOfWeek = daysOfWeek[date.getDay()];
-  const dayOfMonth = date.getDate();
-  const month = monthsOfYear[date.getMonth()];
-  const year = date.getFullYear();
+  const dayOfWeek = daysOfWeek[date?.getDay()];
+  const dayOfMonth = date?.getDate();
+  const month = monthsOfYear[date?.getMonth()];
+  const year = date?.getFullYear();
 
   return `${dayOfWeek}, ${dayOfMonth} ${month} ${year}`;
 }
