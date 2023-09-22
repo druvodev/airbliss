@@ -43,7 +43,7 @@ const initialFormData = {
 };
 
 const AddFlight = () => {
-  const allFlights = useSelector((state) => state.addFlight.allFlights);
+  const allFlights = useSelector((state) => state?.addFlight?.allFlights);
   const [selectAirportId, setSelectAirportId] = useState("");
   const [selectAirportCode, setSelectAirportCode] = useState("");
   const [formData, setFormData] = useState(initialFormData);
