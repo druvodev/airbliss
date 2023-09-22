@@ -133,6 +133,7 @@ const BookFlight = () => {
   };
 
   const handelCardComapnyFilter = (airlineName) => {
+    console.log(airlineName);
     const filteredData = flight.filter(
       (item) => item.airlineName === airlineName
     );
