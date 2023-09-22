@@ -18,13 +18,13 @@ const View = ({ currentUser }) => {
       <div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
           <div>
-            <label className="block mb-2 font-semibold text-[#222] text-[18px]">
+            <label className="block mb-2 font-semibold text-[#222] dark:text-gray-300 text-[18px]">
               Full Name:
             </label>
             <p>{name}</p>
           </div>
           <div>
-            <label className="block mb-2 font-semibold text-[#222] text-[18px]">
+            <label className="block mb-2 font-semibold text-[#222] dark:text-gray-300 text-[18px]">
               Occupation:
             </label>
             <p>{occupation}</p>
@@ -32,13 +32,13 @@ const View = ({ currentUser }) => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
           <div>
-            <label className="block mb-2 font-semibold text-[#222] text-[18px]">
+            <label className="block mb-2 font-semibold text-[#222] dark:text-gray-300 text-[18px]">
               Date Of Birth:
             </label>
             <p>{dateOfBirth}</p>
           </div>
           <div>
-            <label className="block mb-2 font-semibold text-[#222] text-[18px]">
+            <label className="block mb-2 font-semibold text-[#222] dark:text-gray-300 text-[18px]">
               Gender:
             </label>
             <p>{gender}</p>
@@ -46,19 +46,19 @@ const View = ({ currentUser }) => {
         </div>
         <div className="mt-8">
           <div>
-            <label className="block mb-2 font-semibold text-[#222] text-[18px]">
+            <label className="block mb-2 font-semibold text-[#222] dark:text-gray-300 text-[18px]">
               Email Address:
             </label>
             <p>{email}</p>
           </div>
           <div className="mt-8">
-            <label className="block mb-2 font-semibold text-[#222] text-[18px]">
+            <label className="block mb-2 font-semibold text-[#222] dark:text-gray-300 text-[18px]">
               Phone Number:
             </label>
             <p>{phone}</p>
           </div>
           <div className="mt-8">
-            <label className="block mb-2 font-semibold text-[#222] text-[18px]">
+            <label className="block mb-2 font-semibold text-[#222] dark:text-gray-300 text-[18px]">
               Cover Letter:
             </label>
             <p>{about}</p>

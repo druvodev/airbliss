@@ -96,13 +96,18 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
     useAxios
       .get(url)
       .then((response) => {
-        const data = response.data;
-        // Handle the response data here
-        dispatch(storeFilteredFlights(data));
-        dispatch(storeFlights(data));
-        dispatch(setLoading(false));
-        navigate("/flights");
-        setIsStart(true);
+        const data = response?.data;
+        if (Object.keys(data).length > 0) {
+          sessionStorage.setItem("search_flight", JSON.stringify(data));
+          const sesonData = JSON.parse(sessionStorage.getItem("search_flight"));
+
+          // Handle the response data here
+          dispatch(storeFilteredFlights(sesonData));
+          dispatch(storeFlights(sesonData));
+          dispatch(setLoading(false));
+          navigate("/flights");
+          setIsStart(true);
+        }
       })
       .catch((error) => {
         // Handle any errors here

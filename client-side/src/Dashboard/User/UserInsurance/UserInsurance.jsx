@@ -109,19 +109,19 @@ const UserInsurance = () => {
 
   return (
     <div>
-      <div className="bg-white p-5 shadow rounded-xl">
+      <div className="bg-white p-5 shadow rounded-xl dark:bg-white/10 dark:backdrop-blur-md dark:shadow dark:shadow-white/50 ">
         <h1 className="text-[20px] font-light text-gray-900 capitalize">
           <span className="text-[24px] font-semibold text-cyan-500">
             AirBliss insurance
           </span>{" "}
-          More Secure Your Flight
+          <span className="dark:text-white"> More Secure Your Flight</span>
         </h1>
       </div>
-      <div className="overflow-x-auto mx-1 mt-[40px] px-10 py-5 shadow-md rounded-xl bg-white">
+      <div className="overflow-x-auto mx-1 mt-[40px] px-10 py-5 shadow-md rounded-xl bg-white dark:bg-slate-700 dark:text-gray-200">
         <table className="table">
           {/* head */}
           <thead>
-            <tr>
+            <tr className="dark:text-gray-200">
               <th>#</th>
               <th>Flight Image</th>
               <th>Flight name</th>

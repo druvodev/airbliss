@@ -8,9 +8,9 @@ const BookingCalendar = () => {
   ]);
 
   return (
-    <div className="bg-white shadow-md lg:p-6 p-2 rounded-lg h-full">
+    <div className="bg-white shadow-md lg:p-6 p-2 rounded-lg h-full dark:bg-white/10 dark:backdrop-blur-md dark:shadow dark:shadow-white/50 ">
       <div className="flex justify-between mb-10">
-        <h1 className="lg:text-2xl font-light text-gray-900">
+        <h1 className="lg:text-2xl font-light text-gray-900 dark:text-gray-200">
           Booking Calendar
         </h1>
         <button>

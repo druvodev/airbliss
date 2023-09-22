@@ -5,9 +5,10 @@ import { useSelector } from "react-redux";
 
 const FareSummary = React.memo(() => {
   const [isCollapse, setIsCollapse] = useState(true);
-  const flightInfo = useSelector((state) => state.userBookingInfo.flightInfo);
+  // const flightInfo = useSelector((state) => state?.userBookingInfo?.flightInfo);
+  const flightInfo = JSON.parse(sessionStorage.getItem("flightInfo"));
   const { airlineLogo, airlineName, fareSummary } = flightInfo;
-  const insuranceStatus = useSelector((state) => state.insurance.insurance);
+  const insuranceStatus = useSelector((state) => state?.insurance?.insurance);
 
   return (
     <div>

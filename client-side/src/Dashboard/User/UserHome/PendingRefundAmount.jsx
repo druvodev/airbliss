@@ -24,16 +24,16 @@ const PendingRefundAmount = () => {
   }
 
   return (
-    <div className="bg-white shadow-md p-7 rounded-lg flex justify-between items-center">
+    <div className="bg-white shadow-md p-7 rounded-lg flex justify-between items-center dark:bg-white/10 dark:backdrop-blur-md dark:shadow dark:shadow-white/50">
       <div className="flex items-center gap-6">
         <div className="border-[#42C2FF] border-4 bg-[rgba(66,195,255,0.37)] w-16 h-16 rounded-full justify-center items-center flex">
           <RiRefundFill className="text-white text-4xl font-bold" />
         </div>
         <div>
-          <h1 className="lg:text-xl font-light text-gray-900">
+          <h1 className="lg:text-xl font-light text-gray-900 dark:text-white  ">
             Pending Refund Amount
           </h1>
-          <p className="text-gray-900 lg:text-2xl text-xl font-semibold mt-2">
+          <p className="text-gray-900 lg:text-2xl text-xl font-semibold mt-2 dark:text-gray-200">
             {totalSum} BDT
           </p>
         </div>
