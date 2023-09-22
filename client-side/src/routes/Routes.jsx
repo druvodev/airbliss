@@ -89,11 +89,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "hotelDetails/:id",
-        element: <HotelDetails></HotelDetails>
+        element: <HotelDetails></HotelDetails>,
       },
       {
         path: "recommendedFlight/:id",
-        element: <RecommendedHotelDetails></RecommendedHotelDetails>
+        element: <RecommendedHotelDetails></RecommendedHotelDetails>,
       },
       {
         path: "/insurance-policy",

@@ -22,6 +22,7 @@ import {
   setCurrentPage,
   setFlightDetailsVisibility,
 } from "../../../../redux/features/bookTicketSlice.js";
+import useAuth from "../../../../hooks/useAuth";
 
 const ITEMS_PER_PAGE = 3;
 
