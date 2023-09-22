@@ -75,22 +75,23 @@ const CancelBookingTable = ({
                       <span
                         className={`${
                           flight?.requestStatus === "denied" &&
-                          "text-red-500 bg-red-50 rounded-full px-2 py-1"
+                          "text-red-500 bg-red-50 rounded-full px-2 flex flex-col items-center justify-center py-1"
                         } ${
                           flight?.requestStatus === "success" &&
-                          "text-green-600 bg-green-50 rounded-full px-2 py-1"
+                          "text-green-600 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } ${
                           flight?.requestStatus === "approved" &&
-                          "text-orange-500 bg-green-50 rounded-full px-2 py-1"
+                          "text-orange-500 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } ${
                           flight?.requestStatus === "pending" &&
-                          "text-orange-500 bg-orange-50 rounded-full px-2 py-1"
+                          "text-orange-500 bg-orange-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } `}
                       >
                         {flight?.bookingStatus}{" "}
                         <span
                           className={`${
-                            flight?.requestStatus === "denied" && "text-red-500"
+                            flight?.requestStatus === "denied" &&
+                            "text-red-500 bg-red-50 rounded-full px-2 flex flex-col items-center justify-center py-1"
                           }`}
                         >
                           ({flight?.requestStatus})
@@ -101,16 +102,16 @@ const CancelBookingTable = ({
                       <span
                         className={`${
                           flight?.requestStatus === "denied" &&
-                          "text-red-500 bg-red-50 rounded-full px-2 py-1"
+                          "text-red-500 bg-red-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } ${
                           flight?.requestStatus === "success" &&
-                          "text-green-600 bg-green-50 rounded-full px-2 py-1"
+                          "text-green-600 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } ${
                           flight?.requestStatus === "approved" &&
-                          "text-orange-500 bg-green-50 rounded-full px-2 py-1"
+                          "text-orange-500 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } ${
                           flight?.requestStatus === "pending" &&
-                          "text-orange-500 bg-orange-50 rounded-full px-2 py-1"
+                          "text-orange-500 bg-orange-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } `}
                       >
                         {flight?.requestStatus}
@@ -120,16 +121,16 @@ const CancelBookingTable = ({
                       <span
                         className={`${
                           flight?.requestStatus === "denied" &&
-                          "text-red-500 bg-red-50 rounded-full px-2 py-1"
+                          "text-red-500 bg-red-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } ${
                           flight?.requestStatus === "success" &&
-                          "text-green-600 bg-green-50 rounded-full px-2 py-1"
+                          "text-green-600 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } ${
                           flight?.requestStatus === "approved" &&
-                          "text-orange-500 bg-green-50 rounded-full px-2 py-1"
+                          "text-orange-500 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } ${
                           flight?.requestStatus === "pending" &&
-                          "text-orange-500 bg-orange-50 rounded-full px-2 py-1"
+                          "text-orange-500 bg-orange-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } `}
                       >
                         {flight?.requestStatus}
