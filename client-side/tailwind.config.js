@@ -6,7 +6,7 @@ export default {
     themes: [
       {
         mytheme: {
-          primary: "#570df8",
+          primary: "#0891B2",
 
           secondary: "#f000b8",
 
