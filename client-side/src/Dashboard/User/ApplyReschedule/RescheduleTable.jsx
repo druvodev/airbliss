@@ -36,7 +36,7 @@ const RescheduleTable = ({
 
   return (
     <div>
-      <div className="overflow-x-auto shadow-md md:mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
+      <div className="overflow-x-auto shadow-md md:mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white dark:bg-white/10 dark:backdrop-blur-md dark:shadow dark:shadow-white/50 dark:text-gray-200">
         {rescheduleBookingData.length < 1 ? (
           <div className="w-full flex items-center justify-center mt-20">
             <p className="sm:text-sm md:text-base lg:text-xl"> No data found</p>
@@ -44,7 +44,7 @@ const RescheduleTable = ({
         ) : (
           <table className="table">
             <thead>
-              <tr>
+              <tr className="dark:text-gray-100">
                 <th>#</th>
                 <th>Flight image</th>
                 <th>Flight name</th>
@@ -138,7 +138,7 @@ const RescheduleTable = ({
         )}
         <section className="mt-12 mr-6 mb-8 flex justify-end items-center">
           <button
-            className="border-[1px] p-2 rounded-l-md"
+            className="border-[1px] p-2 rounded-l-md dark:bg-gray-600"
             onClick={handlePaginationPrev}
           >
             <GrPrevious size={20} />
@@ -160,7 +160,7 @@ const RescheduleTable = ({
             )
           )}
           <button
-            className="border-[1px] p-2 rounded-r-md"
+            className="border-[1px] p-2 rounded-r-md dark:bg-gray-600"
             onClick={handlePaginationNext}
           >
             <GrNext size={20} />

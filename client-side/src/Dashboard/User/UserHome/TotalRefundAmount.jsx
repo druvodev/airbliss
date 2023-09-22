@@ -24,16 +24,16 @@ const TotalRefundAmount = () => {
   }
 
   return (
-    <div className="bg-white shadow-md p-7 rounded-lg flex justify-between items-center">
+    <div className="bg-white shadow-md p-7 rounded-lg flex justify-between items-center dark:bg-white/10 dark:backdrop-blur-md dark:shadow dark:shadow-white/50">
       <div className="flex items-center gap-6">
         <div className="border-[#614BC3] border-4 bg-[rgba(97,75,195,0.36)] w-16 h-16 rounded-full justify-center items-center flex">
           <RiRefund2Fill className="text-gray-50 text-4xl font-bold" />
         </div>
         <div>
-          <h1 className="lg:text-xl font-light text-gray-900">
+          <h1 className="lg:text-xl font-light text-gray-900 dark:text-white">
             Total Refund Amount
           </h1>
-          <p className="text-gray-900 lg:text-2xl text-xl font-semibold mt-2">
+          <p className="text-gray-900 lg:text-2xl text-xl font-semibold mt-2 dark:text-gray-200">
             {totalSum} BDT
           </p>
         </div>

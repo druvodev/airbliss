@@ -113,16 +113,16 @@ const ManageBooking = () => {
   return (
     <div>
       {/* Tab */}
-      <section className="bg-white p-4 shadow-md mt-5 flex md:flex-row flex-col  md:items-center md:mx-7 md:space-x-4">
+      <section className="bg-white p-4 shadow-md mt-5 flex md:flex-row flex-col  md:items-center md:mx-7 md:space-x-4 dark:bg-white/10 dark:backdrop-blur-md dark:shadow dark:shadow-white/50">
         <div className="mb-2 md:mb-0">
           <h1 className="font-semibold ">Filter Ticket: </h1>
         </div>
-        <div className="flex gap-1 rounded font-medium text-gray-600 text-sm">
+        <div className="flex gap-1 rounded font-medium text-gray-600 text-sm dark:text-white">
           <div
             onClick={() => handleTabClick("allflight")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
               isActive === "allflight"
-                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                ? "border-t-2 bg-cyan-50 dark:bg-gray-700 border-cyan-400"
                 : ""
             }`}
           >
@@ -132,7 +132,7 @@ const ManageBooking = () => {
             onClick={() => handleTabClick("confirm")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
               isActive === "confirm"
-                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                ? "border-t-2 bg-cyan-50 dark:bg-gray-700 border-cyan-400"
                 : ""
             }`}
           >
@@ -142,7 +142,7 @@ const ManageBooking = () => {
             onClick={() => handleTabClick("cancel")}
             className={`px-4 py-2 cursor-pointer flex items-center gap-1 ${
               isActive === "cancel"
-                ? "border-t-2 bg-cyan-50 border-cyan-400"
+                ? "border-t-2 bg-cyan-50 dark:bg-gray-700 border-cyan-400"
                 : ""
             }`}
           >

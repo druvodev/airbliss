@@ -37,7 +37,7 @@ const BookingFlightTable = ({
 
   return (
     <div>
-      <div className="overflow-x-auto shadow-md md:mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
+      <div className="overflow-x-auto shadow-md md:mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white dark:bg-white/10 dark:backdrop-blur-md dark:shadow dark:shadow-white/50 dark:text-gray-200">
         {bookings.length < 1 ? (
           <div className="w-full flex items-center justify-center my-20">
             <p className="sm:text-sm md:text-base lg:text-xl"> No data found</p>
@@ -90,7 +90,7 @@ const BookingFlightTable = ({
                           "text-red-500 bg-red-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
                         } ${
                           flight?.requestStatus === "success" &&
-                          "text-green-600 bg-green-50 rounded-full flex flex-col items-center justify-center  px-2 py-1"
+                          "text-green-600 bg-green-50 dark:bg-gray-700  rounded-full flex flex-col items-center justify-center  px-2 py-1"
                         } ${
                           flight?.requestStatus === "approved" &&
                           "text-orange-500 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
@@ -190,7 +190,7 @@ const BookingFlightTable = ({
 
       <section className="mt-12 mr-6 mb-8 flex justify-end items-center">
         <button
-          className="border-[1px] p-2 rounded-l-md"
+          className="border-[1px] p-2 rounded-l-md dark:bg-gray-700"
           onClick={handlePaginationPrev}
         >
           <GrPrevious size={20} />
@@ -211,7 +211,7 @@ const BookingFlightTable = ({
           )
         )}
         <button
-          className="border-[1px] p-2 rounded-r-md"
+          className="border-[1px] p-2 rounded-r-md dark:bg-gray-700"
           onClick={handlePaginationNext}
         >
           <GrNext size={20} />

@@ -5,13 +5,14 @@ import useAuth from "../../hooks/useAuth";
 import DashboardNav from "../DashboardNav/DashboardNav";
 import { FaHome } from "react-icons/fa";
 
-const Sidebar = ({ isActive, setActive }) => {
+const Sidebar = ({ isActive, setActive, isDarkMode }) => {
+  console.log(isDarkMode);
   const navigate = useNavigate();
   // const [toggle, setToggle] = useState(false)
   const { user, logOut } = useAuth();
 
   const closeSidebar = (value) => {
-    console.log('closeSidebar called', value);
+    console.log("closeSidebar called", value);
     setActive(value);
   };
 
@@ -19,6 +20,7 @@ const Sidebar = ({ isActive, setActive }) => {
     logOut();
     navigate("/");
   };
+
   return (
     <>
       {/* Small Screen Navbar */}
@@ -37,11 +39,17 @@ const Sidebar = ({ isActive, setActive }) => {
       </div>
       {/* Sidebar */}
       <div
-        className={`z-10 px-[25px] md:fixed flex flex-col justify-between overflow-x-hidden w-64 space-y-6 py-4 absolute inset-y-0 left-0 transform ${isActive && "-translate-x-full"
-          }  md:translate-x-0  transition duration-200 ease-in-out`}
-        style={{
-          backgroundImage: "linear-gradient(to bottom, #70cfc9 , #5daad6 )",
-        }}
+        className={`z-10 px-[25px] bg-[#37517e] md:fixed flex flex-col justify-between overflow-x-hidden w-64 space-y-6 py-4 absolute inset-y-0 left-0 transform  ${
+          isDarkMode
+            ? "bg-slate-800"
+            : "bg-gradient-to-b from-[#70cfc9] to-[#5daad6]"
+        }
+        ${
+          isActive && "-translate-x-full"
+        }  md:translate-x-0  transition duration-200 ease-in-out`}
+        // style={{
+        //   backgroundImage: "linear-gradient(to bottom, #70cfc9 , #5daad6 )",
+        // }}
       >
         <div>
           {/* Branding & Profile Info */}
@@ -72,9 +80,10 @@ const Sidebar = ({ isActive, setActive }) => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${isActive
-                ? "bg-white text-cyan-500 active:border rounded-full"
-                : "text-white"
+              `flex items-center shadow-lg rounded-full px-4 py-2 mt-5 transition-colors duration-300 transform hover:bg-white hover:text-cyan-500 ${
+                isActive
+                  ? "bg-white text-cyan-500 active:border rounded-full"
+                  : "text-white"
               }`
             }
           >
