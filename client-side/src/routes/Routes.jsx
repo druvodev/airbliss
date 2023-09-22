@@ -213,6 +213,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "login",
-    element: <LoginSignupModal></LoginSignupModal>
-  }
+    element: <LoginSignupModal></LoginSignupModal>,
+  },
 ]);

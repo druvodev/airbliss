@@ -74,23 +74,20 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
               })
               .catch((err) => {
                 setLoading(false);
-                toast.error(err.message);
               });
             navigate(from, { replace: true });
             setIsLoginSignupModalOpen(false);
           })
           .catch((err) => {
             setLoading(false);
-            toast.error(err.message);
           });
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err.message);
-        toast.error(err.message);
+        // console.log(err.message);
       });
 
-    console.log(name, email, password, formData);
+    // console.log(name, email, password, formData);
     return;
   };
 
@@ -101,45 +98,44 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
 
     signIn(email, password)
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         saveUser(result.user);
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false);
       })
       .catch((err) => {
         setLoading(false);
-        console.log(err);
-        toast.error(err.message);
+        // console.log(err);
       });
   };
 
   const handleGoogleSignIn = () => {
     signInWithGoogle()
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         saveUser(result.user);
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false);
       })
       .catch((err) => {
         setLoading(false);
-        toast.error(err.message);
-        console.log(err);
+
+        // console.log(err);
       });
   };
 
   const handleFacebookSignIn = () => {
     signInWithFacebook()
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
         saveUser(result.user);
         navigate(from, { replace: true });
         setIsLoginSignupModalOpen(false);
       })
       .catch((err) => {
         setLoading(false);
-        toast.error(err.message);
-        console.log(err);
+
+        // console.log(err);
       });
   };
 
