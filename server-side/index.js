@@ -392,6 +392,10 @@ async function run() {
         ];
 
         for (const flight of fromCityData[fromCity]) {
+          // check running flight
+          if (flight.airlineStatus !== "running") {
+            continue;
+          }
           const relevantFlightData = {};
           for (const field of relevantFields) {
             relevantFlightData[field] = flight[field];
