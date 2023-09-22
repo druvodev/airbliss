@@ -1,14 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaCaretLeft, FaCaretRight, FaRadiationAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  setAirlines,
+  setSelectedCard,
+} from "../../../redux/features/bookingInfoSlice";
 
 const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
-  const [airlines, setAirlines] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const airlines = useSelector((state) => state?.userBookingInfo?.airlines);
+  const selectedCard = useSelector(
+    (state) => state?.userBookingInfo?.selectedCard
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const uniqueAirlines = {};
@@ -22,14 +30,8 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
 
     const uniqueAirlinesArray = Object.values(uniqueAirlines);
 
-    setAirlines(uniqueAirlinesArray);
+    dispatch(setAirlines(uniqueAirlinesArray));
   }, [destenation]);
-
-  const handleCardCompanyFilter = (airlineName) => {
-    setSelectedCard(airlineName);
-  };
-
-  // console.log(airlines);
 
   return (
     <div className="mb-10 overflow-hidden shadow-md border-[1px] border-gray-100 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 dark:border-0">
@@ -79,7 +81,7 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
             <SwiperSlide key={singleAirline?.airlineName}>
               <div
                 onClick={() =>
-                  handleCardCompanyFilter(singleAirline?.airlineName)
+                  handelCardComapnyFilter(singleAirline?.airlineName)
                 }
                 className={`md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer dark:border-0 dark:backdrop-blur-md ${
                   selectedCard === singleAirline?.airlineName
