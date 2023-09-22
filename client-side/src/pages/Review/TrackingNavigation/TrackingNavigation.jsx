@@ -9,46 +9,45 @@ import {
   setIsCollapse,
   setData,
 } from "../../../redux/features/trakingNavigationSlice";
+import { setFlightInfo } from "../../../redux/features/bookingInfoSlice";
 
 const TrackingNavigation = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.trackingNavigation.isLoading);
-  const isCollapse = useSelector(
-    (state) => state.trackingNavigation.isCollapse
+  const isLoading = useSelector(
+    (state) => state?.trackingNavigation?.isLoading
   );
-  const data = useSelector((state) => state.trackingNavigation.data);
-  const flight = useSelector((state) => state.flights.flights);
+  const isCollapse = useSelector(
+    (state) => state?.trackingNavigation?.isCollapse
+  );
+
+  const flightInfo = useSelector((state) => state?.userBookingInfo?.flightInfo);
+  if (Object.keys(flightInfo).length > 0) {
+    sessionStorage.setItem("flightInfo", JSON.stringify(flightInfo));
+  }
+
+  const getAllData = JSON.parse(sessionStorage.getItem("flightInfo"));
 
   const { airlineLogo, airlineName, passengerType, stopType, duration } =
-    data || {};
-  const { aircraft, cabin, checkIn, flightNumber } = data?.flightInfo || {};
-  const { city, date, time, code } = data?.departure || {};
+    getAllData || {};
+  const { aircraft, cabin, checkIn, flightNumber } =
+    getAllData?.flightInfo || {};
+  const { city, date, time, code } = getAllData?.departure || {};
 
-  const arrive = data?.arrival || {};
-
-  useEffect(() => {
-    if (flight && flight.flights) {
-      const singleData = flight?.flights?.find(
-        (singleFlight) => singleFlight?._id === id
-      );
-      dispatch(setData(singleData));
-      dispatch(setIsLoading(false));
-    }
-  }, [dispatch, flight, id]);
+  const arrive = getAllData?.arrival || {};
 
   function calculateArrivalDate(departureDate, departureTime, arrivalTime) {
-    const [depHour, depMinute] = departureTime.split(":").map(Number);
-    const [arrHour, arrMinute] = arrivalTime.split(":").map(Number);
+    const [depHour, depMinute] = departureTime?.split(":")?.map(Number);
+    const [arrHour, arrMinute] = arrivalTime?.split(":")?.map(Number);
 
     const departureDateTime = new Date(departureDate);
-    departureDateTime.setHours(depHour, depMinute, 0, 0);
+    departureDateTime?.setHours(depHour, depMinute, 0, 0);
 
     if (arrHour < depHour || (arrHour === depHour && arrMinute < depMinute)) {
-      departureDateTime.setDate(departureDateTime.getDate() + 1);
+      departureDateTime?.setDate(departureDateTime?.getDate() + 1);
     }
 
-    const arrivalDate = departureDateTime.toISOString().slice(0, 10);
+    const arrivalDate = departureDateTime?.toISOString()?.slice(0, 10);
     const formattedArrivalDate = formatDate(arrivalDate);
 
     return formattedArrivalDate;
@@ -56,9 +55,7 @@ const TrackingNavigation = () => {
 
   return (
     <section>
-      {isLoading ? (
-        ""
-      ) : (
+      {getAllData && (
         <section>
           <div className=" mb-8 flex lg:justify-between lg:items-center lg:flex-row flex-col ">
             <h1 className="font-bold text-lg md:text-3xl text-cyan-600 dark:text-gray-400">
@@ -130,7 +127,7 @@ const TrackingNavigation = () => {
 
                     <div>
                       <h1 className="text-xs md:text-sm">
-                        {data?.flightInfo?.class}
+                        {flightInfo?.flightInfo?.class}
                       </h1>
                     </div>
                   </div>

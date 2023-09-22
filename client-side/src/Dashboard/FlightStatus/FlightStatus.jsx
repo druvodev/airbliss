@@ -3,6 +3,7 @@ import { RxUpdate } from "react-icons/rx";
 import { useSelector, useDispatch } from "react-redux"; // Import useDispatch
 import { setCurrentPage } from "../../redux/features/bookTicketSlice";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import { FiEdit } from "react-icons/fi";
 import { GoInfo } from "react-icons/go";
 import { setFlights, setPath } from "../../redux/features/manageFlightSlice";
 import { Link } from "react-router-dom";
@@ -208,7 +209,7 @@ const FlightStatus = () => {
                               to={`/dashboard/flightDetails/${airportCode}/${singleFlight?._id}/${id}`}
                             >
                               <p className="text-cyan-500">
-                                <GoInfo size={24} />
+                                <FiEdit size={24} />
                               </p>
                             </Link>
                           </td>
