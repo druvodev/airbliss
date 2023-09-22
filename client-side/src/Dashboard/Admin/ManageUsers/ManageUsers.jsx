@@ -15,7 +15,7 @@ const ManageUsers = () => {
   const [selectedUserRole, setSelectedUserRole] = useState("");
   const [selectedUserStatus, setSelectedUserStatus] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePaginationPrev = () => {
     if (currentPage > 1) {
@@ -34,16 +34,16 @@ const ManageUsers = () => {
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
   useEffect(() => {
-    setIsLoading(true); // Set loading to true when fetching data
+    setIsLoading(true);
     axiosSecure
       .get("/users")
       .then((response) => {
         setUsers(response?.data);
-        setIsLoading(false); // Set loading to false when data is fetched
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-        setIsLoading(false); // Handle error and set loading to false
+        setIsLoading(false);
       });
   }, [axiosSecure]);
 
@@ -58,7 +58,7 @@ const ManageUsers = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsLoading(true); // Set loading to true when submitting data
+    setIsLoading(true);
     const usersData = {
       role: event.target.role.value,
       status: event.target.status.value,
@@ -71,7 +71,7 @@ const ManageUsers = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ usersData }), // Use usersData instead of formData
+        body: JSON.stringify({ usersData }),
       })
         .then((res) => res.json())
         .then((data) => {
@@ -93,7 +93,7 @@ const ManageUsers = () => {
           console.log(err);
         })
         .finally(() => {
-          setIsLoading(false); // Set loading to false when the action is complete
+          setIsLoading(false);
         });
     }
   };
@@ -108,8 +108,8 @@ const ManageUsers = () => {
       </div>
 
       <div className="overflow-x-auto mx-1 lg:mx-7 mt-[40px] px-10 py-5 shadow-md rounded-md bg-white">
-        {isLoading ? ( // Conditional rendering based on isLoading
-          <Loader /> // Display the loading component
+        {isLoading ? ( 
+          <Loader /> 
         ) : (
           <table className="table">
             {/* head */}

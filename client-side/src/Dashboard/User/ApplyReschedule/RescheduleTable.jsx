@@ -88,16 +88,16 @@ const RescheduleTable = ({
                       <span>
                         {flight?.AllRescheduletatus}{" "}
                         <span
-                          className={`${
-                            (flight?.residualStatus === "denied" &&
+                          className={`${(flight?.residualStatus === "denied" &&
                               "text-red-500 bg-red-50 rounded-full px-2 py-1") ||
                             (flight?.residualStatus === "approved" &&
                               "text-green-500 bg-green-50 rounded-full px-2 py-1") ||
                             (flight?.residualStatus === "pending" &&
-                              "text-orange-500 bg-orange-50 rounded-full px-2 py-1")
-                          }`}
+                              "text-orange-500 bg-orange-50 rounded-full px-2 py-1") ||
+                            "text-blue-500 bg-blue-50 rounded-full px-2 py-1"
+                            }`}
                         >
-                          {flight?.residualStatus}
+                          {flight?.residualStatus ? flight?.residualStatus : "NotYet"}
                         </span>
                       </span>
                     </td>
@@ -151,9 +151,8 @@ const RescheduleTable = ({
             (_, index) => (
               <h3
                 key={index}
-                className={`px-3 py-[6px] border-[1px] cursor-pointer ${
-                  index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
-                }`}
+                className={`px-3 py-[6px] border-[1px] cursor-pointer ${index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                  }`}
                 onClick={() => setCurrentPage(index + 1)}
               >
                 {index + 1}

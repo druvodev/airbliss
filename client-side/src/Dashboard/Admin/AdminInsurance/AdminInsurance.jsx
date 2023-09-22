@@ -178,34 +178,33 @@ const AdminInsurance = () => {
                   <td>{insurance?.insurancePolicy?.endDate}</td>
                   <td>
                     <span
-                      className={`capitalize ${
-                        (insurance?.insurancePolicy?.claimedStatus ===
-                          "denied" &&
-                          "text-red-500 bg-red-50 rounded-full px-2 py-1") ||
+                      className={`capitalize ${(insurance?.insurancePolicy?.claimedStatus ===
+                        "denied" &&
+                        "text-red-500 bg-red-50 rounded-full px-2 py-1") ||
                         (insurance?.insurancePolicy?.claimedStatus ===
                           "approved" &&
                           "text-green-500 bg-green-50 rounded-full px-2 py-1") ||
                         (insurance?.insurancePolicy?.claimedStatus ===
                           "pending" &&
-                          "text-orange-500 bg-orange-50 rounded-full px-2 py-1")
-                      }`}
+                          "text-orange-500 bg-orange-50 rounded-full px-2 py-1") ||
+                        "text-blue-500 bg-blue-50 rounded-full px-2 py-1"
+                        }`}
                     >
-                      {insurance?.insurancePolicy?.claimedStatus}
+                      {insurance?.insurancePolicy?.claimedStatus ? insurance?.insurancePolicy?.claimedStatus : "NotYet"}
                     </span>
                   </td>
                   <th className="flex gap-3 mt-2">
                     <button
                       onClick={() => openModal(insurance)}
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${
-                        insurance?.insurancePolicy?.claimedStatus ===
-                          "approved" ||
+                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus ===
+                        "approved" ||
                         insurance?.insurancePolicy?.claimedStatus === "denied"
-                          ? "bg-gray-400"
-                          : "bg-green-400"
-                      }`}
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-green-400"
+                        }`}
                       disabled={
                         insurance?.insurancePolicy?.claimedStatus ===
-                          "approved" ||
+                        "approved" ||
                         insurance?.insurancePolicy?.claimedStatus === "denied"
                       }
                     >
@@ -216,16 +215,15 @@ const AdminInsurance = () => {
                         setSelectedInsurance(insurance);
                         setIsModalDeniedOpen(true);
                       }}
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${
-                        insurance?.insurancePolicy?.claimedStatus ===
-                          "approved" ||
+                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus ===
+                        "approved" ||
                         insurance?.insurancePolicy?.claimedStatus === "denied"
-                          ? "bg-gray-400"
-                          : "bg-red-400"
-                      }`}
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-red-400"
+                        }`}
                       disabled={
                         insurance?.insurancePolicy?.claimedStatus ===
-                          "approved" ||
+                        "approved" ||
                         insurance?.insurancePolicy?.claimedStatus === "denied"
                       }
                     >
@@ -235,11 +233,10 @@ const AdminInsurance = () => {
                   <th className="mt-2">
                     <button
                       onClick={() => openModal(insurance)}
-                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${
-                        insurance?.insurancePolicy?.claimedStatus === "pending"
-                          ? "bg-gray-400"
-                          : "bg-cyan-400"
-                      }`}
+                      className={`w-8 h-8 rounded-full text-white flex justify-center items-center ${insurance?.insurancePolicy?.claimedStatus === "pending"
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-cyan-400"
+                        }`}
                       disabled={
                         insurance?.insurancePolicy?.claimedStatus === "pending"
                       }
@@ -279,9 +276,8 @@ const AdminInsurance = () => {
           (_, index) => (
             <h3
               key={index}
-              className={`px-3 py-[6px] border-[1px] cursor-pointer ${
-                index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
-              }`}
+              className={`px-3 py-[6px] border-[1px] cursor-pointer ${index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                }`}
               onClick={() => setCurrentPage(index + 1)}
             >
               {index + 1}

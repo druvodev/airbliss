@@ -37,7 +37,7 @@ const Sidebar = ({ isActive, setActive }) => {
       </div>
       {/* Sidebar */}
       <div
-        className={`z-10 px-[25px] bg-[#37517e] md:fixed flex flex-col justify-between overflow-x-hidden w-64 space-y-6 py-4 absolute inset-y-0 left-0 transform ${isActive && "-translate-x-full"
+        className={`z-10 px-[25px] md:fixed flex flex-col justify-between overflow-x-hidden w-64 space-y-6 py-4 absolute inset-y-0 left-0 transform ${isActive && "-translate-x-full"
           }  md:translate-x-0  transition duration-200 ease-in-out`}
         style={{
           backgroundImage: "linear-gradient(to bottom, #70cfc9 , #5daad6 )",
