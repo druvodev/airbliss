@@ -63,23 +63,23 @@ const HotDealDetails = () => {
 
   return (
     <div>
-      <div className="bg-[url('https://i.ibb.co/7Wn7njw/offer-bg.jpg')] py-64 bg-cover bg-no-repeat  object-cover">
-        hi
+      <div className="bg-[url('https://i.ibb.co/5x8y5VT/offer-bg-1-1.png')] h-56 bg-cover bg-no-repeat  object-cover relative">
+       <span className="bg-[#0000005d] absolute top-0 left-0 w-full h-full "></span>
       </div>
 
       {/* <img className="w-full object-cover h-52" src={detailsBanner} alt="" /> */}
-      <div className="pb-8 md:pb-16 pt-12 px-5 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
+      <div className="pb-8 md:pb-16 pt-12 px-2 sm:px-10 max-w-7xl mx-auto h-auto overflow-hidden">
         <div className="lg:w-10/12 mx-auto">
           {deal.map((d) => (
             <div key={d?.id} className="">
-              <div className="mb-10 flex sm:gap-x-5 items-center justify-center">
-                <h2 className="text-xl traveler information md:text-5xl font-bold text-cyan-600">
+              <div className="mb-10 flex sm:gap-x-5 items-center justify-center whitespace-nowrap">
+                <h2 className="text-2xl traveler information md:text-5xl font-bold text-cyan-600">
                   AirBLiss <span>|</span>{" "}
                 </h2>
                 <img
                   src={d?.offered_by}
                   alt=""
-                  className="w-8/12 sm:w-6/12 md:w-1/2 lg:w-1/2 "
+                  className="w-7/12 sm:w-6/12 md:w-1/2 lg:w-1/2 h-12 sm:h-16 md:h-full  rounded-lg"
                 />
               </div>
               {/* Offer  */}
@@ -90,10 +90,10 @@ const HotDealDetails = () => {
                   </h3>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-12 text-center ">
-                  <div className="bg-[#F8F9FA] dark:bg-slate-800 pt-20 pb-8 px-6 relative">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-x-4 gap-y-12 text-center ">
+                  <div className="bg-[#F8F9FA] dark:bg-slate-800 pt-20 pb-8 px-6 relative w-[300px] mx-auto sm:w-full ">
                     <div className="p-8 rounded-full absolute shadow-xl left-1/3 -top-10 bg-white ">
-                      <GrAnnounce className="text-3xl"></GrAnnounce>
+                      <GrAnnounce className="text-3xl dark:text-black"></GrAnnounce>
                     </div>
 
                     <h4 className="text-cyan-600 text-lg font-semibold ">
@@ -101,18 +101,18 @@ const HotDealDetails = () => {
                     </h4>
                     <p className="text-sm">{d?.applicable}</p>
                   </div>
-                  <div className="bg-[#F8F9FA] dark:bg-slate-800  pt-24 pb-8 px-6 relative">
+                  <div className="bg-[#F8F9FA] dark:bg-slate-800  pt-20 pb-8 px-6 relative w-[300px] mx-auto sm:w-full  ">
                     <div className="p-8 rounded-full absolute shadow-xl left-1/3 -top-10 bg-white">
-                      <FaHandshake className="text-3xl"></FaHandshake>
+                      <FaHandshake className="text-3xl dark:text-black"></FaHandshake>
                     </div>
                     <h4 className="text-cyan-600 text-lg font-semibold ">
                       Partner
                     </h4>
                     <p className="text-sm">{d?.sponsor}</p>
                   </div>
-                  <div className="bg-[#F8F9FA] dark:bg-slate-800  pt-20 pb-8 px-6 relative">
+                  <div className="bg-[#F8F9FA] dark:bg-slate-800  pt-20 pb-8 px-6 relative w-[300px] mx-auto sm:w-full ">
                     <div className="p-8 rounded-full absolute shadow-xl left-1/3 -top-10 bg-white">
-                      <FaCalendarAlt className="text-3xl"></FaCalendarAlt>
+                      <FaCalendarAlt className="text-3xl dark:text-black"></FaCalendarAlt>
                     </div>
                     <h4 className="text-cyan-600 text-lg font-semibold">
                       Validity
