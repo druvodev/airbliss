@@ -124,7 +124,7 @@ const HotDealDetails = () => {
 
               {/* Get Offer  */}
 
-              <div className="pt-10 md:pt-20  bg-[#F8F9FA] dark:bg-slate-800  ">
+              <div className="py-10 md:pt-20  bg-[#F8F9FA] dark:bg-slate-800  ">
                 <h3 className="text-cyan-600 text-3xl font-semibold text-center mb-12">
                   How to avail the offer
                 </h3>
@@ -181,14 +181,6 @@ const HotDealDetails = () => {
                   </div>
                 </div>
 
-                <div className="mt-12 text-center">
-                  <Link
-                    to="/"
-                    className="px-8 py-4 border rounded-md bg-cyan-500 hover:bg-cyan-600 font-semibold duration-500 text-white"
-                  >
-                    Book Now
-                  </Link>
-                </div>
               </div>
 
               {/* Terms & Conditions  */}
