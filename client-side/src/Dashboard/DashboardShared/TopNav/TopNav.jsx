@@ -27,9 +27,9 @@ const TopNav = ({ handleToggle, isDarkMode, setIsDarkMode }) => {
     <>
       <div
         className="navbar lg:gap-10 gap-0 lg:flex-row  justify-between w-[100%] mx-auto py-0 rounded shadow-md lg:px-10 bg-white dark:bg-slate-800 dark:text-white dark:rounded-none"
-        // style={{
-        //   backgroundImage: 'linear-gradient(to right, #70cfc9 , #5daad6 )',
-        // }}
+      // style={{
+      //   backgroundImage: 'linear-gradient(to right, #70cfc9 , #5daad6 )',
+      // }}
       >
         <div className="navbar-start">
           <div className=" hidden lg:flex bg-[rgba(112,207,201,0.10)] w-full md:w-auto py-2 rounded  shadow-sm hover:shadow-md transition cursor-pointer">
@@ -70,16 +70,18 @@ const TopNav = ({ handleToggle, isDarkMode, setIsDarkMode }) => {
           </div>
         </div>
         <div className="navbar-end">
-          {!isDarkMode ? (
-            <button onClick={() => setIsDarkMode(!isDarkMode)}>
-              <BsMoonFill className="text-xl  " />
-            </button>
-          ) : (
-            <button onClick={() => setIsDarkMode(!isDarkMode)}>
-              <BiSun className="text-2xl hover:animate-spin" />
-            </button>
-          )}
-          <button className="btn btn-ghost btn-circle">
+          <div className="mr-4">
+            {!isDarkMode ? (
+              <button onClick={() => setIsDarkMode(!isDarkMode)}>
+                <BsMoonFill className="text-xl  " />
+              </button>
+            ) : (
+              <button onClick={() => setIsDarkMode(!isDarkMode)}>
+                <BiSun className="text-2xl hover:animate-spin" />
+              </button>
+            )}
+          </div>
+          {/* <button className="btn btn-ghost btn-circle">
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +99,7 @@ const TopNav = ({ handleToggle, isDarkMode, setIsDarkMode }) => {
               </svg>
               <span className="badge badge-xs badge-error indicator-item"></span>
             </div>
-          </button>
+          </button> */}
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="avatar">
               <div className="w-10 rounded-full cursor-pointer">
