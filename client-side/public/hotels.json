@@ -1,32 +1,52 @@
 [
     {
-        "name": "Wonders Hostel Boat Quayland",
+        "id": 1,
+        "name": "Royal Tulip Sea Pearl Resort & Spa",
         "distance": "5 min away from  Mumbai Airport",
         "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
         "cost": 685,
         "discount": 35,
-        "img": "https://i.ibb.co/9H7BJQs/discount-Hotel.png",
-        "star": 5
+        "img": "https://www.seapearlcoxsbazar.com/images/rt001.jpg",
+        "star": 5,
+        "room": 1,
+        "location": "New Work",
+        "bed": 2,
+        "wash_room": 1,
+        "balcony": 1,
+        "contact": "(+880) 13582586"
+        
     },
  
     {
-        "name": "Wonders Hostel Boat Quayland",
-        "distance": "5 min away from  Mumbai Airport",
-        "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
+        "id": 2,
+        "name": "Wonders Hostel Boat Cox's Bazar",
+        "distance": "20 min away from  Mumbai Airport",
+        "details": "We are offering the best services for our customers and unlimited fun for them",
         "cost": 893,
         "discount": 20,
-        "img": "https://i.ibb.co/9H7BJQs/discount-Hotel.png",
-        "star": 5
+        "img": "https://photos.book5star.com/photos/882/preview/9b203928_z.jpg",
+        "star": 5,
+        "location": "Thailand",
+        "bed": 2,
+        "wash_room": 1,
+        "balcony": 1,
+        "contact": "(+880) 184325245"
     },
  
     {
-        "name": "Wonders Hostel Boat Quayland",
-        "distance": "5 min away from  Mumbai Airport",
-        "details": "Conveniently set in the Boat Quay district of Mumbai  7 Wonders Hostel @ Boat Quay is",
+        "id": 3,
+        "name": "Hotel Sea view Crown of Cox's Bazar",
+        "distance": "15 min away from  Cox's Bazar Airport",
+        "details": "Welcome all the customer and feel the best view of the sea and enjoy the food of cuisine ",
         "cost": 904,
         "discount": 29,
-        "img": "https://i.ibb.co/9H7BJQs/discount-Hotel.png",
-        "star": 5
+        "img": "https://photos.book5star.com/photos/882/preview/8c0bc9a0_z.jpg",
+        "star": 5,
+        "location": "Dubai",
+        "bed": 2,
+        "wash_room": 1,
+        "balcony": 1,
+        "contact": "(+880) 167825680"
     }
  
 ]

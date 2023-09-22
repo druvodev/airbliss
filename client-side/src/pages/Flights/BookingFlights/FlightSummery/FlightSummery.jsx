@@ -1,13 +1,13 @@
 import React from "react";
 
 const FlightSummery = ({ flightFullDetails }) => {
-  const { base_fare, taxes_fee, ticket_price } = flightFullDetails || {};
+  const { passengerType } = flightFullDetails || {};
+  const { baseFare, taxesAndFees, total } =
+    flightFullDetails?.fareSummary || {};
 
   return (
     <section className="mt-3 border-[1px] rounded-sm">
-      <h1 className=" p-3 border-b-[1px]">
-        <b>Fare breakdown</b>
-      </h1>
+      <h1 className=" p-3 border-b-[1px] font-semibold">Fare breakdown</h1>
 
       {/* Table Body */}
       <section className="p-3">
@@ -33,18 +33,18 @@ const FlightSummery = ({ flightFullDetails }) => {
           </thead>
           <tbody>
             <tr>
-              <td className="border p-2">Adult</td>
-              <td className="border p-2">BDT {base_fare}</td>
-              <td className="border p-2">BDT {taxes_fee}</td>
-              <td className="border p-2">BDT {taxes_fee}</td>
-              <td className="border p-2">BDT {ticket_price}</td>
+              <td className="border p-2">{passengerType}</td>
+              <td className="border p-2">BDT {baseFare}</td>
+              <td className="border p-2">BDT {taxesAndFees}</td>
+              <td className="border p-2">BDT {taxesAndFees}</td>
+              <td className="border p-2">BDT {total}</td>
             </tr>
             <tr>
               <td className="border p-2">Total (1 Traveler)</td>
               <td className="border p-2"></td>
               <td className="border p-2"></td>
               <td className="border p-2"></td>
-              <td className="border p-2">BDT {ticket_price}</td>
+              <td className="border p-2">BDT {total}</td>
             </tr>
           </tbody>
         </table>

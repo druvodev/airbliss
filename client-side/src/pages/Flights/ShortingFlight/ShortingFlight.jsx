@@ -1,127 +1,105 @@
-import React, { useState, useRef } from "react";
-import { FaCaretLeft, FaCaretRight } from "react-icons/fa";
+import React, { useState, useRef, useEffect } from "react";
+import { FaCaretLeft, FaCaretRight, FaRadiationAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  setAirlines,
+  setSelectedCard,
+} from "../../../redux/features/bookingInfoSlice";
 
-const ShortingFlight = () => {
-  // const [selectedButton, setSelectedButton] = useState('cheapest');
+const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
+  const airlines = useSelector((state) => state?.userBookingInfo?.airlines);
+  const selectedCard = useSelector(
+    (state) => state?.userBookingInfo?.selectedCard
+  );
+  const dispatch = useDispatch();
 
-  // const handleButtonClick = (buttonType) => {
-  //     setSelectedButton(buttonType);
-  // };
+  useEffect(() => {
+    const uniqueAirlines = {};
+
+    destenation.forEach((item) => {
+      const { airlineName, airlineLogo } = item;
+      if (!uniqueAirlines[airlineName]) {
+        uniqueAirlines[airlineName] = { airlineName, airlineLogo };
+      }
+    });
+
+    const uniqueAirlinesArray = Object.values(uniqueAirlines);
+
+    dispatch(setAirlines(uniqueAirlinesArray));
+  }, [destenation]);
 
   return (
-    <div className="mb-10">
-      <div className="flex justify-between items-center mb-3">
-        <div
-          className="tooltip tooltip-bottom"
-          data-tip="Search for Previous Day Flight"
-        >
-          <FaCaretLeft className="text-[45px] text-cyan-500 cursor-pointer" />
+    <div className="mb-10 overflow-hidden shadow-md border-[1px] border-gray-100 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 dark:border-0">
+      {/* <div className="flex justify-between mx-8 items-center mb-3 mt-2">
+        <div className="tooltip tooltip-bottom" data-tip="Previous Day Flight">
+          <FaCaretLeft className="lg:text-[45px] text-[20px] md:text-[25px] text-cyan-500 cursor-pointer" />
         </div>
-        <div className="font-sans font-semibold text-[32px]">
-          Flights from Dhaka to Chittagong
+        <div className="font-sans font-semibold text-[20] md:text-[25px] lg:text-[32px]">
+          Flights {destenation[0]?.departure?.city} to{" "}
+          {destenation[0]?.arrival?.city}
         </div>
-        <div
-          className="tooltip tooltip-bottom"
-          data-tip="Search for Next Day Flight"
-        >
-          <FaCaretRight className="text-[45px] text-cyan-500 cursor-pointer" />
+        <div className="tooltip tooltip-bottom" data-tip="Next Day Flight">
+          <FaCaretRight className="lg:text-[45px] text-[20px] md:text-[25px] text-cyan-500 cursor-pointer" />
+        </div>
+      </div> */}
+
+      <div className="flex justify-between items-center mt-2">
+        <div className="px-2 py-2 ">
+          {/* <FaCaretLeft className="text-cyan-500 text-[23px]" /> */}
+          {/* <p className="p-1 -mt-2 opacity-0 cursor-pointer hover:opacity-100 rounded-md  text-[8px] lg:text-[12px] absolute">
+            Previous
+          </p> */}
+        </div>
+
+        <div className="font-sans mt-3 font-semibold text-[20] md:text-[25px] ">
+          Flights {destenation[0]?.departure?.city} to{" "}
+          {destenation[0]?.arrival?.city}
+        </div>
+
+        <div className="px-2 py-2">
+          {/* <FaCaretRight className="text-cyan-500 text-[23px]" /> */}
+          {/* <p className="p-1 -ml-4 -mt-2 opacity-0 cursor-pointer hover:opacity-100 rounded-md  text-[8px] lg:text-[12px] absolute">
+            Next
+          </p> */}
         </div>
       </div>
-      {/* <div className='flex w-full p-5 mt-10 rounded-md justify-between shadow-2xl'>
-                <button
-                    className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${selectedButton === 'cheapest' ? 'bg-gray-100 text-white' : 'text-white'
-                        }`}
-                    onClick={() => handleButtonClick('cheapest')}
-                >
-                    <h1 className='text-[18px] font-semibold mb-2 text-gray-900'>Cheapest</h1>
-                    <p className='text-[14px] text-[#7c8db0]'>To get the cheapest available flights</p>
-                </button>
-                <div className='border self-stretch mx-5'></div>
-                <button
-                    className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${selectedButton === 'shortest' ? 'bg-gray-100 text-white' : 'text-white'
-                        }`}
-                    onClick={() => handleButtonClick('shortest')}
-                >
-                    <h1 className='text-[18px] font-semibold mb-2 text-gray-900'>Shortest</h1>
-                    <p className='text-[14px] text-[#7c8db0]'>To get the shortest available flights</p>
-                </button>
-            </div> */}
-      <div className="mt-14 p-5 shadow-md rounded-md">
+
+      <div className="mt-6 p-5  mb-6 rounded-md flex justify-center items-center">
         <Swiper
           slidesPerView={3}
-          spaceBetween={30}
+          spaceBetween={20}
           freeMode={true}
-          // pagination={{
-          //     clickable: true,
-          // }}
           modules={[FreeMode, Pagination]}
-          className="mySwiper"
+          className="w-[250px] md:w-[700px] lg:w-[100%] overflow-hidden"
         >
-          <SwiperSlide>
-            <div className="px-8 py-5 shadow-xl flex flex-col justify-center items-center cursor-pointer">
-              <img
-                className="w-auto object-cover h-[40px]"
-                src="https://beebom.com/wp-content/uploads/2015/02/airline-logos-qatar-e1424574584611.png"
-                alt=""
-              />
-              <h1 className="text-center font-bold text-[14px] mt-5">
-                Qatar Airways
-              </h1>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="px-8 py-5 shadow-xl flex flex-col justify-center items-center cursor-pointer">
-              <img
-                className="w-auto object-cover h-[40px]"
-                src="https://beebom.com/wp-content/uploads/2018/12/Lufthansa-Logo.jpg?quality=75&strip=all"
-                alt=""
-              />
-              <h1 className="text-center font-bold text-[14px] mt-5">
-                Lufthansa
-              </h1>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="px-8 py-5 shadow-xl flex flex-col justify-center items-center cursor-pointer">
-              <img
-                className="w-auto object-cover h-[40px]"
-                src="https://beebom.com/wp-content/uploads/2015/02/airline-logos-egyptair.jpg?quality=75&strip=all"
-                alt=""
-              />
-              <h1 className="text-center font-bold text-[14px] mt-5">
-                EgyptAir
-              </h1>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="px-8 py-5 shadow-xl flex flex-col justify-center items-center cursor-pointer">
-              <img
-                className="w-auto object-cover h-[40px]"
-                src="https://beebom.com/wp-content/uploads/2015/02/airline-logos-japan-e1424575148558.png?quality=75&strip=all"
-                alt=""
-              />
-              <h1 className="text-center font-bold text-[14px] mt-5">
-                Japan Airlines
-              </h1>
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="px-8 py-5 shadow-xl flex flex-col justify-center items-center cursor-pointer">
-              <img
-                className="w-auto object-cover h-[40px]"
-                src="https://beebom.com/wp-content/uploads/2015/02/airline-logos-srilankan.jpg?quality=75&strip=all"
-                alt=""
-              />
-              <h1 className="text-center font-bold text-[14px] mt-5">
-                Hawaiian Airlines
-              </h1>
-            </div>
-          </SwiperSlide>
+          {airlines?.map((singleAirline) => (
+            <SwiperSlide key={singleAirline?.airlineName}>
+              <div
+                onClick={() =>
+                  handelCardComapnyFilter(singleAirline?.airlineName)
+                }
+                className={`md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer dark:border-0 dark:backdrop-blur-md ${
+                  selectedCard === singleAirline?.airlineName
+                    ? "bg-cyan-50 dark:bg-gray-600" // Set the background color to cyan-500 when selected
+                    : "" // Use an empty string for the default background color
+                }`}
+              >
+                <img
+                  className="w-auto rounded-md object-cover h-[40px]"
+                  src={singleAirline?.airlineLogo}
+                  alt=""
+                />
+                <h1 className="text-center md:font-semibold text-[10px] md:text-[14px] mt-4">
+                  {singleAirline?.airlineName}
+                </h1>
+              </div>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </div>

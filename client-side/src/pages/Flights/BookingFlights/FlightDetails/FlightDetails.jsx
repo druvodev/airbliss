@@ -1,49 +1,45 @@
 import React from "react";
+import { formatDate } from "../../../../utils/formatDate";
+import { calculateArrivalDate } from "../../../../utils/calculateArrivalDate";
 
 const FlightDetails = ({ flightFullDetails }) => {
-  const {
-    flight_name,
-    flight_image,
-    destination,
-    travel_date,
-    aircraft,
-    operated_by,
-    economy_type,
-    available_seats,
-  } = flightFullDetails?.flight || {};
+  const { airlineName, airlineLogo } = flightFullDetails || {};
+  const { seats, airportName, city, code, date, terminal, time } =
+    flightFullDetails?.departure || {};
 
-  const { time, date, terminal, airport_name, airport_address } =
-    flightFullDetails?.flight_details?.arrival || {};
+  const { aircraft, cabin, checkIn, operatedBy } =
+    flightFullDetails?.flightInfo || {};
 
-  const { travel_duration } = flightFullDetails?.flight_details || {};
+  const { duration, passengerType, stopType } = flightFullDetails || {};
 
-  const { check_in, cabin } =
-    flightFullDetails?.flight_details?.baggage_allowance || {};
+  const arrive = flightFullDetails?.arrival || {};
 
   return (
     <section className="mt-3 border-[1px] rounded-sm ">
-      <h1 className=" p-3 border-b-[1px]">
-        <b>
-          {destination}, {travel_date}
-        </b>
+      <h1 className=" p-3 border-b-[1px] font-semibold">
+        {city} to {arrive?.city}, {formatDate(date)}
       </h1>
 
       {/* Details Body */}
       <section className="p-3">
         {/* Flight Profile */}
         <div className="flex gap-4 ml-3">
-          <img className="h-12 w-12" src={flight_image} alt="" />
+          <img
+            className="h-16 w-16 rounded-full -ml-2"
+            src={airlineLogo}
+            alt=""
+          />
           <div>
-            <h1>
-              <b>{flight_name}</b>
-            </h1>
+            <h1 className="font-semibold">{airlineName}</h1>
             <h3 className="font-semibold text-[13px]">Aircraft : {aircraft}</h3>
             <h4 className="font-semibold text-[12px]">
-              Operated by : {operated_by}
+              Operated by : {operatedBy}
             </h4>
-            <h4 className="font-semibold text-[12px]">{economy_type}</h4>
             <h4 className="font-semibold text-[12px]">
-              Available seats: {available_seats}
+              {flightFullDetails?.flightInfo?.class}
+            </h4>
+            <h4 className="font-semibold text-[12px]">
+              Available seats: {seats}
             </h4>
           </div>
         </div>
@@ -51,29 +47,20 @@ const FlightDetails = ({ flightFullDetails }) => {
         {/* flight other details */}
         <section className="grid grid-cols-3 ml-4 lg:grid-cols-6 mt-4 gap-6 lg:mb-1 mb-8">
           <div>
-            <h2 className="mt-2 text-[15px]">
-              <strong>
-                {flightFullDetails?.flight_details?.departure?.time}
-              </strong>
-            </h2>
-            <p className="text-gray-400 mt-2">
-              <small>{travel_date}</small>
-            </p>
-            <h2 className="text-[13px] font-semibold">(DAC)</h2>
-            <p className="text-gray-400 text-[13px]">
-              {flightFullDetails?.flight_details?.departure?.terminal}
-            </p>
-            <p className="text-gray-400 text-[13px]">
-              {flightFullDetails?.flight_details?.departure?.airport_name}
-            </p>
-            <p className="text-gray-400 text-[13px]">
-              {" "}
-              {flightFullDetails?.flight_details?.departure?.airport_address}
-            </p>
+            <h2 className="mt-2 text-[15px] font-semibold">{time}</h2>
+            <p className="text-gray-400 mt-2 text-xs">{formatDate(date)}</p>
+            <h2 className="text-[13px] font-semibold">{code}</h2>
+            <p className="text-gray-400 text-xs">Tarminal: {terminal}</p>
+            <p className="text-gray-400 text-xs">{airportName}</p>
+            <p className="text-gray-400 text-xs"> {city}</p>
           </div>
 
-          <div align="center" className="space-y-1 pl-2 pr-2">
-            <p className="text-gray-400 text-[14px]">{travel_duration}</p>
+          <div align="center" className="space-y-1 pr-2">
+            <p className="text-gray-400 text-xs">
+              {duration < 60
+                ? `${duration} min`
+                : `${Math.floor(duration / 60)} hr ${duration % 60} min`}
+            </p>
             <img
               style={{
                 WebkitFilter: "grayscale(100%)",
@@ -82,46 +69,38 @@ const FlightDetails = ({ flightFullDetails }) => {
               src="https://flightexpert.com/assets/img/non-stop-shape.png"
               alt=""
             />
-            <p>
-              <small>Non Stop</small>
-            </p>
+            <p className="text-xs">{stopType}</p>
           </div>
 
           <div>
-            <h2 className="mt-2 text-[15px]">
-              <strong>{time}</strong>
-            </h2>
-            <p className="text-gray-400 mt-2">
-              <small>{date}</small>
+            <h2 className="mt-2 text-[15px] font-semibold">{arrive?.time}</h2>
+            <p className="text-gray-400 mt-2 text-xs">
+              {calculateArrivalDate(date, time, arrive?.time)}
             </p>
-            <h2 className="text-[13px] font-semibold">(CGP)</h2>
-            <p className="text-gray-400 text-[13px]">{terminal}</p>
-            <p className="text-gray-400 text-[13px]">{airport_name}</p>
-            <p className="text-gray-400 text-[13px]">{airport_address}</p>
+            <h2 className="text-xs font-semibold">{arrive?.code}</h2>
+            <p className="text-gray-400 text-xs">
+              Tarminal: {arrive?.terminal}
+            </p>
+            <p className="text-gray-400 text-xs">{arrive?.airportName}</p>
+            <p className="text-gray-400 text-xs">{arrive?.city}</p>
           </div>
 
           <div>
-            <h2 className="mt-2 text-[15px]">
-              <strong>Baggage</strong>
-            </h2>
+            <h2 className="mt-2 text-[14px] font-semibold">Baggage</h2>
             <p className="text-gray-400 mt-1">
-              <small>Adult</small>
+              <small>{passengerType}</small>
             </p>
           </div>
 
           <div>
-            <h2 className="mt-2 text-[15px]">
-              <strong>Check In</strong>
-            </h2>
+            <h2 className="mt-2 text-[15px] font-semibold">Check In</h2>
             <p className="text-gray-400 mt-1">
-              <small>{check_in}</small>
+              <small>{checkIn}</small>
             </p>
           </div>
 
           <div>
-            <h2 className="mt-2 text-[15px]">
-              <strong>Cabin</strong>
-            </h2>
+            <h2 className="mt-2 text-[15px] font-semibold">Cabin</h2>
             <p className="text-gray-400 mt-1">
               <small>{cabin}</small>
             </p>

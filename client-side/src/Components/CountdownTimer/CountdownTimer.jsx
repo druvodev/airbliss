@@ -1,25 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useCountdownContext } from "../../providers/CountdownContext";
+import { useLocation } from "react-router";
 
 const CountdownTimer = () => {
-  const [remainingTime, setRemainingTime] = useState(20 * 60);
-
+  const { remainingTime, setIsStart } = useCountdownContext();
+  const location = useLocation();
   useEffect(() => {
-    const timerInterval = setInterval(() => {
-      if (remainingTime > 0) {
-        setRemainingTime((prevTime) => prevTime - 1);
-      }
-    }, 1000);
-
-    return () => {
-      clearInterval(timerInterval);
-    };
-  }, [remainingTime]);
-
+    // setIsStart(true);
+    // console.log(location);
+  }, [location]);
   const minutes = Math.floor(remainingTime / 60);
   const seconds = remainingTime % 60;
 
   return (
-    <div className="p-5 grid justify-center">
+    <div className="p-5 grid justify-center dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 ">
       <p className="text-lg font-semibold mb-4">Session Time Out</p>
       <div className="flex justify-center gap-2">
         <div className="text-center">

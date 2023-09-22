@@ -3,18 +3,20 @@ import ResultsFilter from "../ResultsFilter/ResultsFilter";
 import banner from "../../../assets/banner/flights.webp";
 import { BiSolidEdit } from "react-icons/bi";
 import { TbFilterEdit } from "react-icons/tb";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookFlight from "../BookingFlights/BookFlight/BookFlight";
 import Weather from "../../Home/Weather/Weather";
+import { useCountdownContext } from "../../../providers/CountdownContext";
+import SpecialOffer from "../../../Components/SpecialOffer/SpecialOffer";
 
 const Flights = () => {
+  const { setIsStart } = useCountdownContext();
   const [isShowSearch, setIsShowSearch] = useState(false);
+
   return (
-    <div className="relative">
-      <img src={banner} className="w-full h-44 object-cover" alt="" />
-     <div className="absolute top-16  text-gray-50 left-1/3">
-      <Weather></Weather>
-     </div>
+    <div>
+      <Weather />
+      <div className="absolute top-16  text-gray-50 left-1/3"></div>
       <div className="max-w-7xl mx-auto lg:-mt-10">
         <div className="flex items-center justify-between lg:hidden gap-1 p-3 mt-3 mx-3 border rounded-md bg-cyan-50/50">
           <div>
@@ -42,18 +44,21 @@ const Flights = () => {
           onClick={() => window.my_modal_3.showModal()}
           className="flex items-center justify-between lg:hidden gap-1 p-3 mt-3 mx-3 shadow rounded-md bg-cyan-50/50"
         >
-          <p className="font-semibold text-sm">Filter your search results</p>
+          <p className="font-semibold text-sm ">Filter your search results</p>
           <div className="text-gray-500">
             <TbFilterEdit className="text-xl" />
           </div>
         </div>
         {isShowSearch && (
-          <SearchFilter bookingType="flight" filterName="Modify Search" />
+          <SearchFilter bookingType="flight" filterName="Modify Search " />
         )}
         <div className="hidden lg:block">
           <SearchFilter bookingType="flight" filterName="Modify Search" />
         </div>
-        <div className=" grid md:grid-cols-3 gap-10 mt-12 px-5 sm:px-10">
+        <div className="px-5 sm:px-10">
+          <SpecialOffer />
+        </div>
+        <div className="grid md:grid-cols-3 gap-10 mt-5 px-5 sm:px-10">
           <div className="col-span-1 hidden lg:block">
             <ResultsFilter />
           </div>

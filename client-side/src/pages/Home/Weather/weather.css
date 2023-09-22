@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Default styles for desktop */
+.main-container {
+  width: 100%;
+  max-width: 100%;
+  height: 500px;
+  max-height: 500px;
+  border-radius: 0px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.main-contain {
+  position: absolute;
+  content: "";
+
+  inset: 5px;
+  padding-top: 50px;
+  z-index: 0;
+}
+
+/* Media query for tablets (768px wide and below) */
+@media (max-width: 768px) {
+  .login_form {
+    height: 300px;
+    /* Adjust the height for tablets */
+  }
+}
+
+/* Media query for mobile devices (480px wide and below) */
+@media (max-width: 480px) {
+  .login_form {
+    height: 200px;
+    /* Adjust the height for mobile devices */
+    background-size: cover;
+    /* Ensure the background image covers the container */
+  }
+}
+
+/* Media query for large screens (e.g., widescreen desktops) */
+@media (min-width: 1200px) {
+  .login_form {
+    height: 450px;
+    /* Adjust the height for large screens */
+  }
+}

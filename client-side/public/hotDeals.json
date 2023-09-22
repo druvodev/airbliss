@@ -1,17 +1,67 @@
 [
   {
+    "id": 1,
+    "airline": "Air India",
+    "destination": "Discounts for upcoming FIFA",
+    "offer": "Save 28% on your flight for FIFA matches as a EBL user!",
+    "discount": 28,
+    "applicable": "On Domestic and International Flight Bookings",
+    "sponsor": "EBL",
+    "validity": "valid till 10th october 2023",
+    "offered_by": "https://i.ibb.co/pJvhqTR/1280px-EBL-Registered-Corporate-Logo-horizontal-svg-1-removebg-preview.png",
     "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2T3Uo3KBgcL9GQPHqwYTbtSCg5FANxB4AacG359Tq-xTSM2OXc1cxM-WbWV23QS3U94g&usqp=CAU",
-    "offer": "9 % Discount for GP for GP User Purchasing any ticket for FIFA",
-    "destination": "Flight Discount for FIFA23"
+    "terms": [
+      "Applicable for domestic flight bookings.",
+      "For all EBL Visa debit & credit cards.",
+      "EBL Visa Credit Platinum & upper tier cardholders will get 3 times SKYCOINS.",
+      "EBL Visa Credit Corporate platinum cardholders are not eligible for the 3 times SKYCOINS benefits.",
+      "Up to 2,000 SKYCOINS per cardholder against each transaction.",
+      "Not applicable for internet banking and EMI.",
+      "In the event of any misuse or abuse of the offer by the customer, AirBliss reserves the right to deny the offer or cancel the booking."
+    ]
   },
   {
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWobqGIlApBKdQtexd5dCfWRn9fSBhlmWfRDoVBPmiPPBrt-ndyPO3ESVeEiXhPqNMC_A&usqp=CAU",
-    "offer": "9 % Discount for GP for GP User Purchasing any ticket to Mumbai today",
-    "destination": "Flight Discount for Paypal"
+    "id": 2,
+    "airline": "Bangladesh Airlines",
+    "destination": "Flight Discount for GP",
+    "offer": "GP users can enjoy a 35% discount on flights to Mumbai today!",
+    "discount": 35,
+    "applicable": "On Domestic and International Flight Bookings",
+    "sponsor": "GP",
+    "validity": "valid till 14th october 2023",
+    "offered_by": "https://i.ibb.co/6gRRtfm/Grameenphone-Logo-History-1-1-removebg-preview.png",
+    "terms": [
+      "Applicable for domestic flight bookings.",
+      "For all GP Star debit & credit cards.",
+      "GP Star Credit Platinum & upper tier cardholders will get 3 times SKYCOINS.",
+      "GP Visa Credit Corporate platinum cardholders are not eligible for the 3 times SKYCOINS benefits.",
+      "Up to 2,000 SKYCOINS per cardholder against each transaction.",
+      "In the event of any misuse or abuse of the offer by the customer, AirBliss reserves the right to deny the offer or cancel the booking."
+    ],
+    "img": "https://i.ibb.co/bXWBcGF/gp-offerl.png"
   },
+  
+
+
   {
-    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpFcj-zciWwXXAyUKoF90aEEz0ymphdLmVG6OEdqBDGrCVYlqPf4rRnKWjFWv44TBP9nk&usqp=CAU",
-    "offer": "9 % Discount for GP for GP User Purchasing any ticket to Mumbai today",
-    "destination": "Flight Discount for Cricket WorldCup"
+    "id": 3,
+    "airline": "Qatar Airlines",
+    "destination": "Flight Discount for Cricket WorldCup",
+    "offer": "Avail a 16% discount on flights to Mumbai today for Standard Charted Bank users!",
+    "discount": 16,
+    "applicable": "On Domestic and International Flight Bookings",
+    "sponsor": "SCB",
+    "validity": "valid till 16th october 2023",
+    "offered_by": "https://i.ibb.co/x5rGYky/standard-chartered-bank-new-20211713-1-removebg-preview.png",
+    "terms": [
+      "Applicable for domestic flight bookings.",
+      "For all Standard Charted Visa debit & credit cards.",
+      "SCB Visa Credit Platinum & upper tier cardholders will get 3 times SKYCOINS.",
+      "SCB Visa Credit Corporate platinum cardholders are not eligible for the 3 times SKYCOINS benefits.",
+      "Up to 2,000 SKYCOINS per cardholder against each transaction.",
+      "Not applicable for internet banking and EMI.",
+      "In the event of any misuse or abuse of the offer by the customer, AirBLiss reserves the right to deny the offer or cancel the booking."
+    ],
+    "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpFcj-zciWwXXAyUKoF90aEEz0ymphdLmVG6OEdqBDGrCVYlqPf4rRnKWjFWv44TBP9nk&usqp=CAU"
   }
 ]

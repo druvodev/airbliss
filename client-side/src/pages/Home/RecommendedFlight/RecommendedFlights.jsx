@@ -1,10 +1,23 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import SectionTitle from "../../../Components/SectionTitle";
+import { Link } from "react-router-dom";
 
 const RecommendedFlights = () => {
+  const [recommendedFlights, setRecommendedFLights] = useState([]);
+
+  useEffect(() => {
+    fetch("recommendedFlights.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setRecommendedFLights(data);
+      });
+  }, []);
+
+  console.log(recommendedFlights);
+
   return (
-    <div>
+    <div id="recommended-flights">
       <div>
         <div>
           {/* <h1 className="text-xl mt-2 font-semibold">Recommended Flights</h1>
@@ -12,118 +25,57 @@ const RecommendedFlights = () => {
             <GiAirplaneDeparture /> --------
           </p> */}
           <SectionTitle sectionTitle={"Recommended Flights"} />
-          <p className="text-xs mb-10">
+          <p className=" text-sm dark:text-gray-400 sm:text-base mb-5">
             Most famous Flights of us. Our happy clients always happy with these
             Flights. <br /> The flights are always maintenance there roles and
             regulations
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-10">
-          <div className="border shadow-2xl p-2">
-            <div>
-              <div className="flex gap-5 container ">
-                <img
-                  className="object-cover rounded-full shadow-2xl mb-14 h-full "
-                  src="https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg"
-                />
+        <div className="grid h-full  sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {recommendedFlights?.map((flight) => (
+            <div
+              key={flight?.id}
+              className="overflow-hidden rounded-md shadow-lg p-5  dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500"
+            >
+              <div>
+                <div className="flex gap-5 container ">
+                  <img
+                    className="object-cover rounded-md shadow-md h-52 mb-20  w-full"
+                    src={flight?.img}
+                  />
+                </div>
+              </div>
+              <div className="flex mt-2 gap-x-2 justify-between items-center">
+                <div>
+                  <p className="w-10 h-10 dark:text-cyan-500 rounded-[100%] border dark:border-cyan-300 border-black text-black pl-3 pt-3">
+                    <GiAirplaneDeparture />
+                  </p>
+                </div>
+                <div>
+                  <h3 className="card-title mr-16 text-lg">
+                    {flight?.destination}
+                  </h3>
+                  <p className="text-semibold text-xs font-semibold">
+                    {flight?.route}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs">FROM</p>
+                  <p className="text-sky-400 font-bold">{flight?.fare} BDT</p>
+                </div>
+              </div>
+              <div className="flex  items-center align-middle justify-end  mt-8">
+                <button className="rounded-full hidden border text-sky-500 px-3 font-bold hover:bg-cyan-700 hover:text-white border-sky-500 ">
+                  Book
+                </button>
+                <Link to={`/recommendedFlight/${flight?.id}`}>
+                  <button className="rounded-full  pb-[2px] bg-cyan-700 hover:bg-cyan-600 font-bold px-3 text-white">
+                    View
+                  </button>
+                </Link>
               </div>
             </div>
-            <div className="flex mt-2 justify-between items-center">
-              <div>
-                <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
-                  <GiAirplaneDeparture />
-                </p>
-              </div>
-              <div>
-                <h3 className="card-title mr-16">Bengaluru to Paris</h3>
-                <p className="text-semibold text-xs font-semibold">
-                  ONE WAY FLIGHTS
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-xs">FROM</p>
-                <p className="text-sky-400 font-bold">$620</p>
-              </div>
-            </div>
-            <div className="flex items-center align-middle justify-between  mt-8">
-              <button className="rounded-full bg-cyan-700 hover:bg-cyan-600 font-bold px-3 text-white">
-                View
-              </button>
-              <button className="rounded-full border text-sky-500 px-3 font-bold border-sky-500 ">
-                Book
-              </button>
-            </div>
-          </div>
-          <div className="border shadow-2xl p-2">
-            <div>
-              <div className="flex gap-5 container ">
-                <img
-                  className="object-cover rounded-full shadow-2xl mb-10 "
-                  src="https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
-                />
-              </div>
-            </div>
-            <div className="flex mt-2 justify-between items-center">
-              <div>
-                <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
-                  <GiAirplaneDeparture />
-                </p>
-              </div>
-              <div>
-                <h3 className="card-title mr-16">Bengaluru to Paris</h3>
-                <p className="text-semibold text-xs font-semibold">
-                  ONE WAY FLIGHT
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-xs">FROM</p>
-                <p className="text-sky-400 font-bold">$620</p>
-              </div>
-            </div>
-            <div className="flex items-center align-middle justify-between mt-8">
-              <button className="rounded-full bg-cyan-700 hover:bg-cyan-600 font-bold px-3 text-white">
-                View
-              </button>
-              <button className="rounded-full border text-sky-500 px-3 font-bold border-sky-500 ">
-                Book
-              </button>
-            </div>
-          </div>
-          <div className="border shadow-2xl p-2 ">
-            <div>
-              <div className="flex gap-5 container ">
-                <img
-                  className="object-cover rounded-full shadow-2xl mb-10 "
-                  src="https://www.traveloffpath.com/wp-content/uploads/2021/11/New%E2%80%8B-Low-Cost-Airline-Set-To-Launch-In-Calgary-Next-Year.jpg"
-                />
-              </div>
-            </div>
-            <div className="flex mt-2 justify-between items-center">
-              <div>
-                <p className="w-10 h-10 rounded-[100%] border border-black text-black pl-3 pt-3">
-                  <GiAirplaneDeparture />
-                </p>
-              </div>
-              <div>
-                <h3 className="card-title mr-16">Bengaluru to Paris</h3>
-                <p className="text-semibold text-xs font-semibold">
-                  ONE WAY FLIGHT
-                </p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-xs">FROM</p>
-                <p className="text-sky-400 font-bold">$620</p>
-              </div>
-            </div>
-            <div className="flex items-center align-middle justify-between  mt-8">
-              <button className="rounded-full bg-cyan-700 hover:bg-cyan-600 font-bold px-3 text-white">
-                View
-              </button>
-              <button className="rounded-full border text-sky-500 px-3 font-bold border-sky-500 ">
-                Book
-              </button>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
