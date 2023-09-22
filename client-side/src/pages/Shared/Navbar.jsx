@@ -342,27 +342,49 @@ const Navbar = () => {
                       />
                     </div>
                   </label>
-                  <ul
+                  <div
                     tabIndex={0}
-                    className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
+                    className="menu menu-sm dropdown-content mt-3 z-[1] px-4 py-6 shadow bg-base-100 rounded-box w-[260px] origin-center left-auto"
                   >
-                    <li>
-                      {isAdmin ? (
-                        <Link to="/dashboard/adminHome" className="text-black">
-                          Dashboard
+                    <div className="flex flex-col justify-center items-center">
+                      <label tabIndex={0} className="avatar">
+                        <div className="w-16 rounded-full cursor-pointer">
+                          <img src={user?.photoURL} />
+                        </div>
+                      </label>
+                      <div className="mt-5 mb-5 flex flex-col justify-center items-center">
+                        <h1
+                          className="font-medium text-[12px] lg:text-[18px] text-[#37517e]  hover:underline"
+                        >
+                          {user?.displayName}
+                        </h1>
+                        <p
+                          className="mt-2 text-[10px] lg:text-[12px] font-medium text-[#37517e] hover:underline"
+                        >
+                          {user?.email}
+                        </p>
+                      </div>
+                    </div>
+                    <hr />
+                    <ul className="flex flex-col justify-center items-center">
+                      <li>
+                        {isAdmin ? (
+                          <Link to="/dashboard/adminHome" className="text-black">
+                            Dashboard
+                          </Link>
+                        ) : (
+                          <Link to="/dashboard/userHome" className="text-black">
+                            Dashboard
+                          </Link>
+                        )}
+                      </li>
+                      <li>
+                        <Link className="text-black" to="/" onClick={logOut}>
+                          Logout
                         </Link>
-                      ) : (
-                        <Link to="/dashboard/userHome" className="text-black">
-                          Dashboard
-                        </Link>
-                      )}
-                    </li>
-                    <li>
-                      <Link className="text-black" to="/" onClick={logOut}>
-                        Logout
-                      </Link>
-                    </li>
-                  </ul>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               ) : (
                 <a
