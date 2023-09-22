@@ -65,7 +65,7 @@ const LoginSignupModal = ({ onClose, setIsLoginSignupModalOpen }) => {
         const imageUrl = imageData.data.display_url;
         createUser(email, password)
           .then((result) => {
-            // console.log(result.user);
+            console.log(result.user);
             updateUserProfile(name, imageUrl)
               .then(() => {
                 toast.success("User Created Successfully");
