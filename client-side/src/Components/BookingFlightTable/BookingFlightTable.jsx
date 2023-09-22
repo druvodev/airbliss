@@ -7,7 +7,8 @@ import { MdCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 15;
-const MAX_VISIBLE_PAGES = 3;
+// const MAX_VISIBLE_PAGES = 3;
+// const ITEMS_PER_PAGE = 10;
 
 const BookingFlightTable = ({
   bookings,
@@ -17,7 +18,6 @@ const BookingFlightTable = ({
   action,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(bookings?.length / ITEMS_PER_PAGE);
 
   const handlePaginationPrev = () => {
     if (currentPage > 1) {
@@ -26,44 +26,10 @@ const BookingFlightTable = ({
   };
 
   const handlePaginationNext = () => {
+    const totalPages = Math.ceil(bookings?.length / ITEMS_PER_PAGE);
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
-  };
-
-  const getPageRange = () => {
-    const pageRange = [];
-    const halfMax = Math.floor(MAX_VISIBLE_PAGES / 2);
-
-    for (let i = 1; i <= Math.min(2, totalPages); i++) {
-      pageRange.push(i);
-    }
-
-    if (currentPage - halfMax > 3) {
-      pageRange.push(null);
-    }
-
-    for (
-      let i = Math.max(currentPage - halfMax, 3);
-      i <= Math.min(currentPage + halfMax, totalPages - 2);
-      i++
-    ) {
-      pageRange.push(i);
-    }
-
-    if (totalPages - currentPage - halfMax > 2) {
-      pageRange.push(null);
-    }
-
-    for (
-      let i = Math.max(totalPages - 1, currentPage + halfMax + 1);
-      i <= totalPages;
-      i++
-    ) {
-      pageRange.push(i);
-    }
-
-    return pageRange;
   };
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -222,29 +188,28 @@ const BookingFlightTable = ({
         )}
       </div>
 
-      <section className="mt-12 md:pe-7 flex justify-end items-center ">
+      <section className="mt-12 mr-6 mb-8 flex justify-end items-center">
         <button
           className="border-[1px] p-2 rounded-l-md"
           onClick={handlePaginationPrev}
         >
           <GrPrevious size={20} />
         </button>
-        {/* Render pagination buttons */}
-        {getPageRange().map((pageNumber, index) => (
-          <h3
-            key={index}
-            className={`px-3 py-[6px] border-[1px] cursor-pointer ${
-              pageNumber === null
-                ? "text-gray-500"
-                : pageNumber === currentPage
-                ? "bg-cyan-600 text-white"
-                : ""
-            }`}
-            onClick={() => pageNumber !== null && setCurrentPage(pageNumber)}
-          >
-            {pageNumber === null ? "..." : pageNumber}
-          </h3>
-        ))}
+        {/* Render pagination buttons based on the total number of pages */}
+        {Array.from(
+          { length: Math.ceil(bookings?.length / ITEMS_PER_PAGE) },
+          (_, index) => (
+            <h3
+              key={index}
+              className={`px-3 py-[6px] border-[1px] cursor-pointer ${
+                index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+              }`}
+              onClick={() => setCurrentPage(index + 1)}
+            >
+              {index + 1}
+            </h3>
+          )
+        )}
         <button
           className="border-[1px] p-2 rounded-r-md"
           onClick={handlePaginationNext}

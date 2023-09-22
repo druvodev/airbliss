@@ -46,14 +46,7 @@ const RecommendedHotelDetails = () => {
                   About Us
                 </h2>
                 <p>{f?.about}</p>
-                <div className="mt-6 md:mt-4 lg:mt-8 md:text-center lg:text-left">
-                  <Link
-                    to="/"
-                    className="px-4 py-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-semibold"
-                  >
-                    Book Now
-                  </Link>
-                </div>
+               
               </div>
             </div>
             <div className="flex md:flex-row gap-x-4 mt-6 flex-col ">
