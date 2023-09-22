@@ -634,6 +634,8 @@ async function run() {
         totalAmount = parseFloat(flight.fareSummary.total);
       }
 
+      // Backend Data
+
       const data = {
         total_amount: totalAmount,
         currency: "BDT",
