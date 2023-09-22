@@ -5,6 +5,8 @@ const initialState = {
   userInfo: {},
   allBookings: [],
   cancelRequests: [],
+  airlines: [],
+  selectedCard: null,
   bookingsRefetch: false,
 };
 
@@ -21,8 +23,14 @@ export const bookingInfoSlice = createSlice({
     setAllBookings: (state, action) => {
       state.allBookings = action.payload;
     },
+    setSelectedCard: (state, action) => {
+      state.selectedCard = action.payload;
+    },
     setCancelRequests: (state, action) => {
       state.cancelRequests = action.payload;
+    },
+    setAirlines: (state, action) => {
+      state.airlines = action.payload;
     },
     setBookingsRefetch: (state, action) => {
       state.bookingsRefetch = action.payload;
@@ -36,5 +44,7 @@ export const {
   setAllBookings,
   setCancelRequests,
   setBookingsRefetch,
+  setAirlines,
+  setSelectedCard,
 } = bookingInfoSlice.actions;
 export default bookingInfoSlice.reducer;
