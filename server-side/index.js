@@ -392,6 +392,10 @@ async function run() {
         ];
 
         for (const flight of fromCityData[fromCity]) {
+          // check running flight
+          if (flight.airlineStatus !== "running") {
+            continue;
+          }
           const relevantFlightData = {};
           for (const field of relevantFields) {
             relevantFlightData[field] = flight[field];
@@ -1085,6 +1089,7 @@ async function run() {
             $set: {
               [`${date}.${airportCode}.$.residualStatus`]: rescheduleStatus,
               [`${date}.${airportCode}.$.user.seatNo`]: seatNo,
+              [`${date}.${airportCode}.$.flight.departureDate`]: flightDate,
             },
           };
 
