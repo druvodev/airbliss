@@ -6,7 +6,9 @@ import { GrNext, GrPrevious } from "react-icons/gr";
 import { MdCancel } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 15;
+// const MAX_VISIBLE_PAGES = 3;
+// const ITEMS_PER_PAGE = 10;
 
 const BookingFlightTable = ({
   bookings,

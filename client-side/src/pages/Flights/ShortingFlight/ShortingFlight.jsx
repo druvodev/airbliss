@@ -69,9 +69,9 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
         </div>
       </div>
 
-      <div className="mt-6 p-5  mb-6 rounded-md flex justify-center items-center">
+      <div className="mt-6 p-5 mb-6 rounded-md flex justify-center items-center">
         <Swiper
-          slidesPerView={3}
+          slidesPerView={2}
           spaceBetween={20}
           freeMode={true}
           modules={[FreeMode, Pagination]}
@@ -85,8 +85,8 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
                 }
                 className={`md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer dark:border-0 dark:backdrop-blur-md ${
                   selectedCard === singleAirline?.airlineName
-                    ? "bg-cyan-50 dark:bg-gray-600" // Set the background color to cyan-500 when selected
-                    : "" // Use an empty string for the default background color
+                    ? "bg-cyan-50 dark:bg-gray-600"
+                    : "" 
                 }`}
               >
                 <img

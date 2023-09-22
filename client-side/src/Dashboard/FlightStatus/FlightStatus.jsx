@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux"; // Import useDispatch
 import { setCurrentPage } from "../../redux/features/bookTicketSlice";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { FiEdit } from "react-icons/fi";
-import { GoInfo } from "react-icons/go";
 import { setFlights, setPath } from "../../redux/features/manageFlightSlice";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
