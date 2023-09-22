@@ -1,9 +1,12 @@
 import React from "react";
 import useAuth from "../../../hooks/useAuth";
 import { Link } from "react-router-dom";
-import { BiSearch } from "react-icons/bi";
+import { BiSearch, BiSun } from "react-icons/bi";
+import { useState } from "react";
+import { useEffect } from "react";
+import { BsMoonFill } from "react-icons/bs";
 
-const TopNav = ({ handleToggle }) => {
+const TopNav = ({ handleToggle, isDarkMode, setIsDarkMode }) => {
   const { user, logOut } = useAuth();
 
   // Function to slice a string to a maximum of 10 words
@@ -14,6 +17,7 @@ const TopNav = ({ handleToggle }) => {
     }
     return str;
   };
+  // DarkMood
 
   // Slice and sort the name and email
   const slicedAndSortedName = sliceToMaxWords(user?.displayName || "", 11);
@@ -22,21 +26,21 @@ const TopNav = ({ handleToggle }) => {
   return (
     <>
       <div
-        className="navbar lg:gap-10 gap-0 lg:flex-row  justify-between w-[100%] mx-auto py-0 rounded shadow-md lg:px-10 bg-white"
-      // style={{
-      //   backgroundImage: 'linear-gradient(to right, #70cfc9 , #5daad6 )',
-      // }}
+        className="navbar lg:gap-10 gap-0 lg:flex-row  justify-between w-[100%] mx-auto py-0 rounded shadow-md lg:px-10 bg-white dark:bg-slate-800 dark:text-white dark:rounded-none"
+        // style={{
+        //   backgroundImage: 'linear-gradient(to right, #70cfc9 , #5daad6 )',
+        // }}
       >
         <div className="navbar-start">
-          <div className=" hidden lg:flex bg-[rgba(112,207,201,0.10)] w-full md:w-auto py-2 rounded shadow-sm hover:shadow-md transition cursor-pointer">
+          <div className=" hidden lg:flex bg-[rgba(112,207,201,0.10)] w-full md:w-auto py-2 rounded  shadow-sm hover:shadow-md transition cursor-pointer">
             <div className="flex flex-row items-center justify-between">
-              <div className="text-sm font-semibold text-gray-700 px-6">
+              <div className="text-sm font-semibold text-gray-700 dark:text-white px-6">
                 Anywhere
               </div>
               <div className="hidden text- sm:block text-sm font-semibold px-6 border-x-[1px] flex-1 text-center">
                 Any Week
               </div>
-              <div className="text-sm pl-6 pr-2 text-gray-700 flex flex-row items-center gap-3">
+              <div className="text-sm pl-6 pr-2 text-gray-700 dark:text-white flex flex-row items-center gap-3">
                 <div className="hidden sm:block">Any Day's</div>
                 <div className="p-1 bg-cyan-500 ml-10 rounded-full text-white">
                   <BiSearch size={18} />
@@ -44,6 +48,7 @@ const TopNav = ({ handleToggle }) => {
               </div>
             </div>
           </div>
+
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
@@ -65,6 +70,15 @@ const TopNav = ({ handleToggle }) => {
           </div>
         </div>
         <div className="navbar-end">
+          {!isDarkMode ? (
+            <button onClick={() => setIsDarkMode(!isDarkMode)}>
+              <BsMoonFill className="text-xl  " />
+            </button>
+          ) : (
+            <button onClick={() => setIsDarkMode(!isDarkMode)}>
+              <BiSun className="text-2xl hover:animate-spin" />
+            </button>
+          )}
           <button className="btn btn-ghost btn-circle">
             <div className="indicator">
               <svg
@@ -101,14 +115,10 @@ const TopNav = ({ handleToggle }) => {
                   </div>
                 </label>
                 <div className="mt-5 mb-5 flex flex-col justify-center items-center">
-                  <h1
-                    className="font-medium text-[12px] lg:text-[18px] text-[#37517e]  hover:underline"
-                  >
+                  <h1 className="font-medium text-[12px] lg:text-[18px] text-[#37517e]  hover:underline">
                     {user?.displayName}
                   </h1>
-                  <p
-                    className="mt-2 text-[12px] lg:text-[14px] font-medium text-[#37517e] hover:underline"
-                  >
+                  <p className="mt-2 text-[12px] lg:text-[14px] font-medium text-[#37517e] hover:underline">
                     {user?.email}
                   </p>
                 </div>
@@ -133,11 +143,11 @@ const TopNav = ({ handleToggle }) => {
               </ul>
             </div>
           </div>
-          <div className="hidden lg:flex lg:flex-col">
-            <h4 className="mx-2 font-medium text-[10px] lg:text-[18px] text-[#37517e]  hover:underline">
+          <div className="hidden lg:flex lg:flex-col ">
+            <h4 className="mx-2 font-medium text-[10px] lg:text-[18px] text-[#37517e]  hover:underline dark:text-white">
               {user?.displayName}
             </h4>
-            <p className="mx-2 text-[10px] lg:text-[14px] font-medium -mt-1 text-[#37517e] hover:underline">
+            <p className="mx-2 text-[10px] lg:text-[14px] font-medium -mt-1 text-[#37517e] hover:underline dark:text-gray-400">
               {user?.email}
             </p>
           </div>

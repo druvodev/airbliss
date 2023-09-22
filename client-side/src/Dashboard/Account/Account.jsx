@@ -70,10 +70,12 @@ const Account = () => {
 
   return (
     <div>
-      <div className="bg-white p-5 shadow rounded-xl">
+      <div className="bg-white p-5 shadow rounded-xl dark:bg-white/10 dark:backdrop-blur-md dark:shadow dark:shadow-white/50 ">
         <h1 className="text-[22px] font-semibold text-gray-900 capitalize">
-          <span className="text-[24px] font-bold">{user?.displayName}</span>'s
-          AirBliss Account
+          <span className="text-[24px] font-bold dark:text-gray-300">
+            {user?.displayName}
+          </span>
+          <span className="dark:text-gray-300">'s AirBliss Account</span>
         </h1>
       </div>
       <div className="grid lg:grid-row-3 grid-row-1 gap-8 mt-8">
@@ -82,9 +84,9 @@ const Account = () => {
         </div>
 
         {/* User Personal info card */}
-        <div className="bg-white shadow-md  lg:row-span-2  py-[30px] px-6 md:px-8 rounded-xl">
+        <div className="bg-white shadow-md  lg:row-span-2  py-[30px] px-6 md:px-8 rounded-xl dark:bg-white/10 dark:backdrop-blur-md dark:shadow dark:shadow-white/50 dark:text-gray-300">
           <div className="flex justify-between ">
-            <h1 className="lg:text-[36px] text-xl mb-7 font-semibold text-gray-900 capitalize">
+            <h1 className="lg:text-[36px] text-xl mb-7 font-semibold text-gray-900 capitalize dark:text-gray-300">
               Personal Information
             </h1>
             <button className="btn btn-sm" onClick={switchToEditOrUpdate}>
