@@ -1,14 +1,22 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaCaretLeft, FaCaretRight, FaRadiationAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
 import { FreeMode, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import {
+  setAirlines,
+  setSelectedCard,
+} from "../../../redux/features/bookingInfoSlice";
 
 const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
-  const [airlines, setAirlines] = useState([]);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const airlines = useSelector((state) => state?.userBookingInfo?.airlines);
+  const selectedCard = useSelector(
+    (state) => state?.userBookingInfo?.selectedCard
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const uniqueAirlines = {};
@@ -22,17 +30,11 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
 
     const uniqueAirlinesArray = Object.values(uniqueAirlines);
 
-    setAirlines(uniqueAirlinesArray);
+    dispatch(setAirlines(uniqueAirlinesArray));
   }, [destenation]);
 
-  const handleCardCompanyFilter = (airlineName) => {
-    setSelectedCard(airlineName);
-  };
-
-  // console.log(airlines);
-
   return (
-    <div className="mb-10 overflow-hidden shadow-md border-[1px] border-gray-100">
+    <div className="mb-10 overflow-hidden shadow-md border-[1px] border-gray-100 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 dark:border-0">
       {/* <div className="flex justify-between mx-8 items-center mb-3 mt-2">
         <div className="tooltip tooltip-bottom" data-tip="Previous Day Flight">
           <FaCaretLeft className="lg:text-[45px] text-[20px] md:text-[25px] text-cyan-500 cursor-pointer" />
@@ -47,27 +49,27 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
       </div> */}
 
       <div className="flex justify-between items-center mt-2">
-        <div className="px-2 py-2 relative cursor-pointer">
-          <FaCaretLeft className="text-cyan-500 text-[23px]" />
+        <div className="px-2 py-2 ">
+          {/* <FaCaretLeft className="text-cyan-500 text-[23px]" /> */}
           {/* <p className="p-1 -mt-2 opacity-0 cursor-pointer hover:opacity-100 rounded-md  text-[8px] lg:text-[12px] absolute">
             Previous
           </p> */}
         </div>
 
-        <div className="font-sans font-semibold text-[20] md:text-[25px] ">
+        <div className="font-sans mt-3 font-semibold text-[20] md:text-[25px] ">
           Flights {destenation[0]?.departure?.city} to{" "}
           {destenation[0]?.arrival?.city}
         </div>
 
         <div className="px-2 py-2">
-          <FaCaretRight className="text-cyan-500 text-[23px]" />
+          {/* <FaCaretRight className="text-cyan-500 text-[23px]" /> */}
           {/* <p className="p-1 -ml-4 -mt-2 opacity-0 cursor-pointer hover:opacity-100 rounded-md  text-[8px] lg:text-[12px] absolute">
             Next
           </p> */}
         </div>
       </div>
 
-      <div className="mt-8 p-5  mb-6 rounded-md flex justify-center items-center">
+      <div className="mt-6 p-5  mb-6 rounded-md flex justify-center items-center">
         <Swiper
           slidesPerView={3}
           spaceBetween={20}
@@ -79,11 +81,11 @@ const ShortingFlight = ({ destenation, handelCardComapnyFilter }) => {
             <SwiperSlide key={singleAirline?.airlineName}>
               <div
                 onClick={() =>
-                  handleCardCompanyFilter(singleAirline?.airlineName)
+                  handelCardComapnyFilter(singleAirline?.airlineName)
                 }
-                className={`md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer ${
+                className={`md:px-5 w-full h-full md:py-5 px-2 py-2 shadow-md border-[1px] mb-1 flex flex-col justify-center items-center cursor-pointer dark:border-0 dark:backdrop-blur-md ${
                   selectedCard === singleAirline?.airlineName
-                    ? "bg-cyan-50" // Set the background color to cyan-500 when selected
+                    ? "bg-cyan-50 dark:bg-gray-600" // Set the background color to cyan-500 when selected
                     : "" // Use an empty string for the default background color
                 }`}
               >

@@ -25,13 +25,13 @@ export const noTransitTimeLength = (flights) => {
 export const highestPrice = (flights) => {
   const sortedFlights = flights
     .slice()
-    .sort((a, b) => b.fareSummary.total - a.fareSummary.total);
-  return sortedFlights[0].fareSummary.total;
+    .sort((a, b) => b.fareSummary?.total - a.fareSummary?.total);
+  return sortedFlights[0].fareSummary?.total;
 };
 
 export const lowestPrice = (flights) => {
   const sortedFlights = flights
     .slice()
-    .sort((a, b) => a.fareSummary.total - b.fareSummary.total);
-  return sortedFlights[0].fareSummary.total;
+    .sort((a, b) => a.fareSummary?.total - b.fareSummary?.total);
+  return sortedFlights[0].fareSummary?.total;
 };

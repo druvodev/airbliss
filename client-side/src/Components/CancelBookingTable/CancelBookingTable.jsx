@@ -37,127 +37,169 @@ const CancelBookingTable = ({
   console.log("status", status);
 
   return (
-    <div className="overflow-x-auto shadow-md mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
-      {bookings.length < 1 ? (
-        <div className="w-full flex items-center justify-center mt-20">
-          <p className="sm:text-sm md:text-base lg:text-xl"> No data found</p>
-        </div>
-      ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Booking Reference</th>
-              <th>Flight Name</th>
-              <th>Flight Date</th>
-              <th>Travel Path</th>
-              <th className="capitalize">{status}</th>
-              <th className="capitalize">{feedbackTitle}</th>
-              {!action && <th>Action</th>}
-            </tr>
-          </thead>
-          <tbody>
-            {bookings?.slice(startIndex, endIndex).map((flight, index) => (
-              <tr key={index}>
-                <th>{index + 1}</th>
-                <td>{flight?.bookingReference}</td>
+    <div>
+      <div className="overflow-x-auto shadow-md md:mx-7 mt-[30px] px-10 py-5 rounded-xl bg-white">
+        {bookings.length < 1 ? (
+          <div className="w-full flex items-center justify-center my-20">
+            <p className="sm:text-sm md:text-base lg:text-xl"> No data found</p>
+          </div>
+        ) : (
+          <table className="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Booking Reference</th>
+                <th>Flight Name</th>
+                <th>Flight Date</th>
+                <th>Travel Path</th>
+                <th className="capitalize">{status}</th>
+                <th className="capitalize">{feedbackTitle}</th>
+                {!action && <th>Action</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {bookings?.slice(startIndex, endIndex).map((flight, index) => (
+                <tr key={index}>
+                  <th>{index + 1}</th>
+                  <td>{flight?.bookingReference}</td>
 
-                <td>{flight?.flight.airline}</td>
+                  <td>{flight?.flight.airline}</td>
 
-                <td>{flight?.flight?.arrivalDate}</td>
-                <td>
-                  {flight?.flight?.departureCity} To{" "}
-                  {flight?.flight?.arrivalCity}
-                </td>
-                <td className="capitalize">
-                  {status === "flight status" && (
-                    <span>
-                      {flight?.bookingStatus}{" "}
+                  <td>{flight?.flight?.arrivalDate}</td>
+                  <td>
+                    {flight?.flight?.departureCity} To{" "}
+                    {flight?.flight?.arrivalCity}
+                  </td>
+                  <td className="capitalize">
+                    {status === "flight status" && (
                       <span
                         className={`${
-                          flight?.requestStatus === "denied" && "text-red-500"
-                        }`}
+                          flight?.requestStatus === "denied" &&
+                          "text-red-500 bg-red-50 rounded-full px-2 flex flex-col items-center justify-center py-1"
+                        } ${
+                          flight?.requestStatus === "success" &&
+                          "text-green-600 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "approved" &&
+                          "text-orange-500 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "pending" &&
+                          "text-orange-500 bg-orange-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } `}
                       >
-                        ({flight?.requestStatus})
+                        {flight?.bookingStatus}{" "}
+                        <span
+                          className={`${
+                            flight?.requestStatus === "denied" &&
+                            "text-red-500 bg-red-50 rounded-full px-2 flex flex-col items-center justify-center py-1"
+                          }`}
+                        >
+                          ({flight?.requestStatus})
+                        </span>
                       </span>
-                    </span>
-                  )}
-                  {status === "cancel status" && (
-                    <span
-                      className={`${
-                        flight?.requestStatus === "denied" && "text-red-500"
-                      }`}
-                    >
-                      {flight?.requestStatus}
-                    </span>
-                  )}
-                  {status === "confirm status" && (
-                    <span>{flight?.requestStatus}</span>
-                  )}
-                </td>
-                <td>
-                  {feedbackTitle === "admin feedback"
-                    ? flight?.deniedFeedback
-                    : "I want to cancel for my personal issue"}
-                </td>
-                {!action && (
-                  <td className="flex gap-2 mt-2">
-                    {flight?.requestStatus === "pending" ? (
-                      <button
-                        className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 hover:bg-blue-500
-                  }`}
-                        onClick={() => {
-                          setFlightRef(flight?.bookingReference);
-                          handleCancelApproved(flight);
-                        }}
-                      >
-                        <FaCheck />
-                      </button>
-                    ) : (
-                      <button
-                        className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 opacity-30
-                  }`}
-                        onClick={() => {
-                          setFlightRef(flight?.bookingReference);
-                          handleCancelApproved();
-                        }}
-                        disabled
-                      >
-                        <FaCheck />
-                      </button>
                     )}
-
-                    {flight?.requestStatus === "pending" ? (
-                      <button
-                        className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  hover:bg-red-500`}
-                        onClick={() => {
-                          openModal();
-                          setFlightRef(flight?.bookingReference);
-                        }}
+                    {status === "cancel status" && (
+                      <span
+                        className={`${
+                          flight?.requestStatus === "denied" &&
+                          "text-red-500 bg-red-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "success" &&
+                          "text-green-600 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "approved" &&
+                          "text-orange-500 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "pending" &&
+                          "text-orange-500 bg-orange-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } `}
                       >
-                        <MdCancel />
-                      </button>
-                    ) : (
-                      <button
-                        className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  opacity-30`}
-                        onClick={() => {
-                          openModal();
-                          setFlightRef(flight?.bookingReference);
-                        }}
-                        disabled
+                        {flight?.requestStatus}
+                      </span>
+                    )}
+                    {status === "confirm status" && (
+                      <span
+                        className={`${
+                          flight?.requestStatus === "denied" &&
+                          "text-red-500 bg-red-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "success" &&
+                          "text-green-600 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "approved" &&
+                          "text-orange-500 bg-green-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } ${
+                          flight?.requestStatus === "pending" &&
+                          "text-orange-500 bg-orange-50 rounded-full flex flex-col items-center justify-center px-2 py-1"
+                        } `}
                       >
-                        <MdCancel />
-                      </button>
+                        {flight?.requestStatus}
+                      </span>
                     )}
                   </td>
-                )}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+                  <td>
+                    {feedbackTitle === "admin feedback"
+                      ? flight?.deniedFeedback
+                      : "I want to cancel for my personal issue"}
+                  </td>
+                  {!action && (
+                    <td className="flex gap-2 mt-2">
+                      {flight?.requestStatus === "pending" ? (
+                        <button
+                          className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 hover:bg-blue-500
+                  }`}
+                          onClick={() => {
+                            setFlightRef(flight?.bookingReference);
+                            handleCancelApproved(flight);
+                          }}
+                        >
+                          <FaCheck />
+                        </button>
+                      ) : (
+                        <button
+                          className={`w-8 h-8 rounded-full text-white flex justify-center items-center bg-blue-400 opacity-30
+                  }`}
+                          onClick={() => {
+                            setFlightRef(flight?.bookingReference);
+                            handleCancelApproved();
+                          }}
+                          disabled
+                        >
+                          <FaCheck />
+                        </button>
+                      )}
 
-      <section className="mt-12 flex justify-end items-center">
+                      {flight?.requestStatus === "pending" ? (
+                        <button
+                          className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  hover:bg-red-500`}
+                          onClick={() => {
+                            openModal();
+                            setFlightRef(flight?.bookingReference);
+                          }}
+                        >
+                          <MdCancel />
+                        </button>
+                      ) : (
+                        <button
+                          className={`w-8 h-8 rounded-full text-white flex justify-center items-center  bg-red-400  opacity-30`}
+                          onClick={() => {
+                            openModal();
+                            setFlightRef(flight?.bookingReference);
+                          }}
+                          disabled
+                        >
+                          <MdCancel />
+                        </button>
+                      )}
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+      <section className="mt-12 md:pe-7 flex justify-end items-center">
         <button
           className="border-[1px] p-2 rounded-l-md"
           onClick={handlePaginationPrev}

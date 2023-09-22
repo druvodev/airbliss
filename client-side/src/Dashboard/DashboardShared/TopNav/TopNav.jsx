@@ -22,10 +22,10 @@ const TopNav = ({ handleToggle }) => {
   return (
     <>
       <div
-        className="navbar lg:gap-10 gap-0 lg:flex-row flex-row-reverse justify-between w-[100%] mx-auto py-0 rounded shadow-md lg:px-10 bg-white"
-        // style={{
-        //   backgroundImage: 'linear-gradient(to right, #70cfc9 , #5daad6 )',
-        // }}
+        className="navbar lg:gap-10 gap-0 lg:flex-row  justify-between w-[100%] mx-auto py-0 rounded shadow-md lg:px-10 bg-white"
+      // style={{
+      //   backgroundImage: 'linear-gradient(to right, #70cfc9 , #5daad6 )',
+      // }}
       >
         <div className="navbar-start">
           <div className=" hidden lg:flex bg-[rgba(112,207,201,0.10)] w-full md:w-auto py-2 rounded shadow-sm hover:shadow-md transition cursor-pointer">
@@ -45,7 +45,7 @@ const TopNav = ({ handleToggle }) => {
             </div>
           </div>
           <div className="dropdown">
-            <label tabIndex={0} className="btn btn-ghost ml-24 lg:hidden">
+            <label tabIndex={0} className="btn btn-ghost lg:hidden">
               <svg
                 onClick={handleToggle}
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,37 +86,59 @@ const TopNav = ({ handleToggle }) => {
           </button>
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="avatar">
-              <div className="w-10 rounded-full">
+              <div className="w-10 rounded-full cursor-pointer">
                 <img src={user?.photoURL} />
               </div>
             </label>
-            <ul
+            <div
               tabIndex={0}
-              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+              className="menu menu-sm dropdown-content mt-3 z-[1] px-4 py-6 shadow bg-base-100 rounded-box w-[260px] origin-center left-auto"
             >
-              <li className="">
-                <Link to="/dashboard/account" className="hover:bg-blue-50">
-                  Profile
-                </Link>
-              </li>
-              <li className="">
-                <Link to="/" className="hover:bg-blue-50">
-                  Home
-                </Link>
-              </li>
-              <li className="">
-                <Link to="/" onClick={logOut} className="hover:bg-blue-50">
-                  Logout
-                </Link>
-              </li>
-            </ul>
+              <div className="flex flex-col justify-center items-center">
+                <label tabIndex={0} className="avatar">
+                  <div className="w-16 rounded-full cursor-pointer">
+                    <img src={user?.photoURL} />
+                  </div>
+                </label>
+                <div className="mt-5 mb-5 flex flex-col justify-center items-center">
+                  <h1
+                    className="font-medium text-[12px] lg:text-[18px] text-[#37517e]  hover:underline"
+                  >
+                    {user?.displayName}
+                  </h1>
+                  <p
+                    className="mt-2 text-[12px] lg:text-[14px] font-medium text-[#37517e] hover:underline"
+                  >
+                    {user?.email}
+                  </p>
+                </div>
+              </div>
+              <hr />
+              <ul className="flex flex-col justify-center items-center">
+                <li className="">
+                  <Link to="/dashboard/account" className="hover:bg-blue-50">
+                    Profile
+                  </Link>
+                </li>
+                <li className="">
+                  <Link to="/" className="hover:bg-blue-50">
+                    Home
+                  </Link>
+                </li>
+                <li className="">
+                  <Link to="/" onClick={logOut} className="hover:bg-blue-50">
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="">
+          <div className="hidden lg:flex lg:flex-col">
             <h4 className="mx-2 font-medium text-[10px] lg:text-[18px] text-[#37517e]  hover:underline">
-              {slicedAndSortedName}
+              {user?.displayName}
             </h4>
             <p className="mx-2 text-[10px] lg:text-[14px] font-medium -mt-1 text-[#37517e] hover:underline">
-              {slicedAndSortedEmail}
+              {user?.email}
             </p>
           </div>
         </div>

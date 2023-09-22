@@ -2,12 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@media (max-width: 768px) {
-  .search-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
+.ReactCollapse--collapse {
+  transition: height 500ms;
 }
+
 @media (min-width: 768px) and (max-width: 1120px) {
   .search-grid {
     display: grid;
@@ -20,8 +18,13 @@
     grid-template-columns: 1fr 1fr 1.4fr 1fr;
   }
 }
-
-
-
-
-
+.type::after {
+  content: ".";
+  animation: cursor 0.8s infinite step-start;
+  color: #ff2b2b;
+}
+@keyframes cursor {
+  50% {
+    opacity: 0;
+  }
+}

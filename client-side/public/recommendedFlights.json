@@ -1,0 +1,89 @@
+[
+  {
+    "id": 1,
+    "destination": "Dhaka to Jashore",
+    "route": "ONE WAY FLIGHTS",
+    "fare": 2499,
+    "discount": 18,
+    "img": "https://images.pexels.com/photos/62623/wing-plane-flying-airplane-62623.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+    "bg_pic": "https://i.ibb.co/N3f0WLz/john-mcarthur-8-KLLgq-HMAv4-unsplash.jpg",
+    "about": "Explore the world with us to experience our award-winning service & renowned hospitality. Explore 4000+ entertainment options, unwind in spacious seats and dine on gourmet cuisine. Best Business Class. Global Network. Gateway To The World. Extraordinary Cuisine.",
+    "overviews": [
+      {
+        "airline": "Qatar Airlines",
+        "flight": "First Class",
+        "fare_type": "Refundable",
+        "cancel_fee": 78,
+        "flight_change": 53,
+        "baggage": "extra Charge",
+        "base_fare": 2499,
+        "tax": 350
+      }
+    ],
+    "airline_name": "Qatar Airlines",
+    "coach_number": "AI-635 First Class",
+    "first_take_off": "13 NOV 2023, 7.50 AM",
+    "first_landing": "13 NOV 2023, 9.20 AM",
+    "second_take_off": "16 NOV 2023, 7.50 AM",
+    "second_landing": "16 NOV 2023, 9.20 AM"
+  },
+  
+
+  {
+    "id": 2,
+    "destination": "Dhaka to Barishal",
+    "route": "ONE WAY FLIGHTS",
+    "fare": 2499,
+    "discount": 18,
+    "img": "https://c4.wallpaperflare.com/wallpaper/393/536/1/the-sky-clouds-flight-lights-wallpaper-preview.jpg",
+    "bg_pic": "https://i.ibb.co/gF32d5v/hanson-lu-do-Sv-JDit-Jr-Q-unsplash.jpg",
+    "about": "Explore the world with us to experience our award-winning service & renowned hospitality. Explore 4000+ entertainment options, unwind in spacious seats and dine on gourmet cuisine. Best Business Class. Global Network. Gateway To The World. Extraordinary Cuisine.",
+    "overviews": [
+      {
+        "airline": "Bangladesh Airlines",
+        "flight": "First Class",
+        "fare_type": "Refundable",
+        "cancel_fee": 57,
+        "flight_change": 23,
+        "baggage": "extra Charge",
+        "base_fare": 1789,
+        "tax": 350
+      }
+    ],
+    "airline_name": "Bangladesh Airlines",
+    "coach_number": "AI-635 First Class",
+    "first_take_off": "13 NOV 2023, 5.50 AM",
+    "first_landing": "13 NOV 2023, 7.40 AM",
+    "second_take_off": "16 NOV 2023, 8.50 AM",
+    "second_landing": "16 NOV 2023, 10.20 AM"
+    
+  },
+  {
+    "id": 3,
+    "destination": "Dhaka to Cox'z",
+    "route": "ONE WAY FLIGHTS",
+    "fare": 2499,
+    "discount": 18,
+    "img": "https://www.traveloffpath.com/wp-content/uploads/2021/11/New%E2%80%8B-Low-Cost-Airline-Set-To-Launch-In-Calgary-Next-Year.jpg",
+    "bg_pic": "https://i.ibb.co/B2p6jyj/mark-olsen-K5j1-Kgec-VC8-unsplash.jpg",
+    "about": "Explore the world with us to experience our award-winning service & renowned hospitality. Explore 4000+ entertainment options, unwind in spacious seats and dine on gourmet cuisine. Best Business Class. Global Network. Gateway To The World. Extraordinary Cuisine.",
+    "overviews": [
+      {
+        "airline": "Saudi Airlines",
+        "flight": "First Class",
+        "fare_type": "Refundable",
+        "cancel_fee": 98,
+        "flight_change": 43,
+        "baggage": "extra Charge",
+        "base_fare": 3575,
+        "tax": 276
+      }
+    ],
+    "airline_name": "Bangladesh Airlines",
+    "coach_number": "AI-635 First Class",
+    "first_take_off": "13 NOV 2023, 11.20 AM",
+    "first_landing": "13 NOV 2023, 1.40 PM",
+    "second_take_off": "16 NOV 2023, 8.50 AM",
+    "second_landing": "16 NOV 2023, 10.20 AM"
+  }
+]

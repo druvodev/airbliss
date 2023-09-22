@@ -10,9 +10,11 @@ import RecommendedFlights from "../RecommendedFlight/RecommendedFlights";
 
 const Home = () => {
   const { setIsStart } = useCountdownContext();
+
   useEffect(() => {
     setIsStart(false);
   }, []);
+
   return (
     <div>
       <Hero />
@@ -23,6 +25,7 @@ const Home = () => {
         <OurServices />
         <HotelDiscount></HotelDiscount>
         <PopUpOffer />
+        {/* <LoginForm /> */}
       </div>
     </div>
   );

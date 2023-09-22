@@ -12,14 +12,16 @@ const ModalInsurance = ({ insurance, onClose, onSubmit }) => {
     onClose();
   };
 
+  const premiumType = insurance?.insurancePolicy?.requestedClaimInfo?.premiumType
+
   //* /insuranceClaim/:date/:airportCode/:bookingReference
 
   return (
     <>
       <dialog id="my_modal_1" open={true} className="modal" >
         <div className="bg-black/20 w-full h-full flex justify-center items-center">
-          <div className="modal-box w-10/12 max-w-2xl max-h-[95vh] md:max-h-[100vh] overflow-y-scroll md:overflow-auto">
-            <div className="bg-white w-full h-full rounded-lg p-6">
+          <div className="modal-box w-10/12 max-w-2xl max-h-[95vh] p-8 md:max-h-[100vh] overflow-y-scroll md:overflow-auto">
+            <div className="bg-white w-full h-full rounded-lg ">
               <div className="flex lg:flex-row flex-col gap-2 md:gap-5 lg:gap-10 items-center mb-5">
                 <img className="w-24" src={logo} alt="Website Logo" />
                 <h2 className="text-lg text-center md:text-left md:text-xl font-semibold">
@@ -108,9 +110,9 @@ const ModalInsurance = ({ insurance, onClose, onSubmit }) => {
               <h2 className="text-md font-semibold">Claimed Insurance</h2>
               <hr />
               {
-                insurance?.insurancePolicy?.claimedStatus === "pending" ? (
+                insurance?.insurancePolicy?.claimedStatus === "approved" || insurance?.insurancePolicy?.claimedStatus === "denied" || insurance?.insurancePolicy?.claimedStatus === "pending" ? (
                   <>
-                    <div className="grid grid-cols-2 gap-5 mt-2">
+                    <div className="grid grid-cols-2 gap-5 mt-2 mb-3">
                       <div className="text-sm">
                         <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
                           <h2 className="font-semibold">Premium Type</h2>
@@ -134,6 +136,27 @@ const ModalInsurance = ({ insurance, onClose, onSubmit }) => {
                         </div>
                       </div>
                     </div>
+                    <hr />
+                    <div className="mt-2">
+                      <h2 className="text-md font-semibold">Insurance Status</h2>
+                      <div className="text-sm grid grid-cols-2 gap-5">
+                        <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
+                          <h2 className="font-semibold">Premium Type</h2>
+                          <p>{insurance?.insurancePolicy?.requestedClaimInfo?.premiumType}</p>
+                        </div>
+                        {
+                          insurance?.insurancePolicy?.claimedStatus === "denied" ? <></> :
+                            <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
+                              <h2 className="font-semibold">Payable Amount</h2>
+                              <p>{insurance?.insurancePolicy?.claimedInsurance[premiumType]?.claimedPrice}BDT</p>
+                            </div>
+                        }
+                        <div className="flex md:flex-col  gap-2 md:gap-0 items-center md:items-start md:justify-start mt-2 md:mt-0 ">
+                          <h2 className="font-semibold">Explain Reason</h2>
+                          <p>{insurance?.insurancePolicy?.deniedFeedback}</p>
+                        </div>
+                      </div>
+                    </div>
                     <div className="flex modal-action justify-end mt-2 sm:mt-5 tracking-wide">
                       <button
                         className="bg-red-500 text-white active:bg-red-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
@@ -141,13 +164,6 @@ const ModalInsurance = ({ insurance, onClose, onSubmit }) => {
                         onClick={onClose}
                       >
                         Close
-                      </button>
-                      <button
-                        type="submit" // Use type="submit" here
-                        className="bg-cyan-500 btn text-white active:bg-cyan-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        disabled
-                      >
-                        Submit
                       </button>
                     </div>
                   </>

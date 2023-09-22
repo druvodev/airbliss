@@ -4,7 +4,7 @@ import FlightSummery from "../FlightSummery/FlightSummery";
 import FareRuls from "../FareRuls/FareRuls";
 import ShortingFlight from "../../ShortingFlight/ShortingFlight";
 import { GrPrevious, GrNext } from "react-icons/gr";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFlightInfo } from "../../../../redux/features/bookingInfoSlice";
 import { calculateArrivalDate } from "../../../../utils/calculateArrivalDate";
@@ -22,6 +22,7 @@ import {
   setCurrentPage,
   setFlightDetailsVisibility,
 } from "../../../../redux/features/bookTicketSlice.js";
+import useAuth from "../../../../hooks/useAuth";
 
 const ITEMS_PER_PAGE = 3;
 
@@ -68,9 +69,9 @@ const BookFlight = () => {
     const sortedData = [...flightData];
     sortedData.sort((a, b) => {
       if (sortOrder === "asc") {
-        return a.fareSummary.total - b.fareSummary.total;
+        return a.fareSummary?.total - b.fareSummary?.total;
       } else {
-        return b.fareSummary.total - a.fareSummary.total;
+        return b.fareSummary?.total - a.fareSummary?.total;
       }
     });
 
@@ -132,6 +133,7 @@ const BookFlight = () => {
   };
 
   const handelCardComapnyFilter = (airlineName) => {
+    console.log(airlineName);
     const filteredData = flight.filter(
       (item) => item.airlineName === airlineName
     );
@@ -142,8 +144,21 @@ const BookFlight = () => {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
 
+  const { user } = useAuth()
+  const navigate = useNavigate();
+  const location = useLocation();
+  let from = location.state?.from?.pathname || "/";
+
+  const handleBooking = () => {
+    if (!user) {
+
+      navigate(from, { replace: true });
+    }
+    
+  }
+
   return (
-    <section className="mb-16">
+    <section className="mb-16 ">
       {isLoading ? (
         ""
       ) : (
@@ -157,30 +172,28 @@ const BookFlight = () => {
           <section>
             <div className="flex w-full p-5 mt-10 rounded-md justify-between shadow-md">
               <button
-                className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
-                  selectedButton === "cheapest"
-                    ? "bg-cyan-50 text-white"
+                className={`p-4 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${selectedButton === "cheapest"
+                    ? "bg-cyan-50 text-white dark:bg-white/20"
                     : "text-white"
-                }`}
+                  }`}
                 onClick={() => handleButtonClick("cheapest")}
               >
-                <h1 className="text-[18px] font-semibold mb-2 text-gray-900">
+                <h1 className="text-[18px] font-semibold mb-2 text-gray-900 dark:text-white">
                   Cheapest
                 </h1>
-                <p className="text-xs md:text-sm text-[#7c8db0]">
+                <p className="text-xs dark:text-gray-400 md:text-sm text-[#7c8db0]">
                   To get the cheapest available flights
                 </p>
               </button>
               <div className="border self-stretch mx-5"></div>
               <button
-                className={`p-4 text-left flex-grow py-2 px-3 pe-5 mb-0 border-0 ${
-                  selectedButton === "shortest"
-                    ? "bg-cyan-50 text-white"
+                className={`p-4 text-left  flex-grow py-2 px-3 pe-5 mb-0 border-0 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500 ${selectedButton === "shortest"
+                    ? "bg-cyan-50 text-white dark:bg-white/20   "
                     : "text-white"
-                }`}
+                  }`}
                 onClick={() => handleButtonClick("shortest")}
               >
-                <h1 className="text-[18px] font-semibold mb-2 text-gray-900">
+                <h1 className="text-[18px] font-semibold mb-2 text-gray-900 dark:text-white">
                   Shortest
                 </h1>
                 <p className="text-xs md:text-sm text-[#7c8db0]">
@@ -196,7 +209,7 @@ const BookFlight = () => {
             {flightData?.slice(startIndex, endIndex)?.map((singleFlight) => (
               <section
                 key={singleFlight?._id}
-                className="shadow-md w-full rounded-md px-6 py-8 mt-8 border-[1px] border-gray-100"
+                className="shadow-md w-full rounded-md px-6 py-8 mt-8 border-[1px] border-gray-100 dark:border-0 dark:bg-white/10 dark:backdrop-blur-lg  dark:shadow-sm dark:shadow-gray-500"
               >
                 <div className=" grid grid-cols-3 lg:grid-cols-6 gap-5 ">
                   <div>
@@ -229,9 +242,8 @@ const BookFlight = () => {
                     <p className="text-gray-400 text-xs">
                       {singleFlight?.duration < 60
                         ? `${singleFlight?.duration} min`
-                        : `${Math.floor(singleFlight?.duration / 60)} hr ${
-                            singleFlight?.duration % 60
-                          } min`}
+                        : `${Math.floor(singleFlight?.duration / 60)} hr ${singleFlight?.duration % 60
+                        } min`}
                     </p>
                     <img
                       style={{
@@ -271,10 +283,8 @@ const BookFlight = () => {
                   <div align="center">
                     <Link to={`/review/${singleFlight?._id}`}>
                       <button
-                        onClick={() => {
-                          dispatch(setFlightInfo(singleFlight));
-                        }}
-                        className="btn p-2 bg-cyan-600 hover:bg-white hover:border-2 hover:text-cyan-600 hover:border-cyan-600 text-white rounded-md"
+                        onClick={() => { handleBooking(), dispatch(setFlightInfo(singleFlight)); }}
+                        className="btn p-2 bg-cyan-600 hover:bg-white hover:border-2 hover:text-cyan-600 hover:border-cyan-600 text-white rounded-md dark:border-0"
                       >
                         Book Now
                       </button>
@@ -307,25 +317,22 @@ const BookFlight = () => {
                     <section className="flex justify-start items-center mt-5 text-[12px]">
                       <p
                         onClick={() => handleFlightDetailsClick()}
-                        className={`border-2 p-2 rounded-md cursor-pointer ${
-                          showFlightDetails ? "bg-cyan-600 text-white" : ""
-                        }`}
+                        className={`border-2 p-2 rounded-md cursor-pointer ${showFlightDetails ? "bg-cyan-600 text-white" : ""
+                          }`}
                       >
                         Flight Details
                       </p>
                       <p
                         onClick={() => handleFlightSummaryClick()}
-                        className={`border-2 p-2 rounded-md cursor-pointer ${
-                          showFlightSummary ? "bg-cyan-600 text-white" : ""
-                        }`}
+                        className={`border-2 p-2 rounded-md cursor-pointer ${showFlightSummary ? "bg-cyan-600 text-white" : ""
+                          }`}
                       >
                         Fare Summary
                       </p>
                       <p
                         onClick={() => handleFareRulesClick()}
-                        className={`border-2 p-2 rounded-md cursor-pointer ${
-                          showFareRules ? "bg-cyan-600 text-white" : ""
-                        }`}
+                        className={`border-2 p-2 rounded-md cursor-pointer ${showFareRules ? "bg-cyan-600 text-white" : ""
+                          }`}
                       >
                         Fare Rules
                       </p>
@@ -346,9 +353,9 @@ const BookFlight = () => {
             ))}
 
             {/* Paination Button Section */}
-            <section className="mt-12 flex justify-end items-center">
+            <section className="mt-12 mr-6 mb-8 flex justify-end items-center">
               <button
-                className="border-[1px] p-2 rounded-l-md"
+                className="border-[1px] p-2 rounded-l-md dark:bg-gray-500"
                 onClick={handlePaginationPrev}
               >
                 <GrPrevious size={20} />
@@ -359,9 +366,8 @@ const BookFlight = () => {
                 (_, index) => (
                   <h3
                     key={index}
-                    className={`pl-3 pr-3 pt-[6px] pb-[6px] border-[1px] ${
-                      index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
-                    }`}
+                    className={`pl-3 pr-3 pt-[6px] pb-[6px] border-[1px] ${index + 1 === currentPage ? "bg-cyan-600 text-white" : ""
+                      }`}
                     onClick={() => dispatch(setCurrentPage(index + 1))}
                   >
                     {index + 1}
@@ -369,7 +375,7 @@ const BookFlight = () => {
                 )
               )}
               <button
-                className="border-[1px] p-2 rounded-r-md"
+                className="border-[1px] p-2 rounded-r-md dark:bg-gray-500 "
                 onClick={handlePaginationNext}
               >
                 <GrNext size={20} />

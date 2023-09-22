@@ -24,7 +24,14 @@ import AdminRoute from "./AdminRoute";
 import ManageAllBookings from "../Dashboard/Admin/ManageAllBookings/ManageAllBookings";
 import UserInsurance from "../Dashboard/User/UserInsurance/UserInsurance";
 import AdminInsurance from "../Dashboard/Admin/AdminInsurance/AdminInsurance";
-
+import RecommendedHotelDetails from "../pages/Home/RecommendedFlight/RecommendedHotelDetails";
+import InsurancePolicy from "../pages/InsurancePolicy/InsurancePolicy";
+import ServicesDetails from "../pages/ServicesDetails/ServicesDetails";
+import ApplyReschedule from "../Dashboard/User/ApplyReschedule/ApplyReschedule";
+import FlightDetails from "../Dashboard/FlightStatus/FlightDetails/FlightDetails";
+import Reschedule from "../Dashboard/Admin/Reschedule/Reschedule";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import LoginSignupModal from "../LogIn/LoginSignupModal";
 
 // const selector = useSelector(state =>console.log(state))
 // const userType = "admin";
@@ -56,6 +63,10 @@ export const router = createBrowserRouter([
         path: "/contact",
         element: <Contact />,
       },
+      {
+        path: "/about",
+        element: <AboutUs />,
+      },
 
       {
         path: "/terms",
@@ -75,12 +86,24 @@ export const router = createBrowserRouter([
       },
       {
         path: "hotDeals/:id",
-        element: <HotDealDetails></HotDealDetails>
+        element: <HotDealDetails></HotDealDetails>,
       },
       {
         path: "hotelDetails/:id",
-        element: <HotelDetails></HotelDetails>
-      }
+        element: <HotelDetails></HotelDetails>,
+      },
+      {
+        path: "recommendedFlight/:id",
+        element: <RecommendedHotelDetails></RecommendedHotelDetails>,
+      },
+      {
+        path: "/insurance-policy",
+        element: <InsurancePolicy />,
+      },
+      {
+        path: "service/:id",
+        element: <ServicesDetails />,
+      },
     ],
   },
   {
@@ -166,6 +189,30 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
       },
+      {
+        path: "applyReschedule",
+        element: <ApplyReschedule />,
+      },
+      {
+        path: "flightDetails/:airportCode/:_id/:id",
+        element: (
+          <AdminRoute>
+            <FlightDetails />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "reschedule",
+        element: (
+          <AdminRoute>
+            <Reschedule />
+          </AdminRoute>
+        ),
+      },
     ],
+  },
+  {
+    path: "login",
+    element: <LoginSignupModal></LoginSignupModal>,
   },
 ]);
