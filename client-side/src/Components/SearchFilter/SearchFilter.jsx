@@ -144,9 +144,6 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               }`}
             >
               <RiHotelFill /> Hotel{" "}
-              <small className="text-xs font-normal hidden sm:block">
-                (Upcoming)
-              </small>
             </div>
             <div
               // onClick={() => dispatch(setIsActive("visa"))}
@@ -155,9 +152,6 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               }`}
             >
               <BsPostcardFill /> Visa{" "}
-              <small className="text-xs font-normal  hidden sm:block">
-                (Upcoming)
-              </small>
             </div>
           </div>
         )}
@@ -171,7 +165,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
               checked
               onChange={() => dispatch(setFlightType("oneWay"))}
             />
-            One Way for One Traveler
+            One Way
           </label>
           <div className="relative w-fit">
             <small className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-sm bg-white dark:bg-transparent dark:text-gray-300">
