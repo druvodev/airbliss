@@ -37,4 +37,4 @@ Implementation of a dynamic flight search API that harmonizes arrival and depart
 **_Home Page_**
 ![Airbliss Home](https://i.ibb.co/RcvkhN9/Airbliss-Home.png)
 **_Searched Page_**
-![Airbliss Result](https://i.ibb.co/XzSkLSy/Airbliss-Home.png)
+![Airbliss Result](https://i.ibb.co/L5psNsd/Airbliss-Result.png)
