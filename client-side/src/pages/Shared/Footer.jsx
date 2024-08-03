@@ -79,7 +79,7 @@ const Footer = () => {
         <div className="sm:px-10 md:px-0 max-w-7xl mx-auto h-auto overflow-hidden  ">
           <div className="mt-14">
             {/* Footer Item Design */}
-            <section className="text-white p-3 grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <section className="text-white p-3 grid grid-cols-1 lg:grid-cols-3 gap-10 sm:gap-20">
               {/* Airblees Text */}
               <div className="dark:text-gray-400">
                 <img
@@ -126,22 +126,10 @@ const Footer = () => {
                 </div>
               </div>
 
-              <div className="grid grid-flow-col gap-4">
-                <div className="mt-6 lg:mt-0 dark:text-gray-400 ">
-                  <h1 className="text-xl font-bold dark:text-gray-400 ">
+              <div className="mt-6 lg:mt-0 dark:text-gray-400 ">
+                  <h1 className="text-xl sm:text-2xl font-bold dark:text-gray-400 ">
                     Quick Links
                   </h1>
-                  <p>
-                    <span className="flex items-center  tracking-widest">
-                      <IoAirplaneSharp />
-                      <BsDashLg />
-                      <BsDashLg />
-                      <BsDashLg />
-                      <BsDashLg />
-                      <BsDashLg />
-                      <BsDashLg />
-                    </span>
-                  </p>
 
                   <div>
                     <Link
@@ -193,18 +181,7 @@ const Footer = () => {
                 </div>
 
                 <div className="mt-6 lg:mt-0 dark:text-gray-400 ">
-                  <h1 className="text-xl font-bold">Contact Us</h1>
-                  <p>
-                    <span className="flex items-center  tracking-widest">
-                      <IoAirplaneSharp />
-                      <BsDashLg />
-                      <BsDashLg />
-                      <BsDashLg />
-                      <BsDashLg />
-                      <BsDashLg />
-                      <BsDashLg />
-                    </span>
-                  </p>
+                  <h1 className="text-xl sm:text-2xl font-bold">Contact Us</h1>
 
                   <div>
                     <p className="inline-flex justify-start items-center gap-1 mt-3">
@@ -233,127 +210,7 @@ const Footer = () => {
                     </p>
                   </div>
                 </div>
-              </div>
-
-              <div className="mt-12 lg:mt-0 dark:text-gray-400">
-                <h1 className="text-xl font-bold">Coming Soon Services</h1>
-                <p>
-                  <span className="flex items-center  tracking-widest">
-                    <IoAirplaneSharp />
-                    <BsDashLg />
-                    <BsDashLg />
-                    <BsDashLg />
-                    <BsDashLg />
-                    <BsDashLg />
-                    <BsDashLg />
-                    <BsDashLg />
-                    <BsDashLg />
-                  </span>
-                </p>
-
-                {/* Recent Service Card */}
-                {sliceService?.map((service, index) => (
-                  <div
-                    key={index}
-                    className="mt-2 flex justify-start items-center gap-2"
-                  >
-                    <img
-                      className="rounded shadow-md h-16"
-                      src={service?.image}
-                      alt=""
-                    />
-
-                    <Link to={`/service/${service?._id}`}>
-                      <div className="cursor-pointer">
-                        <h1 className="font-bold ">{service?.title}</h1>
-                        <p className="mt-1 inline-flex items-center gap-1">
-                          <span>
-                            <AiOutlineCalendar size={18} />{" "}
-                          </span>{" "}
-                          <span>{service?.date}</span>
-                        </p>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
             </section>
-
-            {/* Payment Partner */}
-            <div>
-              <h1 className=" ml-3 dark:text-gray-400 text-white text-xl font-bold mb-2">
-                Payment Partner
-              </h1>
-              <hr className="w-[170px] md:ml-12 ml-3" />
-
-              <div className=" ml-2 flex lg:flex-row flex-col ">
-                <div className="flex justify-start items-center">
-                  <img
-                    className="h-16 "
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/gTF85MF/unnamed-removebg-preview.png"
-                    alt=""
-                  />
-
-                  <img
-                    className="h-10 img_bg"
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/bzNCqnQ/Master-Card-early-1990s-logo-svg-removebg-preview.png"
-                    alt=""
-                  />
-                </div>
-
-                <div className="flex justify-start items-center">
-                  <img
-                    className="h-6 lg:ml-1 img_bg"
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/J2fnFdy/2560px-Pay-Pal-logo-svg.png"
-                    alt=""
-                  />
-
-                  <img
-                    className="h-16 lg:ml-1 img_bg"
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/BPwnQFQ/Discover-logo-removebg-preview.png"
-                    alt=""
-                  />
-                </div>
-
-                <div className="flex justify-start items-center">
-                  <img
-                    className="h-6 img_bg"
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/C6Hzwdc/logo-black-59208b9-removebg-preview.png"
-                    alt=""
-                  />
-
-                  <img
-                    className="h-16 img_bg"
-                    style={{
-                      WebkitFilter: "grayscale(100%)",
-                      filter: "grayscale(100%)",
-                    }}
-                    src="https://i.ibb.co/qMLHdgs/download-2-removebg-preview-1.png"
-                    alt=""
-                  />
-                </div>
-              </div>
-            </div>
 
             <hr className="mt-12" />
 
