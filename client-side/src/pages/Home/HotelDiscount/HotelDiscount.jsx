@@ -5,12 +5,14 @@ import DiscountedHotelCard from "../../../Components/Card/DiscountedHotelCard";
 const HotelDiscount = () => {
   const [discountedHotels, setDiscountedHotels] = useState([]);
   useEffect(() => {
+
     fetch("hotels.json")
       .then((res) => res.json())
       .then((data) => {
         setDiscountedHotels(data);
       });
-  }, [discountedHotels]);
+  }, []);
+
   return (
     <div id="discount-hotels" className="pb-16">
       <SectionTitle sectionTitle="Best Deal  for Hotels"></SectionTitle>

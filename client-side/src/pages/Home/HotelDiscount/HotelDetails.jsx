@@ -25,6 +25,7 @@ const HotelDetails = () => {
         setDiscountedHotels(data);
       });
   }, []);
+
   return (
     <div>
       <SectionBanner
