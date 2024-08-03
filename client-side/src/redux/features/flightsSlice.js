@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { setLoading, setError } from "./globalSlice";
-import useAxios from "../../hooks/useAxios";
+import useAxios from "../../hooks/useAxios"
 
 const initialState = {
   flights: [],
@@ -23,7 +23,8 @@ export const flightsSlice = createSlice({
 export const fetchFlights = (searchQuery) => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    const response = await useAxios.get(`/flights/search?${searchQuery}`);
+    const API = useAxios();
+    const response = await API.get(`/flights/search?${searchQuery}`);
     const data = response.data;
     dispatch(storeFlights(data));
     dispatch(setError(""));

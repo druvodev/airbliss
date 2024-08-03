@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
-import UseAxiosSecure from "../hooks/UseAxiosSecure";
+
 import useAuth from "../hooks/useAuth";
 import { Navigate, useLocation } from "react-router";
 import Loader from "../Components/Loader/Loader";
+import useAxios from "../hooks/useAxios";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useAuth();
   const location = useLocation();
   const [users, setUsers] = useState([]);
-  const [axiosSecure] = UseAxiosSecure();
+  const API = useAxios();
   const [isLoadingData, setIsLoadingData] = useState(true); // Add loading state
 
   useEffect(() => {
-    axiosSecure
+    API
       .get("/users")
       .then((response) => {
         setUsers(response?.data);
@@ -22,7 +23,7 @@ const AdminRoute = ({ children }) => {
         console.error("Error fetching data:", error);
         setIsLoadingData(false); // Handle error and set loading to false
       });
-  }, [axiosSecure, user, isLoadingData]);
+  }, [API, user, isLoadingData]);
 
   const currentUser = users?.find(
     (userData) => userData?.email === user?.email

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import UseAxiosSecure from "../../../hooks/UseAxiosSecure";
+
 import { toast } from "react-hot-toast";
 import AllUsers from "./AllUsers";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import logo from "../../../assets/icon/airblissBlack.png";
 import Loader from "../../../Components/Loader/Loader";
+import useAxios from "../../../hooks/useAxios";
 
 const ITEMS_PER_PAGE = 15;
 
 const ManageUsers = () => {
   const [users, setUsers] = useState([]);
-  const [axiosSecure] = UseAxiosSecure();
+  const API = useAxios();
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [selectedUserRole, setSelectedUserRole] = useState("");
   const [selectedUserStatus, setSelectedUserStatus] = useState("");
@@ -35,7 +36,7 @@ const ManageUsers = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    axiosSecure
+    API
       .get("/users")
       .then((response) => {
         setUsers(response?.data);
@@ -45,7 +46,7 @@ const ManageUsers = () => {
         console.error("Error fetching data:", error);
         setIsLoading(false);
       });
-  }, [axiosSecure]);
+  }, [API]);
 
   const handleModalOpen = (userId, role, status) => {
     setSelectedUserId(userId);
@@ -108,8 +109,8 @@ const ManageUsers = () => {
       </div>
 
       <div className="overflow-x-auto mx-1 lg:mx-7 mt-[40px] px-10 py-5 shadow-md rounded-md bg-white">
-        {isLoading ? ( 
-          <Loader /> 
+        {isLoading ? (
+          <Loader />
         ) : (
           <table className="table">
             {/* head */}

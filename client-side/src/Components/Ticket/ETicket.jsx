@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { GiAirplaneDeparture } from "react-icons/gi";
 import DomToImage from "dom-to-image";
 import { useParams } from "react-router";
-import useAxios from "../../hooks/useAxios";
 import airbliss from "../../assets/banner/airblibanner.png";
 import emailjs from "@emailjs/browser";
 import { HashLoader } from "react-spinners";
+import useAxios from "../../hooks/useAxios";
 
 const ETicket = ({ booking }) => {
+  const API = useAxios();
   const [myBooking, setBooking] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
@@ -15,7 +16,7 @@ const ETicket = ({ booking }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    useAxios
+    API
       .get(`/bookings/${refID.bookingId}`)
       .then((res) => {
         setBooking(res.data);

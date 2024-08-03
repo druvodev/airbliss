@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setAllBookings } from "../../../redux/features/bookingInfoSlice";
-import UseAxiosSecure from "../../../hooks/UseAxiosSecure";
+
 import { setAllUserInfo } from "../../../redux/features/usersSlice";
 import {
   setFlights,
@@ -17,7 +17,7 @@ import {
 import { TbCalendarTime } from "react-icons/tb";
 
 const AdminNav = ({closeSidebar}) => {
-  const [axiosSecure] = UseAxiosSecure();
+  const API = useAxios();
   const dispatch = useDispatch();
   const allBooking = useSelector((state) => state?.userBookingInfo.allBookings);
   const { id, airportCode } = useSelector((state) => state?.manageFlight?.path);
@@ -26,7 +26,7 @@ const AdminNav = ({closeSidebar}) => {
     (state) => state.userBookingInfo.bookingsRefetch
   );
   useEffect(() => {
-    axiosSecure
+    API
       .get("/users")
       .then((response) => {
         dispatch(setAllUserInfo(response?.data));
@@ -34,7 +34,7 @@ const AdminNav = ({closeSidebar}) => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [axiosSecure]);
+  }, [API]);
 
   useEffect(() => {
     fetch(`http://localhost:5000/allBookings`)

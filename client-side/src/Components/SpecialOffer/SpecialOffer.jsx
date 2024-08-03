@@ -12,6 +12,7 @@ import OfferCard from "./OfferCard";
 import { useEffect, useState } from "react";
 import useAxios from "../../hooks/useAxios";
 const SpecialOffer = () => {
+  const API = useAxios();
   const [data, setData] = useState([]);
   const departureDate = useSelector(
     (state) => state?.searchFilter?.departureDate
@@ -21,8 +22,10 @@ const SpecialOffer = () => {
   );
   const date = format(departureDate, "dd MMM yy");
   const fromCity = destination.split(",")[0];
+
+
   useEffect(() => {
-    useAxios
+    API
       .get("/specialDiscount")
       .then((response) => {
         const toCity = response.data.filter(

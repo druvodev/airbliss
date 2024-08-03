@@ -7,11 +7,12 @@ import logoWhite from "../../assets/icon/airblissWhite.png";
 import LoginSignupModal from "../../LogIn/LoginSignupModal";
 import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
-import UseAxiosSecure from "../../hooks/UseAxiosSecure";
+
 import { useDispatch } from "react-redux";
 import { setAllUserInfo, setUserInfo } from "../../redux/features/usersSlice";
 import { PiPhone } from "react-icons/pi";
 import { BsMoonFill } from "react-icons/bs";
+import useAxios from "../../hooks/useAxios";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -22,7 +23,7 @@ const Navbar = () => {
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
   const [isLoginSignupModalOpen, setIsLoginSignupModalOpen] = useState(false);
   const [users, setUsers] = useState([]);
-  const [axiosSecure] = UseAxiosSecure();
+  const API = useAxios();
   const location = useLocation();
 
   // Dark Mode
@@ -41,7 +42,7 @@ const Navbar = () => {
 
   useEffect(() => {
     // setIsLoading(true);
-    axiosSecure
+    API
       .get("/users")
       .then((response) => {
         setUsers(response?.data);
@@ -51,7 +52,7 @@ const Navbar = () => {
         console.error("Error fetching data:", error);
         // setIsLoading(false);
       });
-  }, [axiosSecure]);
+  }, [API]);
 
   const currentUser = users.find((userData) => userData?.email === user?.email);
 

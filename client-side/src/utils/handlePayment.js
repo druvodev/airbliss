@@ -141,7 +141,8 @@ export const paymentProcessing = (flightInfo, userInfo, insurance) => {
   userBookingInfo.airlineLogo = flightInfo?.airlineLogo;
 
   // Make a POST request using Axios from useAxios hook
-  useAxios
+  const API = useAxios();
+  API
     .post("/process-payment", userBookingInfo, {
       headers: {
         "Content-Type": "application/json",

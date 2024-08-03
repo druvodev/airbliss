@@ -1,24 +1,23 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import UseAxiosSecure from "../../hooks/UseAxiosSecure";
 import InforMation from "./InforMation";
 import Edit from "./Edit";
-import View from "./View";
 import { FiEdit } from "react-icons/fi";
 import { toast } from "react-hot-toast";
+import useAxios from "../../hooks/useAxios";
 
 const Account = () => {
   const { user } = useAuth();
   const [isEdit, setIsEdit] = useState(false);
   const [users, setUsers] = useState([]);
-  const [axiosSecure] = UseAxiosSecure();
+  const API = useAxios();
 
   const switchToEditOrUpdate = () => {
     setIsEdit((prevMode) => !prevMode);
   };
 
   useEffect(() => {
-    axiosSecure
+    API
       .get("/users")
       .then((response) => {
         setUsers(response?.data);
@@ -26,7 +25,7 @@ const Account = () => {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, [axiosSecure, users]);
+  }, [API, users]);
 
   const currentUser = users.find((userData) => userData?.email === user?.email);
 
@@ -99,7 +98,7 @@ const Account = () => {
             {isEdit ? (
               <Edit handleSubmit={handleSubmit} currentUser={currentUser} />
             ) : (
-                // <View currentUser={currentUser} /> 
+                // <View currentUser={currentUser} />
                 <></>
             )}
           </>

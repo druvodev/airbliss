@@ -18,14 +18,15 @@ import {
   setReturnDate,
   setCalendarModal,
 } from "../../redux/features/searchFilterSlice";
-import useAxios from "../../hooks/useAxios";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { useCountdownContext } from "../../providers/CountdownContext";
 import { setLoading } from "../../redux/features/globalSlice";
 import { errorToast } from "../../utils/toast";
+import useAxios from "../../hooks/useAxios";
 
 const SearchFilter = React.memo(({ bookingType, filterName }) => {
+  const API = useAxios();
   const { setIsStart } = useCountdownContext();
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
@@ -93,7 +94,7 @@ const SearchFilter = React.memo(({ bookingType, filterName }) => {
     const searchQuery = `fromCity=${fromCity}&toCity=${toCity}&departureDate=${date}`;
     const url = `/flights/search?${searchQuery}`;
 
-    useAxios
+    API
       .get(url)
       .then((response) => {
         const data = response?.data;
